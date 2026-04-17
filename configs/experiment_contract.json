@@ -1,0 +1,18 @@
+{
+  "name": "gsm8k-qwen35-9b-vs-4b",
+  "task_name": "gsm8k",
+  "compressed_source_model_id": "Qwen/Qwen3.5-9B",
+  "native_baseline_model_id": "Qwen/Qwen3.5-4B",
+  "upper_bound_model_id": "Qwen/Qwen3.5-9B",
+  "comparison_rule": "Compare a task-aware quantized 9B checkpoint against the native 4B baseline at approximately matched VRAM budget, not matched parameter count.",
+  "budget_rule": "Use the measured peak VRAM of the native 4B baseline as the target budget for quantized 9B search.",
+  "quantization_bits": [
+    2,
+    3,
+    4,
+    8
+  ],
+  "calibration_samples": 128,
+  "baseline_eval_limit": 25,
+  "generation_max_new_tokens": 64
+}

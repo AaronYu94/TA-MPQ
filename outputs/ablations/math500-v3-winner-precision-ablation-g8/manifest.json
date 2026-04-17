@@ -1,0 +1,116 @@
+{
+  "ablations": [
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-001.json",
+      "component_type": "linear_attn.in_proj_a",
+      "group_name": "block:0:linear_attn.in_proj_a",
+      "layer_names": [
+        "model.layers.0.linear_attn.in_proj_a"
+      ],
+      "parameter_count": 245760,
+      "reference_bit_width": 8,
+      "selection_score": 0.8070781266204384
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-002.json",
+      "component_type": "self_attn.v_proj",
+      "group_name": "block:63:self_attn.v_proj",
+      "layer_names": [
+        "model.layers.63.self_attn.v_proj"
+      ],
+      "parameter_count": 5242880,
+      "reference_bit_width": 8,
+      "selection_score": 0.775
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-003.json",
+      "component_type": "linear_attn.in_proj_a",
+      "group_name": "block:60:linear_attn.in_proj_a",
+      "layer_names": [
+        "model.layers.60.linear_attn.in_proj_a"
+      ],
+      "parameter_count": 245760,
+      "reference_bit_width": 8,
+      "selection_score": 0.7532648015983096
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-004.json",
+      "component_type": "linear_attn.in_proj_a",
+      "group_name": "block:61:linear_attn.in_proj_a",
+      "layer_names": [
+        "model.layers.61.linear_attn.in_proj_a"
+      ],
+      "parameter_count": 245760,
+      "reference_bit_width": 8,
+      "selection_score": 0.7454810280047133
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-005.json",
+      "component_type": "mlp.gate_proj",
+      "group_name": "block:61:mlp.gate_proj",
+      "layer_names": [
+        "model.layers.61.mlp.gate_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 8,
+      "selection_score": 0.7366272704915716
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-006.json",
+      "component_type": "linear_attn.in_proj_qkv",
+      "group_name": "block:0:linear_attn.in_proj_qkv",
+      "layer_names": [
+        "model.layers.0.linear_attn.in_proj_qkv"
+      ],
+      "parameter_count": 52428800,
+      "reference_bit_width": 8,
+      "selection_score": 0.725746762083221
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-007.json",
+      "component_type": "linear_attn.in_proj_a",
+      "group_name": "block:62:linear_attn.in_proj_a",
+      "layer_names": [
+        "model.layers.62.linear_attn.in_proj_a"
+      ],
+      "parameter_count": 245760,
+      "reference_bit_width": 8,
+      "selection_score": 0.717528280085105
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-v3-winner-precision-ablation-g8/ablation-008.json",
+      "component_type": "mlp.down_proj",
+      "group_name": "block:63:mlp.down_proj",
+      "layer_names": [
+        "model.layers.63.mlp.down_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 8,
+      "selection_score": 0.7163350494760409
+    }
+  ],
+  "allowed_bits": [
+    4,
+    8,
+    16
+  ],
+  "floor_bit": 4,
+  "grouping": "per_block_component",
+  "num_ablations": 8,
+  "ranking_field": "combined_sensitivity",
+  "ranking_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+  "reference_bit_counts": {
+    "4": 343,
+    "8": 154
+  },
+  "reference_candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+  "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json"
+}

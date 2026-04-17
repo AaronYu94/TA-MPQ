@@ -1,0 +1,1589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TA-MPQ Results Summary</title>
+    <style>
+      :root {
+        --paper: #f7f1e8;
+        --panel: rgba(255, 250, 242, 0.9);
+        --panel-strong: rgba(255, 247, 236, 0.98);
+        --ink: #1f1916;
+        --muted: #6a5950;
+        --line: rgba(78, 53, 40, 0.16);
+        --accent: #ba5b38;
+        --accent-dark: #83361d;
+        --green: #2d6d4f;
+        --amber: #9b6a14;
+        --red: #8d3b33;
+        --shadow: 0 20px 50px rgba(67, 42, 29, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+        background:
+          radial-gradient(circle at top left, rgba(186, 91, 56, 0.16), transparent 26%),
+          radial-gradient(circle at top right, rgba(56, 110, 143, 0.12), transparent 20%),
+          linear-gradient(180deg, #fbf6ef 0%, var(--paper) 100%);
+      }
+
+      .lang {
+        display: none;
+      }
+
+      body[data-lang="en"] .lang.en {
+        display: inline;
+      }
+
+      body[data-lang="zh"] .lang.zh {
+        display: inline;
+      }
+
+      body[data-lang="en"] .lang-block.en {
+        display: block;
+      }
+
+      body[data-lang="zh"] .lang-block.zh {
+        display: block;
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 36px 24px 64px;
+      }
+
+      .hero,
+      .panel {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+        border-radius: 24px;
+      }
+
+      .hero {
+        padding: 28px 32px 32px;
+        margin-bottom: 24px;
+        background:
+          linear-gradient(135deg, rgba(255, 248, 240, 0.96), rgba(255, 244, 233, 0.92)),
+          var(--panel);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--accent-dark);
+        font-size: 0.84rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .toggle {
+        display: inline-flex;
+        gap: 8px;
+        padding: 6px;
+        border-radius: 999px;
+        border: 1px solid rgba(131, 54, 29, 0.18);
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      .toggle button {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-family: inherit;
+        font-size: 0.92rem;
+        cursor: pointer;
+      }
+
+      .toggle button.active {
+        background: var(--accent);
+        color: #fffaf4;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-weight: 700;
+        line-height: 1.08;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 4vw, 4.1rem);
+        max-width: 11ch;
+      }
+
+      h2 {
+        font-size: 1.55rem;
+        margin-bottom: 16px;
+      }
+
+      h3 {
+        font-size: 1.04rem;
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      .hero-copy {
+        margin-top: 16px;
+        max-width: 72ch;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .chip {
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(131, 54, 29, 0.18);
+        background: rgba(255, 255, 255, 0.6);
+        color: var(--accent-dark);
+        font-size: 0.92rem;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .metric {
+        padding: 18px;
+      }
+
+      .metric .label {
+        color: var(--muted);
+        font-size: 0.84rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .metric .value {
+        margin-top: 10px;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .metric .detail {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .section-stack {
+        display: grid;
+        gap: 24px;
+      }
+
+      .panel {
+        padding: 24px;
+      }
+
+      .lead {
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .three-col {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .subpanel {
+        border-radius: 18px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 0.82rem;
+        border: 1px solid transparent;
+      }
+
+      .badge.good {
+        color: var(--green);
+        background: rgba(45, 109, 79, 0.1);
+        border-color: rgba(45, 109, 79, 0.15);
+      }
+
+      .badge.warn {
+        color: var(--amber);
+        background: rgba(155, 106, 20, 0.11);
+        border-color: rgba(155, 106, 20, 0.16);
+      }
+
+      .badge.blocked {
+        color: var(--red);
+        background: rgba(141, 59, 51, 0.11);
+        border-color: rgba(141, 59, 51, 0.16);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+
+      th,
+      td {
+        padding: 11px 10px;
+        text-align: left;
+        border-top: 1px solid var(--line);
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 0.84rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: 1fr 74px 1fr 74px 1fr;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .flow-box,
+      .flow-arrow {
+        border-radius: 18px;
+        min-height: 112px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .flow-box {
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+        padding: 18px;
+      }
+
+      .flow-arrow {
+        color: var(--accent-dark);
+        font-size: 1.55rem;
+        font-weight: 700;
+      }
+
+      .list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+      }
+
+      .list li + li {
+        margin-top: 8px;
+      }
+
+      .bar-table td.metric-cell {
+        min-width: 180px;
+      }
+
+      .bar {
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(131, 54, 29, 0.12);
+        overflow: hidden;
+        margin-top: 6px;
+      }
+
+      .bar > span {
+        display: block;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--accent) 0%, #db8b59 100%);
+      }
+
+      .code {
+        font-family: "SFMono-Regular", "Menlo", "Monaco", "Liberation Mono", monospace;
+        font-size: 0.9rem;
+      }
+
+      .note {
+        margin-top: 14px;
+        color: var(--muted);
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .status-card {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+      }
+
+      .status-card h3 {
+        margin-bottom: 10px;
+      }
+
+      a {
+        color: var(--accent-dark);
+      }
+
+      .foot {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 980px) {
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .metrics,
+        .two-col,
+        .three-col,
+        .status-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flow {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-arrow {
+          min-height: 36px;
+          transform: rotate(90deg);
+        }
+      }
+    </style>
+  </head>
+  <body data-lang="en">
+    <main class="page">
+      <section class="hero">
+        <div class="topbar">
+          <p class="eyebrow">
+            <span class="lang en">TA-MPQ Project Snapshot</span>
+            <span class="lang zh">TA-MPQ 项目快照</span>
+          </p>
+          <div class="toggle" aria-label="Language switcher">
+            <button type="button" data-lang-choice="en" class="active">English</button>
+            <button type="button" data-lang-choice="zh">中文</button>
+          </div>
+        </div>
+
+        <h1>
+          <span class="lang en">Current Results, Consolidated</span>
+          <span class="lang zh">当前结果总览</span>
+        </h1>
+
+        <p class="hero-copy">
+          <span class="lang en">
+            This page summarizes the current state of the TA-MPQ project as of
+            <strong>April 11, 2026</strong>. The mainline is now
+            <strong>Qwen3.5-27B compressed toward native 9B budget</strong>, with
+            the earlier <strong>9B vs 4B</strong> experiment retained as a low-cost
+            debugging track rather than the primary research claim. Real source-backend
+            PTQ validation is now running end-to-end: the best task-aware candidates and
+            a uniform 4-bit baseline all beat native 9B on the current GSM8K sample.
+            On the latest <strong>MATH-500 limit=100</strong> comparison, the current
+            ranking is <strong>closed-loop task-aware 40% > uniform 4-bit 39% > native 9B 29%</strong>.
+          </span>
+          <span class="lang zh">
+            这个页面汇总了截至 <strong>2026 年 4 月 11 日</strong> 的 TA-MPQ 项目进展。
+            当前主线已经切换为
+            <strong>将 Qwen3.5-27B 压缩到接近原生 9B 的预算</strong>，
+            之前的 <strong>9B vs 4B</strong> 实验则保留为低成本调试线，
+            不再作为主要研究结论。现在真实 source-backend PTQ 验证已经可以端到端跑通：
+            当前最好的 task-aware 候选和 uniform 4-bit baseline 都已经在 GSM8K 小样本上赢过原生 9B。
+            在最新的 <strong>MATH-500 limit=100</strong> 对比里，当前排序已经变成
+            <strong>closed-loop task-aware 40% > uniform 4-bit 39% > native 9B 29%</strong>。
+          </span>
+        </p>
+
+        <div class="chip-row">
+          <span class="chip">
+            <span class="lang en">Mainline: 27B → 9B budget</span>
+            <span class="lang zh">主线：27B → 9B 预算</span>
+          </span>
+          <span class="chip">
+            <span class="lang en">Tasks: GSM8K + MATH-500</span>
+            <span class="lang zh">任务：GSM8K + MATH-500</span>
+          </span>
+          <span class="chip">
+            <span class="lang en">Workspace used for runs: hanweny</span>
+            <span class="lang zh">实际运行 workspace：hanweny</span>
+          </span>
+          <span class="chip">
+            <span class="lang en">Modal command path: python3 -m modal</span>
+            <span class="lang zh">Modal 命令入口：python3 -m modal</span>
+          </span>
+          <span class="chip">
+            <span class="lang en">Real PTQ path: working</span>
+            <span class="lang zh">真实 PTQ 路径：已打通</span>
+          </span>
+        </div>
+      </section>
+
+      <section class="metrics">
+        <article class="panel metric">
+          <div class="label">
+            <span class="lang en">Mainline Gap</span>
+            <span class="lang zh">主线差距</span>
+          </div>
+          <div class="value">52% vs 20%</div>
+          <div class="detail">
+            <span class="lang en">Native 27B clearly outperforms native 9B on GSM8K (25 examples).</span>
+            <span class="lang zh">在 GSM8K 的 25 个样本上，原生 27B 明显强于原生 9B。</span>
+          </div>
+        </article>
+
+        <article class="panel metric">
+          <div class="label">
+            <span class="lang en">Target Budget</span>
+            <span class="lang zh">目标预算</span>
+          </div>
+          <div class="value">17.15 GB</div>
+          <div class="detail">
+            <span class="lang en">Measured peak memory of native Qwen3.5-9B.</span>
+            <span class="lang zh">这是原生 Qwen3.5-9B 的实测峰值显存。</span>
+          </div>
+        </article>
+
+        <article class="panel metric">
+          <div class="label">
+            <span class="lang en">Best Quantized Result</span>
+            <span class="lang zh">最佳量化结果</span>
+          </div>
+          <div class="value">40% vs 29%</div>
+          <div class="detail">
+            <span class="lang en">The newest closed-loop task-aware winner reaches 40/100 on MATH-500, while native 9B stays at 29/100.</span>
+            <span class="lang zh">最新的 closed-loop task-aware winner 在 MATH-500 上达到 40/100，而原生 9B 为 29/100。</span>
+          </div>
+        </article>
+
+        <article class="panel metric">
+          <div class="label">
+            <span class="lang en">Open Comparison</span>
+            <span class="lang zh">当前对比结论</span>
+          </div>
+          <div class="value">40% &gt; 39%</div>
+          <div class="detail">
+            <span class="lang en">On MATH-500 with 100 examples, the newest closed-loop task-aware candidate now slightly outperforms uniform 4-bit.</span>
+            <span class="lang zh">在 MATH-500 的 100 个样本上，最新的 closed-loop task-aware 候选已经略微高于 uniform 4-bit。</span>
+          </div>
+        </article>
+      </section>
+
+      <div class="section-stack">
+        <section class="panel">
+          <h2>
+            <span class="lang en">Mainline Framing</span>
+            <span class="lang zh">主线问题定义</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              The project now asks whether a task-aware mixed-precision
+              <strong>compressed 27B</strong> can remain competitive against a
+              <strong>native 9B</strong> under roughly the same deployment budget.
+            </span>
+            <span class="lang zh">
+              当前项目的核心问题是：在大致相同的部署预算下，
+              一个任务感知、混合精度压缩后的 <strong>27B</strong>，
+              能否保持对原生 <strong>9B</strong> 的竞争力。
+            </span>
+          </p>
+
+          <div class="flow">
+            <div class="flow-box">
+              <div>
+                <strong>Native Qwen3.5-27B</strong><br />
+                <span class="lang en">BF16 upper bound</span>
+                <span class="lang zh">BF16 上界参考</span>
+              </div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">
+              <div>
+                <strong>
+                  <span class="lang en">Task-aware mixed-precision quantization</span>
+                  <span class="lang zh">任务感知混合精度量化</span>
+                </strong>
+                <br />
+                <span class="lang en">evolutionary search over layer-wise bit assignments</span>
+                <span class="lang zh">对逐层 bit 分配做进化搜索</span>
+              </div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">
+              <div>
+                <strong>Compressed Qwen3.5-27B</strong><br />
+                <span class="lang en">target: native 9B budget</span>
+                <span class="lang zh">目标：贴近原生 9B 预算</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="note">
+            <span class="lang en">
+              Compare the compressed 27B against <strong>native Qwen3.5-9B</strong>.
+              Keep native 27B only as an upper bound reference.
+            </span>
+            <span class="lang zh">
+              最终比较对象是压缩后的 27B 和 <strong>原生 Qwen3.5-9B</strong>。
+              原生 27B 只保留为性能上界参考。
+            </span>
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Baseline Results</span>
+            <span class="lang zh">Baseline 结果</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              Two baseline tracks have been run. The early 9B vs 4B run de-risked the harness;
+              the 27B vs 9B run established the mainline research gap.
+            </span>
+            <span class="lang zh">
+              目前已经跑过两条 baseline 线。前面的 9B vs 4B 主要用来验证 harness，
+              而 27B vs 9B 则真正建立了主线研究所需要的模型差距。
+            </span>
+          </p>
+
+          <div class="two-col">
+            <article class="subpanel">
+              <div class="chip-row" style="margin-top: 0; margin-bottom: 12px;">
+                <span class="badge warn">
+                  <span class="lang en">Debug Track</span>
+                  <span class="lang zh">调试线</span>
+                </span>
+                <span class="chip">
+                  <span class="lang en">Contract: 9B → 4B budget</span>
+                  <span class="lang zh">合同：9B → 4B 预算</span>
+                </span>
+              </div>
+              <table class="bar-table">
+                <thead>
+                  <tr>
+                    <th><span class="lang en">Model</span><span class="lang zh">模型</span></th>
+                    <th><span class="lang en">Accuracy</span><span class="lang zh">准确率</span></th>
+                    <th><span class="lang en">Mean Latency</span><span class="lang zh">平均延迟</span></th>
+                    <th><span class="lang en">Peak Memory</span><span class="lang zh">峰值显存</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Native Qwen3.5-4B</td>
+                    <td class="metric-cell">
+                      24% (6/25)
+                      <div class="bar"><span style="width: 24%;"></span></div>
+                    </td>
+                    <td>0.372 s</td>
+                    <td>8.09 GB</td>
+                  </tr>
+                  <tr>
+                    <td>Native Qwen3.5-9B</td>
+                    <td class="metric-cell">
+                      20% (5/25)
+                      <div class="bar"><span style="width: 20%;"></span></div>
+                    </td>
+                    <td>0.295 s</td>
+                    <td>17.15 GB</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="note">
+                <span class="lang en">
+                  Conclusion: this gap was too weak to support the main claim, so the project was
+                  promoted to a stronger <strong>27B vs 9B</strong> mainline.
+                </span>
+                <span class="lang zh">
+                  结论：这条线上的差距不足以支撑主结论，所以项目主线被提升为更有说服力的
+                  <strong>27B vs 9B</strong>。
+                </span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <div class="chip-row" style="margin-top: 0; margin-bottom: 12px;">
+                <span class="badge good">
+                  <span class="lang en">Mainline</span>
+                  <span class="lang zh">主线</span>
+                </span>
+                <span class="chip">
+                  <span class="lang en">Contract: 27B → 9B budget</span>
+                  <span class="lang zh">合同：27B → 9B 预算</span>
+                </span>
+              </div>
+              <table class="bar-table">
+                <thead>
+                  <tr>
+                    <th><span class="lang en">Model</span><span class="lang zh">模型</span></th>
+                    <th><span class="lang en">Accuracy</span><span class="lang zh">准确率</span></th>
+                    <th><span class="lang en">Mean Latency</span><span class="lang zh">平均延迟</span></th>
+                    <th><span class="lang en">Peak Memory</span><span class="lang zh">峰值显存</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Native Qwen3.5-9B</td>
+                    <td class="metric-cell">
+                      20% (5/25)
+                      <div class="bar"><span style="width: 20%;"></span></div>
+                    </td>
+                    <td>0.335 s</td>
+                    <td>17.15 GB</td>
+                  </tr>
+                  <tr>
+                    <td>Native Qwen3.5-27B</td>
+                    <td class="metric-cell">
+                      52% (13/25)
+                      <div class="bar"><span style="width: 52%;"></span></div>
+                    </td>
+                    <td>0.621 s</td>
+                    <td>51.45 GB</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="note">
+                <span class="lang en">
+                  This is the key result that justifies the mainline: native 27B has a large
+                  enough margin over native 9B to make compression toward 9B budget meaningful.
+                </span>
+                <span class="lang zh">
+                  这是支撑主线切换的关键结果：原生 27B 相比原生 9B 已经有足够大的 margin，
+                  因此“压到 9B 预算后还能不能赢”这个问题才真正有研究价值。
+                </span>
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Mixed-Precision Feasibility</span>
+            <span class="lang zh">混合精度可行性</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              A dry-run feasibility path was built to inspect Qwen3.5-27B layer structure and
+              estimate budget under a simple mixed-bit policy before real PTQ export was available.
+              It now serves as the reference layer-statistics stage for the full pipeline.
+            </span>
+            <span class="lang zh">
+              在真实 PTQ 导出路径尚未打通时，我们先建立了一条 dry-run feasibility 路径，
+              用于统计 Qwen3.5-27B 的层结构，并在简单 mixed-bit policy 下估算预算。
+              现在它则继续作为完整 pipeline 里的 layer statistics 参考阶段。
+            </span>
+          </p>
+
+          <div class="three-col">
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Layer Inventory</span>
+                <span class="lang zh">层统计</span>
+              </h3>
+              <p class="note">
+                <span class="lang en">497 quantizable linear layers were collected from Qwen3.5-27B.</span>
+                <span class="lang zh">从 Qwen3.5-27B 中统计到 497 个可量化线性层。</span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Default Feasibility Policy</span>
+                <span class="lang zh">默认可行性策略</span>
+              </h3>
+              <p class="note">
+                <span class="lang en">4-bit default with down_proj preserved at 8-bit.</span>
+                <span class="lang zh">默认 4-bit，并将 down_proj 保留为 8-bit。</span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Estimated Footprint</span>
+                <span class="lang zh">估算 footprint</span>
+              </h3>
+              <p class="note">
+                <span class="lang en">14.5874 GB at an average bit-width of 4.8905.</span>
+                <span class="lang zh">平均 bit-width 为 4.8905 时，估算权重占用约 14.5874 GB。</span>
+              </p>
+            </article>
+          </div>
+
+          <p class="note">
+            <span class="lang en">
+              Interpretation: even a simple heuristic mixed-bit policy already appears to fit under
+              the native 9B deployment envelope, which is a strong positive signal for the mainline.
+            </span>
+            <span class="lang zh">
+              解读：即便只是一个简单的启发式 mixed-bit policy，看起来也已经能落在原生 9B
+              的预算范围之内，这对主线来说是一个很强的正向信号。
+            </span>
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Proxy Evolutionary Search</span>
+            <span class="lang zh">代理进化搜索</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              The search engine is implemented and running in proxy mode. It operates over
+              <strong>497 per-block component groups</strong> with allowed bits
+              <strong>{2, 3, 4, 8}</strong> and a target budget of
+              <strong>16.7483 GiB</strong>.
+            </span>
+            <span class="lang zh">
+              search engine 已经实现，并且能在 proxy 模式下运行。当前搜索粒度是
+              <strong>497 个 per-block component group</strong>，允许位宽为
+              <strong>{2, 3, 4, 8}</strong>，目标预算是
+              <strong>16.7483 GiB</strong>。
+            </span>
+          </p>
+
+          <div class="two-col">
+            <article class="subpanel">
+              <h3>V1 Search</h3>
+              <table>
+                <tbody>
+                  <tr>
+                    <th><span class="lang en">Population / Generations</span><span class="lang zh">种群 / 代数</span></th>
+                    <td>32 / 15</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Top-1 Fitness</span><span class="lang zh">Top-1 适应度</span></th>
+                    <td>0.8995</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Average Bit Width</span><span class="lang zh">平均位宽</span></th>
+                    <td>5.6150</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Estimated Footprint</span><span class="lang zh">估算 footprint</span></th>
+                    <td>16.7483 GiB</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Bit Counts</span><span class="lang zh">位宽分布</span></th>
+                    <td>234 × 8-bit, 263 × 4-bit</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="note">
+                <span class="lang en">V1 mostly stayed in {4, 8}, which showed the need for stronger low-bit exploration.</span>
+                <span class="lang zh">V1 基本停留在 {4, 8}，这说明必须加强对低 bit 解的探索压力。</span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <h3>V2 Search</h3>
+              <table>
+                <tbody>
+                  <tr>
+                    <th><span class="lang en">Population / Generations</span><span class="lang zh">种群 / 代数</span></th>
+                    <td>48 / 20</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Top-1 Fitness</span><span class="lang zh">Top-1 适应度</span></th>
+                    <td>1.0366</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Proxy Quality</span><span class="lang zh">Proxy 质量分</span></th>
+                    <td>0.9240</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Average Bit Width</span><span class="lang zh">平均位宽</span></th>
+                    <td>5.5291</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Estimated Footprint</span><span class="lang zh">估算 footprint</span></th>
+                    <td>16.4921 GiB</td>
+                  </tr>
+                  <tr>
+                    <th><span class="lang en">Bit Counts</span><span class="lang zh">位宽分布</span></th>
+                    <td>178 × 8-bit, 242 × 4-bit, 63 × 3-bit, 14 × 2-bit</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="note">
+                <span class="lang en">V2 is the first search result that genuinely uses all four project bit-widths.</span>
+                <span class="lang zh">V2 是第一轮真正同时用到四种项目位宽的搜索结果。</span>
+              </p>
+            </article>
+          </div>
+
+          <div class="two-col" style="margin-top: 18px;">
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Patterns Preserved at 8-bit</span>
+                <span class="lang zh">经常保留为 8-bit 的模式</span>
+              </h3>
+              <ul class="list">
+                <li><span class="lang en">Many </span><span class="lang zh">大量 </span><span class="code">linear_attn.in_proj_qkv</span></li>
+                <li><span class="lang en">Many </span><span class="lang zh">大量 </span><span class="code">linear_attn.out_proj</span></li>
+                <li><span class="lang en">Many </span><span class="lang zh">大量 </span><span class="code">mlp.down_proj</span></li>
+              </ul>
+            </article>
+
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Patterns Pushed to 2/3-bit</span>
+                <span class="lang zh">经常被压到 2/3-bit 的模式</span>
+              </h3>
+              <ul class="list">
+                <li><span class="lang en">Several </span><span class="lang zh">一些 </span><span class="code">self_attn.k_proj</span></li>
+                <li><span class="lang en">Several </span><span class="lang zh">一些 </span><span class="code">self_attn.q_proj</span></li>
+                <li><span class="lang en">Some </span><span class="lang zh">部分 </span><span class="code">self_attn.o_proj</span> <span class="lang en">and</span><span class="lang zh"> 与 </span><span class="code">self_attn.v_proj</span></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Exported Top-5 Candidates</span>
+            <span class="lang zh">已导出的 Top-5 候选策略</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              Proposal step 6 is complete: top search candidates are now exported as executable
+              policy artifacts with both project-level policy and current backend projection.
+            </span>
+            <span class="lang zh">
+              proposal 的第 6 步已经完成：top search candidates 现在已经被导出为可执行的
+              policy artifact，同时包含项目级 policy 和当前 backend 的 projection 版本。
+            </span>
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th><span class="lang en">Rank</span><span class="lang zh">排名</span></th>
+                <th><span class="lang en">Fitness</span><span class="lang zh">适应度</span></th>
+                <th><span class="lang en">Estimated Footprint</span><span class="lang zh">估算 footprint</span></th>
+                <th><span class="lang en">Average Bit Width</span><span class="lang zh">平均位宽</span></th>
+                <th><span class="lang en">Bit Counts</span><span class="lang zh">位宽分布</span></th>
+                <th><span class="lang en">Projected Downgrades</span><span class="lang zh">投影降级数</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#1</td>
+                <td>1.0366</td>
+                <td>16.4921 GiB</td>
+                <td>5.5291</td>
+                <td>14 × 2, 63 × 3, 242 × 4, 178 × 8</td>
+                <td>77 modules</td>
+              </tr>
+              <tr>
+                <td>#2</td>
+                <td>1.0358</td>
+                <td>16.2474 GiB</td>
+                <td>5.4471</td>
+                <td>10 × 2, 49 × 3, 273 × 4, 165 × 8</td>
+                <td>59 modules</td>
+              </tr>
+              <tr>
+                <td>#3</td>
+                <td>1.0356</td>
+                <td>16.2483 GiB</td>
+                <td>5.4473</td>
+                <td>9 × 2, 52 × 3, 268 × 4, 168 × 8</td>
+                <td>61 modules</td>
+              </tr>
+              <tr>
+                <td>#4</td>
+                <td>1.0352</td>
+                <td>16.7421 GiB</td>
+                <td>5.6129</td>
+                <td>28 × 2, 66 × 3, 239 × 4, 164 × 8</td>
+                <td>94 modules</td>
+              </tr>
+              <tr>
+                <td>#5</td>
+                <td>1.0352</td>
+                <td>16.5247 GiB</td>
+                <td>5.5400</td>
+                <td>19 × 2, 63 × 3, 235 × 4, 180 × 8</td>
+                <td>82 modules</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="two-col" style="margin-top: 18px;">
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Top-1 Project Policy</span>
+                <span class="lang zh">Top-1 项目级策略</span>
+              </h3>
+              <p class="note">
+                <span class="lang en">
+                  The exported top-1 candidate expands to <strong>497 module assignments</strong>.
+                  Its project policy uses <strong>4-bit default</strong> plus three non-default
+                  rule groups, preserving the genuine {2, 3, 4, 8} mixed-bit structure.
+                </span>
+                <span class="lang zh">
+                  导出的 top-1 候选会展开成 <strong>497 个 module assignment</strong>。
+                  它的项目级 policy 采用 <strong>4-bit 默认位宽</strong>，再加上三个非默认 rule group，
+                  从而保留真正的 {2, 3, 4, 8} 混合位宽结构。
+                </span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Top-1 Backend Projection</span>
+                <span class="lang zh">Top-1 Backend 投影</span>
+              </h3>
+              <p class="note">
+                <span class="lang en">
+                  Under the current <span class="code">llmcompressor</span> bridge, unsupported
+                  2-bit and 3-bit modules are projected upward. The top-1 candidate becomes
+                  <strong>319 × 4-bit + 178 × 8-bit</strong>, with
+                  <strong>77 downgraded modules</strong>.
+                </span>
+                <span class="lang zh">
+                  在当前的 <span class="code">llmcompressor</span> bridge 下，不支持的 2-bit 和
+                  3-bit 模块会被向上投影。top-1 候选最终会变成
+                  <strong>319 × 4-bit + 178 × 8-bit</strong>，
+                  一共会有 <strong>77 个模块发生降级投影</strong>。
+                </span>
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Real PTQ Validation</span>
+            <span class="lang zh">真实 PTQ 验证</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              The project is no longer blocked before full PTQ validation. Runnable
+              quantized 27B artifacts have now been exported and evaluated on both
+              GSM8K and MATH-500, and the surrogate-guided search path is now online.
+              The important update is that the latest multi-iteration closed-loop search
+              has now produced a stronger winner: on the larger <strong>limit=100</strong>
+              comparison, the best closed-loop task-aware candidate reaches
+              <strong>40%</strong>, slightly above <strong>uniform 4-bit at 39%</strong>.
+            </span>
+            <span class="lang zh">
+              项目已经不再卡在 full PTQ validation 之前。现在已经成功导出并评测了
+              多个可运行的 quantized 27B artifact，不仅跑通了 GSM8K，也跑通了 MATH-500；
+              现在 surrogate-guided search 这条线也已经接通了。最新的重要更新是：
+              多轮 closed-loop search 已经产生了更强的新赢家；在更大的
+              <strong>limit=100</strong> 对比里，最强 closed-loop task-aware 候选达到
+              <strong>40%</strong>，略高于 <strong>uniform 4-bit 的 39%</strong>。
+            </span>
+          </p>
+
+          <h3 style="margin: 12px 0 12px;">
+            <span class="lang en">GSM8K, 25 examples</span>
+            <span class="lang zh">GSM8K，25 个样本</span>
+          </h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th><span class="lang en">Policy</span><span class="lang zh">策略</span></th>
+                <th><span class="lang en">Type</span><span class="lang zh">类型</span></th>
+                <th><span class="lang en">Accuracy</span><span class="lang zh">准确率</span></th>
+                <th><span class="lang en">Mean Latency</span><span class="lang zh">平均延迟</span></th>
+                <th><span class="lang en">Estimated Weight Footprint</span><span class="lang zh">估算权重占用</span></th>
+                <th><span class="lang en">Status</span><span class="lang zh">状态</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>candidate-01</td>
+                <td><span class="lang en">Task-aware mixed precision</span><span class="lang zh">任务感知混合精度</span></td>
+                <td>56% (14/25)</td>
+                <td>1.034 s</td>
+                <td>16.9224 GB</td>
+                <td><span class="lang en">Runnable, beats native 9B</span><span class="lang zh">可运行，且优于原生 9B</span></td>
+              </tr>
+              <tr>
+                <td>candidate-02</td>
+                <td><span class="lang en">Task-aware mixed precision</span><span class="lang zh">任务感知混合精度</span></td>
+                <td>52% (13/25)</td>
+                <td>0.735 s</td>
+                <td>16.5999 GB</td>
+                <td><span class="lang en">Runnable, beats native 9B</span><span class="lang zh">可运行，且优于原生 9B</span></td>
+              </tr>
+              <tr>
+                <td>candidate-03</td>
+                <td><span class="lang en">Task-aware mixed precision</span><span class="lang zh">任务感知混合精度</span></td>
+                <td>56% (14/25)</td>
+                <td>0.654 s</td>
+                <td>16.5977 GB</td>
+                <td><span class="lang en">Current best task-aware result</span><span class="lang zh">当前最强 task-aware 结果</span></td>
+              </tr>
+              <tr>
+                <td>uniform-4bit</td>
+                <td><span class="lang en">Uniform baseline</span><span class="lang zh">uniform 基线</span></td>
+                <td>56% (14/25)</td>
+                <td>0.856 s</td>
+                <td>11.9312 GB</td>
+                <td><span class="lang en">Runnable, accuracy tie with candidate-03</span><span class="lang zh">可运行，且与 candidate-03 打平</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="note">
+            <span class="lang en">
+              In every paired run above, native <strong>Qwen3.5-9B</strong> remained at
+              <strong>20% (5/25)</strong>. The strongest task-aware policy is now
+              <strong>candidate-03</strong>, but the key open issue is that it still does
+              <strong>not outperform uniform 4-bit</strong> on this sample.
+            </span>
+            <span class="lang zh">
+              上面每组对照里，原生 <strong>Qwen3.5-9B</strong> 都保持在
+              <strong>20% (5/25)</strong>。当前最强的 task-aware 策略是
+              <strong>candidate-03</strong>，但关键未解问题是：在这组样本上，
+              它仍然<strong>没有超过 uniform 4-bit</strong>。
+            </span>
+          </p>
+
+          <h3 style="margin: 22px 0 12px;">
+            <span class="lang en">MATH-500, 25 examples</span>
+            <span class="lang zh">MATH-500，25 个样本</span>
+          </h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th><span class="lang en">Policy</span><span class="lang zh">策略</span></th>
+                <th><span class="lang en">Type</span><span class="lang zh">类型</span></th>
+                <th><span class="lang en">Accuracy</span><span class="lang zh">准确率</span></th>
+                <th><span class="lang en">Mean Latency</span><span class="lang zh">平均延迟</span></th>
+                <th><span class="lang en">Estimated Weight Footprint</span><span class="lang zh">估算权重占用</span></th>
+                <th><span class="lang en">Status</span><span class="lang zh">状态</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>guided-candidate-01</td>
+                <td><span class="lang en">Task-guided mixed precision</span><span class="lang zh">任务引导混合精度</span></td>
+                <td>28% (7/25)</td>
+                <td>0.759 s</td>
+                <td>16.7212 GB</td>
+                <td><span class="lang en">Runnable, but under baseline</span><span class="lang zh">可运行，但弱于基线</span></td>
+              </tr>
+              <tr>
+                <td>candidate-03</td>
+                <td><span class="lang en">Earlier task-aware policy</span><span class="lang zh">较早的 task-aware 策略</span></td>
+                <td>32% (8/25)</td>
+                <td>1.051 s</td>
+                <td>16.5977 GB</td>
+                <td><span class="lang en">Matches native 9B</span><span class="lang zh">与原生 9B 持平</span></td>
+              </tr>
+              <tr>
+                <td>closed-loop-v3-iter-01-candidate-01</td>
+                <td><span class="lang en">Closed-loop surrogate-guided mixed precision</span><span class="lang zh">closed-loop surrogate 引导混合精度</span></td>
+                <td>52% (13/25)</td>
+                <td>0.852 s</td>
+                <td>16.2693 GB</td>
+                <td><span class="lang en">Current best MATH-500 dev result</span><span class="lang zh">当前最强的 MATH-500 dev 结果</span></td>
+              </tr>
+              <tr>
+                <td>surrogate-guided-v3-candidate-01</td>
+                <td><span class="lang en">Surrogate-guided mixed precision</span><span class="lang zh">surrogate 引导混合精度</span></td>
+                <td>40% (10/25)</td>
+                <td>0.968 s</td>
+                <td>16.7483 GB</td>
+                <td><span class="lang en">Current best MATH-500 result</span><span class="lang zh">当前最强 MATH-500 结果</span></td>
+              </tr>
+              <tr>
+                <td>guided-candidate-05</td>
+                <td><span class="lang en">Task-guided mixed precision</span><span class="lang zh">任务引导混合精度</span></td>
+                <td>36% (9/25)</td>
+                <td>0.886 s</td>
+                <td>16.7034 GB</td>
+                <td><span class="lang en">Improved guided result, ties uniform 4-bit</span><span class="lang zh">改进后的 guided 结果，与 uniform 4-bit 打平</span></td>
+              </tr>
+              <tr>
+                <td>guided-v2-candidate-02</td>
+                <td><span class="lang en">Task-guided mixed precision</span><span class="lang zh">任务引导混合精度</span></td>
+                <td>28% (7/25)</td>
+                <td>0.942 s</td>
+                <td>16.7822 GB</td>
+                <td><span class="lang en">Real PTQ run, below current best</span><span class="lang zh">真实 PTQ 已跑通，但弱于当前最优</span></td>
+              </tr>
+              <tr>
+                <td>guided-v2-candidate-04</td>
+                <td><span class="lang en">Task-guided mixed precision</span><span class="lang zh">任务引导混合精度</span></td>
+                <td>32% (8/25)</td>
+                <td>0.974 s</td>
+                <td>16.9202 GB</td>
+                <td><span class="lang en">Real PTQ run, matches native 9B</span><span class="lang zh">真实 PTQ 已跑通，与原生 9B 持平</span></td>
+              </tr>
+              <tr>
+                <td>uniform-4bit</td>
+                <td><span class="lang en">Uniform baseline</span><span class="lang zh">uniform 基线</span></td>
+                <td>36% (9/25)</td>
+                <td>0.886 s</td>
+                <td>11.9312 GB</td>
+                <td><span class="lang en">Still the lightest strong baseline</span><span class="lang zh">仍是最轻的强基线</span></td>
+              </tr>
+              <tr>
+                <td>native-9B</td>
+                <td><span class="lang en">Native baseline</span><span class="lang zh">原生基线</span></td>
+                <td>32% (8/25)</td>
+                <td>0.387 s</td>
+                <td>17.1502 GB peak</td>
+                <td><span class="lang en">Reference baseline</span><span class="lang zh">参考基线</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="note">
+            <span class="lang en">
+              The larger task-specific MATH-500 subset produced cleaner candidates,
+              and the first surrogate-guided line already reached <strong>40%</strong>.
+              The new multi-iteration closed-loop `v3` winner pushes the same
+              <strong>25-example</strong> slice to <strong>52%</strong>, making it the
+              strongest dev-time MATH-500 result so far and the best candidate to test
+              at larger sample size.
+            </span>
+            <span class="lang zh">
+              更大的 MATH-500 任务子集带来了更干净的候选，而第一条 surrogate-guided
+              结果已经达到 <strong>40%</strong>。新的多轮 closed-loop `v3` winner
+              则把同一组 <strong>25 个样本</strong> 推到了 <strong>52%</strong>，
+              成为目前最强的 MATH-500 dev 结果，也因此成为最值得进入大样本验证的候选。
+            </span>
+          </p>
+
+          <h3 style="margin: 22px 0 12px;">
+            <span class="lang en">MATH-500, 100 examples</span>
+            <span class="lang zh">MATH-500，100 个样本</span>
+          </h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th><span class="lang en">Policy</span><span class="lang zh">策略</span></th>
+                <th><span class="lang en">Type</span><span class="lang zh">类型</span></th>
+                <th><span class="lang en">Accuracy</span><span class="lang zh">准确率</span></th>
+                <th><span class="lang en">Mean Latency</span><span class="lang zh">平均延迟</span></th>
+                <th><span class="lang en">Status</span><span class="lang zh">状态</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>closed-loop-v3-iter-01-candidate-01</td>
+                <td><span class="lang en">Closed-loop surrogate-guided mixed precision</span><span class="lang zh">closed-loop surrogate 引导混合精度</span></td>
+                <td>40% (40/100)</td>
+                <td>0.660 s</td>
+                <td><span class="lang en">Current best large-sample result</span><span class="lang zh">当前大样本最优结果</span></td>
+              </tr>
+              <tr>
+                <td>uniform-4bit</td>
+                <td><span class="lang en">Uniform baseline</span><span class="lang zh">uniform 基线</span></td>
+                <td>39% (39/100)</td>
+                <td>0.668 s</td>
+                <td><span class="lang en">Very strong baseline, now just below closed-loop v3</span><span class="lang zh">仍是很强的基线，但已略低于 closed-loop v3</span></td>
+              </tr>
+              <tr>
+                <td>surrogate-guided-v3-candidate-01</td>
+                <td><span class="lang en">Surrogate-guided mixed precision</span><span class="lang zh">surrogate 引导混合精度</span></td>
+                <td>36% (36/100)</td>
+                <td>0.692 s</td>
+                <td><span class="lang en">Earlier large-sample winner, now below closed-loop v3</span><span class="lang zh">较早的大样本赢家，现在低于 closed-loop v3</span></td>
+              </tr>
+              <tr>
+                <td>guided-candidate-05</td>
+                <td><span class="lang en">Task-guided mixed precision</span><span class="lang zh">任务引导混合精度</span></td>
+                <td>33% (33/100)</td>
+                <td>0.788 s</td>
+                <td><span class="lang en">Below surrogate-guided v3</span><span class="lang zh">低于 surrogate-guided v3</span></td>
+              </tr>
+              <tr>
+                <td>native-9B</td>
+                <td><span class="lang en">Native baseline</span><span class="lang zh">原生基线</span></td>
+                <td>29% (29/100)</td>
+                <td>0.331 s</td>
+                <td><span class="lang en">Reference baseline</span><span class="lang zh">参考基线</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="note">
+            <span class="lang en">
+              This larger run is the most important current result. It confirms that
+              benchmark-guided quantized `27B` still beats native `9B`, and the new
+              closed-loop `v3` winner now also edges past <strong>uniform 4-bit</strong>.
+              The margin is still narrow, though, so this should be treated as a strong
+              signal rather than the final word.
+            </span>
+            <span class="lang zh">
+              这组更大的实验是当前最重要的结果。它确认了 benchmark-guided 的 quantized
+              `27B` 仍然优于原生 `9B`，而新的 closed-loop `v3` winner 也已经略微超过了
+              <strong>uniform 4-bit</strong>。不过这个领先幅度还很窄，所以更像一个强信号，
+              还不能直接当成最终定论。
+            </span>
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Surrogate-Guided Search</span>
+            <span class="lang zh">Surrogate 引导搜索</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              The proposal-style middle loop is now implemented end-to-end and wrapped
+              into a multi-iteration closed loop: executed policies are converted into
+              features, an XGBoost ensemble surrogate is trained, novel candidates are
+              searched automatically, and the best new records can be promoted directly
+              into larger-sample evaluation.
+            </span>
+            <span class="lang zh">
+              proposal 中间那段方法线现在已经端到端接通，并且被包装成了多轮 closed loop：
+              真实执行过的 policy 会先变成特征，再训练一个 XGBoost ensemble surrogate，
+              自动搜索新的候选，然后把新的 best record 直接推进到更大样本评测。
+            </span>
+          </p>
+
+          <div class="three-col">
+            <article class="subpanel">
+              <div class="badge good">
+                <span class="lang en">Executed dataset</span>
+                <span class="lang zh">真实执行数据集</span>
+              </div>
+              <p style="margin-top: 12px;">
+                <span class="lang en">
+                  The closed-loop manifest now contains <strong>13</strong> real MATH-500
+                  records. The latest v3 loop trained on <strong>12</strong> examples
+                  with <strong>45</strong> features before proposing its next candidate.
+                </span>
+                <span class="lang zh">
+                  当前 closed-loop manifest 里已经有 <strong>13</strong> 条真实执行过的
+                  MATH-500 记录。最新的 v3 loop 在提出下一轮 candidate 之前，
+                  已经用 <strong>12</strong> 个样本和 <strong>45</strong> 个特征完成训练。
+                </span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <div class="badge good">
+                <span class="lang en">Closed-loop status</span>
+                <span class="lang zh">closed-loop 状态</span>
+              </div>
+              <p style="margin-top: 12px;">
+                <span class="lang en">
+                  `math500-surrogate-closed-loop-v3` completed <strong>2</strong> full
+                  iterations and is marked <strong>large-sample ready</strong>. Iteration 1
+                  found the current best record.
+                </span>
+                <span class="lang zh">
+                  `math500-surrogate-closed-loop-v3` 已经完整跑完 <strong>2</strong> 轮，
+                  并且被标记为 <strong>large-sample ready</strong>。当前最好的 record
+                  就来自它的第一轮。
+                </span>
+              </p>
+            </article>
+
+            <article class="subpanel">
+              <div class="badge good">
+                <span class="lang en">Closed-loop v3 winner</span>
+                <span class="lang zh">closed-loop v3 winner</span>
+              </div>
+              <p style="margin-top: 12px;">
+                <span class="lang en">
+                  Best policy: <strong>343 × 4-bit + 154 × 8-bit</strong>,
+                  <strong>16.2693 GB</strong>, <strong>0</strong> downgraded modules,
+                  <strong>40% on MATH-500 (100)</strong>.
+                </span>
+                <span class="lang zh">
+                  当前最佳策略：<strong>343 × 4-bit + 154 × 8-bit</strong>，
+                  估算占用 <strong>16.2693 GB</strong>，<strong>0</strong> 个降级模块，
+                  在 <strong>MATH-500 (100)</strong> 上达到 <strong>40%</strong>。
+                </span>
+              </p>
+            </article>
+          </div>
+
+          <p class="note">
+            <span class="lang en">
+              This is now more than a plumbing milestone: feeding real executed policies
+              back into the dataset and rerunning the closed loop did produce a stronger
+              large-sample winner. The remaining challenge is no longer “can it win?” but
+              “can this narrow edge over uniform 4-bit be repeated?”
+            </span>
+            <span class="lang zh">
+              现在已经不只是“pipeline 打通”而已：把真实执行过的 policy 回灌进数据集，
+              再把 closed loop 多迭代几轮，确实产生了一个更强的大样本赢家。剩下的问题已经不是
+              “能不能赢”，而是“这个相对 uniform 4-bit 的窄优势能不能复现并稳定下来”。
+            </span>
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Current Open Question</span>
+            <span class="lang zh">当前开放问题</span>
+          </h2>
+          <p class="lead">
+            <span class="lang en">
+              The remaining gap is no longer basic PTQ execution. The question has become
+              empirical: can task-aware mixed precision hold a win over a strong
+              <strong>uniform 4-bit baseline</strong> consistently, not just narrowly once?
+              The latest <strong>MATH-500 limit=100</strong> comparison now says
+              <strong>yes, but only by 1/100</strong>.
+            </span>
+            <span class="lang zh">
+              当前剩下的缺口已经不在基本 PTQ 执行本身，而变成了一个经验问题：
+              task-aware mixed precision 能不能不只是赢原生 9B，
+              还要对一个很强的 <strong>uniform 4-bit baseline</strong> 保持稳定优势？
+              最新的 <strong>MATH-500 limit=100</strong> 对比给出的答案现在变成了：
+              <strong>这次赢了，但只赢了 1/100</strong>。
+            </span>
+          </p>
+
+          <div class="chip-row" style="margin-top: 0; margin-bottom: 16px;">
+            <span class="badge good">
+              <span class="lang en">Full PTQ validation works</span>
+              <span class="lang zh">Full PTQ validation 已打通</span>
+            </span>
+            <span class="badge good">
+              <span class="lang en">Quantized 27B beats native 9B</span>
+              <span class="lang zh">quantized 27B 已胜过原生 9B</span>
+            </span>
+            <span class="badge warn">
+              <span class="lang en">Large-sample edge over uniform is still narrow</span>
+              <span class="lang zh">相对 uniform 的大样本优势仍然很窄</span>
+            </span>
+          </div>
+
+          <ul class="list">
+            <li>
+              <span class="lang en">The current source-backend path is good enough to export and evaluate real artifacts.</span>
+              <span class="lang zh">当前的 source-backend 路径已经足以导出并评测真实 artifact。</span>
+            </li>
+            <li>
+              <span class="lang en">Projection mismatch still matters for the older GSM8K candidates, but the newer pure {4,8} MATH-500 candidates show that projection is not the whole story.</span>
+              <span class="lang zh">投影不匹配仍然影响较早的 GSM8K 候选，但新的纯 {4,8} MATH-500 候选说明：问题不只在 projection。</span>
+            </li>
+            <li>
+              <span class="lang en">The next discriminating experiment should therefore improve the training signal and executed-policy dataset, then rerun surrogate-guided search rather than over-trusting the current small-sample winner.</span>
+              <span class="lang zh">所以下一步最有区分度的实验，应该是继续强化训练信号和真实执行 policy 数据集，再重跑 surrogate-guided search，并验证这条新的窄优势是否能复现。</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Pipeline Status</span>
+            <span class="lang zh">Pipeline 进度</span>
+          </h2>
+          <div class="status-grid">
+            <article class="status-card">
+              <h3>
+                <span class="lang en">Done</span>
+                <span class="lang zh">已完成</span>
+              </h3>
+              <ul class="list">
+                <li><span class="lang en">Experiment contract locked to 27B → 9B budget.</span><span class="lang zh">实验合同已经锁定为 27B → 9B 预算。</span></li>
+                <li><span class="lang en">Native GSM8K baselines for 9B and 27B.</span><span class="lang zh">已经跑通 9B 和 27B 的 GSM8K 原生 baseline。</span></li>
+                <li><span class="lang en">Feasibility dry-run with layer stats.</span><span class="lang zh">已完成带 layer stats 的 feasibility dry-run。</span></li>
+                <li><span class="lang en">Proxy evolutionary search.</span><span class="lang zh">已完成 proxy evolutionary search。</span></li>
+                <li><span class="lang en">Top-k policy export bridge.</span><span class="lang zh">已完成 top-k policy export bridge。</span></li>
+                <li><span class="lang en">Real source-backend PTQ export for candidate-01/02/03 and uniform-4bit.</span><span class="lang zh">已完成 candidate-01/02/03 和 uniform-4bit 的真实 source-backend PTQ 导出。</span></li>
+                <li><span class="lang en">Quantized 27B vs native 9B GSM8K validation.</span><span class="lang zh">已完成 quantized 27B 对 native 9B 的 GSM8K 验证。</span></li>
+                <li><span class="lang en">Task-specific sensitivity pipeline for MATH-500.</span><span class="lang zh">已完成面向 MATH-500 的 task-specific sensitivity pipeline。</span></li>
+                <li><span class="lang en">Guided MATH-500 PTQ validation through candidate-05.</span><span class="lang zh">已完成 guided MATH-500 的 candidate-05 PTQ 验证。</span></li>
+                <li><span class="lang en">Executed-policy dataset v3 with 8 real MATH-500 policies.</span><span class="lang zh">已完成包含 8 条真实 MATH-500 policy 的 executed-policy dataset v3。</span></li>
+                <li><span class="lang en">Surrogate-guided v3 candidate-01 reaches 40% on the first MATH-500 slice and beats native 9B.</span><span class="lang zh">已完成 surrogate-guided v3 candidate-01 的首轮 MATH-500 验证，达到 40%，并超过原生 9B。</span></li>
+                <li><span class="lang en">Executed-policy dataset v4 with 9 real MATH-500 policies.</span><span class="lang zh">已完成包含 9 条真实 MATH-500 policy 的 executed-policy dataset v4。</span></li>
+                <li><span class="lang en">XGBoost surrogate v4 training with improved leave-one-out diagnostics.</span><span class="lang zh">已完成带改进留一验证诊断的 XGBoost surrogate v4 训练。</span></li>
+                <li><span class="lang en">Backend-aware surrogate-guided search v4 over executable {4,8} policies.</span><span class="lang zh">已完成面向可执行 {4,8} 策略的 backend-aware surrogate-guided search v4。</span></li>
+                <li><span class="lang en">Large-sample MATH-500 comparison at 100 examples.</span><span class="lang zh">已完成 MATH-500 的 100 样本大样本对比。</span></li>
+                <li><span class="lang en">Fully automated multi-iteration surrogate closed loop through v3, with 13 executed MATH-500 records.</span><span class="lang zh">已完成到 v3 的全自动多轮 surrogate closed loop，并累计 13 条已执行的 MATH-500 记录。</span></li>
+                <li><span class="lang en">Closed-loop v3 best candidate reaches 40% on MATH-500 (100), slightly above uniform 4-bit at 39%.</span><span class="lang zh">closed-loop v3 最强候选在 MATH-500 (100) 上达到 40%，略高于 uniform 4-bit 的 39%。</span></li>
+              </ul>
+            </article>
+
+            <article class="status-card">
+              <h3>
+                <span class="lang en">Ready Next</span>
+                <span class="lang zh">下一步就绪</span>
+              </h3>
+              <ul class="list">
+                <li><span class="lang en">Re-test the closed-loop v3 winner on a fresh large held-out MATH-500 slice.</span><span class="lang zh">在新的大样本 held-out MATH-500 切片上复测 closed-loop v3 winner。</span></li>
+                <li><span class="lang en">Keep expanding the executed-policy dataset beyond 13 records.</span><span class="lang zh">继续把真实执行 policy 数据集扩到 13 条以上。</span></li>
+                <li><span class="lang en">Retrain the surrogate and rerun the closed loop with the stronger dataset.</span><span class="lang zh">用更强的数据集重训 surrogate，并重跑 closed loop。</span></li>
+              </ul>
+            </article>
+
+            <article class="status-card">
+              <h3>
+                <span class="lang en">Still Missing</span>
+                <span class="lang zh">仍未完成</span>
+              </h3>
+              <ul class="list">
+                <li><span class="lang en">A repeated, statistically convincing task-aware win over uniform 4-bit on large samples.</span><span class="lang zh">task-aware 相比 uniform 4-bit 在大样本下可复现、统计上更有说服力的优势。</span></li>
+                <li><span class="lang en">A surrogate that ranks held-out policies credibly.</span><span class="lang zh">一个能对 holdout policy 做可信排序的 surrogate。</span></li>
+                <li><span class="lang en">Uniform INT4 / AWQ / GPTQ final comparison.</span><span class="lang zh">uniform INT4 / AWQ / GPTQ 的最终对比。</span></li>
+                <li><span class="lang en">Broader multi-task validation beyond GSM8K and MATH-500.</span><span class="lang zh">GSM8K 和 MATH-500 之外更广的多任务验证。</span></li>
+                <li><span class="lang en">Final report figures showing when task-aware policies are worth the extra budget.</span><span class="lang zh">最终报告图表，回答 task-aware 策略在什么条件下值得额外预算。</span></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>
+            <span class="lang en">Artifacts</span>
+            <span class="lang zh">产物链接</span>
+          </h2>
+          <div class="two-col">
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Analysis Docs</span>
+                <span class="lang zh">分析文档</span>
+              </h3>
+              <ul class="list">
+                <li><a href="EXISTING_OFFICIAL_DATA.md">EXISTING_OFFICIAL_DATA.md</a></li>
+                <li><a href="MAINLINE_27B_9B_DIAGRAM.md">MAINLINE_27B_9B_DIAGRAM.md</a></li>
+                <li><a href="SEARCH_ANALYSIS.md">SEARCH_ANALYSIS.md</a></li>
+              </ul>
+            </article>
+
+            <article class="subpanel">
+              <h3>
+                <span class="lang en">Primary JSON Outputs</span>
+                <span class="lang zh">核心 JSON 输出</span>
+              </h3>
+              <ul class="list">
+                <li><a href="outputs/baselines/gsm8k-qwen35-27b-vs-9b-native-baseline-qwen3.5-9b.json">27B vs 9B native baseline</a></li>
+                <li><a href="outputs/baselines/gsm8k-qwen35-27b-vs-9b-upper-bound-qwen3.5-27b.json">27B upper bound baseline</a></li>
+                <li><a href="outputs/feasibility/gsm8k-qwen35-27b-vs-9b-candidate-03-llmcompressor-source-report.json">Candidate-03 source PTQ report</a></li>
+                <li><a href="outputs/feasibility/gsm8k-qwen35-27b-vs-9b-uniform-4bit-llmcompressor-source-report.json">Uniform-4bit source PTQ report</a></li>
+                <li><a href="outputs/search/gsm8k-qwen35-27b-vs-9b-proxy-search-v2.json">Proxy search v2</a></li>
+                <li><a href="outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/manifest.json">Exported policy manifest</a></li>
+                <li><a href="outputs/evaluations/candidate-03-quantized-vs-native-9b-limit-25-quantized.json">Candidate-03 evaluation</a></li>
+                <li><a href="outputs/evaluations/uniform-4bit-quantized-vs-native-9b-limit-25-quantized.json">Uniform-4bit evaluation</a></li>
+                <li><a href="outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json">MATH-500 sensitivity v2</a></li>
+                <li><a href="outputs/search/math500-27b-guided-proxy-search-v2-limit-32.json">MATH-500 guided search v2</a></li>
+                <li><a href="outputs/policies/math500-27b-guided-v2-limit-32/manifest.json">MATH-500 guided policy manifest</a></li>
+                <li><a href="outputs/feasibility/math500-qwen35-27b-vs-9b-candidate-05-llmcompressor-source-report.json">Candidate-05 source PTQ report</a></li>
+                <li><a href="outputs/evaluations/math500-guided-candidate-05-quantized-vs-native-9b-limit-25-quantized.json">Candidate-05 MATH-500 evaluation</a></li>
+                <li><a href="outputs/feasibility/math500-surrogate-guided-v3-candidate-01-llmcompressor-source-report.json">Surrogate-guided v3 candidate-01 PTQ report</a></li>
+                <li><a href="outputs/evaluations/math500-surrogate-guided-v3-candidate-01-quantized-vs-native-9b-limit-25-quantized.json">Surrogate-guided v3 candidate-01 evaluation</a></li>
+                <li><a href="outputs/evaluations/math500-surrogate-guided-v3-candidate-01-quantized-vs-native-9b-limit-100-quantized.json">Surrogate-guided v3 candidate-01 evaluation (100)</a></li>
+                <li><a href="outputs/evaluations/math500-uniform-4bit-quantized-vs-native-9b-limit-100-quantized.json">Uniform-4bit evaluation (100)</a></li>
+                <li><a href="outputs/evaluations/math500-guided-candidate-05-quantized-vs-native-9b-limit-100-quantized.json">Candidate-05 evaluation (100)</a></li>
+                <li><a href="outputs/surrogate/math500-executed-policy-dataset-v4.json">MATH-500 executed-policy dataset v4</a></li>
+                <li><a href="outputs/surrogate/math500-xgboost-bootstrap-v4.json">MATH-500 XGBoost surrogate v4 summary</a></li>
+                <li><a href="outputs/search/math500-surrogate-guided-search-v4.json">MATH-500 surrogate-guided search v4</a></li>
+                <li><a href="outputs/policies/math500-surrogate-guided-v4/manifest.json">MATH-500 surrogate-guided v4 policy manifest</a></li>
+                <li><a href="outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-guided-v4-candidate-01-llmcompressor-source-report.json">Surrogate-guided v4 candidate-01 PTQ report</a></li>
+                <li><a href="outputs/closed_loop/math500-surrogate-closed-loop-v3-summary.json">Closed-loop v3 summary</a></li>
+                <li><a href="outputs/closed_loop/math500-surrogate-closed-loop-v3-best-closed-loop-record-limit-100-large-sample-summary.json">Closed-loop v3 large-sample summary</a></li>
+                <li><a href="outputs/evaluations/math500-surrogate-closed-loop-v3-best-closed-loop-record-limit-100-quantized.json">Closed-loop v3 evaluation (100)</a></li>
+                <li><a href="outputs/evaluations/math500-surrogate-closed-loop-v3-best-closed-loop-record-limit-100-uniform-4bit.json">Closed-loop v3 uniform comparison (100)</a></li>
+              </ul>
+            </article>
+          </div>
+
+          <p class="foot">
+            <span class="lang en">All numbers on this page are sourced from the local workspace artifacts listed above.</span>
+            <span class="lang zh">本页所有数字都来自上面列出的本地 workspace artifact。</span>
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var storageKey = "ta-mpq-results-lang";
+        var body = document.body;
+        var root = document.documentElement;
+        var buttons = Array.prototype.slice.call(
+          document.querySelectorAll("[data-lang-choice]")
+        );
+
+        function setLanguage(lang) {
+          var next = lang === "zh" ? "zh" : "en";
+          body.setAttribute("data-lang", next);
+          root.setAttribute("lang", next === "zh" ? "zh-CN" : "en");
+          document.title = next === "zh" ? "TA-MPQ 结果总览" : "TA-MPQ Results Summary";
+          buttons.forEach(function (button) {
+            button.classList.toggle(
+              "active",
+              button.getAttribute("data-lang-choice") === next
+            );
+          });
+          try {
+            localStorage.setItem(storageKey, next);
+          } catch (error) {
+          }
+        }
+
+        buttons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            setLanguage(button.getAttribute("data-lang-choice"));
+          });
+        });
+
+        var initial = "en";
+        try {
+          var saved = localStorage.getItem(storageKey);
+          if (saved === "zh" || saved === "en") {
+            initial = saved;
+          } else if ((navigator.language || "").toLowerCase().startsWith("zh")) {
+            initial = "zh";
+          }
+        } catch (error) {
+        }
+        setLanguage(initial);
+      })();
+    </script>
+  </body>
+</html>

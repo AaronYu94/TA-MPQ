@@ -1,0 +1,74 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 301,
+        "8": 196
+      },
+      "estimated_average_bit_width": 5.605880396971557,
+      "estimated_weight_footprint_gb": 16.721153259277344,
+      "fitness": 1.0187538104645546,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-01.json",
+      "rank": 1
+    },
+    {
+      "bit_counts": {
+        "2": 3,
+        "3": 11,
+        "4": 288,
+        "8": 195
+      },
+      "estimated_average_bit_width": 5.607479025987313,
+      "estimated_weight_footprint_gb": 16.725921630859375,
+      "fitness": 1.0183232751104472,
+      "llmcompressor_downgraded_module_count": 14,
+      "path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-02.json",
+      "rank": 2
+    },
+    {
+      "bit_counts": {
+        "2": 3,
+        "3": 6,
+        "4": 297,
+        "8": 191
+      },
+      "estimated_average_bit_width": 5.612760896255371,
+      "estimated_weight_footprint_gb": 16.741676330566406,
+      "fitness": 1.0182895391863127,
+      "llmcompressor_downgraded_module_count": 9,
+      "path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-03.json",
+      "rank": 3
+    },
+    {
+      "bit_counts": {
+        "2": 5,
+        "3": 29,
+        "4": 277,
+        "8": 186
+      },
+      "estimated_average_bit_width": 5.61337157253939,
+      "estimated_weight_footprint_gb": 16.743497848510742,
+      "fitness": 1.0178906058743966,
+      "llmcompressor_downgraded_module_count": 34,
+      "path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-04.json",
+      "rank": 4
+    },
+    {
+      "bit_counts": {
+        "4": 313,
+        "8": 184
+      },
+      "estimated_average_bit_width": 5.599920708000819,
+      "estimated_weight_footprint_gb": 16.70337677001953,
+      "fitness": 1.0174382542040212,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-05.json",
+      "rank": 5
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "outputs/search/math500-27b-guided-proxy-search-v2-limit-32.json"
+}

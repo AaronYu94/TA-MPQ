@@ -1,0 +1,48 @@
+{
+  "ablations": [
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing/ablation-001.json",
+      "component_type": "mlp.down_proj",
+      "group_name": "block:30:mlp.down_proj",
+      "layer_names": [
+        "model.layers.30.mlp.down_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 16,
+      "selection_score": 1.0
+    },
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing/ablation-002.json",
+      "component_type": "mlp.down_proj",
+      "group_name": "block:49:mlp.down_proj",
+      "layer_names": [
+        "model.layers.49.mlp.down_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 16,
+      "selection_score": 1.0
+    }
+  ],
+  "allowed_bits": [
+    4,
+    8,
+    16
+  ],
+  "floor_bit": 4,
+  "grouping": "per_block_component",
+  "num_ablations": 2,
+  "ranking_field": "combined_sensitivity",
+  "ranking_profile_path": "outputs/sensitivity/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-profile.json",
+  "reference_bit_counts": {
+    "16": 74,
+    "4": 164,
+    "8": 259
+  },
+  "reference_bit_widths": [
+    16
+  ],
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v1/candidate-01.json",
+  "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json"
+}

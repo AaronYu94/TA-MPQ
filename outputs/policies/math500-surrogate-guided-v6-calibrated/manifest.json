@@ -1,0 +1,73 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 344,
+        "8": 153
+      },
+      "estimated_average_bit_width": 5.450071618579906,
+      "estimated_weight_footprint_gb": 16.25640869140625,
+      "fitness": 0.38370658161750104,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v6-calibrated/candidate-01.json",
+      "prediction_uncertainty": 0.0808634128775563,
+      "rank": 1
+    },
+    {
+      "bit_counts": {
+        "4": 352,
+        "8": 145
+      },
+      "estimated_average_bit_width": 5.508223347657049,
+      "estimated_weight_footprint_gb": 16.42986297607422,
+      "fitness": 0.3828034030242359,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v6-calibrated/candidate-02.json",
+      "prediction_uncertainty": 0.07362916883778246,
+      "rank": 2
+    },
+    {
+      "bit_counts": {
+        "4": 343,
+        "8": 154
+      },
+      "estimated_average_bit_width": 5.472989564149785,
+      "estimated_weight_footprint_gb": 16.32476806640625,
+      "fitness": 0.3813635669044874,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v6-calibrated/candidate-03.json",
+      "prediction_uncertainty": 0.07517947553600438,
+      "rank": 3
+    },
+    {
+      "bit_counts": {
+        "4": 343,
+        "8": 154
+      },
+      "estimated_average_bit_width": 5.44769285860446,
+      "estimated_weight_footprint_gb": 16.249313354492188,
+      "fitness": 0.38057947412811094,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v6-calibrated/candidate-04.json",
+      "prediction_uncertainty": 0.08449399326165792,
+      "rank": 4
+    },
+    {
+      "bit_counts": {
+        "4": 343,
+        "8": 154
+      },
+      "estimated_average_bit_width": 5.451043585021486,
+      "estimated_weight_footprint_gb": 16.259307861328125,
+      "fitness": 0.3779724769322926,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v6-calibrated/candidate-05.json",
+      "prediction_uncertainty": 0.07899382466720326,
+      "rank": 5
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-surrogate-guided-search-v6-calibrated.json"
+}

@@ -1,0 +1,59 @@
+{
+  "accuracy": 0.3333333333333333,
+  "contract_name": "gsm8k-qwen35-27b-vs-9b",
+  "mean_generation_peak_delta_mb": 64.39567057291667,
+  "mean_latency_sec": 0.6854445990000002,
+  "mean_resident_memory_mb": 17078.0517578125,
+  "mean_total_peak_memory_mb": 17147.86669921875,
+  "median_latency_sec": 0.482056429,
+  "model_id": "Qwen/Qwen3.5-9B",
+  "model_role": "native_baseline",
+  "num_correct": 1,
+  "num_examples": 3,
+  "p95_latency_sec": 1.3323290830000012,
+  "results": [
+    {
+      "completion_tokens": 2,
+      "example_id": "0",
+      "generation_peak_delta_mb": 71.20263671875,
+      "is_correct": false,
+      "latency_sec": 1.3323290830000012,
+      "model_id": "Qwen/Qwen3.5-9B",
+      "predicted_answer": "4",
+      "prompt_tokens": 119,
+      "raw_completion": "4",
+      "reference_answer": "18",
+      "resident_memory_mb": 17078.0517578125,
+      "total_peak_memory_mb": 17149.25634765625
+    },
+    {
+      "completion_tokens": 2,
+      "example_id": "1",
+      "generation_peak_delta_mb": 59.2548828125,
+      "is_correct": true,
+      "latency_sec": 0.24194828499999943,
+      "model_id": "Qwen/Qwen3.5-9B",
+      "predicted_answer": "3",
+      "prompt_tokens": 80,
+      "raw_completion": "3",
+      "reference_answer": "3",
+      "resident_memory_mb": 17078.0517578125,
+      "total_peak_memory_mb": 17145.4345703125
+    },
+    {
+      "completion_tokens": 7,
+      "example_id": "2",
+      "generation_peak_delta_mb": 62.7294921875,
+      "is_correct": false,
+      "latency_sec": 0.482056429,
+      "model_id": "Qwen/Qwen3.5-9B",
+      "predicted_answer": "230000",
+      "prompt_tokens": 111,
+      "raw_completion": "230000",
+      "reference_answer": "70000",
+      "resident_memory_mb": 17078.0517578125,
+      "total_peak_memory_mb": 17148.9091796875
+    }
+  ],
+  "task_name": "gsm8k"
+}

@@ -1,0 +1,93 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 346,
+        "8": 151
+      },
+      "budget_alignment_score": 0.9722623671776863,
+      "conservative_prediction": 0.3369580068657223,
+      "estimated_average_bit_width": 5.459228565582157,
+      "estimated_weight_footprint_gb": 16.283721923828125,
+      "fitness": 0.41155647665188055,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v8-stabilized/candidate-01.json",
+      "prediction_uncertainty": 0.05942345496829209,
+      "rank": 1,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.026520996567138855
+    },
+    {
+      "bit_counts": {
+        "4": 347,
+        "8": 150
+      },
+      "budget_alignment_score": 0.9745810303002134,
+      "conservative_prediction": 0.3347924267092727,
+      "estimated_average_bit_width": 5.472247800286475,
+      "estimated_weight_footprint_gb": 16.322555541992188,
+      "fitness": 0.4094464547358461,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v8-stabilized/candidate-02.json",
+      "prediction_uncertainty": 0.0712178900102647,
+      "rank": 2,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.02760378664536367
+    },
+    {
+      "bit_counts": {
+        "4": 343,
+        "8": 154
+      },
+      "budget_alignment_score": 0.9710962026209733,
+      "conservative_prediction": 0.33471433278795365,
+      "estimated_average_bit_width": 5.452680581133619,
+      "estimated_weight_footprint_gb": 16.264190673828125,
+      "fitness": 0.4090848889649088,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v8-stabilized/candidate-03.json",
+      "prediction_uncertainty": 0.06396578575529296,
+      "rank": 3,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.02764283360602318
+    },
+    {
+      "bit_counts": {
+        "4": 347,
+        "8": 150
+      },
+      "budget_alignment_score": 0.9732964271557092,
+      "conservative_prediction": 0.33377873084254694,
+      "estimated_average_bit_width": 5.465034786167383,
+      "estimated_weight_footprint_gb": 16.301040649414062,
+      "fitness": 0.40826916886555653,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v8-stabilized/candidate-04.json",
+      "prediction_uncertainty": 0.07288081639622493,
+      "rank": 4,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.028110634578726534
+    },
+    {
+      "bit_counts": {
+        "4": 326,
+        "8": 171
+      },
+      "budget_alignment_score": 0.9979384864117213,
+      "conservative_prediction": 0.3183362018918484,
+      "estimated_average_bit_width": 5.603399324739104,
+      "estimated_weight_footprint_gb": 16.71375274658203,
+      "fitness": 0.393871452918297,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v8-stabilized/candidate-05.json",
+      "prediction_uncertainty": 0.047827425035268295,
+      "rank": 5,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.0358318990540758
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-surrogate-guided-search-v8-stabilized.json"
+}

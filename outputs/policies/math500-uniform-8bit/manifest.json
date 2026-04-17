@@ -1,0 +1,17 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "8": 497
+      },
+      "estimated_average_bit_width": 8.0,
+      "estimated_weight_footprint_gb": 23.8623046875,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-uniform-8bit/candidate-01.json",
+      "rank": 1
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 1,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json"
+}

@@ -1,0 +1,627 @@
+{
+  "backend": "xgboost_ensemble",
+  "calibration_weight": 0.6184738361526485,
+  "ensemble_size": 8,
+  "feature_importances": [
+    {
+      "feature_name": "linear_attn_in_proj_qkv_8bit_fraction",
+      "importance": 0.005913156483074999
+    },
+    {
+      "feature_name": "self_attn_q_proj_8bit_fraction",
+      "importance": 0.005641448175992991
+    },
+    {
+      "feature_name": "self_attn_v_proj_8bit_fraction",
+      "importance": 0.004336387445334822
+    },
+    {
+      "feature_name": "bit_count_4",
+      "importance": 0.0036284096313465852
+    },
+    {
+      "feature_name": "self_attn_k_proj_8bit_fraction",
+      "importance": 0.003088471756200306
+    },
+    {
+      "feature_name": "linear_attn_in_proj_qkv_4bit_fraction",
+      "importance": 0.002024598953170198
+    },
+    {
+      "feature_name": "policy_alignment_score",
+      "importance": 0.001538157424874953
+    },
+    {
+      "feature_name": "estimated_average_bit_width",
+      "importance": 0.0012853817293034808
+    },
+    {
+      "feature_name": "avg_8bit_group_sensitivity",
+      "importance": 0.0011612476196205535
+    },
+    {
+      "feature_name": "linear_attn_out_proj_4bit_fraction",
+      "importance": 0.0009820334767027816
+    },
+    {
+      "feature_name": "bit_count_2",
+      "importance": 0.0009454002920392668
+    },
+    {
+      "feature_name": "param_fraction_4",
+      "importance": 0.0007941407939142664
+    },
+    {
+      "feature_name": "estimated_weight_footprint_gb",
+      "importance": 0.0007717923162999796
+    },
+    {
+      "feature_name": "bit_count_3",
+      "importance": 0.0007141717828744731
+    },
+    {
+      "feature_name": "bit_count_16",
+      "importance": 0.000690699254221272
+    },
+    {
+      "feature_name": "self_attn_q_proj_4bit_fraction",
+      "importance": 0.0005480155814439058
+    },
+    {
+      "feature_name": "linear_attn_out_proj_8bit_fraction",
+      "importance": 0.0004992180479064245
+    },
+    {
+      "feature_name": "avg_4bit_group_sensitivity",
+      "importance": 0.0004434854508872377
+    },
+    {
+      "feature_name": "bit_count_8",
+      "importance": 0.00039682682290731464
+    },
+    {
+      "feature_name": "linear_attn_in_proj_a_4bit_fraction",
+      "importance": 0.0002803913694151561
+    },
+    {
+      "feature_name": "high_sensitivity_8bit_fraction",
+      "importance": 0.0002700776130950544
+    },
+    {
+      "feature_name": "mlp_gate_proj_4bit_fraction",
+      "importance": 0.00024124728952301666
+    },
+    {
+      "feature_name": "mlp_down_proj_4bit_fraction",
+      "importance": 0.000172156445046312
+    },
+    {
+      "feature_name": "param_fraction_16",
+      "importance": 0.00013429254840957583
+    },
+    {
+      "feature_name": "self_attn_k_proj_4bit_fraction",
+      "importance": 0.00013175819185562432
+    },
+    {
+      "feature_name": "param_fraction_2",
+      "importance": 0.00013068964108242653
+    },
+    {
+      "feature_name": "mlp_gate_proj_8bit_fraction",
+      "importance": 9.592663877810992e-05
+    },
+    {
+      "feature_name": "param_fraction_8",
+      "importance": 9.237953781848773e-05
+    },
+    {
+      "feature_name": "linear_attn_in_proj_z_4bit_fraction",
+      "importance": 4.6081968321232125e-05
+    },
+    {
+      "feature_name": "low_sensitivity_8bit_fraction",
+      "importance": 4.346590708337317e-05
+    },
+    {
+      "feature_name": "self_attn_v_proj_4bit_fraction",
+      "importance": 3.584167825465556e-05
+    },
+    {
+      "feature_name": "self_attn_o_proj_4bit_fraction",
+      "importance": 1.4298463611339685e-05
+    },
+    {
+      "feature_name": "mlp_down_proj_8bit_fraction",
+      "importance": 4.9251498239755165e-06
+    },
+    {
+      "feature_name": "unsupported_low_bit_groups",
+      "importance": 4.729793317892472e-06
+    },
+    {
+      "feature_name": "linear_attn_in_proj_a_8bit_fraction",
+      "importance": 2.429057531116996e-06
+    },
+    {
+      "feature_name": "linear_attn_in_proj_b_4bit_fraction",
+      "importance": 2.049762414912948e-06
+    },
+    {
+      "feature_name": "mlp_up_proj_8bit_fraction",
+      "importance": 7.250540647874004e-07
+    },
+    {
+      "feature_name": "linear_attn_in_proj_b_8bit_fraction",
+      "importance": 2.425460934318835e-07
+    },
+    {
+      "feature_name": "linear_attn_in_proj_z_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_up_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "num_groups",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_3",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "report_estimated_average_bit_width",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "report_estimated_weight_footprint_gb",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "rule_hit_rate",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_o_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "total_parameters_billions",
+      "importance": 0.0
+    }
+  ],
+  "feature_names": [
+    "avg_4bit_group_sensitivity",
+    "avg_8bit_group_sensitivity",
+    "bit_count_16",
+    "bit_count_2",
+    "bit_count_3",
+    "bit_count_4",
+    "bit_count_8",
+    "estimated_average_bit_width",
+    "estimated_weight_footprint_gb",
+    "high_sensitivity_8bit_fraction",
+    "linear_attn_in_proj_a_4bit_fraction",
+    "linear_attn_in_proj_a_8bit_fraction",
+    "linear_attn_in_proj_b_4bit_fraction",
+    "linear_attn_in_proj_b_8bit_fraction",
+    "linear_attn_in_proj_qkv_4bit_fraction",
+    "linear_attn_in_proj_qkv_8bit_fraction",
+    "linear_attn_in_proj_z_4bit_fraction",
+    "linear_attn_in_proj_z_8bit_fraction",
+    "linear_attn_out_proj_4bit_fraction",
+    "linear_attn_out_proj_8bit_fraction",
+    "low_sensitivity_8bit_fraction",
+    "mlp_down_proj_4bit_fraction",
+    "mlp_down_proj_8bit_fraction",
+    "mlp_gate_proj_4bit_fraction",
+    "mlp_gate_proj_8bit_fraction",
+    "mlp_up_proj_4bit_fraction",
+    "mlp_up_proj_8bit_fraction",
+    "num_groups",
+    "param_fraction_16",
+    "param_fraction_2",
+    "param_fraction_3",
+    "param_fraction_4",
+    "param_fraction_8",
+    "policy_alignment_score",
+    "report_estimated_average_bit_width",
+    "report_estimated_weight_footprint_gb",
+    "rule_hit_rate",
+    "self_attn_k_proj_4bit_fraction",
+    "self_attn_k_proj_8bit_fraction",
+    "self_attn_o_proj_4bit_fraction",
+    "self_attn_o_proj_8bit_fraction",
+    "self_attn_q_proj_4bit_fraction",
+    "self_attn_q_proj_8bit_fraction",
+    "self_attn_v_proj_4bit_fraction",
+    "self_attn_v_proj_8bit_fraction",
+    "total_parameters_billions",
+    "unsupported_low_bit_groups"
+  ],
+  "num_examples": 30,
+  "predictions": [
+    {
+      "policy_id": "math500-guided-candidate-01",
+      "prediction": -0.037962941234582104,
+      "prediction_std": 0.03868236721802414,
+      "target": -0.07999999999999996
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-02",
+      "prediction": -0.05396949080750346,
+      "prediction_std": 0.03276365297174328,
+      "target": -0.07999999999999996
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-04",
+      "prediction": -0.03537012962624431,
+      "prediction_std": 0.02056359759141381,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "math500-guided-candidate-05",
+      "prediction": -0.01522272458646512,
+      "prediction_std": 0.022094577285511143,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-surrogate-guided-v3-candidate-01",
+      "prediction": 0.0211290349252522,
+      "prediction_std": 0.028882966982336847,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "candidate-01-on-math500",
+      "prediction": -0.06480385069153272,
+      "prediction_std": 0.038726055870230175,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "candidate-02-on-math500",
+      "prediction": -0.10778732877224684,
+      "prediction_std": 0.003183888058481556,
+      "target": -0.12
+    },
+    {
+      "policy_id": "candidate-03-on-math500",
+      "prediction": -0.05641505867242813,
+      "prediction_std": 0.028511978693380065,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "uniform-4bit-on-math500",
+      "prediction": 0.010672567022993462,
+      "prediction_std": 0.03161551015982376,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v1-iter-01-candidate-01",
+      "prediction": -0.014117729384452105,
+      "prediction_std": 0.03957918580702618,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+      "prediction": 0.0006350836920319125,
+      "prediction_std": 0.012113095801854235,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+      "prediction": 0.07184847164899111,
+      "prediction_std": 0.07749498914427347,
+      "target": 0.16000000000000003
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-02-candidate-01",
+      "prediction": -0.015224873553961515,
+      "prediction_std": 0.032259721096206555,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01",
+      "prediction": 0.038426724378950894,
+      "prediction_std": 0.05411175064101745,
+      "target": 0.08000000000000002
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07",
+      "prediction": 0.033875946483021835,
+      "prediction_std": 0.057983787477667324,
+      "target": 0.0
+    },
+    {
+      "policy_id": "uniform-8bit-on-math500",
+      "prediction": -0.00522798125166446,
+      "prediction_std": 0.014725620256425424,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-001",
+      "prediction": 0.03849718626588583,
+      "prediction_std": 0.0025140291930517856,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-002",
+      "prediction": 0.03943366464227438,
+      "prediction_std": 0.0009712735983850846,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-003",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-004",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-005",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-006",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-007",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-008",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-001",
+      "prediction": 0.03975109662860632,
+      "prediction_std": 0.00010067078975036006,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-002",
+      "prediction": 0.03977459296584129,
+      "prediction_std": 4.816433748040708e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-003",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-004",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-005",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-006",
+      "prediction": 0.03978653950616717,
+      "prediction_std": 6.301028947031977e-05,
+      "target": 0.040000000000000036
+    }
+  ],
+  "target_mean": 0.012000000000000026,
+  "target_metric": "accuracy_advantage_over_uniform",
+  "target_range": 0.28,
+  "target_scale": 0.07,
+  "target_std": 0.05381449618829485,
+  "task_name": "math500",
+  "training_mae": 0.013189818416789133,
+  "training_prediction_std_mean": 0.017918566195626207,
+  "training_rmse": 0.023211283720752932,
+  "uncertainty_floor": 0.017775699468392744,
+  "validation_mae": 0.027567164613046334,
+  "validation_pairwise_accuracy": 0.7540453074433657,
+  "validation_prediction_std_mean": 0.016994459361779513,
+  "validation_predictions": [
+    {
+      "policy_id": "math500-guided-candidate-01",
+      "prediction": -0.010091626304756574,
+      "prediction_std": 0.019348635822340594,
+      "target": -0.07999999999999996
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-02",
+      "prediction": -0.03637936770974193,
+      "prediction_std": 0.034206264771212844,
+      "target": -0.07999999999999996
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-04",
+      "prediction": -0.032682431366993114,
+      "prediction_std": 0.030456339383967915,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "math500-guided-candidate-05",
+      "prediction": -0.03544223494827747,
+      "prediction_std": 0.04725705649711091,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-surrogate-guided-v3-candidate-01",
+      "prediction": 0.010407211171695963,
+      "prediction_std": 0.031512772014230826,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "candidate-01-on-math500",
+      "prediction": -0.08181302185403183,
+      "prediction_std": 0.03997995488029267,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "candidate-02-on-math500",
+      "prediction": -0.03700250783003867,
+      "prediction_std": 0.003581585540631129,
+      "target": -0.12
+    },
+    {
+      "policy_id": "candidate-03-on-math500",
+      "prediction": -0.0797082963399589,
+      "prediction_std": 0.015603470441424296,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "uniform-4bit-on-math500",
+      "prediction": 0.0016016732370189857,
+      "prediction_std": 0.035822687542650444,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v1-iter-01-candidate-01",
+      "prediction": 0.03445560042746365,
+      "prediction_std": 0.037103013220987406,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+      "prediction": 0.02098326903069392,
+      "prediction_std": 0.04190524036955577,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+      "prediction": 0.002760696284894948,
+      "prediction_std": 0.01604296181172786,
+      "target": 0.16000000000000003
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-02-candidate-01",
+      "prediction": 0.030139037553453818,
+      "prediction_std": 0.04351432078706093,
+      "target": -0.03999999999999998
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01",
+      "prediction": -0.005366478534483576,
+      "prediction_std": 0.014507382510916931,
+      "target": 0.08000000000000002
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07",
+      "prediction": 0.05436168401502073,
+      "prediction_std": 0.06277680322543111,
+      "target": 0.0
+    },
+    {
+      "policy_id": "uniform-8bit-on-math500",
+      "prediction": 0.00751344405580312,
+      "prediction_std": 0.0323890182210378,
+      "target": 0.0
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-001",
+      "prediction": 0.03850374836474657,
+      "prediction_std": 0.0013778128229920933,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-002",
+      "prediction": 0.03925995668396354,
+      "prediction_std": 0.0009291715913733916,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-003",
+      "prediction": 0.03977978369221091,
+      "prediction_std": 0.00010301813007677437,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-004",
+      "prediction": 0.03978340467438102,
+      "prediction_std": 5.92768109160969e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-005",
+      "prediction": 0.039786356035619974,
+      "prediction_std": 7.381960910309827e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-006",
+      "prediction": 0.039725007489323616,
+      "prediction_std": 0.00010389626107876508,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-007",
+      "prediction": 0.039788599126040936,
+      "prediction_std": 0.00010305362978739485,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-8to4-g8-eval-manifest-008",
+      "prediction": 0.03978174412623048,
+      "prediction_std": 4.194943361246728e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-001",
+      "prediction": 0.039755689445883036,
+      "prediction_std": 0.00011290144502084049,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-002",
+      "prediction": 0.03993446100503206,
+      "prediction_std": 0.00026491053513570353,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-003",
+      "prediction": 0.03978385170921683,
+      "prediction_std": 8.2205962529349e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-004",
+      "prediction": 0.039666637778282166,
+      "prediction_std": 0.0004137449539660294,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-005",
+      "prediction": 0.03976466599851847,
+      "prediction_std": 7.532591729006709e-05,
+      "target": 0.040000000000000036
+    },
+    {
+      "policy_id": "math500-uniform8-route-v1-candidate-01-precision-ablation-g8-partial-006",
+      "prediction": 0.03973205480724573,
+      "prediction_std": 8.51867099238958e-05,
+      "target": 0.040000000000000036
+    }
+  ],
+  "validation_rmse": 0.04659103661237973,
+  "validation_spearman": 0.5726957920442134,
+  "validation_strategy": "leave_one_out",
+  "validation_top1_hit_rate": 0.0,
+  "validation_top3_hit_rate": 0.0
+}

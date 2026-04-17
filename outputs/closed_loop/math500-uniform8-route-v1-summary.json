@@ -1,0 +1,16 @@
+{
+  "loop_name": "math500-uniform8-route-v1",
+  "task_name": "math500",
+  "large_sample_ready": true,
+  "best_closed_loop_record": {
+    "policy_id": "math500-uniform8-route-v1-candidate-01",
+    "task_name": "math500",
+    "provenance": "surrogate_guided_uniform8_route",
+    "candidate_path": "outputs/policies/math500-uniform8-route-v1/candidate-01.json",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v1-candidate-01-llmcompressor-source-report.json",
+    "search_result_path": "outputs/search/math500-uniform8-route-search-v1.json",
+    "surrogate_summary_path": "outputs/surrogate/math500-uniform8-route-surrogate-v1.json",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "sensitivity_field": "combined_sensitivity"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 301,
+        "8": 196
+      },
+      "estimated_average_bit_width": 5.605880396971557,
+      "estimated_weight_footprint_gb": 16.721153259277344,
+      "fitness": 1.0187676648368358,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-27b-guided-v1/candidate-01.json",
+      "rank": 1
+    },
+    {
+      "bit_counts": {
+        "3": 28,
+        "4": 273,
+        "8": 196
+      },
+      "estimated_average_bit_width": 5.6108521332105585,
+      "estimated_weight_footprint_gb": 16.73598289489746,
+      "fitness": 1.0185891525072266,
+      "llmcompressor_downgraded_module_count": 28,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-27b-guided-v1/candidate-02.json",
+      "rank": 2
+    },
+    {
+      "bit_counts": {
+        "2": 3,
+        "3": 30,
+        "4": 266,
+        "8": 198
+      },
+      "estimated_average_bit_width": 5.610062410476775,
+      "estimated_weight_footprint_gb": 16.733627319335938,
+      "fitness": 1.018293421181023,
+      "llmcompressor_downgraded_module_count": 33,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-27b-guided-v1/candidate-03.json",
+      "rank": 3
+    },
+    {
+      "bit_counts": {
+        "2": 2,
+        "3": 29,
+        "4": 275,
+        "8": 191
+      },
+      "estimated_average_bit_width": 5.613886331082464,
+      "estimated_weight_footprint_gb": 16.745033264160156,
+      "fitness": 1.0179415903411364,
+      "llmcompressor_downgraded_module_count": 31,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-27b-guided-v1/candidate-04.json",
+      "rank": 4
+    },
+    {
+      "bit_counts": {
+        "2": 1,
+        "3": 12,
+        "4": 290,
+        "8": 194
+      },
+      "estimated_average_bit_width": 5.6137264681808885,
+      "estimated_weight_footprint_gb": 16.744556427001953,
+      "fitness": 1.0178750106623844,
+      "llmcompressor_downgraded_module_count": 13,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-27b-guided-v1/candidate-05.json",
+      "rank": 5
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-27b-guided-proxy-search-v1.json"
+}

@@ -1,0 +1,74 @@
+{
+  "best_closed_loop_record": {
+    "accuracy": 0.36,
+    "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v2-iter-01/candidate-01.json",
+    "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v2-iter-01-candidate-01-dev-quantized.json",
+    "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+    "provenance": "surrogate_guided_closed_loop",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v2-iter-01-candidate-01-llmcompressor-source-report.json",
+    "search_result_path": "outputs/search/math500-surrogate-closed-loop-v2-iter-01.json",
+    "sensitivity_field": "combined_sensitivity",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v2-iter-01-surrogate.json",
+    "task_name": "math500"
+  },
+  "best_surrogate_record": {
+    "accuracy": 0.4,
+    "candidate_path": "outputs/policies/math500-surrogate-guided-v3/candidate-01.json",
+    "evaluation_path": "outputs/evaluations/math500-surrogate-guided-v3-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
+    "policy_id": "math500-surrogate-guided-v3-candidate-01",
+    "provenance": "surrogate_guided",
+    "report_path": "outputs/feasibility/math500-surrogate-guided-v3-candidate-01-llmcompressor-source-report.json",
+    "sensitivity_field": "combined_sensitivity",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "task_name": "math500"
+  },
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "dev_limit": 25,
+  "ensemble_size": 8,
+  "eval_max_new_tokens": 32,
+  "executed_manifest_path": "outputs/closed_loop/math500-surrogate-closed-loop-v2-executed-manifest.json",
+  "iteration_summaries": [
+    {
+      "dataset_path": "outputs/surrogate/math500-surrogate-closed-loop-v2-iter-01-dataset.json",
+      "executed_records": [
+        {
+          "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-closed-loop-v2-iter-01-candidate-01-llmcompressor-source",
+          "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v2-iter-01/candidate-01.json",
+          "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v2-iter-01-candidate-01-dev-quantized.json",
+          "native_accuracy": 0.32,
+          "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+          "prediction_uncertainty": 0.01843368064537466,
+          "quantized_accuracy": 0.36,
+          "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v2-iter-01-candidate-01-llmcompressor-source-report.json"
+        }
+      ],
+      "iteration": 1,
+      "policy_manifest_path": "outputs/policies/math500-surrogate-closed-loop-v2-iter-01/manifest.json",
+      "search_result_path": "outputs/search/math500-surrogate-closed-loop-v2-iter-01.json",
+      "selected_candidates": [
+        {
+          "bit_counts": {
+            "4": 328,
+            "8": 169
+          },
+          "estimated_average_bit_width": 5.448191630857377,
+          "estimated_weight_footprint_gb": 16.25080108642578,
+          "fitness": 0.38641705878484217,
+          "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v2-iter-01/candidate-01.json",
+          "prediction_uncertainty": 0.01843368064537466,
+          "rank": 1,
+          "signature": "7ac2905f2583c1bca6a30a08f044a7c1237831635328f70531679b6511ae0fd9"
+        }
+      ],
+      "surrogate_model_path": "outputs/surrogate/math500-surrogate-closed-loop-v2-iter-01-surrogate-model.json",
+      "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v2-iter-01-surrogate.json"
+    }
+  ],
+  "iterations_completed": 1,
+  "iterations_requested": 1,
+  "large_sample_ready": true,
+  "loop_name": "math500-surrogate-closed-loop-v2",
+  "task_name": "math500",
+  "uncertainty_penalty": 0.5
+}

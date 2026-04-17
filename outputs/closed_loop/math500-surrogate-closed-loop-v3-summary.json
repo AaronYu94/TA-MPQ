@@ -1,0 +1,111 @@
+{
+  "best_closed_loop_record": {
+    "accuracy": 0.52,
+    "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+    "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-01-candidate-01-dev-quantized.json",
+    "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+    "provenance": "surrogate_guided_closed_loop",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v3-iter-01-candidate-01-llmcompressor-source-report.json",
+    "search_result_path": "outputs/search/math500-surrogate-closed-loop-v3-iter-01.json",
+    "sensitivity_field": "combined_sensitivity",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-surrogate.json",
+    "task_name": "math500"
+  },
+  "best_surrogate_record": {
+    "accuracy": 0.52,
+    "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+    "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-01-candidate-01-dev-quantized.json",
+    "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+    "provenance": "surrogate_guided_closed_loop",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v3-iter-01-candidate-01-llmcompressor-source-report.json",
+    "search_result_path": "outputs/search/math500-surrogate-closed-loop-v3-iter-01.json",
+    "sensitivity_field": "combined_sensitivity",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-surrogate.json",
+    "task_name": "math500"
+  },
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "dev_limit": 25,
+  "ensemble_size": 8,
+  "eval_max_new_tokens": 32,
+  "executed_manifest_path": "outputs/closed_loop/math500-surrogate-closed-loop-v3-executed-manifest.json",
+  "iteration_summaries": [
+    {
+      "dataset_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-dataset.json",
+      "executed_records": [
+        {
+          "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-closed-loop-v3-iter-01-candidate-01-llmcompressor-source",
+          "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+          "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-01-candidate-01-dev-quantized.json",
+          "native_accuracy": 0.32,
+          "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+          "prediction_uncertainty": 0.013677795882786736,
+          "quantized_accuracy": 0.52,
+          "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v3-iter-01-candidate-01-llmcompressor-source-report.json"
+        }
+      ],
+      "iteration": 1,
+      "policy_manifest_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/manifest.json",
+      "search_result_path": "outputs/search/math500-surrogate-closed-loop-v3-iter-01.json",
+      "selected_candidates": [
+        {
+          "bit_counts": {
+            "4": 343,
+            "8": 154
+          },
+          "estimated_average_bit_width": 5.45439431143851,
+          "estimated_weight_footprint_gb": 16.269302368164062,
+          "fitness": 0.39697583532905323,
+          "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+          "prediction_uncertainty": 0.013677795882786736,
+          "rank": 1,
+          "signature": "0ed1a35dcd85b4df6eb24ba1178039598eb2a9b0936aae14b94bc3e39f0de653"
+        }
+      ],
+      "surrogate_model_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-surrogate-model.json",
+      "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-surrogate.json"
+    },
+    {
+      "dataset_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-02-dataset.json",
+      "executed_records": [
+        {
+          "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-closed-loop-v3-iter-02-candidate-01-llmcompressor-source",
+          "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-01.json",
+          "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-02-candidate-01-dev-quantized.json",
+          "native_accuracy": 0.32,
+          "policy_id": "math500-surrogate-closed-loop-v3-iter-02-candidate-01",
+          "prediction_uncertainty": 0.05655651517021583,
+          "quantized_accuracy": 0.32,
+          "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v3-iter-02-candidate-01-llmcompressor-source-report.json"
+        }
+      ],
+      "iteration": 2,
+      "policy_manifest_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-02/manifest.json",
+      "search_result_path": "outputs/search/math500-surrogate-closed-loop-v3-iter-02.json",
+      "selected_candidates": [
+        {
+          "bit_counts": {
+            "4": 335,
+            "8": 162
+          },
+          "estimated_average_bit_width": 5.5445058317986495,
+          "estimated_weight_footprint_gb": 16.5380859375,
+          "fitness": 0.4296878455804692,
+          "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-01.json",
+          "prediction_uncertainty": 0.05655651517021583,
+          "rank": 1,
+          "signature": "7a7065563d7cb793f0354e1c12aebecf7e32b14c9ba1714a064920a4c4bcb8d9"
+        }
+      ],
+      "surrogate_model_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-02-surrogate-model.json",
+      "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-02-surrogate.json"
+    }
+  ],
+  "iterations_completed": 2,
+  "iterations_requested": 2,
+  "large_sample_ready": true,
+  "loop_name": "math500-surrogate-closed-loop-v3",
+  "task_name": "math500",
+  "uncertainty_penalty": 0.5
+}

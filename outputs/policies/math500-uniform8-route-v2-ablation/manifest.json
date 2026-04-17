@@ -1,0 +1,103 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "16": 73,
+        "4": 176,
+        "8": 248
+      },
+      "budget_alignment_score": 0.9835756854921219,
+      "conservative_prediction": 0.024367482841405264,
+      "estimated_average_bit_width": 7.8686054839369755,
+      "estimated_weight_footprint_gb": 23.470382690429688,
+      "fitness": 0.16555279905520745,
+      "group_value_alignment_score": 0.7446895429182976,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v2-ablation/candidate-01.json",
+      "prediction_uncertainty": 0.02141361391811899,
+      "rank": 1,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.024367482841405264
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 172,
+        "8": 249
+      },
+      "budget_alignment_score": 0.9816893032535298,
+      "conservative_prediction": 0.020391621196069555,
+      "estimated_average_bit_width": 7.853514426028238,
+      "estimated_weight_footprint_gb": 23.425369262695312,
+      "fitness": 0.16227731656180142,
+      "group_value_alignment_score": 0.7612944570240143,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v2-ablation/candidate-02.json",
+      "prediction_uncertainty": 0.02325201676954965,
+      "rank": 2,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.020391621196069555
+    },
+    {
+      "bit_counts": {
+        "16": 83,
+        "4": 171,
+        "8": 243
+      },
+      "budget_alignment_score": 0.9966125051156128,
+      "conservative_prediction": 0.020425530376173437,
+      "estimated_average_bit_width": 7.972900040924903,
+      "estimated_weight_footprint_gb": 23.781471252441406,
+      "fitness": 0.16086266035332522,
+      "group_value_alignment_score": 0.7282133240345244,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v2-ablation/candidate-03.json",
+      "prediction_uncertainty": 0.02322647440592099,
+      "rank": 3,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.020425530376173437
+    },
+    {
+      "bit_counts": {
+        "16": 81,
+        "4": 178,
+        "8": 238
+      },
+      "budget_alignment_score": 0.9974421935747902,
+      "conservative_prediction": 0.023362189702757587,
+      "estimated_average_bit_width": 7.979537548598322,
+      "estimated_weight_footprint_gb": 23.80126953125,
+      "fitness": 0.16058130391260925,
+      "group_value_alignment_score": 0.682753449494219,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v2-ablation/candidate-04.json",
+      "prediction_uncertainty": 0.021880696625287733,
+      "rank": 4,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.023362189702757587
+    },
+    {
+      "bit_counts": {
+        "16": 77,
+        "4": 161,
+        "8": 259
+      },
+      "budget_alignment_score": 0.9989177281563332,
+      "conservative_prediction": 0.006745042442515106,
+      "estimated_average_bit_width": 7.991341825250665,
+      "estimated_weight_footprint_gb": 23.83647918701172,
+      "fitness": 0.1405224256837179,
+      "group_value_alignment_score": 0.6631819986949291,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v2-ablation/candidate-05.json",
+      "prediction_uncertainty": 0.030093658300701324,
+      "rank": 5,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.006745042442515106
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-uniform8-route-search-v2-ablation.json"
+}

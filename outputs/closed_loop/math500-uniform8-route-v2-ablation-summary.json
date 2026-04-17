@@ -1,0 +1,9 @@
+{
+  "best_closed_loop_record": {
+    "accuracy": 0.36,
+    "candidate_path": "outputs/policies/math500-uniform8-route-v2-ablation/candidate-01.json",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v2-ablation-candidate-01-llmcompressor-source-report.json"
+  },
+  "large_sample_ready": true,
+  "route": "uniform8-aware-ablation-v2"
+}

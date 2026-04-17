@@ -1,0 +1,78 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "2": 14,
+        "3": 63,
+        "4": 242,
+        "8": 178
+      },
+      "estimated_average_bit_width": 5.5290918508287294,
+      "estimated_weight_footprint_gb": 16.492109298706055,
+      "fitness": 1.0366085329451653,
+      "llmcompressor_downgraded_module_count": 77,
+      "path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-01.json",
+      "rank": 1
+    },
+    {
+      "bit_counts": {
+        "2": 10,
+        "3": 49,
+        "4": 273,
+        "8": 165
+      },
+      "estimated_average_bit_width": 5.447066196030285,
+      "estimated_weight_footprint_gb": 16.24744415283203,
+      "fitness": 1.0357941164651214,
+      "llmcompressor_downgraded_module_count": 59,
+      "path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-02.json",
+      "rank": 2
+    },
+    {
+      "bit_counts": {
+        "2": 9,
+        "3": 52,
+        "4": 268,
+        "8": 168
+      },
+      "estimated_average_bit_width": 5.447347554737058,
+      "estimated_weight_footprint_gb": 16.24828338623047,
+      "fitness": 1.0355987479555717,
+      "llmcompressor_downgraded_module_count": 61,
+      "path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-03.json",
+      "rank": 3
+    },
+    {
+      "bit_counts": {
+        "2": 28,
+        "3": 66,
+        "4": 239,
+        "8": 164
+      },
+      "estimated_average_bit_width": 5.612911167382853,
+      "estimated_weight_footprint_gb": 16.742124557495117,
+      "fitness": 1.03521547479903,
+      "llmcompressor_downgraded_module_count": 94,
+      "path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-04.json",
+      "rank": 4
+    },
+    {
+      "bit_counts": {
+        "2": 19,
+        "3": 63,
+        "4": 235,
+        "8": 180
+      },
+      "estimated_average_bit_width": 5.54000409249028,
+      "estimated_weight_footprint_gb": 16.524658203125,
+      "fitness": 1.0351900862344579,
+      "llmcompressor_downgraded_module_count": 82,
+      "path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-05.json",
+      "rank": 5
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "outputs/search/gsm8k-qwen35-27b-vs-9b-proxy-search-v2.json"
+}

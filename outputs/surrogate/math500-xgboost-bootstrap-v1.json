@@ -1,0 +1,259 @@
+{
+  "backend": "xgboost",
+  "feature_importances": [
+    {
+      "feature_name": "linear_attn_in_proj_qkv_8bit_fraction",
+      "importance": 0.0010115646291524172
+    },
+    {
+      "feature_name": "linear_attn_in_proj_qkv_4bit_fraction",
+      "importance": 0.00039962370647117496
+    },
+    {
+      "feature_name": "bit_count_4",
+      "importance": 0.00039302388904616237
+    },
+    {
+      "feature_name": "avg_4bit_group_sensitivity",
+      "importance": 4.6423399908235297e-05
+    },
+    {
+      "feature_name": "avg_8bit_group_sensitivity",
+      "importance": 3.359294396432233e-06
+    },
+    {
+      "feature_name": "bit_count_2",
+      "importance": 1.1431802704464644e-06
+    },
+    {
+      "feature_name": "bit_count_3",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "bit_count_8",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "estimated_average_bit_width",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "estimated_weight_footprint_gb",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "high_sensitivity_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_a_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_a_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_b_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_b_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_z_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_z_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_out_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_out_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "low_sensitivity_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_down_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_down_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_gate_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_gate_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_up_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_up_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "num_groups",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_2",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_3",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_4",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_8",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "policy_alignment_score",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "report_estimated_average_bit_width",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "report_estimated_weight_footprint_gb",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "rule_hit_rate",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_k_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_k_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_o_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_o_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_q_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_q_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_v_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_v_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "total_parameters_billions",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "unsupported_low_bit_groups",
+      "importance": 0.0
+    }
+  ],
+  "feature_names": [
+    "avg_4bit_group_sensitivity",
+    "avg_8bit_group_sensitivity",
+    "bit_count_2",
+    "bit_count_3",
+    "bit_count_4",
+    "bit_count_8",
+    "estimated_average_bit_width",
+    "estimated_weight_footprint_gb",
+    "high_sensitivity_8bit_fraction",
+    "linear_attn_in_proj_a_4bit_fraction",
+    "linear_attn_in_proj_a_8bit_fraction",
+    "linear_attn_in_proj_b_4bit_fraction",
+    "linear_attn_in_proj_b_8bit_fraction",
+    "linear_attn_in_proj_qkv_4bit_fraction",
+    "linear_attn_in_proj_qkv_8bit_fraction",
+    "linear_attn_in_proj_z_4bit_fraction",
+    "linear_attn_in_proj_z_8bit_fraction",
+    "linear_attn_out_proj_4bit_fraction",
+    "linear_attn_out_proj_8bit_fraction",
+    "low_sensitivity_8bit_fraction",
+    "mlp_down_proj_4bit_fraction",
+    "mlp_down_proj_8bit_fraction",
+    "mlp_gate_proj_4bit_fraction",
+    "mlp_gate_proj_8bit_fraction",
+    "mlp_up_proj_4bit_fraction",
+    "mlp_up_proj_8bit_fraction",
+    "num_groups",
+    "param_fraction_2",
+    "param_fraction_3",
+    "param_fraction_4",
+    "param_fraction_8",
+    "policy_alignment_score",
+    "report_estimated_average_bit_width",
+    "report_estimated_weight_footprint_gb",
+    "rule_hit_rate",
+    "self_attn_k_proj_4bit_fraction",
+    "self_attn_k_proj_8bit_fraction",
+    "self_attn_o_proj_4bit_fraction",
+    "self_attn_o_proj_8bit_fraction",
+    "self_attn_q_proj_4bit_fraction",
+    "self_attn_q_proj_8bit_fraction",
+    "self_attn_v_proj_4bit_fraction",
+    "self_attn_v_proj_8bit_fraction",
+    "total_parameters_billions",
+    "unsupported_low_bit_groups"
+  ],
+  "num_examples": 4,
+  "predictions": [
+    {
+      "policy_id": "math500-guided-candidate-01",
+      "prediction": 0.28386133909225464,
+      "target": 0.28
+    },
+    {
+      "policy_id": "math500-guided-candidate-05",
+      "prediction": 0.358906626701355,
+      "target": 0.36
+    },
+    {
+      "policy_id": "candidate-03-on-math500",
+      "prediction": 0.32063207030296326,
+      "target": 0.32
+    },
+    {
+      "policy_id": "uniform-4bit-on-math500",
+      "prediction": 0.358906626701355,
+      "target": 0.36
+    }
+  ],
+  "target_metric": "accuracy",
+  "task_name": "math500",
+  "training_mae": 0.0016700389981269687,
+  "training_rmse": 0.0021035911433570837
+}

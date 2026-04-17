@@ -1,0 +1,11 @@
+{
+  "artifact_dir": "/artifacts/gsm8k-qwen35-27b-vs-9b-feasibility-candidate-01-llmcompressor-source",
+  "backend_variant": "source",
+  "completion": "<think>\nThinking",
+  "device_strategy": "gpu_auto",
+  "execution_strategy": "gpu_auto",
+  "input_device": "cuda:0",
+  "max_new_tokens": 4,
+  "prompt": "What is 2 + 2? Answer with a number only.",
+  "tokenizer_source": "Qwen/Qwen3.5-27B"
+}

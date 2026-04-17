@@ -1,0 +1,68 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 325,
+        "8": 172
+      },
+      "estimated_average_bit_width": 5.614973398813178,
+      "estimated_weight_footprint_gb": 16.748275756835938,
+      "fitness": 0.40226610362795967,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v3/candidate-01.json",
+      "rank": 1
+    },
+    {
+      "bit_counts": {
+        "4": 326,
+        "8": 171
+      },
+      "estimated_average_bit_width": 5.614231634949867,
+      "estimated_weight_footprint_gb": 16.746063232421875,
+      "fitness": 0.4022388909763982,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v3/candidate-02.json",
+      "rank": 2
+    },
+    {
+      "bit_counts": {
+        "4": 319,
+        "8": 178
+      },
+      "estimated_average_bit_width": 5.614346736239002,
+      "estimated_weight_footprint_gb": 16.74640655517578,
+      "fitness": 0.40222964163358466,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v3/candidate-03.json",
+      "rank": 3
+    },
+    {
+      "bit_counts": {
+        "4": 325,
+        "8": 172
+      },
+      "estimated_average_bit_width": 5.613374769797422,
+      "estimated_weight_footprint_gb": 16.743507385253906,
+      "fitness": 0.4022196321376489,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v3/candidate-04.json",
+      "rank": 4
+    },
+    {
+      "bit_counts": {
+        "4": 319,
+        "8": 178
+      },
+      "estimated_average_bit_width": 5.614308369142623,
+      "estimated_weight_footprint_gb": 16.746292114257812,
+      "fitness": 0.4022121173631772,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v3/candidate-05.json",
+      "rank": 5
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-surrogate-guided-search-v3.json"
+}

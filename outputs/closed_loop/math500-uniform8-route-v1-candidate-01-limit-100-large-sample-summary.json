@@ -1,0 +1,16 @@
+{
+  "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-uniform8-route-v1-candidate-01-llmcompressor-source",
+  "candidate_path": "outputs/policies/math500-uniform8-route-v1/candidate-01.json",
+  "closed_loop_summary_path": "outputs/closed_loop/math500-uniform8-route-v1-summary.json",
+  "limit": 100,
+  "max_new_tokens": 32,
+  "native_accuracy": 0.29,
+  "native_evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-limit-100-native.json",
+  "quantized_accuracy": 0.37,
+  "quantized_evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-limit-100-quantized.json",
+  "reference_accuracy": 0.39,
+  "reference_evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-limit-100-uniform-8bit.json",
+  "reference_report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform-8bit-candidate-01-llmcompressor-source-report.json",
+  "summary_record_key": "best_closed_loop_record",
+  "task_name": "math500"
+}

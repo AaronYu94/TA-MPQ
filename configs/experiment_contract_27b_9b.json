@@ -1,0 +1,20 @@
+{
+  "name": "gsm8k-qwen35-27b-vs-9b",
+  "task_name": "gsm8k",
+  "compressed_source_model_id": "Qwen/Qwen3.5-27B",
+  "native_baseline_model_id": "Qwen/Qwen3.5-9B",
+  "upper_bound_model_id": "Qwen/Qwen3.5-27B",
+  "comparison_rule": "Compare a task-aware quantized 27B checkpoint against the uniform 8-bit 27B baseline while also exceeding the native 9B baseline.",
+  "budget_rule": "Use the measured weight-footprint target of the uniform 8-bit 27B baseline as the search budget for task-aware 27B quantization.",
+  "quantization_bits": [
+    4,
+    8,
+    16
+  ],
+  "calibration_samples": 128,
+  "baseline_eval_limit": 25,
+  "generation_max_new_tokens": 64,
+  "search_target_budget_gb": 23.8623046875,
+  "surrogate_target_metric": "accuracy_advantage_over_uniform",
+  "surrogate_uniform_baseline_bit_width": 8
+}

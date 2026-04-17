@@ -1,0 +1,16 @@
+{
+  "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-candidate-01-llmcompressor-source",
+  "candidate_path": "outputs/policies/math500-surrogate-guided-v3/candidate-01.json",
+  "closed_loop_summary_path": "outputs/closed_loop/math500-surrogate-closed-loop-v1-summary.json",
+  "limit": 100,
+  "max_new_tokens": 32,
+  "native_accuracy": 0.29,
+  "native_evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v1-best-surrogate-record-limit-100-native.json",
+  "quantized_accuracy": 0.36,
+  "quantized_evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v1-best-surrogate-record-limit-100-quantized.json",
+  "reference_accuracy": 0.39,
+  "reference_evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v1-best-surrogate-record-limit-100-uniform-4bit.json",
+  "reference_report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-uniform-4bit-llmcompressor-source-report.json",
+  "summary_record_key": "best_surrogate_record",
+  "task_name": "math500"
+}

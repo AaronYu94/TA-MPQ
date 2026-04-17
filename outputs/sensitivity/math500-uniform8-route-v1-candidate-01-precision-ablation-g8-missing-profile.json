@@ -1,0 +1,56 @@
+{
+  "ablation_manifest_path": "outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing/manifest.json",
+  "evaluation_manifest_path": "outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-eval-manifest.json",
+  "grouping": "per_block_component",
+  "groups": [
+    {
+      "ablated_accuracy": 0.32,
+      "ablated_bit_width": 8,
+      "accuracy_drop": 0.08000000000000002,
+      "combined_sensitivity": 1.0,
+      "component_type": "mlp.down_proj",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.30.mlp.down_proj"
+      ],
+      "name": "block:30:mlp.down_proj",
+      "normalized_accuracy_drop": 1.0,
+      "parameter_count": 89128960,
+      "positive_accuracy_drop": 0.08000000000000002,
+      "prior_sensitivity": 1.0,
+      "reference_accuracy": 0.4,
+      "reference_bit_width": 16,
+      "selection_score": 1.0
+    },
+    {
+      "ablated_accuracy": 0.4,
+      "ablated_bit_width": 8,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.25,
+      "component_type": "mlp.down_proj",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.49.mlp.down_proj"
+      ],
+      "name": "block:49:mlp.down_proj",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 89128960,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 1.0,
+      "reference_accuracy": 0.4,
+      "reference_bit_width": 16,
+      "selection_score": 1.0
+    }
+  ],
+  "num_ablations": 2,
+  "prior_weight": 0.25,
+  "reference_accuracy": 0.4,
+  "reference_bit_counts": {
+    "16": 74,
+    "4": 164,
+    "8": 259
+  },
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v1/candidate-01.json",
+  "reference_evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-reference.json",
+  "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json"
+}

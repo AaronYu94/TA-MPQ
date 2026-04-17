@@ -1,0 +1,116 @@
+{
+  "acquisition_diversity_weight": 0.2,
+  "acquisition_exploration_weight": 0.5,
+  "best_closed_loop_record": {
+    "accuracy": 0.52,
+    "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+    "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-01-candidate-01-dev-quantized.json",
+    "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+    "provenance": "surrogate_guided_closed_loop",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v3-iter-01-candidate-01-llmcompressor-source-report.json",
+    "search_result_path": "outputs/search/math500-surrogate-closed-loop-v3-iter-01.json",
+    "sensitivity_field": "combined_sensitivity",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-surrogate.json",
+    "task_name": "math500"
+  },
+  "best_surrogate_record": {
+    "accuracy": 0.52,
+    "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+    "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-01-candidate-01-dev-quantized.json",
+    "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+    "provenance": "surrogate_guided_closed_loop",
+    "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v3-iter-01-candidate-01-llmcompressor-source-report.json",
+    "search_result_path": "outputs/search/math500-surrogate-closed-loop-v3-iter-01.json",
+    "sensitivity_field": "combined_sensitivity",
+    "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+    "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v3-iter-01-surrogate.json",
+    "task_name": "math500"
+  },
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "dev_limit": 25,
+  "ensemble_size": 8,
+  "eval_max_new_tokens": 32,
+  "executed_manifest_path": "outputs/closed_loop/math500-surrogate-closed-loop-v4-acquisition-executed-manifest.json",
+  "iteration_summaries": [
+    {
+      "dataset_path": "outputs/surrogate/math500-surrogate-closed-loop-v4-acquisition-iter-01-dataset.json",
+      "executed_records": [
+        {
+          "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01-llmcompressor-source",
+          "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-01.json",
+          "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01-dev-quantized.json",
+          "native_accuracy": 0.32,
+          "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01",
+          "prediction_uncertainty": 0.06643943085810237,
+          "quantized_accuracy": 0.44,
+          "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01-llmcompressor-source-report.json"
+        },
+        {
+          "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07-llmcompressor-source",
+          "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-07.json",
+          "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07-dev-quantized.json",
+          "native_accuracy": 0.32,
+          "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07",
+          "prediction_uncertainty": 0.06883697328411069,
+          "quantized_accuracy": 0.36,
+          "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07-llmcompressor-source-report.json"
+        }
+      ],
+      "iteration": 1,
+      "policy_manifest_path": "outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/manifest.json",
+      "search_result_path": "outputs/search/math500-surrogate-closed-loop-v4-acquisition-iter-01.json",
+      "selected_candidates": [
+        {
+          "bit_counts": {
+            "4": 343,
+            "8": 154
+          },
+          "budget_alignment_score": 0.9993620271303651,
+          "conservative_prediction": 0.35799074153475025,
+          "estimated_average_bit_width": 5.6113924698178845,
+          "estimated_weight_footprint_gb": 16.737594604492188,
+          "fitness": 0.4360191481972645,
+          "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-01.json",
+          "prediction_uncertainty": 0.06643943085810237,
+          "rank": 1,
+          "reference_accuracy": 0.39,
+          "reference_advantage_score": -0.016004629232624884,
+          "selection_acquisition_score": 0.4568040183320107,
+          "selection_exploitation_score": 0.35799074153475025,
+          "selection_novelty_score": 0.32796780684104626,
+          "signature": "35ff15844dd63c9a79b0d19d3cf3387fda9be76722bd89d3516fc045d7065f72"
+        },
+        {
+          "bit_counts": {
+            "4": 345,
+            "8": 152
+          },
+          "budget_alignment_score": 0.999188924578978,
+          "conservative_prediction": 0.3563848562230815,
+          "estimated_average_bit_width": 5.610420503376305,
+          "estimated_weight_footprint_gb": 16.734695434570312,
+          "fitness": 0.43430306156278464,
+          "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-07.json",
+          "prediction_uncertainty": 0.06883697328411069,
+          "rank": 7,
+          "reference_accuracy": 0.39,
+          "reference_advantage_score": -0.016807571888459244,
+          "selection_acquisition_score": 0.4439220551387787,
+          "selection_exploitation_score": 0.3563848562230815,
+          "selection_novelty_score": 0.2655935613682093,
+          "signature": "74c71e54cf0659c5c5a9b2ffd58c63038c61d5b698c2830ac416ef89fed7b822"
+        }
+      ],
+      "surrogate_model_path": "outputs/surrogate/math500-surrogate-closed-loop-v4-acquisition-iter-01-surrogate-model.json",
+      "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v4-acquisition-iter-01-surrogate.json"
+    }
+  ],
+  "iterations_completed": 1,
+  "iterations_requested": 1,
+  "large_sample_ready": true,
+  "loop_name": "math500-surrogate-closed-loop-v4-acquisition",
+  "reference_accuracy": 0.39,
+  "task_name": "math500",
+  "uncertainty_penalty": 0.5
+}

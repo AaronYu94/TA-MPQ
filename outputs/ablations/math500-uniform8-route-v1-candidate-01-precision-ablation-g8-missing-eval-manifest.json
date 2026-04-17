@@ -1,0 +1,45 @@
+{
+  "ablation_manifest_path": "outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing/manifest.json",
+  "ablations": [
+    {
+      "ablated_bit_width": 8,
+      "accuracy": 0.32,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing/ablation-001.json",
+      "component_type": "mlp.down_proj",
+      "evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-block-30-mlp.down_proj.json",
+      "group_name": "block:30:mlp.down_proj",
+      "layer_names": [
+        "model.layers.30.mlp.down_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 16,
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-ablation-001-llmcompressor-source-report.json",
+      "selection_score": 1.0
+    },
+    {
+      "ablated_bit_width": 8,
+      "accuracy": 0.4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing/ablation-002.json",
+      "component_type": "mlp.down_proj",
+      "evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-block-49-mlp.down_proj.json",
+      "group_name": "block:49:mlp.down_proj",
+      "layer_names": [
+        "model.layers.49.mlp.down_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 16,
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-ablation-002-llmcompressor-source-report.json",
+      "selection_score": 1.0
+    }
+  ],
+  "backend_variant": "source",
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "limit": 25,
+  "max_new_tokens": 32,
+  "policy_source": "llmcompressor",
+  "reference_accuracy": 0.4,
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v1/candidate-01.json",
+  "reference_evaluation_path": "outputs/evaluations/math500-uniform8-route-v1-candidate-01-precision-ablation-g8-missing-reference.json",
+  "reference_report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v1-candidate-01-llmcompressor-source-report.json",
+  "task_name": "math500"
+}

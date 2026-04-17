@@ -1,0 +1,73 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 335,
+        "8": 162
+      },
+      "estimated_average_bit_width": 5.5445058317986495,
+      "estimated_weight_footprint_gb": 16.5380859375,
+      "fitness": 0.4296878455804692,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-01.json",
+      "prediction_uncertainty": 0.05655651517021583,
+      "rank": 1
+    },
+    {
+      "bit_counts": {
+        "4": 325,
+        "8": 172
+      },
+      "estimated_average_bit_width": 5.475982197667281,
+      "estimated_weight_footprint_gb": 16.333694458007812,
+      "fitness": 0.4296400912278425,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-02.json",
+      "prediction_uncertainty": 0.05860716496316926,
+      "rank": 2
+    },
+    {
+      "bit_counts": {
+        "4": 327,
+        "8": 170
+      },
+      "estimated_average_bit_width": 5.557678534888479,
+      "estimated_weight_footprint_gb": 16.577377319335938,
+      "fitness": 0.42927680177845795,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-03.json",
+      "prediction_uncertainty": 0.0585929073988918,
+      "rank": 3
+    },
+    {
+      "bit_counts": {
+        "4": 327,
+        "8": 170
+      },
+      "estimated_average_bit_width": 5.468577348066298,
+      "estimated_weight_footprint_gb": 16.311607360839844,
+      "fitness": 0.4292243795691183,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-04.json",
+      "prediction_uncertainty": 0.0585929073988918,
+      "rank": 4
+    },
+    {
+      "bit_counts": {
+        "4": 326,
+        "8": 171
+      },
+      "estimated_average_bit_width": 5.579739615305914,
+      "estimated_weight_footprint_gb": 16.64318084716797,
+      "fitness": 0.429205958517437,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-05.json",
+      "prediction_uncertainty": 0.058665192176262974,
+      "rank": 5
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-surrogate-closed-loop-v3-iter-02.json"
+}

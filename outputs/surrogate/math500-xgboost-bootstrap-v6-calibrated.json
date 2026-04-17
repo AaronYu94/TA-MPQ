@@ -1,0 +1,413 @@
+{
+  "backend": "xgboost_ensemble",
+  "calibration_weight": 0.4473867156418795,
+  "ensemble_size": 8,
+  "feature_importances": [
+    {
+      "feature_name": "self_attn_v_proj_8bit_fraction",
+      "importance": 0.00216801976057468
+    },
+    {
+      "feature_name": "bit_count_4",
+      "importance": 0.002108584055577012
+    },
+    {
+      "feature_name": "bit_count_8",
+      "importance": 0.0013098311305412835
+    },
+    {
+      "feature_name": "report_estimated_average_bit_width",
+      "importance": 0.0012219646596349776
+    },
+    {
+      "feature_name": "param_fraction_8",
+      "importance": 0.0011005769069925009
+    },
+    {
+      "feature_name": "low_sensitivity_8bit_fraction",
+      "importance": 0.0010352330671139498
+    },
+    {
+      "feature_name": "param_fraction_4",
+      "importance": 0.0009935471352946479
+    },
+    {
+      "feature_name": "avg_8bit_group_sensitivity",
+      "importance": 0.0007737697171705804
+    },
+    {
+      "feature_name": "estimated_average_bit_width",
+      "importance": 0.0006035480055288645
+    },
+    {
+      "feature_name": "linear_attn_in_proj_qkv_8bit_fraction",
+      "importance": 0.0005805995315313339
+    },
+    {
+      "feature_name": "bit_count_2",
+      "importance": 0.00053047933806738
+    },
+    {
+      "feature_name": "linear_attn_in_proj_qkv_4bit_fraction",
+      "importance": 0.0005202869097047369
+    },
+    {
+      "feature_name": "avg_4bit_group_sensitivity",
+      "importance": 0.000454154891485814
+    },
+    {
+      "feature_name": "self_attn_k_proj_8bit_fraction",
+      "importance": 0.0004305037807625922
+    },
+    {
+      "feature_name": "linear_attn_out_proj_8bit_fraction",
+      "importance": 0.0004077790345036192
+    },
+    {
+      "feature_name": "self_attn_q_proj_8bit_fraction",
+      "importance": 0.00040029618560311064
+    },
+    {
+      "feature_name": "bit_count_3",
+      "importance": 0.00028912884351939283
+    },
+    {
+      "feature_name": "estimated_weight_footprint_gb",
+      "importance": 0.00028514933040924006
+    },
+    {
+      "feature_name": "linear_attn_out_proj_4bit_fraction",
+      "importance": 0.0002060732222162187
+    },
+    {
+      "feature_name": "self_attn_o_proj_4bit_fraction",
+      "importance": 0.00016017611778806895
+    },
+    {
+      "feature_name": "mlp_down_proj_4bit_fraction",
+      "importance": 9.042868077813182e-05
+    },
+    {
+      "feature_name": "self_attn_q_proj_4bit_fraction",
+      "importance": 9.005299853015458e-05
+    },
+    {
+      "feature_name": "mlp_up_proj_4bit_fraction",
+      "importance": 5.151432196726091e-05
+    },
+    {
+      "feature_name": "policy_alignment_score",
+      "importance": 3.220985672669485e-05
+    },
+    {
+      "feature_name": "linear_attn_in_proj_z_4bit_fraction",
+      "importance": 2.7679636332322843e-05
+    },
+    {
+      "feature_name": "linear_attn_in_proj_z_8bit_fraction",
+      "importance": 1.62029991770396e-05
+    },
+    {
+      "feature_name": "mlp_down_proj_8bit_fraction",
+      "importance": 1.3810323707730277e-05
+    },
+    {
+      "feature_name": "high_sensitivity_8bit_fraction",
+      "importance": 4.95360200147843e-06
+    },
+    {
+      "feature_name": "linear_attn_in_proj_b_4bit_fraction",
+      "importance": 3.697727038343146e-06
+    },
+    {
+      "feature_name": "self_attn_v_proj_4bit_fraction",
+      "importance": 1.4627947564349597e-07
+    },
+    {
+      "feature_name": "linear_attn_in_proj_a_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_a_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "linear_attn_in_proj_b_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_gate_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_gate_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "mlp_up_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "num_groups",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_2",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "param_fraction_3",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "report_estimated_weight_footprint_gb",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "rule_hit_rate",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_k_proj_4bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "self_attn_o_proj_8bit_fraction",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "total_parameters_billions",
+      "importance": 0.0
+    },
+    {
+      "feature_name": "unsupported_low_bit_groups",
+      "importance": 0.0
+    }
+  ],
+  "feature_names": [
+    "avg_4bit_group_sensitivity",
+    "avg_8bit_group_sensitivity",
+    "bit_count_2",
+    "bit_count_3",
+    "bit_count_4",
+    "bit_count_8",
+    "estimated_average_bit_width",
+    "estimated_weight_footprint_gb",
+    "high_sensitivity_8bit_fraction",
+    "linear_attn_in_proj_a_4bit_fraction",
+    "linear_attn_in_proj_a_8bit_fraction",
+    "linear_attn_in_proj_b_4bit_fraction",
+    "linear_attn_in_proj_b_8bit_fraction",
+    "linear_attn_in_proj_qkv_4bit_fraction",
+    "linear_attn_in_proj_qkv_8bit_fraction",
+    "linear_attn_in_proj_z_4bit_fraction",
+    "linear_attn_in_proj_z_8bit_fraction",
+    "linear_attn_out_proj_4bit_fraction",
+    "linear_attn_out_proj_8bit_fraction",
+    "low_sensitivity_8bit_fraction",
+    "mlp_down_proj_4bit_fraction",
+    "mlp_down_proj_8bit_fraction",
+    "mlp_gate_proj_4bit_fraction",
+    "mlp_gate_proj_8bit_fraction",
+    "mlp_up_proj_4bit_fraction",
+    "mlp_up_proj_8bit_fraction",
+    "num_groups",
+    "param_fraction_2",
+    "param_fraction_3",
+    "param_fraction_4",
+    "param_fraction_8",
+    "policy_alignment_score",
+    "report_estimated_average_bit_width",
+    "report_estimated_weight_footprint_gb",
+    "rule_hit_rate",
+    "self_attn_k_proj_4bit_fraction",
+    "self_attn_k_proj_8bit_fraction",
+    "self_attn_o_proj_4bit_fraction",
+    "self_attn_o_proj_8bit_fraction",
+    "self_attn_q_proj_4bit_fraction",
+    "self_attn_q_proj_8bit_fraction",
+    "self_attn_v_proj_4bit_fraction",
+    "self_attn_v_proj_8bit_fraction",
+    "total_parameters_billions",
+    "unsupported_low_bit_groups"
+  ],
+  "num_examples": 13,
+  "predictions": [
+    {
+      "policy_id": "math500-guided-candidate-01",
+      "prediction": 0.3096513897180557,
+      "prediction_std": 0.0347311338786723,
+      "target": 0.28
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-02",
+      "prediction": 0.3033202476799488,
+      "prediction_std": 0.03356307677981573,
+      "target": 0.28
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-04",
+      "prediction": 0.3183916211128235,
+      "prediction_std": 0.020112142617094958,
+      "target": 0.32
+    },
+    {
+      "policy_id": "math500-guided-candidate-05",
+      "prediction": 0.3355494253337383,
+      "prediction_std": 0.03151920676506887,
+      "target": 0.36
+    },
+    {
+      "policy_id": "math500-surrogate-guided-v3-candidate-01",
+      "prediction": 0.376960601657629,
+      "prediction_std": 0.032237340209540895,
+      "target": 0.4
+    },
+    {
+      "policy_id": "candidate-01-on-math500",
+      "prediction": 0.2953276988118887,
+      "prediction_std": 0.031110917006123173,
+      "target": 0.32
+    },
+    {
+      "policy_id": "candidate-02-on-math500",
+      "prediction": 0.2749310117214918,
+      "prediction_std": 0.035514640090919675,
+      "target": 0.24
+    },
+    {
+      "policy_id": "candidate-03-on-math500",
+      "prediction": 0.31160977110266685,
+      "prediction_std": 0.02156596989485501,
+      "target": 0.32
+    },
+    {
+      "policy_id": "uniform-4bit-on-math500",
+      "prediction": 0.3849090114235878,
+      "prediction_std": 0.04748934438853573,
+      "target": 0.36
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v1-iter-01-candidate-01",
+      "prediction": 0.3420124761760235,
+      "prediction_std": 0.05726901919807246,
+      "target": 0.32
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+      "prediction": 0.35698046535253525,
+      "prediction_std": 0.006594216647042227,
+      "target": 0.36
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+      "prediction": 0.45139452815055847,
+      "prediction_std": 0.07522358547545274,
+      "target": 0.52
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-02-candidate-01",
+      "prediction": 0.3718787282705307,
+      "prediction_std": 0.06403727074626495,
+      "target": 0.32
+    }
+  ],
+  "target_mean": 0.3384615384615385,
+  "target_metric": "accuracy",
+  "target_range": 0.28,
+  "target_scale": 0.07,
+  "target_std": 0.06584902941240829,
+  "task_name": "math500",
+  "training_mae": 0.026191442574446017,
+  "training_prediction_std_mean": 0.03776675874595836,
+  "training_rmse": 0.031581156690212796,
+  "uncertainty_floor": 0.03968642170345817,
+  "validation_mae": 0.059761750239592334,
+  "validation_pairwise_accuracy": 0.5625,
+  "validation_prediction_std_mean": 0.03969761268010409,
+  "validation_predictions": [
+    {
+      "policy_id": "math500-guided-candidate-01",
+      "prediction": 0.3635074757039547,
+      "prediction_std": 0.04739817078487869,
+      "target": 0.28
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-02",
+      "prediction": 0.31102168187499046,
+      "prediction_std": 0.030791795861458696,
+      "target": 0.28
+    },
+    {
+      "policy_id": "math500-guided-v2-candidate-04",
+      "prediction": 0.2958301641047001,
+      "prediction_std": 0.020926827329108416,
+      "target": 0.32
+    },
+    {
+      "policy_id": "math500-guided-candidate-05",
+      "prediction": 0.30537737905979156,
+      "prediction_std": 0.03424719497079685,
+      "target": 0.36
+    },
+    {
+      "policy_id": "math500-surrogate-guided-v3-candidate-01",
+      "prediction": 0.35447660833597183,
+      "prediction_std": 0.05173948653364182,
+      "target": 0.4
+    },
+    {
+      "policy_id": "candidate-01-on-math500",
+      "prediction": 0.27379304729402065,
+      "prediction_std": 0.03185737261582323,
+      "target": 0.32
+    },
+    {
+      "policy_id": "candidate-02-on-math500",
+      "prediction": 0.32421043887734413,
+      "prediction_std": 0.00953003884985125,
+      "target": 0.24
+    },
+    {
+      "policy_id": "candidate-03-on-math500",
+      "prediction": 0.2956333439797163,
+      "prediction_std": 0.030272355416841663,
+      "target": 0.32
+    },
+    {
+      "policy_id": "uniform-4bit-on-math500",
+      "prediction": 0.4340900592505932,
+      "prediction_std": 0.0845450407014286,
+      "target": 0.36
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v1-iter-01-candidate-01",
+      "prediction": 0.38925885409116745,
+      "prediction_std": 0.0620977317904326,
+      "target": 0.32
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+      "prediction": 0.3543616719543934,
+      "prediction_std": 0.032077696141485514,
+      "target": 0.36
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
+      "prediction": 0.34859549254179,
+      "prediction_std": 0.012493232294226022,
+      "target": 0.52
+    },
+    {
+      "policy_id": "math500-surrogate-closed-loop-v3-iter-02-candidate-01",
+      "prediction": 0.3828819505870342,
+      "prediction_std": 0.06809202155137987,
+      "target": 0.32
+    }
+  ],
+  "validation_rmse": 0.07181590241638025,
+  "validation_spearman": 0.16795830018004806,
+  "validation_strategy": "leave_one_out",
+  "validation_top1_hit_rate": 0.0,
+  "validation_top3_hit_rate": 0.0
+}

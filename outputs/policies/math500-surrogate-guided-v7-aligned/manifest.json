@@ -1,0 +1,93 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "4": 345,
+        "8": 152
+      },
+      "budget_alignment_score": 0.9706588909122059,
+      "conservative_prediction": 0.3368308641146459,
+      "estimated_average_bit_width": 5.4502250869654185,
+      "estimated_weight_footprint_gb": 16.256866455078125,
+      "fitness": 0.4112934272345012,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v7-aligned/candidate-01.json",
+      "prediction_uncertainty": 0.06275519118586906,
+      "rank": 1,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.02658456794267705
+    },
+    {
+      "bit_counts": {
+        "4": 344,
+        "8": 153
+      },
+      "budget_alignment_score": 0.9805644566488171,
+      "conservative_prediction": 0.3360762541893367,
+      "estimated_average_bit_width": 5.5058445876816045,
+      "estimated_weight_footprint_gb": 16.422767639160156,
+      "fitness": 0.41128598597260224,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v7-aligned/candidate-02.json",
+      "prediction_uncertainty": 0.07786512741928867,
+      "rank": 2,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.02696187290533167
+    },
+    {
+      "bit_counts": {
+        "4": 344,
+        "8": 153
+      },
+      "budget_alignment_score": 0.9987652788611097,
+      "conservative_prediction": 0.3346642004472341,
+      "estimated_average_bit_width": 5.608041743400859,
+      "estimated_weight_footprint_gb": 16.72760009765625,
+      "fitness": 0.41124527478295697,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v7-aligned/candidate-03.json",
+      "prediction_uncertainty": 0.08066288523985514,
+      "rank": 3,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.027667899776382954
+    },
+    {
+      "bit_counts": {
+        "4": 344,
+        "8": 153
+      },
+      "budget_alignment_score": 0.9753030501527095,
+      "conservative_prediction": 0.3363948085840053,
+      "estimated_average_bit_width": 5.476301923470432,
+      "estimated_weight_footprint_gb": 16.33464813232422,
+      "fitness": 0.4112027411112623,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v7-aligned/candidate-04.json",
+      "prediction_uncertainty": 0.07868813665777624,
+      "rank": 4,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.026802595707997368
+    },
+    {
+      "bit_counts": {
+        "4": 345,
+        "8": 152
+      },
+      "budget_alignment_score": 0.999188924578978,
+      "conservative_prediction": 0.3310361103891071,
+      "estimated_average_bit_width": 5.610420503376305,
+      "estimated_weight_footprint_gb": 16.734695434570312,
+      "fitness": 0.40743339097877174,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-surrogate-guided-v7-aligned/candidate-05.json",
+      "prediction_uncertainty": 0.08417236651717006,
+      "rank": 5,
+      "reference_accuracy": 0.39,
+      "reference_advantage_score": -0.02948194480544647
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "outputs/search/math500-surrogate-guided-search-v7-aligned.json"
+}

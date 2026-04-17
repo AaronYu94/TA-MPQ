@@ -1,0 +1,17 @@
+{
+  "backend_projections": {
+    "llmcompressor": {
+      "projected_policy": {
+        "default_bit_width": 4,
+        "default_targets": [
+          "Linear"
+        ],
+        "ignore": [
+          "lm_head"
+        ],
+        "rules": []
+      }
+    }
+  },
+  "description": "Uniform 4-bit weight-only baseline for Qwen3.5-27B."
+}

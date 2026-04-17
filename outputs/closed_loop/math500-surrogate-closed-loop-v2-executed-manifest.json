@@ -1,0 +1,120 @@
+{
+  "grouping": "per_block_component",
+  "records": [
+    {
+      "candidate_path": "outputs/policies/math500-27b-guided-v1/candidate-01.json",
+      "evaluation_path": "outputs/evaluations/math500-guided-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "math500-guided-candidate-01",
+      "provenance": "guided_task_specific",
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-candidate-01-guided-v1-backup-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-02.json",
+      "evaluation_path": "outputs/evaluations/math500-guided-v2-candidate-02-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "math500-guided-v2-candidate-02",
+      "provenance": "guided_task_specific",
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-candidate-02-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-04.json",
+      "evaluation_path": "outputs/evaluations/math500-guided-v2-candidate-04-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "math500-guided-v2-candidate-04",
+      "provenance": "guided_task_specific",
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-candidate-04-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-05.json",
+      "evaluation_path": "outputs/evaluations/math500-guided-candidate-05-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "math500-guided-candidate-05",
+      "provenance": "guided_task_specific",
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-candidate-05-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/math500-surrogate-guided-v3/candidate-01.json",
+      "evaluation_path": "outputs/evaluations/math500-surrogate-guided-v3-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "math500-surrogate-guided-v3-candidate-01",
+      "provenance": "surrogate_guided",
+      "report_path": "outputs/feasibility/math500-surrogate-guided-v3-candidate-01-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-01.json",
+      "evaluation_path": "outputs/evaluations/math500-cross-task-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "candidate-01-on-math500",
+      "provenance": "cross_task_candidate",
+      "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-candidate-01-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-02.json",
+      "evaluation_path": "outputs/evaluations/math500-cross-task-candidate-02-quantized-vs-native-9b-limit-25-quantized.json",
+      "policy_id": "candidate-02-on-math500",
+      "provenance": "cross_task_candidate",
+      "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-candidate-02-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-03.json",
+      "evaluation_path": "outputs/evaluations/candidate-03-quantized-vs-native-9b-math500-limit-25-quantized.json",
+      "policy_id": "candidate-03-on-math500",
+      "provenance": "cross_task_candidate",
+      "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-candidate-03-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500"
+    },
+    {
+      "evaluation_path": "outputs/evaluations/uniform-4bit-quantized-vs-native-9b-math500-limit-25-quantized.json",
+      "policy_id": "uniform-4bit-on-math500",
+      "provenance": "uniform_baseline",
+      "report_path": "outputs/feasibility/gsm8k-qwen35-27b-vs-9b-uniform-4bit-llmcompressor-source-report.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "task_name": "math500",
+      "uniform_bit_width": 4
+    },
+    {
+      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v1-iter-01/candidate-01.json",
+      "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v1-iter-01-candidate-01-dev-quantized.json",
+      "policy_id": "math500-surrogate-closed-loop-v1-iter-01-candidate-01",
+      "provenance": "surrogate_guided_closed_loop",
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v1-iter-01-candidate-01-llmcompressor-source-report.json",
+      "search_result_path": "outputs/search/math500-surrogate-closed-loop-v1-iter-01.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v1-iter-01-surrogate.json",
+      "task_name": "math500"
+    },
+    {
+      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v2-iter-01/candidate-01.json",
+      "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v2-iter-01-candidate-01-dev-quantized.json",
+      "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
+      "provenance": "surrogate_guided_closed_loop",
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-surrogate-closed-loop-v2-iter-01-candidate-01-llmcompressor-source-report.json",
+      "search_result_path": "outputs/search/math500-surrogate-closed-loop-v2-iter-01.json",
+      "sensitivity_field": "combined_sensitivity",
+      "sensitivity_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+      "surrogate_summary_path": "outputs/surrogate/math500-surrogate-closed-loop-v2-iter-01-surrogate.json",
+      "task_name": "math500"
+    }
+  ],
+  "task_name": "math500"
+}

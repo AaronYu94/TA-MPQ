@@ -1,0 +1,88 @@
+# TA-MPQ Current Layer Precision Summary
+
+- Source candidate: `outputs/policies/math500-uniform8-route-v1/candidate-01.json`
+- Estimated average bit width: `7.991764`
+- Estimated weight footprint (GB): `23.837738`
+- Module counts by bit: `4-bit=164`, `8-bit=259`, `16-bit=74`
+
+## Component-Level Counts
+- `linear_attn.in_proj_a`: 4-bit=10, 8-bit=28, 16-bit=10
+- `linear_attn.in_proj_b`: 4-bit=10, 8-bit=28, 16-bit=10
+- `linear_attn.in_proj_qkv`: 4-bit=14, 8-bit=30, 16-bit=4
+- `linear_attn.in_proj_z`: 4-bit=14, 8-bit=27, 16-bit=7
+- `linear_attn.out_proj`: 4-bit=32, 8-bit=16
+- `lm_head`: 8-bit=1
+- `mlp.down_proj`: 4-bit=25, 8-bit=31, 16-bit=8
+- `mlp.gate_proj`: 4-bit=15, 8-bit=32, 16-bit=17
+- `mlp.up_proj`: 4-bit=14, 8-bit=39, 16-bit=11
+- `self_attn.k_proj`: 4-bit=6, 8-bit=6, 16-bit=4
+- `self_attn.o_proj`: 4-bit=12, 8-bit=4
+- `self_attn.q_proj`: 4-bit=5, 8-bit=8, 16-bit=3
+- `self_attn.v_proj`: 4-bit=7, 8-bit=9
+
+## Per-Layer Assignment
+- `Layer 0`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=4
+- `Layer 1`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=8
+- `Layer 2`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=4
+- `Layer 3`: mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=4; self_attn.o_proj=4; self_attn.q_proj=8; self_attn.v_proj=4
+- `Layer 4`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=16; mlp.gate_proj=4; mlp.up_proj=8
+- `Layer 5`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 6`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 7`: mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=8; self_attn.o_proj=4; self_attn.q_proj=16; self_attn.v_proj=8
+- `Layer 8`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=16; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 9`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 10`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=4
+- `Layer 11`: mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=4; self_attn.o_proj=4; self_attn.q_proj=8; self_attn.v_proj=8
+- `Layer 12`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=4; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 13`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 14`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=4
+- `Layer 15`: mlp.down_proj=4; mlp.gate_proj=4; mlp.up_proj=8; self_attn.k_proj=8; self_attn.o_proj=4; self_attn.q_proj=8; self_attn.v_proj=8
+- `Layer 16`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=4; mlp.up_proj=8
+- `Layer 17`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 18`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=4; mlp.gate_proj=4; mlp.up_proj=4
+- `Layer 19`: mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=4; self_attn.k_proj=8; self_attn.o_proj=4; self_attn.q_proj=4; self_attn.v_proj=8
+- `Layer 20`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=16; linear_attn.out_proj=8; mlp.down_proj=4; mlp.gate_proj=4; mlp.up_proj=16
+- `Layer 21`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=16; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 22`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=8; mlp.down_proj=4; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 23`: mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=4; self_attn.k_proj=4; self_attn.o_proj=8; self_attn.q_proj=4; self_attn.v_proj=4
+- `Layer 24`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=16
+- `Layer 25`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=8
+- `Layer 26`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=16
+- `Layer 27`: mlp.down_proj=4; mlp.gate_proj=16; mlp.up_proj=8; self_attn.k_proj=4; self_attn.o_proj=4; self_attn.q_proj=4; self_attn.v_proj=4
+- `Layer 28`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 29`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=4; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=16
+- `Layer 30`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=16; mlp.gate_proj=8; mlp.up_proj=16
+- `Layer 31`: mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=4; self_attn.o_proj=4; self_attn.q_proj=4; self_attn.v_proj=4
+- `Layer 32`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=4; mlp.up_proj=8
+- `Layer 33`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 34`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 35`: mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=16; self_attn.k_proj=8; self_attn.o_proj=8; self_attn.q_proj=4; self_attn.v_proj=4
+- `Layer 36`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=16
+- `Layer 37`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=16; linear_attn.in_proj_z=16; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=4
+- `Layer 38`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=4
+- `Layer 39`: mlp.down_proj=4; mlp.gate_proj=16; mlp.up_proj=8; self_attn.k_proj=4; self_attn.o_proj=4; self_attn.q_proj=8; self_attn.v_proj=4
+- `Layer 40`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=4
+- `Layer 41`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=4
+- `Layer 42`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=16; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 43`: mlp.down_proj=4; mlp.gate_proj=4; mlp.up_proj=8; self_attn.k_proj=8; self_attn.o_proj=4; self_attn.q_proj=16; self_attn.v_proj=4
+- `Layer 44`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=4; mlp.up_proj=4
+- `Layer 45`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 46`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=16; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=16
+- `Layer 47`: mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=8; self_attn.o_proj=8; self_attn.q_proj=8; self_attn.v_proj=8
+- `Layer 48`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=16
+- `Layer 49`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=16; linear_attn.out_proj=8; mlp.down_proj=16; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 50`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 51`: mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=8; self_attn.k_proj=16; self_attn.o_proj=4; self_attn.q_proj=16; self_attn.v_proj=8
+- `Layer 52`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=4
+- `Layer 53`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=4; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=4
+- `Layer 54`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 55`: mlp.down_proj=16; mlp.gate_proj=16; mlp.up_proj=8; self_attn.k_proj=16; self_attn.o_proj=4; self_attn.q_proj=8; self_attn.v_proj=8
+- `Layer 56`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=4; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=16; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=16
+- `Layer 57`: linear_attn.in_proj_a=4; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=16; linear_attn.in_proj_z=16; linear_attn.out_proj=4; mlp.down_proj=16; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 58`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=4; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 59`: mlp.down_proj=16; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=16; self_attn.o_proj=8; self_attn.q_proj=8; self_attn.v_proj=8
+- `Layer 60`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=8; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=16; mlp.up_proj=16
+- `Layer 61`: linear_attn.in_proj_a=16; linear_attn.in_proj_b=8; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=4; linear_attn.out_proj=8; mlp.down_proj=16; mlp.gate_proj=16; mlp.up_proj=8
+- `Layer 62`: linear_attn.in_proj_a=8; linear_attn.in_proj_b=16; linear_attn.in_proj_qkv=8; linear_attn.in_proj_z=16; linear_attn.out_proj=8; mlp.down_proj=8; mlp.gate_proj=8; mlp.up_proj=8
+- `Layer 63`: mlp.down_proj=4; mlp.gate_proj=8; mlp.up_proj=8; self_attn.k_proj=16; self_attn.o_proj=4; self_attn.q_proj=8; self_attn.v_proj=8
+- `lm_head`: lm_head=8
