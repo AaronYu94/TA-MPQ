@@ -1,0 +1,4094 @@
+{
+  "task_name": "math500",
+  "target_metric": "accuracy_advantage_over_uniform",
+  "num_examples": 32,
+  "baseline_metrics": {
+    "uniform_accuracy": 0.36,
+    "native_accuracy": 0.32,
+    "uniform_baseline_bit_width": 8.0
+  },
+  "group_scores": {
+    "block:0:linear_attn.in_proj_a": {
+      "score": 0.053076923076923084,
+      "raw_uplift": 0.053076923076923084,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.04999999999999999,
+      "mean_8bit_target": 0.003076923076923097
+    },
+    "block:0:linear_attn.in_proj_b": {
+      "score": 0.02500000000000001,
+      "raw_uplift": 0.02500000000000001,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.024999999999999988,
+      "mean_8bit_target": 2.0816681711721685e-17
+    },
+    "block:0:linear_attn.in_proj_qkv": {
+      "score": 0.0014285714285714318,
+      "raw_uplift": 0.0014285714285714318,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.010000000000000023,
+      "mean_8bit_target": 0.011428571428571455
+    },
+    "block:0:linear_attn.in_proj_z": {
+      "score": 0.030256410256410265,
+      "raw_uplift": 0.030256410256410265,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.013333333333333317,
+      "mean_8bit_target": 0.01692307692307695
+    },
+    "block:0:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:0:mlp.down_proj": {
+      "score": -0.06074074074074076,
+      "raw_uplift": -0.06074074074074076,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:0:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:0:mlp.up_proj": {
+      "score": -0.04714285714285715,
+      "raw_uplift": -0.04714285714285715,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.01714285714285717,
+      "mean_8bit_target": -0.029999999999999985
+    },
+    "block:10:linear_attn.in_proj_a": {
+      "score": 0.04341880341880343,
+      "raw_uplift": 0.04341880341880343,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.012307692307692289,
+      "mean_8bit_target": 0.031111111111111138
+    },
+    "block:10:linear_attn.in_proj_b": {
+      "score": -0.00666666666666668,
+      "raw_uplift": -0.01333333333333336,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": 0.0
+    },
+    "block:10:linear_attn.in_proj_qkv": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:10:linear_attn.in_proj_z": {
+      "score": -0.02712643678160922,
+      "raw_uplift": -0.02712643678160922,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.01379310344827589,
+      "mean_8bit_target": -0.013333333333333327
+    },
+    "block:10:linear_attn.out_proj": {
+      "score": -0.07126436781609197,
+      "raw_uplift": -0.07126436781609197,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": -0.05333333333333332
+    },
+    "block:10:mlp.down_proj": {
+      "score": -0.03846153846153848,
+      "raw_uplift": -0.03846153846153848,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.01846153846153849,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:10:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:10:mlp.up_proj": {
+      "score": -0.03857142857142859,
+      "raw_uplift": -0.03857142857142859,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.018571428571428596,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:11:mlp.down_proj": {
+      "score": -0.04177777777777779,
+      "raw_uplift": -0.04177777777777779,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.017777777777777806,
+      "mean_8bit_target": -0.023999999999999987
+    },
+    "block:11:mlp.gate_proj": {
+      "score": 0.02866666666666668,
+      "raw_uplift": 0.02866666666666668,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.00666666666666665,
+      "mean_8bit_target": 0.02200000000000003
+    },
+    "block:11:mlp.up_proj": {
+      "score": 0.04436974789915968,
+      "raw_uplift": 0.04436974789915968,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:11:self_attn.k_proj": {
+      "score": -0.042222222222222244,
+      "raw_uplift": -0.042222222222222244,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:11:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:11:self_attn.q_proj": {
+      "score": -0.047199999999999985,
+      "raw_uplift": -0.047199999999999985,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.06000000000000001,
+      "mean_8bit_target": 0.012800000000000028
+    },
+    "block:11:self_attn.v_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:12:linear_attn.in_proj_a": {
+      "score": 0.04666666666666665,
+      "raw_uplift": 0.04666666666666665,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.01999999999999998,
+      "mean_8bit_target": 0.026666666666666672
+    },
+    "block:12:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:12:linear_attn.in_proj_qkv": {
+      "score": -0.06074074074074076,
+      "raw_uplift": -0.06074074074074076,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:12:linear_attn.in_proj_z": {
+      "score": -0.07793103448275865,
+      "raw_uplift": -0.07793103448275865,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": -0.06
+    },
+    "block:12:linear_attn.out_proj": {
+      "score": 0.04466666666666668,
+      "raw_uplift": 0.04466666666666668,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.01666666666666665,
+      "mean_8bit_target": 0.028000000000000032
+    },
+    "block:12:mlp.down_proj": {
+      "score": 0.028000000000000008,
+      "raw_uplift": 0.028000000000000008,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.00799999999999998,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:12:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:12:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:13:linear_attn.in_proj_a": {
+      "score": 0.04539682539682541,
+      "raw_uplift": 0.04539682539682541,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.014285714285714266,
+      "mean_8bit_target": 0.031111111111111138
+    },
+    "block:13:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:13:linear_attn.in_proj_qkv": {
+      "score": -0.021666666666666678,
+      "raw_uplift": -0.021666666666666678,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.016666666666666694,
+      "mean_8bit_target": -0.004999999999999984
+    },
+    "block:13:linear_attn.in_proj_z": {
+      "score": -0.00666666666666668,
+      "raw_uplift": -0.01333333333333336,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": 0.0
+    },
+    "block:13:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:13:mlp.down_proj": {
+      "score": -0.058571428571428594,
+      "raw_uplift": -0.058571428571428594,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.0185714285714286,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:13:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:13:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:14:linear_attn.in_proj_a": {
+      "score": -0.05353846153846155,
+      "raw_uplift": -0.05353846153846155,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.021538461538461565,
+      "mean_8bit_target": -0.03199999999999999
+    },
+    "block:14:linear_attn.in_proj_b": {
+      "score": -0.07022222222222224,
+      "raw_uplift": -0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:14:linear_attn.in_proj_qkv": {
+      "score": -0.06872727272727275,
+      "raw_uplift": -0.06872727272727275,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": 0.03272727272727276,
+      "mean_8bit_target": -0.03599999999999998
+    },
+    "block:14:linear_attn.in_proj_z": {
+      "score": 0.04436974789915968,
+      "raw_uplift": 0.04436974789915968,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:14:linear_attn.out_proj": {
+      "score": 0.018000000000000013,
+      "raw_uplift": 0.018000000000000013,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.01800000000000003
+    },
+    "block:14:mlp.down_proj": {
+      "score": 0.039676113360323895,
+      "raw_uplift": 0.039676113360323895,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.012307692307692289,
+      "mean_8bit_target": 0.027368421052631608
+    },
+    "block:14:mlp.gate_proj": {
+      "score": -0.07600000000000003,
+      "raw_uplift": -0.07600000000000003,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.016000000000000028,
+      "mean_8bit_target": -0.06
+    },
+    "block:14:mlp.up_proj": {
+      "score": -0.033333333333333354,
+      "raw_uplift": -0.033333333333333354,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:15:mlp.down_proj": {
+      "score": -0.05487179487179489,
+      "raw_uplift": -0.05487179487179489,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.021538461538461565,
+      "mean_8bit_target": -0.03333333333333332
+    },
+    "block:15:mlp.gate_proj": {
+      "score": -0.005806451612903239,
+      "raw_uplift": -0.011612903225806478,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.011612903225806478,
+      "mean_8bit_target": 0.0
+    },
+    "block:15:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:15:self_attn.k_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:15:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:15:self_attn.q_proj": {
+      "score": 0.032987012987012995,
+      "raw_uplift": 0.032987012987012995,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.005714285714285695,
+      "mean_8bit_target": 0.027272727272727303
+    },
+    "block:15:self_attn.v_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:16:linear_attn.in_proj_a": {
+      "score": 0.05545454545454545,
+      "raw_uplift": 0.05545454545454545,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.025454545454545438,
+      "mean_8bit_target": 0.030000000000000013
+    },
+    "block:16:linear_attn.in_proj_b": {
+      "score": 0.04818181818181819,
+      "raw_uplift": 0.04818181818181819,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.018181818181818164,
+      "mean_8bit_target": 0.030000000000000027
+    },
+    "block:16:linear_attn.in_proj_qkv": {
+      "score": 0.014400000000000022,
+      "raw_uplift": 0.014400000000000022,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 7.93016446160826e-18,
+      "mean_8bit_target": 0.01440000000000003
+    },
+    "block:16:linear_attn.in_proj_z": {
+      "score": -0.02712643678160922,
+      "raw_uplift": -0.02712643678160922,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.01379310344827589,
+      "mean_8bit_target": -0.013333333333333327
+    },
+    "block:16:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:16:mlp.down_proj": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:16:mlp.gate_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:16:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:17:linear_attn.in_proj_a": {
+      "score": 0.036909090909090926,
+      "raw_uplift": 0.036909090909090926,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.010909090909090894,
+      "mean_8bit_target": 0.026000000000000034
+    },
+    "block:17:linear_attn.in_proj_b": {
+      "score": 0.04436974789915968,
+      "raw_uplift": 0.04436974789915968,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:17:linear_attn.in_proj_qkv": {
+      "score": -0.02948571428571427,
+      "raw_uplift": -0.02948571428571427,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.0342857142857143,
+      "mean_8bit_target": 0.004800000000000029
+    },
+    "block:17:linear_attn.in_proj_z": {
+      "score": 0.03930735930735932,
+      "raw_uplift": 0.03930735930735932,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.024761904761904794
+    },
+    "block:17:linear_attn.out_proj": {
+      "score": -0.06074074074074076,
+      "raw_uplift": -0.06074074074074076,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:17:mlp.down_proj": {
+      "score": -0.06560000000000002,
+      "raw_uplift": -0.06560000000000002,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.025600000000000032,
+      "mean_8bit_target": -0.03999999999999999
+    },
+    "block:17:mlp.gate_proj": {
+      "score": 0.03736842105263159,
+      "raw_uplift": 0.03736842105263159,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.009999999999999981,
+      "mean_8bit_target": 0.027368421052631608
+    },
+    "block:17:mlp.up_proj": {
+      "score": 0.030158730158730173,
+      "raw_uplift": 0.030158730158730173,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.005714285714285695,
+      "mean_8bit_target": 0.024444444444444477
+    },
+    "block:18:linear_attn.in_proj_a": {
+      "score": 0.06461538461538462,
+      "raw_uplift": 0.06461538461538462,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.024615384615384598,
+      "mean_8bit_target": 0.040000000000000015
+    },
+    "block:18:linear_attn.in_proj_b": {
+      "score": -0.05466666666666667,
+      "raw_uplift": -0.05466666666666667,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.014666666666666692,
+      "mean_8bit_target": -0.03999999999999998
+    },
+    "block:18:linear_attn.in_proj_qkv": {
+      "score": 0.0014285714285714474,
+      "raw_uplift": 0.0014285714285714474,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.010000000000000009,
+      "mean_8bit_target": 0.011428571428571456
+    },
+    "block:18:linear_attn.in_proj_z": {
+      "score": 0.04539682539682541,
+      "raw_uplift": 0.04539682539682541,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.014285714285714266,
+      "mean_8bit_target": 0.031111111111111138
+    },
+    "block:18:linear_attn.out_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:18:mlp.down_proj": {
+      "score": -0.043657142857142874,
+      "raw_uplift": -0.043657142857142874,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.020800000000000027,
+      "mean_8bit_target": -0.022857142857142847
+    },
+    "block:18:mlp.gate_proj": {
+      "score": -0.033333333333333354,
+      "raw_uplift": -0.033333333333333354,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:18:mlp.up_proj": {
+      "score": -0.07126436781609197,
+      "raw_uplift": -0.07126436781609197,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": -0.05333333333333332
+    },
+    "block:19:mlp.down_proj": {
+      "score": 0.03930735930735932,
+      "raw_uplift": 0.03930735930735932,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.024761904761904794
+    },
+    "block:19:mlp.gate_proj": {
+      "score": -0.07022222222222224,
+      "raw_uplift": -0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:19:mlp.up_proj": {
+      "score": -0.05487179487179489,
+      "raw_uplift": -0.05487179487179489,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.021538461538461565,
+      "mean_8bit_target": -0.03333333333333332
+    },
+    "block:19:self_attn.k_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:19:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:19:self_attn.q_proj": {
+      "score": -0.007586206896551737,
+      "raw_uplift": -0.015172413793103474,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.015172413793103474,
+      "mean_8bit_target": 0.0
+    },
+    "block:19:self_attn.v_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:1:linear_attn.in_proj_a": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:1:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:1:linear_attn.in_proj_qkv": {
+      "score": -0.07022222222222224,
+      "raw_uplift": -0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:1:linear_attn.in_proj_z": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:1:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:1:mlp.down_proj": {
+      "score": 0.03963636363636365,
+      "raw_uplift": 0.03963636363636365,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.01599999999999998,
+      "mean_8bit_target": 0.023636363636363667
+    },
+    "block:1:mlp.gate_proj": {
+      "score": -0.035172413793103464,
+      "raw_uplift": -0.035172413793103464,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.015172413793103474,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:1:mlp.up_proj": {
+      "score": 0.034493927125506085,
+      "raw_uplift": 0.034493927125506085,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.009230769230769213,
+      "mean_8bit_target": 0.025263157894736873
+    },
+    "block:20:linear_attn.in_proj_a": {
+      "score": 0.06512077294685992,
+      "raw_uplift": 0.06512077294685992,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.03555555555555554,
+      "mean_8bit_target": 0.02956521739130438
+    },
+    "block:20:linear_attn.in_proj_b": {
+      "score": 0.04539682539682541,
+      "raw_uplift": 0.04539682539682541,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.014285714285714266,
+      "mean_8bit_target": 0.031111111111111138
+    },
+    "block:20:linear_attn.in_proj_qkv": {
+      "score": 0.012413793103448282,
+      "raw_uplift": 0.012413793103448282,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.012413793103448301
+    },
+    "block:20:linear_attn.in_proj_z": {
+      "score": -0.009333333333333325,
+      "raw_uplift": -0.009333333333333325,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.006666666666666654,
+      "mean_8bit_target": -0.01599999999999998
+    },
+    "block:20:linear_attn.out_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:20:mlp.down_proj": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:20:mlp.gate_proj": {
+      "score": -0.041839080459770125,
+      "raw_uplift": -0.041839080459770125,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.015172413793103474,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:20:mlp.up_proj": {
+      "score": 0.08102564102564103,
+      "raw_uplift": 0.08102564102564103,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.027692307692307676,
+      "mean_8bit_target": 0.053333333333333344
+    },
+    "block:21:linear_attn.in_proj_a": {
+      "score": -0.04365714285714287,
+      "raw_uplift": -0.04365714285714287,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.020800000000000027,
+      "mean_8bit_target": -0.022857142857142836
+    },
+    "block:21:linear_attn.in_proj_b": {
+      "score": -0.015000000000000006,
+      "raw_uplift": -0.015000000000000006,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.015000000000000027,
+      "mean_8bit_target": 2.0816681711721685e-17
+    },
+    "block:21:linear_attn.in_proj_qkv": {
+      "score": 0.010000000000000009,
+      "raw_uplift": 0.010000000000000009,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": -0.009999999999999981
+    },
+    "block:21:linear_attn.in_proj_z": {
+      "score": -0.021714285714285714,
+      "raw_uplift": -0.021714285714285714,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.016000000000000025,
+      "mean_8bit_target": -0.005714285714285687
+    },
+    "block:21:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:21:mlp.down_proj": {
+      "score": 0.052753623188405804,
+      "raw_uplift": 0.052753623188405804,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.026666666666666648,
+      "mean_8bit_target": 0.026086956521739157
+    },
+    "block:21:mlp.gate_proj": {
+      "score": 0.05999999999999999,
+      "raw_uplift": 0.05999999999999999,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.04000000000000001
+    },
+    "block:21:mlp.up_proj": {
+      "score": 0.05004048582995953,
+      "raw_uplift": 0.05004048582995953,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.018461538461538442,
+      "mean_8bit_target": 0.03157894736842108
+    },
+    "block:22:linear_attn.in_proj_a": {
+      "score": -0.018181818181818174,
+      "raw_uplift": -0.018181818181818174,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 1.1102230246251566e-17,
+      "mean_8bit_target": -0.018181818181818164
+    },
+    "block:22:linear_attn.in_proj_b": {
+      "score": -0.03571428571428573,
+      "raw_uplift": -0.03571428571428573,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.015714285714285743,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:22:linear_attn.in_proj_qkv": {
+      "score": -0.01701149425287354,
+      "raw_uplift": -0.01701149425287354,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.026666666666666672,
+      "mean_8bit_target": 0.009655172413793132
+    },
+    "block:22:linear_attn.in_proj_z": {
+      "score": -0.021714285714285724,
+      "raw_uplift": -0.021714285714285724,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.016000000000000028,
+      "mean_8bit_target": -0.005714285714285695
+    },
+    "block:22:linear_attn.out_proj": {
+      "score": 0.018000000000000013,
+      "raw_uplift": 0.018000000000000013,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.01800000000000003
+    },
+    "block:22:mlp.down_proj": {
+      "score": -0.03500000000000002,
+      "raw_uplift": -0.03500000000000002,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.020000000000000028,
+      "mean_8bit_target": -0.014999999999999986
+    },
+    "block:22:mlp.gate_proj": {
+      "score": 0.05999999999999999,
+      "raw_uplift": 0.05999999999999999,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.04000000000000001
+    },
+    "block:22:mlp.up_proj": {
+      "score": 0.033766233766233784,
+      "raw_uplift": 0.033766233766233784,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.010909090909090894,
+      "mean_8bit_target": 0.02285714285714289
+    },
+    "block:23:mlp.down_proj": {
+      "score": 0.028333333333333342,
+      "raw_uplift": 0.028333333333333342,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.009999999999999981,
+      "mean_8bit_target": 0.01833333333333336
+    },
+    "block:23:mlp.gate_proj": {
+      "score": 0.08102564102564103,
+      "raw_uplift": 0.08102564102564103,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.027692307692307676,
+      "mean_8bit_target": 0.053333333333333344
+    },
+    "block:23:mlp.up_proj": {
+      "score": -0.012000000000000028,
+      "raw_uplift": -0.012000000000000028,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.012000000000000028,
+      "mean_8bit_target": 0.0
+    },
+    "block:23:self_attn.k_proj": {
+      "score": -0.042222222222222244,
+      "raw_uplift": -0.042222222222222244,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:23:self_attn.o_proj": {
+      "score": 0.04436974789915968,
+      "raw_uplift": 0.04436974789915968,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:23:self_attn.q_proj": {
+      "score": -0.034000000000000016,
+      "raw_uplift": -0.034000000000000016,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.02400000000000003,
+      "mean_8bit_target": -0.009999999999999981
+    },
+    "block:23:self_attn.v_proj": {
+      "score": -0.008965517241379324,
+      "raw_uplift": -0.017931034482758648,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": 0.0
+    },
+    "block:24:linear_attn.in_proj_a": {
+      "score": -0.037608695652173924,
+      "raw_uplift": -0.037608695652173924,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.02260869565217394,
+      "mean_8bit_target": -0.014999999999999979
+    },
+    "block:24:linear_attn.in_proj_b": {
+      "score": 0.03933333333333335,
+      "raw_uplift": 0.03933333333333335,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.013333333333333317,
+      "mean_8bit_target": 0.026000000000000034
+    },
+    "block:24:linear_attn.in_proj_qkv": {
+      "score": 0.02428571428571431,
+      "raw_uplift": 0.02428571428571431,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.009999999999999995,
+      "mean_8bit_target": 0.014285714285714315
+    },
+    "block:24:linear_attn.in_proj_z": {
+      "score": 0.04485829959514172,
+      "raw_uplift": 0.04485829959514172,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.015384615384615368,
+      "mean_8bit_target": 0.029473684210526346
+    },
+    "block:24:linear_attn.out_proj": {
+      "score": -0.033333333333333354,
+      "raw_uplift": -0.033333333333333354,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:24:mlp.down_proj": {
+      "score": 0.052753623188405804,
+      "raw_uplift": 0.052753623188405804,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.026666666666666648,
+      "mean_8bit_target": 0.026086956521739157
+    },
+    "block:24:mlp.gate_proj": {
+      "score": -0.036342857142857156,
+      "raw_uplift": -0.036342857142857156,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.01920000000000003,
+      "mean_8bit_target": -0.017142857142857126
+    },
+    "block:24:mlp.up_proj": {
+      "score": 0.0065454545454545435,
+      "raw_uplift": 0.0065454545454545435,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": -0.007999999999999985
+    },
+    "block:25:linear_attn.in_proj_a": {
+      "score": 0.020000000000000018,
+      "raw_uplift": 0.020000000000000018,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 1.5139404881252134e-17,
+      "mean_8bit_target": 0.02000000000000003
+    },
+    "block:25:linear_attn.in_proj_b": {
+      "score": 0.016666666666666663,
+      "raw_uplift": 0.016666666666666663,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.01666666666666665,
+      "mean_8bit_target": 1.3877787807814457e-17
+    },
+    "block:25:linear_attn.in_proj_qkv": {
+      "score": -0.02948571428571427,
+      "raw_uplift": -0.02948571428571427,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.0342857142857143,
+      "mean_8bit_target": 0.004800000000000029
+    },
+    "block:25:linear_attn.in_proj_z": {
+      "score": 0.01714285714285716,
+      "raw_uplift": 0.01714285714285716,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 1.5139404881252134e-17,
+      "mean_8bit_target": 0.017142857142857175
+    },
+    "block:25:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:25:mlp.down_proj": {
+      "score": 0.021714285714285724,
+      "raw_uplift": 0.021714285714285724,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.005714285714285695,
+      "mean_8bit_target": 0.016000000000000028
+    },
+    "block:25:mlp.gate_proj": {
+      "score": -0.02712643678160922,
+      "raw_uplift": -0.02712643678160922,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.01379310344827589,
+      "mean_8bit_target": -0.013333333333333327
+    },
+    "block:25:mlp.up_proj": {
+      "score": 0.040317460317460335,
+      "raw_uplift": 0.040317460317460335,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.028888888888888922
+    },
+    "block:26:linear_attn.in_proj_a": {
+      "score": 0.01800000000000002,
+      "raw_uplift": 0.01800000000000002,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": 0.018000000000000033
+    },
+    "block:26:linear_attn.in_proj_b": {
+      "score": 0.06558704453441297,
+      "raw_uplift": 0.06558704453441297,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.027692307692307676,
+      "mean_8bit_target": 0.037894736842105294
+    },
+    "block:26:linear_attn.in_proj_qkv": {
+      "score": -0.03407407407407406,
+      "raw_uplift": -0.03407407407407406,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.040000000000000015,
+      "mean_8bit_target": 0.005925925925925953
+    },
+    "block:26:linear_attn.in_proj_z": {
+      "score": -0.038400000000000004,
+      "raw_uplift": -0.038400000000000004,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.022400000000000028,
+      "mean_8bit_target": -0.01599999999999998
+    },
+    "block:26:linear_attn.out_proj": {
+      "score": -0.06074074074074076,
+      "raw_uplift": -0.06074074074074076,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:26:mlp.down_proj": {
+      "score": 0.040386473429951705,
+      "raw_uplift": 0.040386473429951705,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.017777777777777764,
+      "mean_8bit_target": 0.02260869565217394
+    },
+    "block:26:mlp.gate_proj": {
+      "score": -0.005806451612903239,
+      "raw_uplift": -0.011612903225806478,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.011612903225806478,
+      "mean_8bit_target": 0.0
+    },
+    "block:26:mlp.up_proj": {
+      "score": 0.1057142857142857,
+      "raw_uplift": 0.1057142857142857,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.025714285714285696,
+      "mean_8bit_target": 0.08000000000000002
+    },
+    "block:27:mlp.down_proj": {
+      "score": -0.043657142857142874,
+      "raw_uplift": -0.043657142857142874,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.020800000000000027,
+      "mean_8bit_target": -0.022857142857142847
+    },
+    "block:27:mlp.gate_proj": {
+      "score": 0.05666666666666666,
+      "raw_uplift": 0.05666666666666666,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.026666666666666648,
+      "mean_8bit_target": 0.030000000000000013
+    },
+    "block:27:mlp.up_proj": {
+      "score": 0.03930735930735932,
+      "raw_uplift": 0.03930735930735932,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.024761904761904794
+    },
+    "block:27:self_attn.k_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:27:self_attn.o_proj": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:27:self_attn.q_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:27:self_attn.v_proj": {
+      "score": -0.011851851851851867,
+      "raw_uplift": -0.023703703703703734,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.023703703703703734,
+      "mean_8bit_target": 0.0
+    },
+    "block:28:linear_attn.in_proj_a": {
+      "score": 0.0016666666666666791,
+      "raw_uplift": 0.0016666666666666791,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.010000000000000016,
+      "mean_8bit_target": 0.011666666666666695
+    },
+    "block:28:linear_attn.in_proj_b": {
+      "score": 0.044545454545454555,
+      "raw_uplift": 0.044545454545454555,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.030000000000000027
+    },
+    "block:28:linear_attn.in_proj_qkv": {
+      "score": 0.012000000000000028,
+      "raw_uplift": 0.012000000000000028,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.0,
+      "mean_8bit_target": 0.012000000000000028
+    },
+    "block:28:linear_attn.in_proj_z": {
+      "score": 0.04254545454545456,
+      "raw_uplift": 0.04254545454545456,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.028000000000000032
+    },
+    "block:28:linear_attn.out_proj": {
+      "score": -0.07291428571428574,
+      "raw_uplift": -0.07291428571428574,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.02720000000000003,
+      "mean_8bit_target": -0.0457142857142857
+    },
+    "block:28:mlp.down_proj": {
+      "score": 0.03420289855072465,
+      "raw_uplift": 0.03420289855072465,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.020869565217391334
+    },
+    "block:28:mlp.gate_proj": {
+      "score": 0.040317460317460335,
+      "raw_uplift": 0.040317460317460335,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.028888888888888922
+    },
+    "block:28:mlp.up_proj": {
+      "score": 0.04545454545454547,
+      "raw_uplift": 0.04545454545454547,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.025454545454545487
+    },
+    "block:29:linear_attn.in_proj_a": {
+      "score": -0.033333333333333354,
+      "raw_uplift": -0.033333333333333354,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:29:linear_attn.in_proj_b": {
+      "score": 0.06147186147186148,
+      "raw_uplift": 0.06147186147186148,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.02909090909090907,
+      "mean_8bit_target": 0.03238095238095241
+    },
+    "block:29:linear_attn.in_proj_qkv": {
+      "score": -0.07666666666666667,
+      "raw_uplift": -0.07666666666666667,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 0.04000000000000003,
+      "mean_8bit_target": -0.036666666666666646
+    },
+    "block:29:linear_attn.in_proj_z": {
+      "score": -0.04666666666666667,
+      "raw_uplift": -0.04666666666666667,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666644
+    },
+    "block:29:linear_attn.out_proj": {
+      "score": 0.03736842105263159,
+      "raw_uplift": 0.03736842105263159,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.009999999999999981,
+      "mean_8bit_target": 0.027368421052631608
+    },
+    "block:29:mlp.down_proj": {
+      "score": 0.015000000000000006,
+      "raw_uplift": 0.015000000000000006,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 2.0816681711721685e-17,
+      "mean_8bit_target": 0.015000000000000027
+    },
+    "block:29:mlp.gate_proj": {
+      "score": 0.02999999999999999,
+      "raw_uplift": 0.02999999999999999,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.01999999999999998,
+      "mean_8bit_target": 0.010000000000000009
+    },
+    "block:29:mlp.up_proj": {
+      "score": 0.043333333333333335,
+      "raw_uplift": 0.043333333333333335,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.023333333333333317,
+      "mean_8bit_target": 0.020000000000000018
+    },
+    "block:2:linear_attn.in_proj_a": {
+      "score": -0.035172413793103464,
+      "raw_uplift": -0.035172413793103464,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.015172413793103474,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:2:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:2:linear_attn.in_proj_qkv": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:2:linear_attn.in_proj_z": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:2:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:2:mlp.down_proj": {
+      "score": 0.01714285714285715,
+      "raw_uplift": 0.01714285714285715,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 2.0185873175002847e-17,
+      "mean_8bit_target": 0.01714285714285717
+    },
+    "block:2:mlp.gate_proj": {
+      "score": -0.043809523809523826,
+      "raw_uplift": -0.043809523809523826,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.01714285714285717,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:2:mlp.up_proj": {
+      "score": -0.035172413793103464,
+      "raw_uplift": -0.035172413793103464,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.015172413793103474,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:30:linear_attn.in_proj_a": {
+      "score": 0.04466666666666668,
+      "raw_uplift": 0.04466666666666668,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.01666666666666665,
+      "mean_8bit_target": 0.028000000000000032
+    },
+    "block:30:linear_attn.in_proj_b": {
+      "score": 0.04341880341880343,
+      "raw_uplift": 0.04341880341880343,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.012307692307692289,
+      "mean_8bit_target": 0.031111111111111138
+    },
+    "block:30:linear_attn.in_proj_qkv": {
+      "score": 0.033333333333333354,
+      "raw_uplift": 0.033333333333333354,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": 0.01333333333333336
+    },
+    "block:30:linear_attn.in_proj_z": {
+      "score": 0.008333333333333352,
+      "raw_uplift": 0.008333333333333352,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.005000000000000011,
+      "mean_8bit_target": 0.013333333333333364
+    },
+    "block:30:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:30:mlp.down_proj": {
+      "score": 0.043428571428571434,
+      "raw_uplift": 0.043428571428571434,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.03199999999999999,
+      "mean_8bit_target": 0.011428571428571446
+    },
+    "block:30:mlp.gate_proj": {
+      "score": 0.054476190476190484,
+      "raw_uplift": 0.054476190476190484,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.023999999999999983,
+      "mean_8bit_target": 0.030476190476190504
+    },
+    "block:30:mlp.up_proj": {
+      "score": 0.06266666666666666,
+      "raw_uplift": 0.06266666666666666,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.03599999999999998,
+      "mean_8bit_target": 0.026666666666666682
+    },
+    "block:31:mlp.down_proj": {
+      "score": -0.03500000000000002,
+      "raw_uplift": -0.03500000000000002,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.020000000000000028,
+      "mean_8bit_target": -0.014999999999999986
+    },
+    "block:31:mlp.gate_proj": {
+      "score": 0.04484848484848486,
+      "raw_uplift": 0.04484848484848486,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.018181818181818164,
+      "mean_8bit_target": 0.026666666666666696
+    },
+    "block:31:mlp.up_proj": {
+      "score": 0.060666666666666674,
+      "raw_uplift": 0.060666666666666674,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.026666666666666648,
+      "mean_8bit_target": 0.03400000000000003
+    },
+    "block:31:self_attn.k_proj": {
+      "score": -0.042222222222222244,
+      "raw_uplift": -0.042222222222222244,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:31:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:31:self_attn.q_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:31:self_attn.v_proj": {
+      "score": -0.01307692307692309,
+      "raw_uplift": -0.02615384615384618,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.02615384615384618,
+      "mean_8bit_target": 0.0
+    },
+    "block:32:linear_attn.in_proj_a": {
+      "score": 0.008333333333333352,
+      "raw_uplift": 0.008333333333333352,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.005000000000000011,
+      "mean_8bit_target": 0.013333333333333364
+    },
+    "block:32:linear_attn.in_proj_b": {
+      "score": 0.034493927125506085,
+      "raw_uplift": 0.034493927125506085,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.009230769230769213,
+      "mean_8bit_target": 0.025263157894736873
+    },
+    "block:32:linear_attn.in_proj_qkv": {
+      "score": -0.07333333333333332,
+      "raw_uplift": -0.07333333333333332,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.08000000000000002,
+      "mean_8bit_target": 0.006666666666666693
+    },
+    "block:32:linear_attn.in_proj_z": {
+      "score": 0.015000000000000015,
+      "raw_uplift": 0.015000000000000015,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": 0.015000000000000029
+    },
+    "block:32:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:32:mlp.down_proj": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:32:mlp.gate_proj": {
+      "score": -0.05125925925925927,
+      "raw_uplift": -0.05125925925925927,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.019259259259259285,
+      "mean_8bit_target": -0.03199999999999999
+    },
+    "block:32:mlp.up_proj": {
+      "score": 0.04545454545454547,
+      "raw_uplift": 0.04545454545454547,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.025454545454545487
+    },
+    "block:33:linear_attn.in_proj_a": {
+      "score": -0.04666666666666667,
+      "raw_uplift": -0.04666666666666667,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666644
+    },
+    "block:33:linear_attn.in_proj_b": {
+      "score": -0.0377777777777778,
+      "raw_uplift": -0.0377777777777778,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.017777777777777806,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:33:linear_attn.in_proj_qkv": {
+      "score": 0.005641025641025654,
+      "raw_uplift": 0.005641025641025654,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.006666666666666682,
+      "mean_8bit_target": 0.012307692307692335
+    },
+    "block:33:linear_attn.in_proj_z": {
+      "score": 0.005641025641025654,
+      "raw_uplift": 0.005641025641025654,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.006666666666666682,
+      "mean_8bit_target": 0.012307692307692335
+    },
+    "block:33:linear_attn.out_proj": {
+      "score": -0.07126436781609197,
+      "raw_uplift": -0.07126436781609197,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": -0.05333333333333332
+    },
+    "block:33:mlp.down_proj": {
+      "score": -0.03500000000000002,
+      "raw_uplift": -0.03500000000000002,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.020000000000000028,
+      "mean_8bit_target": -0.014999999999999986
+    },
+    "block:33:mlp.gate_proj": {
+      "score": 0.10461538461538461,
+      "raw_uplift": 0.10461538461538461,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.024615384615384598,
+      "mean_8bit_target": 0.08000000000000002
+    },
+    "block:33:mlp.up_proj": {
+      "score": 0.04485829959514172,
+      "raw_uplift": 0.04485829959514172,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.015384615384615368,
+      "mean_8bit_target": 0.029473684210526346
+    },
+    "block:34:linear_attn.in_proj_a": {
+      "score": 0.040386473429951705,
+      "raw_uplift": 0.040386473429951705,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.017777777777777764,
+      "mean_8bit_target": 0.02260869565217394
+    },
+    "block:34:linear_attn.in_proj_b": {
+      "score": 0.05004048582995953,
+      "raw_uplift": 0.05004048582995953,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.018461538461538442,
+      "mean_8bit_target": 0.03157894736842108
+    },
+    "block:34:linear_attn.in_proj_qkv": {
+      "score": -0.05593073593073594,
+      "raw_uplift": -0.05593073593073594,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 0.030476190476190504,
+      "mean_8bit_target": -0.025454545454545438
+    },
+    "block:34:linear_attn.in_proj_z": {
+      "score": 0.036909090909090926,
+      "raw_uplift": 0.036909090909090926,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.010909090909090894,
+      "mean_8bit_target": 0.026000000000000034
+    },
+    "block:34:linear_attn.out_proj": {
+      "score": -0.07370370370370372,
+      "raw_uplift": -0.07370370370370372,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.023703703703703734,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:34:mlp.down_proj": {
+      "score": 0.03420289855072465,
+      "raw_uplift": 0.03420289855072465,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.020869565217391334
+    },
+    "block:34:mlp.gate_proj": {
+      "score": 0.06472727272727272,
+      "raw_uplift": 0.06472727272727272,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.03272727272727271,
+      "mean_8bit_target": 0.032000000000000015
+    },
+    "block:34:mlp.up_proj": {
+      "score": 0.0503896103896104,
+      "raw_uplift": 0.0503896103896104,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.021818181818181803,
+      "mean_8bit_target": 0.028571428571428602
+    },
+    "block:35:mlp.down_proj": {
+      "score": 0.030869565217391315,
+      "raw_uplift": 0.030869565217391315,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.009999999999999981,
+      "mean_8bit_target": 0.020869565217391334
+    },
+    "block:35:mlp.gate_proj": {
+      "score": 0.03420289855072465,
+      "raw_uplift": 0.03420289855072465,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.020869565217391334
+    },
+    "block:35:mlp.up_proj": {
+      "score": 0.11000000000000001,
+      "raw_uplift": 0.11000000000000001,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.03999999999999999,
+      "mean_8bit_target": 0.07000000000000002
+    },
+    "block:35:self_attn.k_proj": {
+      "score": 0.028888888888888905,
+      "raw_uplift": 0.028888888888888905,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.028888888888888922
+    },
+    "block:35:self_attn.o_proj": {
+      "score": 0.042171945701357474,
+      "raw_uplift": 0.042171945701357474,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.009230769230769213,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:35:self_attn.q_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:35:self_attn.v_proj": {
+      "score": -0.011851851851851867,
+      "raw_uplift": -0.023703703703703734,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.023703703703703734,
+      "mean_8bit_target": 0.0
+    },
+    "block:36:linear_attn.in_proj_a": {
+      "score": -0.04833333333333334,
+      "raw_uplift": -0.04833333333333334,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.023333333333333362,
+      "mean_8bit_target": -0.02499999999999998
+    },
+    "block:36:linear_attn.in_proj_b": {
+      "score": 0.06040485829959516,
+      "raw_uplift": 0.06040485829959516,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.024615384615384598,
+      "mean_8bit_target": 0.03578947368421056
+    },
+    "block:36:linear_attn.in_proj_qkv": {
+      "score": 0.041839080459770125,
+      "raw_uplift": 0.041839080459770125,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.026666666666666655,
+      "mean_8bit_target": 0.015172413793103474
+    },
+    "block:36:linear_attn.in_proj_z": {
+      "score": -0.036342857142857156,
+      "raw_uplift": -0.036342857142857156,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.01920000000000003,
+      "mean_8bit_target": -0.017142857142857126
+    },
+    "block:36:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:36:mlp.down_proj": {
+      "score": 0.03963636363636365,
+      "raw_uplift": 0.03963636363636365,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.01599999999999998,
+      "mean_8bit_target": 0.023636363636363667
+    },
+    "block:36:mlp.gate_proj": {
+      "score": 0.039333333333333345,
+      "raw_uplift": 0.039333333333333345,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.013333333333333313,
+      "mean_8bit_target": 0.02600000000000003
+    },
+    "block:36:mlp.up_proj": {
+      "score": 0.06920634920634922,
+      "raw_uplift": 0.06920634920634922,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.051428571428571414,
+      "mean_8bit_target": 0.017777777777777795
+    },
+    "block:37:linear_attn.in_proj_a": {
+      "score": 0.015,
+      "raw_uplift": 0.015,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": -0.004999999999999984
+    },
+    "block:37:linear_attn.in_proj_b": {
+      "score": 0.028019323671497606,
+      "raw_uplift": 0.028019323671497606,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.008888888888888878,
+      "mean_8bit_target": 0.019130434782608726
+    },
+    "block:37:linear_attn.in_proj_qkv": {
+      "score": -0.08399999999999999,
+      "raw_uplift": -0.08399999999999999,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.040000000000000015,
+      "mean_8bit_target": -0.043999999999999984
+    },
+    "block:37:linear_attn.in_proj_z": {
+      "score": 0.05466666666666667,
+      "raw_uplift": 0.05466666666666667,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.046666666666666655,
+      "mean_8bit_target": 0.008000000000000018
+    },
+    "block:37:linear_attn.out_proj": {
+      "score": -0.06074074074074076,
+      "raw_uplift": -0.06074074074074076,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:37:mlp.down_proj": {
+      "score": 0.028333333333333342,
+      "raw_uplift": 0.028333333333333342,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.009999999999999981,
+      "mean_8bit_target": 0.01833333333333336
+    },
+    "block:37:mlp.gate_proj": {
+      "score": 0.052000000000000005,
+      "raw_uplift": 0.052000000000000005,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.03199999999999999,
+      "mean_8bit_target": 0.020000000000000018
+    },
+    "block:37:mlp.up_proj": {
+      "score": -0.045538461538461555,
+      "raw_uplift": -0.045538461538461555,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.021538461538461565,
+      "mean_8bit_target": -0.023999999999999987
+    },
+    "block:38:linear_attn.in_proj_a": {
+      "score": 0.007085714285714301,
+      "raw_uplift": 0.007085714285714301,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.005714285714285727,
+      "mean_8bit_target": 0.012800000000000028
+    },
+    "block:38:linear_attn.in_proj_b": {
+      "score": 0.07333333333333333,
+      "raw_uplift": 0.07333333333333333,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.03999999999999999,
+      "mean_8bit_target": 0.033333333333333354
+    },
+    "block:38:linear_attn.in_proj_qkv": {
+      "score": -0.05575757575757576,
+      "raw_uplift": -0.05575757575757576,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.029090909090909115,
+      "mean_8bit_target": -0.026666666666666648
+    },
+    "block:38:linear_attn.in_proj_z": {
+      "score": 0.013333333333333352,
+      "raw_uplift": 0.013333333333333352,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 1.1102230246251566e-17,
+      "mean_8bit_target": 0.013333333333333362
+    },
+    "block:38:linear_attn.out_proj": {
+      "score": -0.07126436781609197,
+      "raw_uplift": -0.07126436781609197,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": -0.05333333333333332
+    },
+    "block:38:mlp.down_proj": {
+      "score": -0.03571428571428573,
+      "raw_uplift": -0.03571428571428573,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.015714285714285743,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:38:mlp.gate_proj": {
+      "score": 0.009468599033816439,
+      "raw_uplift": 0.009468599033816439,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.004444444444444461,
+      "mean_8bit_target": 0.0139130434782609
+    },
+    "block:38:mlp.up_proj": {
+      "score": -0.04177777777777779,
+      "raw_uplift": -0.04177777777777779,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.017777777777777806,
+      "mean_8bit_target": -0.023999999999999987
+    },
+    "block:39:mlp.down_proj": {
+      "score": -0.03634285714285716,
+      "raw_uplift": -0.03634285714285716,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.01920000000000003,
+      "mean_8bit_target": -0.017142857142857133
+    },
+    "block:39:mlp.gate_proj": {
+      "score": 0.015000000000000013,
+      "raw_uplift": 0.015000000000000013,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": -0.004999999999999977
+    },
+    "block:39:mlp.up_proj": {
+      "score": 0.040386473429951705,
+      "raw_uplift": 0.040386473429951705,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.017777777777777764,
+      "mean_8bit_target": 0.02260869565217394
+    },
+    "block:39:self_attn.k_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:39:self_attn.o_proj": {
+      "score": -0.04461538461538464,
+      "raw_uplift": -0.04461538461538464,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.024615384615384647,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:39:self_attn.q_proj": {
+      "score": 0.011272727272727288,
+      "raw_uplift": 0.011272727272727288,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.016000000000000014,
+      "mean_8bit_target": 0.027272727272727303
+    },
+    "block:39:self_attn.v_proj": {
+      "score": -0.00666666666666668,
+      "raw_uplift": -0.01333333333333336,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.01333333333333336,
+      "mean_8bit_target": 0.0
+    },
+    "block:3:mlp.down_proj": {
+      "score": -0.07022222222222224,
+      "raw_uplift": -0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:3:mlp.gate_proj": {
+      "score": 0.044858299595141704,
+      "raw_uplift": 0.044858299595141704,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.015384615384615365,
+      "mean_8bit_target": 0.029473684210526343
+    },
+    "block:3:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:3:self_attn.k_proj": {
+      "score": -0.020740740740740768,
+      "raw_uplift": -0.020740740740740768,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": 0.0
+    },
+    "block:3:self_attn.o_proj": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:3:self_attn.q_proj": {
+      "score": -0.017681159420289836,
+      "raw_uplift": -0.017681159420289836,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.03333333333333335,
+      "mean_8bit_target": 0.01565217391304351
+    },
+    "block:3:self_attn.v_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:40:linear_attn.in_proj_a": {
+      "score": -0.016363636363636375,
+      "raw_uplift": -0.016363636363636375,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": 0.016363636363636393,
+      "mean_8bit_target": 1.6653345369377347e-17
+    },
+    "block:40:linear_attn.in_proj_b": {
+      "score": 0.05127272727272729,
+      "raw_uplift": 0.05127272727272729,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.023999999999999987,
+      "mean_8bit_target": 0.027272727272727306
+    },
+    "block:40:linear_attn.in_proj_qkv": {
+      "score": 0.01285714285714287,
+      "raw_uplift": 0.01285714285714287,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": 0.012857142857142885
+    },
+    "block:40:linear_attn.in_proj_z": {
+      "score": 0.04833333333333335,
+      "raw_uplift": 0.04833333333333335,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.024999999999999988,
+      "mean_8bit_target": 0.023333333333333362
+    },
+    "block:40:linear_attn.out_proj": {
+      "score": 0.018000000000000013,
+      "raw_uplift": 0.018000000000000013,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.01800000000000003
+    },
+    "block:40:mlp.down_proj": {
+      "score": 0.031272727272727285,
+      "raw_uplift": 0.031272727272727285,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.007272727272727254,
+      "mean_8bit_target": 0.024000000000000028
+    },
+    "block:40:mlp.gate_proj": {
+      "score": -0.030714285714285708,
+      "raw_uplift": -0.030714285714285708,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.005714285714285727,
+      "mean_8bit_target": -0.02499999999999998
+    },
+    "block:40:mlp.up_proj": {
+      "score": -0.06833333333333334,
+      "raw_uplift": -0.06833333333333334,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.02833333333333336,
+      "mean_8bit_target": -0.03999999999999998
+    },
+    "block:41:linear_attn.in_proj_a": {
+      "score": 0.022683982683982695,
+      "raw_uplift": 0.022683982683982695,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.0036363636363636194,
+      "mean_8bit_target": 0.019047619047619077
+    },
+    "block:41:linear_attn.in_proj_b": {
+      "score": 0.0019047619047619126,
+      "raw_uplift": 0.0019047619047619126,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.01333333333333332,
+      "mean_8bit_target": -0.011428571428571408
+    },
+    "block:41:linear_attn.in_proj_qkv": {
+      "score": -0.002298850574712628,
+      "raw_uplift": -0.002298850574712628,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.013333333333333345,
+      "mean_8bit_target": 0.011034482758620717
+    },
+    "block:41:linear_attn.in_proj_z": {
+      "score": 0.015652173913043497,
+      "raw_uplift": 0.015652173913043497,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 1.2335811384723961e-17,
+      "mean_8bit_target": 0.01565217391304351
+    },
+    "block:41:linear_attn.out_proj": {
+      "score": -0.043809523809523826,
+      "raw_uplift": -0.043809523809523826,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.01714285714285717,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:41:mlp.down_proj": {
+      "score": 0.052753623188405804,
+      "raw_uplift": 0.052753623188405804,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.026666666666666648,
+      "mean_8bit_target": 0.026086956521739157
+    },
+    "block:41:mlp.gate_proj": {
+      "score": 0.06307692307692309,
+      "raw_uplift": 0.06307692307692309,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.03999999999999999,
+      "mean_8bit_target": 0.023076923076923106
+    },
+    "block:41:mlp.up_proj": {
+      "score": -0.07255411255411257,
+      "raw_uplift": -0.07255411255411257,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 0.036190476190476224,
+      "mean_8bit_target": -0.03636363636363635
+    },
+    "block:42:linear_attn.in_proj_a": {
+      "score": 0.02183574879227055,
+      "raw_uplift": 0.02183574879227055,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.00444444444444443,
+      "mean_8bit_target": 0.01739130434782612
+    },
+    "block:42:linear_attn.in_proj_b": {
+      "score": 0.015000000000000015,
+      "raw_uplift": 0.015000000000000015,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": 0.015000000000000029
+    },
+    "block:42:linear_attn.in_proj_qkv": {
+      "score": 0.0038518518518518736,
+      "raw_uplift": 0.0038518518518518736,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.008000000000000007,
+      "mean_8bit_target": 0.01185185185185188
+    },
+    "block:42:linear_attn.in_proj_z": {
+      "score": 0.022857142857142868,
+      "raw_uplift": 0.022857142857142868,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.022857142857142847,
+      "mean_8bit_target": 2.0816681711721685e-17
+    },
+    "block:42:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:42:mlp.down_proj": {
+      "score": -0.043657142857142874,
+      "raw_uplift": -0.043657142857142874,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.020800000000000027,
+      "mean_8bit_target": -0.022857142857142847
+    },
+    "block:42:mlp.gate_proj": {
+      "score": 0.009333333333333325,
+      "raw_uplift": 0.009333333333333325,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.01599999999999998,
+      "mean_8bit_target": -0.006666666666666654
+    },
+    "block:42:mlp.up_proj": {
+      "score": 0.036342857142857156,
+      "raw_uplift": 0.036342857142857156,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.017142857142857126,
+      "mean_8bit_target": 0.01920000000000003
+    },
+    "block:43:mlp.down_proj": {
+      "score": -0.03846153846153848,
+      "raw_uplift": -0.03846153846153848,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.01846153846153849,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:43:mlp.gate_proj": {
+      "score": -0.014400000000000001,
+      "raw_uplift": -0.014400000000000001,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.014400000000000026,
+      "mean_8bit_target": 2.3790493384824782e-17
+    },
+    "block:43:mlp.up_proj": {
+      "score": 0.03963636363636365,
+      "raw_uplift": 0.03963636363636365,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.015999999999999986,
+      "mean_8bit_target": 0.023636363636363667
+    },
+    "block:43:self_attn.k_proj": {
+      "score": 0.042171945701357474,
+      "raw_uplift": 0.042171945701357474,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.009230769230769213,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:43:self_attn.o_proj": {
+      "score": -0.04461538461538464,
+      "raw_uplift": -0.04461538461538464,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.024615384615384647,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:43:self_attn.q_proj": {
+      "score": -0.023636363636363643,
+      "raw_uplift": -0.023636363636363643,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.0036363636363636546,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:43:self_attn.v_proj": {
+      "score": -0.01307692307692309,
+      "raw_uplift": -0.02615384615384618,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.02615384615384618,
+      "mean_8bit_target": 0.0
+    },
+    "block:44:linear_attn.in_proj_a": {
+      "score": 0.028000000000000018,
+      "raw_uplift": 0.028000000000000018,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.007999999999999985,
+      "mean_8bit_target": 0.02000000000000003
+    },
+    "block:44:linear_attn.in_proj_b": {
+      "score": -0.07333333333333333,
+      "raw_uplift": -0.07333333333333333,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.03333333333333335,
+      "mean_8bit_target": -0.03999999999999998
+    },
+    "block:44:linear_attn.in_proj_qkv": {
+      "score": -0.04539682539682541,
+      "raw_uplift": -0.04539682539682541,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": 0.031111111111111138,
+      "mean_8bit_target": -0.014285714285714266
+    },
+    "block:44:linear_attn.in_proj_z": {
+      "score": 0.05357142857142859,
+      "raw_uplift": 0.05357142857142859,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.028571428571428557,
+      "mean_8bit_target": 0.025000000000000033
+    },
+    "block:44:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:44:mlp.down_proj": {
+      "score": 0.0032850241545893787,
+      "raw_uplift": 0.0032850241545893787,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.00888888888888891,
+      "mean_8bit_target": 0.012173913043478288
+    },
+    "block:44:mlp.gate_proj": {
+      "score": -0.04365714285714287,
+      "raw_uplift": -0.04365714285714287,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.020800000000000027,
+      "mean_8bit_target": -0.022857142857142836
+    },
+    "block:44:mlp.up_proj": {
+      "score": -0.0280193236714976,
+      "raw_uplift": -0.0280193236714976,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.019130434782608726,
+      "mean_8bit_target": -0.008888888888888872
+    },
+    "block:45:linear_attn.in_proj_a": {
+      "score": 0.010545454545454563,
+      "raw_uplift": 0.010545454545454563,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": 0.004000000000000015,
+      "mean_8bit_target": 0.014545454545454577
+    },
+    "block:45:linear_attn.in_proj_b": {
+      "score": -0.04166666666666668,
+      "raw_uplift": -0.04166666666666668,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.021666666666666695,
+      "mean_8bit_target": -0.019999999999999983
+    },
+    "block:45:linear_attn.in_proj_qkv": {
+      "score": 0.005806451612903239,
+      "raw_uplift": 0.011612903225806478,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.0,
+      "mean_8bit_target": 0.011612903225806478
+    },
+    "block:45:linear_attn.in_proj_z": {
+      "score": -0.01636363636363637,
+      "raw_uplift": -0.01636363636363637,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": 0.01636363636363639,
+      "mean_8bit_target": 2.2204460492503132e-17
+    },
+    "block:45:linear_attn.out_proj": {
+      "score": -0.041839080459770125,
+      "raw_uplift": -0.041839080459770125,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.015172413793103474,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:45:mlp.down_proj": {
+      "score": 0.0280193236714976,
+      "raw_uplift": 0.0280193236714976,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.008888888888888872,
+      "mean_8bit_target": 0.019130434782608726
+    },
+    "block:45:mlp.gate_proj": {
+      "score": 0.03500000000000002,
+      "raw_uplift": 0.03500000000000002,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:45:mlp.up_proj": {
+      "score": 0.050971428571428584,
+      "raw_uplift": 0.050971428571428584,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.028571428571428557,
+      "mean_8bit_target": 0.022400000000000028
+    },
+    "block:46:linear_attn.in_proj_a": {
+      "score": 0.015000000000000015,
+      "raw_uplift": 0.015000000000000015,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": 0.015000000000000029
+    },
+    "block:46:linear_attn.in_proj_b": {
+      "score": 0.02,
+      "raw_uplift": 0.02,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 1.850371707708594e-17
+    },
+    "block:46:linear_attn.in_proj_qkv": {
+      "score": -0.02999999999999999,
+      "raw_uplift": -0.02999999999999999,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.010000000000000009,
+      "mean_8bit_target": -0.01999999999999998
+    },
+    "block:46:linear_attn.in_proj_z": {
+      "score": -0.04166666666666668,
+      "raw_uplift": -0.04166666666666668,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.021666666666666695,
+      "mean_8bit_target": -0.019999999999999983
+    },
+    "block:46:linear_attn.out_proj": {
+      "score": -0.07022222222222224,
+      "raw_uplift": -0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:46:mlp.down_proj": {
+      "score": -0.04166666666666668,
+      "raw_uplift": -0.04166666666666668,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.021666666666666695,
+      "mean_8bit_target": -0.019999999999999983
+    },
+    "block:46:mlp.gate_proj": {
+      "score": 0.03930735930735932,
+      "raw_uplift": 0.03930735930735932,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.024761904761904794
+    },
+    "block:46:mlp.up_proj": {
+      "score": 0.0050000000000000044,
+      "raw_uplift": 0.0050000000000000044,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": -0.009999999999999981
+    },
+    "block:47:mlp.down_proj": {
+      "score": 0.04484848484848486,
+      "raw_uplift": 0.04484848484848486,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.018181818181818164,
+      "mean_8bit_target": 0.026666666666666696
+    },
+    "block:47:mlp.gate_proj": {
+      "score": 0.02171428571428573,
+      "raw_uplift": 0.02171428571428573,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.005714285714285704,
+      "mean_8bit_target": 0.016000000000000028
+    },
+    "block:47:mlp.up_proj": {
+      "score": 0.007085714285714301,
+      "raw_uplift": 0.007085714285714301,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.005714285714285727,
+      "mean_8bit_target": 0.012800000000000028
+    },
+    "block:47:self_attn.k_proj": {
+      "score": 0.036018099547511326,
+      "raw_uplift": 0.036018099547511326,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.0030769230769230583,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:47:self_attn.o_proj": {
+      "score": 0.029304812834224613,
+      "raw_uplift": 0.029304812834224613,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 0.0036363636363636546,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:47:self_attn.q_proj": {
+      "score": 0.028000000000000014,
+      "raw_uplift": 0.028000000000000014,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.028000000000000032
+    },
+    "block:47:self_attn.v_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:48:linear_attn.in_proj_a": {
+      "score": 0.04657004830917877,
+      "raw_uplift": 0.04657004830917877,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.022222222222222213,
+      "mean_8bit_target": 0.024347826086956553
+    },
+    "block:48:linear_attn.in_proj_b": {
+      "score": -0.04999999999999999,
+      "raw_uplift": -0.04999999999999999,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": -0.049999999999999975
+    },
+    "block:48:linear_attn.in_proj_qkv": {
+      "score": -0.035384615384615375,
+      "raw_uplift": -0.035384615384615375,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.040000000000000015,
+      "mean_8bit_target": 0.004615384615384643
+    },
+    "block:48:linear_attn.in_proj_z": {
+      "score": 0.03500000000000002,
+      "raw_uplift": 0.03500000000000002,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:48:linear_attn.out_proj": {
+      "score": -0.030256410256410265,
+      "raw_uplift": -0.030256410256410265,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.01692307692307695,
+      "mean_8bit_target": -0.013333333333333317
+    },
+    "block:48:mlp.down_proj": {
+      "score": 0.035,
+      "raw_uplift": 0.035,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999979,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:48:mlp.gate_proj": {
+      "score": -0.051111111111111114,
+      "raw_uplift": -0.051111111111111114,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000018,
+      "mean_8bit_target": -0.031111111111111096
+    },
+    "block:48:mlp.up_proj": {
+      "score": 0.015000000000000013,
+      "raw_uplift": 0.015000000000000013,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": -0.004999999999999977
+    },
+    "block:49:linear_attn.in_proj_a": {
+      "score": 0.02183574879227055,
+      "raw_uplift": 0.02183574879227055,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.00444444444444443,
+      "mean_8bit_target": 0.01739130434782612
+    },
+    "block:49:linear_attn.in_proj_b": {
+      "score": 0.009468599033816439,
+      "raw_uplift": 0.009468599033816439,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.004444444444444461,
+      "mean_8bit_target": 0.0139130434782609
+    },
+    "block:49:linear_attn.in_proj_qkv": {
+      "score": 0.03846153846153848,
+      "raw_uplift": 0.03846153846153848,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": 0.01846153846153849
+    },
+    "block:49:linear_attn.in_proj_z": {
+      "score": 0.0488888888888889,
+      "raw_uplift": 0.0488888888888889,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.03999999999999999,
+      "mean_8bit_target": 0.00888888888888891
+    },
+    "block:49:linear_attn.out_proj": {
+      "score": 0.044858299595141704,
+      "raw_uplift": 0.044858299595141704,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.015384615384615365,
+      "mean_8bit_target": 0.029473684210526343
+    },
+    "block:49:mlp.down_proj": {
+      "score": 0.030000000000000013,
+      "raw_uplift": 0.030000000000000013,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": 0.010000000000000023
+    },
+    "block:49:mlp.gate_proj": {
+      "score": 0.05275362318840582,
+      "raw_uplift": 0.05275362318840582,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.026666666666666655,
+      "mean_8bit_target": 0.026086956521739164
+    },
+    "block:49:mlp.up_proj": {
+      "score": 0.028225108225108243,
+      "raw_uplift": 0.028225108225108243,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": -0.007272727272727259,
+      "mean_8bit_target": 0.020952380952380983
+    },
+    "block:4:linear_attn.in_proj_a": {
+      "score": -0.07126436781609197,
+      "raw_uplift": -0.07126436781609197,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.017931034482758648,
+      "mean_8bit_target": -0.05333333333333332
+    },
+    "block:4:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:4:linear_attn.in_proj_qkv": {
+      "score": -0.06074074074074076,
+      "raw_uplift": -0.06074074074074076,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.020740740740740768,
+      "mean_8bit_target": -0.039999999999999994
+    },
+    "block:4:linear_attn.in_proj_z": {
+      "score": -0.04523809523809525,
+      "raw_uplift": -0.04523809523809525,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.018571428571428596,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:4:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:4:mlp.down_proj": {
+      "score": -0.05163636363636364,
+      "raw_uplift": -0.05163636363636364,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.0036363636363636546,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:4:mlp.gate_proj": {
+      "score": -0.005806451612903239,
+      "raw_uplift": -0.011612903225806478,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.011612903225806478,
+      "mean_8bit_target": 0.0
+    },
+    "block:4:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:50:linear_attn.in_proj_a": {
+      "score": 0.043657142857142874,
+      "raw_uplift": 0.043657142857142874,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.022857142857142847,
+      "mean_8bit_target": 0.020800000000000027
+    },
+    "block:50:linear_attn.in_proj_b": {
+      "score": -0.0656,
+      "raw_uplift": -0.0656,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.025600000000000026,
+      "mean_8bit_target": -0.03999999999999998
+    },
+    "block:50:linear_attn.in_proj_qkv": {
+      "score": 0.033333333333333354,
+      "raw_uplift": 0.033333333333333354,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": 0.01333333333333336
+    },
+    "block:50:linear_attn.in_proj_z": {
+      "score": 0.022051282051282067,
+      "raw_uplift": 0.022051282051282067,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.006666666666666654,
+      "mean_8bit_target": 0.015384615384615413
+    },
+    "block:50:linear_attn.out_proj": {
+      "score": -0.02712643678160922,
+      "raw_uplift": -0.02712643678160922,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.01379310344827589,
+      "mean_8bit_target": -0.013333333333333327
+    },
+    "block:50:mlp.down_proj": {
+      "score": 0.022051282051282067,
+      "raw_uplift": 0.022051282051282067,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.006666666666666654,
+      "mean_8bit_target": 0.015384615384615413
+    },
+    "block:50:mlp.gate_proj": {
+      "score": 0.015000000000000015,
+      "raw_uplift": 0.015000000000000015,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 1.3877787807814457e-17,
+      "mean_8bit_target": 0.015000000000000029
+    },
+    "block:50:mlp.up_proj": {
+      "score": 0.036342857142857156,
+      "raw_uplift": 0.036342857142857156,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.017142857142857126,
+      "mean_8bit_target": 0.01920000000000003
+    },
+    "block:51:mlp.down_proj": {
+      "score": -0.032857142857142835,
+      "raw_uplift": -0.032857142857142835,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.04000000000000001,
+      "mean_8bit_target": 0.007142857142857171
+    },
+    "block:51:mlp.gate_proj": {
+      "score": 0.016727272727272733,
+      "raw_uplift": 0.016727272727272733,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.023999999999999987,
+      "mean_8bit_target": -0.007272727272727254
+    },
+    "block:51:mlp.up_proj": {
+      "score": -0.004999999999999984,
+      "raw_uplift": -0.004999999999999984,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.015000000000000013,
+      "mean_8bit_target": 0.01000000000000003
+    },
+    "block:51:self_attn.k_proj": {
+      "score": 0.04727272727272726,
+      "raw_uplift": 0.04727272727272726,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.007272727272727254,
+      "mean_8bit_target": 0.04000000000000001
+    },
+    "block:51:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:51:self_attn.q_proj": {
+      "score": 0.04727272727272726,
+      "raw_uplift": 0.04727272727272726,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.007272727272727254,
+      "mean_8bit_target": 0.04000000000000001
+    },
+    "block:51:self_attn.v_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:52:linear_attn.in_proj_a": {
+      "score": 0.05353846153846155,
+      "raw_uplift": 0.05353846153846155,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.03199999999999999,
+      "mean_8bit_target": 0.021538461538461565
+    },
+    "block:52:linear_attn.in_proj_b": {
+      "score": 0.010952380952380967,
+      "raw_uplift": 0.010952380952380967,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.005714285714285727,
+      "mean_8bit_target": 0.016666666666666694
+    },
+    "block:52:linear_attn.in_proj_qkv": {
+      "score": -0.009999999999999992,
+      "raw_uplift": -0.009999999999999992,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000018,
+      "mean_8bit_target": 0.010000000000000026
+    },
+    "block:52:linear_attn.in_proj_z": {
+      "score": 0.07022222222222224,
+      "raw_uplift": 0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.04799999999999999,
+      "mean_8bit_target": 0.02222222222222225
+    },
+    "block:52:linear_attn.out_proj": {
+      "score": 0.035,
+      "raw_uplift": 0.035,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999979,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:52:mlp.down_proj": {
+      "score": -0.02459259259259258,
+      "raw_uplift": -0.02459259259259258,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.032000000000000015,
+      "mean_8bit_target": 0.007407407407407435
+    },
+    "block:52:mlp.gate_proj": {
+      "score": 0.030256410256410265,
+      "raw_uplift": 0.030256410256410265,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.013333333333333317,
+      "mean_8bit_target": 0.01692307692307695
+    },
+    "block:52:mlp.up_proj": {
+      "score": -0.02183574879227054,
+      "raw_uplift": -0.02183574879227054,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.017391304347826115,
+      "mean_8bit_target": -0.004444444444444424
+    },
+    "block:53:linear_attn.in_proj_a": {
+      "score": 0.031428571428571445,
+      "raw_uplift": 0.031428571428571445,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.011428571428571415,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:53:linear_attn.in_proj_b": {
+      "score": -0.0280193236714976,
+      "raw_uplift": -0.0280193236714976,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.019130434782608726,
+      "mean_8bit_target": -0.008888888888888872
+    },
+    "block:53:linear_attn.in_proj_qkv": {
+      "score": 0.041839080459770125,
+      "raw_uplift": 0.041839080459770125,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.026666666666666655,
+      "mean_8bit_target": 0.015172413793103474
+    },
+    "block:53:linear_attn.in_proj_z": {
+      "score": -0.009285714285714293,
+      "raw_uplift": -0.009285714285714293,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.015000000000000027,
+      "mean_8bit_target": 0.005714285714285735
+    },
+    "block:53:linear_attn.out_proj": {
+      "score": -0.041666666666666685,
+      "raw_uplift": -0.041666666666666685,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.021666666666666695,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:53:mlp.down_proj": {
+      "score": 0.012413793103448305,
+      "raw_uplift": 0.012413793103448305,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.0,
+      "mean_8bit_target": 0.012413793103448305
+    },
+    "block:53:mlp.gate_proj": {
+      "score": 0.0322962962962963,
+      "raw_uplift": 0.0322962962962963,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.01599999999999998,
+      "mean_8bit_target": 0.016296296296296323
+    },
+    "block:53:mlp.up_proj": {
+      "score": -0.02801932367149759,
+      "raw_uplift": -0.02801932367149759,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.019130434782608723,
+      "mean_8bit_target": -0.008888888888888866
+    },
+    "block:54:linear_attn.in_proj_a": {
+      "score": 0.01200000000000001,
+      "raw_uplift": 0.01200000000000001,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": -0.00799999999999998
+    },
+    "block:54:linear_attn.in_proj_b": {
+      "score": 0.008333333333333352,
+      "raw_uplift": 0.008333333333333352,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": 0.005000000000000011,
+      "mean_8bit_target": 0.013333333333333364
+    },
+    "block:54:linear_attn.in_proj_qkv": {
+      "score": 0.02281481481481483,
+      "raw_uplift": 0.02281481481481483,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.007999999999999985,
+      "mean_8bit_target": 0.014814814814814843
+    },
+    "block:54:linear_attn.in_proj_z": {
+      "score": 0.043657142857142874,
+      "raw_uplift": 0.043657142857142874,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.022857142857142847,
+      "mean_8bit_target": 0.020800000000000027
+    },
+    "block:54:linear_attn.out_proj": {
+      "score": 0.03963636363636365,
+      "raw_uplift": 0.03963636363636365,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.01599999999999998,
+      "mean_8bit_target": 0.023636363636363667
+    },
+    "block:54:mlp.down_proj": {
+      "score": 0.029028571428571445,
+      "raw_uplift": 0.029028571428571445,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.011428571428571415,
+      "mean_8bit_target": 0.01760000000000003
+    },
+    "block:54:mlp.gate_proj": {
+      "score": 0.030256410256410265,
+      "raw_uplift": 0.030256410256410265,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.013333333333333317,
+      "mean_8bit_target": 0.01692307692307695
+    },
+    "block:54:mlp.up_proj": {
+      "score": 0.03025641025641028,
+      "raw_uplift": 0.03025641025641028,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.013333333333333327,
+      "mean_8bit_target": 0.016923076923076954
+    },
+    "block:55:mlp.down_proj": {
+      "score": 0.03333333333333333,
+      "raw_uplift": 0.03333333333333333,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.03333333333333332,
+      "mean_8bit_target": 1.6653345369377347e-17
+    },
+    "block:55:mlp.gate_proj": {
+      "score": -0.0065454545454545435,
+      "raw_uplift": -0.0065454545454545435,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.007999999999999985,
+      "mean_8bit_target": -0.014545454545454528
+    },
+    "block:55:mlp.up_proj": {
+      "score": 0.044347826086956546,
+      "raw_uplift": 0.044347826086956546,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": 0.024347826086956553
+    },
+    "block:55:self_attn.k_proj": {
+      "score": 0.04333333333333333,
+      "raw_uplift": 0.04333333333333333,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.030000000000000013
+    },
+    "block:55:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:55:self_attn.q_proj": {
+      "score": 0.035578947368421064,
+      "raw_uplift": 0.035578947368421064,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.003999999999999981,
+      "mean_8bit_target": 0.03157894736842108
+    },
+    "block:55:self_attn.v_proj": {
+      "score": 0.0542857142857143,
+      "raw_uplift": 0.0542857142857143,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.034285714285714315
+    },
+    "block:56:linear_attn.in_proj_a": {
+      "score": 0.046666666666666676,
+      "raw_uplift": 0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.026666666666666655,
+      "mean_8bit_target": 0.020000000000000025
+    },
+    "block:56:linear_attn.in_proj_b": {
+      "score": -0.024444444444444453,
+      "raw_uplift": -0.024444444444444453,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": 0.020000000000000028,
+      "mean_8bit_target": -0.004444444444444424
+    },
+    "block:56:linear_attn.in_proj_qkv": {
+      "score": -0.03172413793103447,
+      "raw_uplift": -0.03172413793103447,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.040000000000000015,
+      "mean_8bit_target": 0.008275862068965543
+    },
+    "block:56:linear_attn.in_proj_z": {
+      "score": 0.05163636363636364,
+      "raw_uplift": 0.05163636363636364,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.04799999999999999,
+      "mean_8bit_target": 0.0036363636363636546
+    },
+    "block:56:linear_attn.out_proj": {
+      "score": 0.03963636363636365,
+      "raw_uplift": 0.03963636363636365,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.01599999999999998,
+      "mean_8bit_target": 0.023636363636363667
+    },
+    "block:56:mlp.down_proj": {
+      "score": -0.005629629629629616,
+      "raw_uplift": -0.005629629629629616,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.016000000000000014,
+      "mean_8bit_target": 0.010370370370370398
+    },
+    "block:56:mlp.gate_proj": {
+      "score": 0.05125925925925927,
+      "raw_uplift": 0.05125925925925927,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.03199999999999999,
+      "mean_8bit_target": 0.019259259259259285
+    },
+    "block:56:mlp.up_proj": {
+      "score": 0.0050000000000000044,
+      "raw_uplift": 0.0050000000000000044,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": -0.009999999999999981
+    },
+    "block:57:linear_attn.in_proj_a": {
+      "score": -0.03930735930735932,
+      "raw_uplift": -0.03930735930735932,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 0.024761904761904794,
+      "mean_8bit_target": -0.014545454545454528
+    },
+    "block:57:linear_attn.in_proj_b": {
+      "score": 0.029028571428571445,
+      "raw_uplift": 0.029028571428571445,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.011428571428571415,
+      "mean_8bit_target": 0.01760000000000003
+    },
+    "block:57:linear_attn.in_proj_qkv": {
+      "score": 0.004761904761904776,
+      "raw_uplift": 0.004761904761904776,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.013333333333333327,
+      "mean_8bit_target": -0.008571428571428551
+    },
+    "block:57:linear_attn.in_proj_z": {
+      "score": 0.05000000000000001,
+      "raw_uplift": 0.05000000000000001,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.04999999999999999,
+      "mean_8bit_target": 1.850371707708594e-17
+    },
+    "block:57:linear_attn.out_proj": {
+      "score": -0.046666666666666676,
+      "raw_uplift": -0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.026666666666666655
+    },
+    "block:57:mlp.down_proj": {
+      "score": -0.03179487179487179,
+      "raw_uplift": -0.03179487179487179,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.013333333333333345,
+      "mean_8bit_target": -0.018461538461538442
+    },
+    "block:57:mlp.gate_proj": {
+      "score": 0.036342857142857156,
+      "raw_uplift": 0.036342857142857156,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": -0.017142857142857126,
+      "mean_8bit_target": 0.01920000000000003
+    },
+    "block:57:mlp.up_proj": {
+      "score": -0.005629629629629616,
+      "raw_uplift": -0.005629629629629616,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.016000000000000014,
+      "mean_8bit_target": 0.010370370370370398
+    },
+    "block:58:linear_attn.in_proj_a": {
+      "score": 0.046666666666666676,
+      "raw_uplift": 0.046666666666666676,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.026666666666666655,
+      "mean_8bit_target": 0.020000000000000025
+    },
+    "block:58:linear_attn.in_proj_b": {
+      "score": 0.0050000000000000044,
+      "raw_uplift": 0.0050000000000000044,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": -0.009999999999999981
+    },
+    "block:58:linear_attn.in_proj_qkv": {
+      "score": -0.05047619047619049,
+      "raw_uplift": -0.05047619047619049,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": 0.03333333333333336,
+      "mean_8bit_target": -0.017142857142857126
+    },
+    "block:58:linear_attn.in_proj_z": {
+      "score": 0.005641025641025654,
+      "raw_uplift": 0.005641025641025654,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.006666666666666682,
+      "mean_8bit_target": 0.012307692307692335
+    },
+    "block:58:linear_attn.out_proj": {
+      "score": 0.039333333333333345,
+      "raw_uplift": 0.039333333333333345,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.013333333333333313,
+      "mean_8bit_target": 0.02600000000000003
+    },
+    "block:58:mlp.down_proj": {
+      "score": 0.041839080459770125,
+      "raw_uplift": 0.041839080459770125,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.026666666666666655,
+      "mean_8bit_target": 0.015172413793103474
+    },
+    "block:58:mlp.gate_proj": {
+      "score": 0.05000000000000001,
+      "raw_uplift": 0.05000000000000001,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.04999999999999999,
+      "mean_8bit_target": 1.850371707708594e-17
+    },
+    "block:58:mlp.up_proj": {
+      "score": 0.03500000000000002,
+      "raw_uplift": 0.03500000000000002,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": 0.020000000000000028
+    },
+    "block:59:mlp.down_proj": {
+      "score": 0.05025641025641026,
+      "raw_uplift": 0.05025641025641026,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.05333333333333332,
+      "mean_8bit_target": -0.0030769230769230583
+    },
+    "block:59:mlp.gate_proj": {
+      "score": 0.030256410256410265,
+      "raw_uplift": 0.030256410256410265,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.013333333333333317,
+      "mean_8bit_target": 0.01692307692307695
+    },
+    "block:59:mlp.up_proj": {
+      "score": 0.013333333333333352,
+      "raw_uplift": 0.013333333333333352,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 1.1102230246251566e-17,
+      "mean_8bit_target": 0.013333333333333362
+    },
+    "block:59:self_attn.k_proj": {
+      "score": 0.037142857142857144,
+      "raw_uplift": 0.037142857142857144,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.017142857142857126,
+      "mean_8bit_target": 0.020000000000000018
+    },
+    "block:59:self_attn.o_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:59:self_attn.q_proj": {
+      "score": 0.0473809523809524,
+      "raw_uplift": 0.0473809523809524,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.014999999999999986,
+      "mean_8bit_target": 0.03238095238095241
+    },
+    "block:59:self_attn.v_proj": {
+      "score": 0.013666666666666688,
+      "raw_uplift": 0.013666666666666688,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.008000000000000007,
+      "mean_8bit_target": 0.021666666666666695
+    },
+    "block:5:linear_attn.in_proj_a": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:5:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:5:linear_attn.in_proj_qkv": {
+      "score": -0.07022222222222224,
+      "raw_uplift": -0.07022222222222224,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.02222222222222225,
+      "mean_8bit_target": -0.04799999999999999
+    },
+    "block:5:linear_attn.in_proj_z": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:5:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:5:mlp.down_proj": {
+      "score": -0.07600000000000003,
+      "raw_uplift": -0.07600000000000003,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.016000000000000028,
+      "mean_8bit_target": -0.06
+    },
+    "block:5:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:5:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:60:linear_attn.in_proj_a": {
+      "score": 0.0408,
+      "raw_uplift": 0.0408,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.01999999999999998,
+      "mean_8bit_target": 0.020800000000000027
+    },
+    "block:60:linear_attn.in_proj_b": {
+      "score": -0.038730158730158726,
+      "raw_uplift": -0.038730158730158726,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 0.004444444444444461,
+      "mean_8bit_target": -0.03428571428571427
+    },
+    "block:60:linear_attn.in_proj_qkv": {
+      "score": -0.018974358974358972,
+      "raw_uplift": -0.018974358974358972,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.02666666666666669,
+      "mean_8bit_target": 0.007692307692307719
+    },
+    "block:60:linear_attn.in_proj_z": {
+      "score": 0.02183574879227054,
+      "raw_uplift": 0.02183574879227054,
+      "confidence": 1.0,
+      "support": 9.0,
+      "mean_4bit_target": -0.004444444444444424,
+      "mean_8bit_target": 0.017391304347826115
+    },
+    "block:60:linear_attn.out_proj": {
+      "score": 0.022051282051282067,
+      "raw_uplift": 0.022051282051282067,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.006666666666666654,
+      "mean_8bit_target": 0.015384615384615413
+    },
+    "block:60:mlp.down_proj": {
+      "score": -0.03172413793103447,
+      "raw_uplift": -0.03172413793103447,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.040000000000000015,
+      "mean_8bit_target": 0.008275862068965543
+    },
+    "block:60:mlp.gate_proj": {
+      "score": 0.054666666666666676,
+      "raw_uplift": 0.054666666666666676,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.04799999999999999,
+      "mean_8bit_target": 0.006666666666666686
+    },
+    "block:60:mlp.up_proj": {
+      "score": 0.05163636363636364,
+      "raw_uplift": 0.05163636363636364,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.04799999999999999,
+      "mean_8bit_target": 0.0036363636363636546
+    },
+    "block:61:linear_attn.in_proj_a": {
+      "score": 0.054666666666666676,
+      "raw_uplift": 0.054666666666666676,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.04799999999999999,
+      "mean_8bit_target": 0.006666666666666686
+    },
+    "block:61:linear_attn.in_proj_b": {
+      "score": 0.04166666666666668,
+      "raw_uplift": 0.04166666666666668,
+      "confidence": 1.0,
+      "support": 8.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.021666666666666695
+    },
+    "block:61:linear_attn.in_proj_qkv": {
+      "score": -0.009999999999999992,
+      "raw_uplift": -0.009999999999999992,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000018,
+      "mean_8bit_target": 0.010000000000000026
+    },
+    "block:61:linear_attn.in_proj_z": {
+      "score": -0.022683982683982695,
+      "raw_uplift": -0.022683982683982695,
+      "confidence": 1.0,
+      "support": 11.0,
+      "mean_4bit_target": 0.019047619047619077,
+      "mean_8bit_target": -0.0036363636363636194
+    },
+    "block:61:linear_attn.out_proj": {
+      "score": 0.02866666666666668,
+      "raw_uplift": 0.02866666666666668,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": -0.00666666666666665,
+      "mean_8bit_target": 0.02200000000000003
+    },
+    "block:61:mlp.down_proj": {
+      "score": 0.010000000000000009,
+      "raw_uplift": 0.010000000000000009,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.01999999999999999,
+      "mean_8bit_target": -0.009999999999999981
+    },
+    "block:61:mlp.gate_proj": {
+      "score": 0.05666666666666668,
+      "raw_uplift": 0.05666666666666668,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.04999999999999999,
+      "mean_8bit_target": 0.006666666666666686
+    },
+    "block:61:mlp.up_proj": {
+      "score": 0.05125925925925927,
+      "raw_uplift": 0.05125925925925927,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.03199999999999999,
+      "mean_8bit_target": 0.019259259259259285
+    },
+    "block:62:linear_attn.in_proj_a": {
+      "score": 0.04177777777777779,
+      "raw_uplift": 0.04177777777777779,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.023999999999999987,
+      "mean_8bit_target": 0.017777777777777806
+    },
+    "block:62:linear_attn.in_proj_b": {
+      "score": -0.052000000000000005,
+      "raw_uplift": -0.052000000000000005,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.020000000000000018,
+      "mean_8bit_target": -0.03199999999999999
+    },
+    "block:62:linear_attn.in_proj_qkv": {
+      "score": -0.009333333333333325,
+      "raw_uplift": -0.009333333333333325,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.020000000000000018,
+      "mean_8bit_target": 0.010666666666666692
+    },
+    "block:62:linear_attn.in_proj_z": {
+      "score": 0.053076923076923084,
+      "raw_uplift": 0.053076923076923084,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": -0.04999999999999999,
+      "mean_8bit_target": 0.003076923076923097
+    },
+    "block:62:linear_attn.out_proj": {
+      "score": 0.013333333333333352,
+      "raw_uplift": 0.013333333333333352,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 1.1102230246251566e-17,
+      "mean_8bit_target": 0.013333333333333362
+    },
+    "block:62:mlp.down_proj": {
+      "score": 0.030256410256410265,
+      "raw_uplift": 0.030256410256410265,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.013333333333333317,
+      "mean_8bit_target": 0.01692307692307695
+    },
+    "block:62:mlp.gate_proj": {
+      "score": 0.013846153846153854,
+      "raw_uplift": 0.013846153846153854,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.013846153846153873
+    },
+    "block:62:mlp.up_proj": {
+      "score": -0.002298850574712628,
+      "raw_uplift": -0.002298850574712628,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": 0.013333333333333345,
+      "mean_8bit_target": 0.011034482758620717
+    },
+    "block:63:mlp.down_proj": {
+      "score": -0.04627450980392158,
+      "raw_uplift": -0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": 0.032941176470588265,
+      "mean_8bit_target": -0.013333333333333315
+    },
+    "block:63:mlp.gate_proj": {
+      "score": 0.02281481481481483,
+      "raw_uplift": 0.02281481481481483,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": -0.007999999999999985,
+      "mean_8bit_target": 0.014814814814814843
+    },
+    "block:63:mlp.up_proj": {
+      "score": 0.014400000000000013,
+      "raw_uplift": 0.014400000000000013,
+      "confidence": 1.0,
+      "support": 7.0,
+      "mean_4bit_target": 1.586032892321652e-17,
+      "mean_8bit_target": 0.014400000000000029
+    },
+    "block:63:self_attn.k_proj": {
+      "score": 0.09454545454545454,
+      "raw_uplift": 0.09454545454545454,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.014545454545454528,
+      "mean_8bit_target": 0.08000000000000002
+    },
+    "block:63:self_attn.o_proj": {
+      "score": -0.010000000000000012,
+      "raw_uplift": -0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": 0.0
+    },
+    "block:63:self_attn.q_proj": {
+      "score": -0.017681159420289836,
+      "raw_uplift": -0.017681159420289836,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.03333333333333335,
+      "mean_8bit_target": 0.01565217391304351
+    },
+    "block:63:self_attn.v_proj": {
+      "score": -0.0007407407407407328,
+      "raw_uplift": -0.0007407407407407328,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.020000000000000018,
+      "mean_8bit_target": 0.019259259259259285
+    },
+    "block:6:linear_attn.in_proj_a": {
+      "score": 0.003076923076923069,
+      "raw_uplift": 0.006153846153846138,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": -0.006153846153846138,
+      "mean_8bit_target": 0.0
+    },
+    "block:6:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:6:linear_attn.in_proj_qkv": {
+      "score": 0.04545454545454547,
+      "raw_uplift": 0.04545454545454547,
+      "confidence": 1.0,
+      "support": 10.0,
+      "mean_4bit_target": -0.019999999999999983,
+      "mean_8bit_target": 0.025454545454545487
+    },
+    "block:6:linear_attn.in_proj_z": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:6:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:6:mlp.down_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:6:mlp.gate_proj": {
+      "score": 0.04436974789915968,
+      "raw_uplift": 0.04436974789915968,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.011428571428571411,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:6:mlp.up_proj": {
+      "score": 0.024129554655870456,
+      "raw_uplift": 0.024129554655870456,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.0030769230769230583,
+      "mean_8bit_target": 0.0210526315789474
+    },
+    "block:7:mlp.down_proj": {
+      "score": -0.04177777777777779,
+      "raw_uplift": -0.04177777777777779,
+      "confidence": 1.0,
+      "support": 5.0,
+      "mean_4bit_target": 0.017777777777777806,
+      "mean_8bit_target": -0.023999999999999987
+    },
+    "block:7:mlp.gate_proj": {
+      "score": 0.034493927125506085,
+      "raw_uplift": 0.034493927125506085,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.009230769230769213,
+      "mean_8bit_target": 0.025263157894736873
+    },
+    "block:7:mlp.up_proj": {
+      "score": 0.06571428571428573,
+      "raw_uplift": 0.06571428571428573,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.025714285714285696,
+      "mean_8bit_target": 0.040000000000000036
+    },
+    "block:7:self_attn.k_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:7:self_attn.o_proj": {
+      "score": -0.08000000000000002,
+      "raw_uplift": -0.08000000000000002,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.06
+    },
+    "block:7:self_attn.q_proj": {
+      "score": 0.0022222222222222305,
+      "raw_uplift": 0.0022222222222222305,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": -0.006666666666666654,
+      "mean_8bit_target": -0.004444444444444424
+    },
+    "block:7:self_attn.v_proj": {
+      "score": 0.032941176470588245,
+      "raw_uplift": 0.032941176470588245,
+      "confidence": 1.0,
+      "support": 12.0,
+      "mean_4bit_target": 1.850371707708594e-17,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:8:linear_attn.in_proj_a": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:8:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:8:linear_attn.in_proj_qkv": {
+      "score": -0.03571428571428573,
+      "raw_uplift": -0.03571428571428573,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.015714285714285743,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:8:linear_attn.in_proj_z": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:8:linear_attn.out_proj": {
+      "score": 0.030158730158730173,
+      "raw_uplift": 0.030158730158730173,
+      "confidence": 1.0,
+      "support": 14.0,
+      "mean_4bit_target": -0.005714285714285695,
+      "mean_8bit_target": 0.024444444444444477
+    },
+    "block:8:mlp.down_proj": {
+      "score": 0.04820512820512819,
+      "raw_uplift": 0.04820512820512819,
+      "confidence": 1.0,
+      "support": 3.0,
+      "mean_4bit_target": -0.02153846153846152,
+      "mean_8bit_target": 0.026666666666666672
+    },
+    "block:8:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:8:mlp.up_proj": {
+      "score": 0.039676113360323895,
+      "raw_uplift": 0.039676113360323895,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.012307692307692289,
+      "mean_8bit_target": 0.027368421052631608
+    },
+    "block:9:linear_attn.in_proj_a": {
+      "score": 0.1057142857142857,
+      "raw_uplift": 0.1057142857142857,
+      "confidence": 1.0,
+      "support": 2.0,
+      "mean_4bit_target": -0.025714285714285696,
+      "mean_8bit_target": 0.08000000000000002
+    },
+    "block:9:linear_attn.in_proj_b": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:9:linear_attn.in_proj_qkv": {
+      "score": -0.03846153846153848,
+      "raw_uplift": -0.03846153846153848,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.01846153846153849,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:9:linear_attn.in_proj_z": {
+      "score": 0.034493927125506085,
+      "raw_uplift": 0.034493927125506085,
+      "confidence": 1.0,
+      "support": 13.0,
+      "mean_4bit_target": -0.009230769230769213,
+      "mean_8bit_target": 0.025263157894736873
+    },
+    "block:9:linear_attn.out_proj": {
+      "score": -0.07,
+      "raw_uplift": -0.07,
+      "confidence": 1.0,
+      "support": 4.0,
+      "mean_4bit_target": 0.020000000000000025,
+      "mean_8bit_target": -0.04999999999999999
+    },
+    "block:9:mlp.down_proj": {
+      "score": -0.03846153846153848,
+      "raw_uplift": -0.03846153846153848,
+      "confidence": 1.0,
+      "support": 6.0,
+      "mean_4bit_target": 0.01846153846153849,
+      "mean_8bit_target": -0.01999999999999999
+    },
+    "block:9:mlp.gate_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "block:9:mlp.up_proj": {
+      "score": 0.04627450980392158,
+      "raw_uplift": 0.04627450980392158,
+      "confidence": 1.0,
+      "support": 15.0,
+      "mean_4bit_target": -0.013333333333333315,
+      "mean_8bit_target": 0.032941176470588265
+    },
+    "global::lm_head": {
+      "score": 0.010000000000000012,
+      "raw_uplift": 0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.0,
+      "mean_8bit_target": 0.020000000000000025
+    }
+  },
+  "component_scores": {
+    "linear_attn.in_proj_a": {
+      "score": 0.016382978723404263,
+      "raw_uplift": 0.016382978723404263,
+      "confidence": 1.0,
+      "support": 613.0,
+      "mean_4bit_target": 2.0556331695751268e-17,
+      "mean_8bit_target": 0.016382978723404284
+    },
+    "linear_attn.in_proj_b": {
+      "score": 0.020100098042993356,
+      "raw_uplift": 0.020100098042993356,
+      "confidence": 1.0,
+      "support": 678.0,
+      "mean_4bit_target": -0.001103047895500705,
+      "mean_8bit_target": 0.01899705014749265
+    },
+    "linear_attn.in_proj_qkv": {
+      "score": -0.013081434093029455,
+      "raw_uplift": -0.013081434093029455,
+      "confidence": 1.0,
+      "support": 488.0,
+      "mean_4bit_target": 0.019016393442622976,
+      "mean_8bit_target": 0.005934959349593522
+    },
+    "linear_attn.in_proj_z": {
+      "score": 0.013769092542677453,
+      "raw_uplift": 0.013769092542677453,
+      "confidence": 1.0,
+      "support": 672.0,
+      "mean_4bit_target": 0.002619047619047641,
+      "mean_8bit_target": 0.016388140161725094
+    },
+    "linear_attn.out_proj": {
+      "score": -0.010671933261199223,
+      "raw_uplift": -0.010671933261199223,
+      "confidence": 1.0,
+      "support": 466.0,
+      "mean_4bit_target": 0.014620431115276502,
+      "mean_8bit_target": 0.003948497854077278
+    },
+    "mlp.down_proj": {
+      "score": -0.0004329896907216482,
+      "raw_uplift": -0.0004329896907216482,
+      "confidence": 1.0,
+      "support": 948.0,
+      "mean_4bit_target": 0.010000000000000024,
+      "mean_8bit_target": 0.009567010309278376
+    },
+    "mlp.gate_proj": {
+      "score": 0.018548029377080052,
+      "raw_uplift": 0.018548029377080052,
+      "confidence": 1.0,
+      "support": 862.0,
+      "mean_4bit_target": -0.001146637265711114,
+      "mean_8bit_target": 0.017401392111368937
+    },
+    "mlp.up_proj": {
+      "score": 0.02070179799486288,
+      "raw_uplift": 0.02070179799486288,
+      "confidence": 1.0,
+      "support": 894.0,
+      "mean_4bit_target": -0.0015659955257270484,
+      "mean_8bit_target": 0.01913580246913583
+    },
+    "self_attn.k_proj": {
+      "score": 0.018686522880292142,
+      "raw_uplift": 0.018686522880292142,
+      "confidence": 1.0,
+      "support": 127.0,
+      "mean_4bit_target": 0.010289855072463792,
+      "mean_8bit_target": 0.028976377952755934
+    },
+    "self_attn.o_proj": {
+      "score": 0.004226996449419269,
+      "raw_uplift": 0.004226996449419269,
+      "confidence": 1.0,
+      "support": 87.0,
+      "mean_4bit_target": 0.017382198952879607,
+      "mean_8bit_target": 0.021609195402298876
+    },
+    "self_attn.q_proj": {
+      "score": 0.0063136023640225376,
+      "raw_uplift": 0.0063136023640225376,
+      "confidence": 1.0,
+      "support": 196.0,
+      "mean_4bit_target": 0.014298642533936675,
+      "mean_8bit_target": 0.020612244897959212
+    },
+    "self_attn.v_proj": {
+      "score": 0.013858721389108136,
+      "raw_uplift": 0.013858721389108136,
+      "confidence": 1.0,
+      "support": 181.0,
+      "mean_4bit_target": 0.014428571428571454,
+      "mean_8bit_target": 0.02828729281767959
+    },
+    "global::lm_head": {
+      "score": 0.010000000000000012,
+      "raw_uplift": 0.020000000000000025,
+      "confidence": 0.5,
+      "support": 1.0,
+      "mean_4bit_target": 0.0,
+      "mean_8bit_target": 0.020000000000000025
+    }
+  }
+}
