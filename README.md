@@ -1,44 +1,98 @@
 # TA-MPQ
 
-This workspace contains the first executable scaffold for the TA-MPQ project.
+This repository now tracks the active `TA-MPQ` workflow around:
 
-Current scope:
+- `Qwen/Qwen3.5-27B` as the compressed source model
+- `Qwen/Qwen3.5-9B` as the native baseline
+- `uniform 8-bit 27B` as the main matched-budget reference
+- `MATH-500` as the current task used to train and validate task-aware search
 
-- lock the experiment contract around `Qwen/Qwen3.5-9B` vs `Qwen/Qwen3.5-4B`
-- run a GSM8K baseline harness on Modal
-- track exact-match accuracy, latency, and GPU memory
-- probe mixed-precision feasibility before building surrogate search
+The project is no longer on the early `9B -> 4B` scaffold. The active route is:
 
-## Experiment contract
+- search in `{4, 8, 16}`
+- target the measured `uniform 8-bit` weight-footprint budget
+- learn a surrogate on executed task-aware policies
+- use closed-loop search to produce new mixed-precision candidates
+- compare the resulting quantized `27B` against both `uniform 8-bit` and native `9B`
 
-The active contract is stored in [configs/experiment_contract.json](/Users/aaronyu/Desktop/TA-MPQ/configs/experiment_contract.json).
+## Active contract
 
-Key rule:
+The main experiment contract is:
 
-- compare a task-aware quantized `9B` checkpoint against the native `4B` baseline at approximately matched VRAM budget, not matched parameter count
+- `configs/experiment_contract_27b_9b_math500.json`
 
-## Quickstart
+Key rules in the current contract:
 
-Run the native baselines on Modal:
+- compare task-aware quantized `27B` against `uniform 8-bit 27B`
+- also require the task-aware model to remain stronger than native `9B`
+- use the measured `uniform 8-bit` footprint as the search budget
+- search over `4 / 8 / 16-bit` group assignments
+
+## Current status
+
+The current stable takeaway is:
+
+- task-aware quantized `27B` is stronger than native `9B`
+- but it has not yet stably beaten `uniform 8-bit`
+
+The active debugging direction is:
+
+- run targeted precision ablations
+- update group-value priors from real accuracy drops
+- retrain the surrogate
+- rerun the `uniform8-aware` search
+
+## Main entrypoints
+
+Run the current closed-loop search:
 
 ```bash
-modal run src/ta_mpq/modal_app.py::main --limit 10
+python3 -m modal run src/ta_mpq/modal_feasibility_app.py::run_surrogate_closed_loop
 ```
 
-Probe mixed-precision feasibility with the default smoke-test policy:
+Run targeted precision ablation sensitivity:
 
 ```bash
-modal run src/ta_mpq/modal_feasibility_app.py::run_feasibility_probe --calibration-limit 16
+python3 -m modal run src/ta_mpq/modal_feasibility_app.py::run_precision_ablation_sensitivity
 ```
 
-Run local unit tests:
+Run large-sample evaluation from a closed-loop summary:
+
+```bash
+python3 -m modal run src/ta_mpq/modal_feasibility_app.py::run_large_sample_eval_from_closed_loop
+```
+
+Run unit tests:
 
 ```bash
 python3 -m unittest discover -s tests
 ```
 
-## Notes
+## Output layout
 
-- The baseline harness is wired for `GSM8K` first because it is cheap to evaluate and stable to debug.
-- The mixed-precision policy layer supports the project search space `{2, 3, 4, 8}`.
-- The current `llm-compressor` runtime bridge is intentionally stricter and only emits backend configs for `{4, 8}` until we verify whether lower-bit mixed precision is actually deployable for this model family.
+Current-route artifacts live under:
+
+- `outputs/closed_loop/`
+- `outputs/search/`
+- `outputs/surrogate/`
+- `outputs/policies/`
+- `outputs/evaluations/`
+- `outputs/feasibility/`
+- `outputs/sensitivity/`
+
+Older retired routes are being moved under:
+
+- `outputs/archive/`
+
+This keeps the current `uniform8-aware` line readable while preserving historical artifacts for reference.
+
+## Practical note
+
+If you are trying to improve the current route, the most useful next step is usually not “more generations”.
+It is:
+
+1. run targeted `16 -> 8` and `8 -> 4` ablations
+2. update the group-value prior
+3. retrain the surrogate
+4. rerun the `uniform8-aware` `4/8/16` search
+5. only then rerun the large-sample benchmark
