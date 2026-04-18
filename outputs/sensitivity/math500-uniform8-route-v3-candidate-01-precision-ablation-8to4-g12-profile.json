@@ -1,0 +1,246 @@
+{
+  "ablation_manifest_path": "outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12/manifest.json",
+  "evaluation_manifest_path": "outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12-eval-manifest.json",
+  "grouping": "per_block_component",
+  "groups": [
+    {
+      "ablated_accuracy": 0.4,
+      "ablated_bit_width": 4,
+      "accuracy_drop": -0.12,
+      "combined_sensitivity": 0.25,
+      "component_type": "mlp.down_proj",
+      "improvement_if_downgraded": 0.12,
+      "layer_names": [
+        "model.layers.63.mlp.down_proj"
+      ],
+      "name": "block:63:mlp.down_proj",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 89128960,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 1.0,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.7163350494760409
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.225,
+      "component_type": "linear_attn.in_proj_qkv",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.0.linear_attn.in_proj_qkv"
+      ],
+      "name": "block:0:linear_attn.in_proj_qkv",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 52428800,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.9,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.725746762083221
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.225,
+      "component_type": "linear_attn.in_proj_qkv",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.60.linear_attn.in_proj_qkv"
+      ],
+      "name": "block:60:linear_attn.in_proj_qkv",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 52428800,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.9,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.7093923695849136
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.225,
+      "component_type": "linear_attn.in_proj_qkv",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.62.linear_attn.in_proj_qkv"
+      ],
+      "name": "block:62:linear_attn.in_proj_qkv",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 52428800,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.9,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.6920440619891151
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.225,
+      "component_type": "linear_attn.in_proj_qkv",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.57.linear_attn.in_proj_qkv"
+      ],
+      "name": "block:57:linear_attn.in_proj_qkv",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 52428800,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.9,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.6825509858677965
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.2,
+      "component_type": "mlp.gate_proj",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.62.mlp.gate_proj"
+      ],
+      "name": "block:62:mlp.gate_proj",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 89128960,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.8,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.7126577469099029
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.2,
+      "component_type": "mlp.gate_proj",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.63.mlp.gate_proj"
+      ],
+      "name": "block:63:mlp.gate_proj",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 89128960,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.8,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.7023321274350125
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.2,
+      "component_type": "mlp.gate_proj",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.59.mlp.gate_proj"
+      ],
+      "name": "block:59:mlp.gate_proj",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 89128960,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.8,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.6798562295031306
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.1625,
+      "component_type": "linear_attn.in_proj_a",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.0.linear_attn.in_proj_a"
+      ],
+      "name": "block:0:linear_attn.in_proj_a",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 245760,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.65,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.8070781266204384
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.1625,
+      "component_type": "linear_attn.in_proj_a",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.60.linear_attn.in_proj_a"
+      ],
+      "name": "block:60:linear_attn.in_proj_a",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 245760,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.65,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.7532648015983096
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.1625,
+      "component_type": "linear_attn.in_proj_a",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.62.linear_attn.in_proj_a"
+      ],
+      "name": "block:62:linear_attn.in_proj_a",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 245760,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.65,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.717528280085105
+    },
+    {
+      "ablated_accuracy": 0.28,
+      "ablated_bit_width": 4,
+      "accuracy_drop": 0.0,
+      "combined_sensitivity": 0.125,
+      "component_type": "self_attn.v_proj",
+      "improvement_if_downgraded": 0.0,
+      "layer_names": [
+        "model.layers.63.self_attn.v_proj"
+      ],
+      "name": "block:63:self_attn.v_proj",
+      "normalized_accuracy_drop": 0.0,
+      "parameter_count": 5242880,
+      "positive_accuracy_drop": 0.0,
+      "prior_sensitivity": 0.5,
+      "reference_accuracy": 0.28,
+      "reference_bit_width": 8,
+      "selection_score": 0.775
+    }
+  ],
+  "num_ablations": 12,
+  "prior_weight": 0.25,
+  "reference_accuracy": 0.28,
+  "reference_bit_counts": {
+    "16": 83,
+    "4": 180,
+    "8": 234
+  },
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json",
+  "reference_evaluation_path": "outputs/evaluations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12-reference.json",
+  "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json"
+}

@@ -523,6 +523,7 @@ def run_surrogate_search_remote(
         mutation_rate=mutation_rate,
         uncertainty_penalty=uncertainty_penalty,
         group_value_scores=group_value_scores,
+        sensitivity_profile_payload=sensitivity_profile_payload,
         reference_accuracy=reference_accuracy,
         top_k=top_k,
         seed=seed,
@@ -756,6 +757,159 @@ def run_quantized_vs_native_eval(
 
 
 @app.local_entrypoint()
+def run_build_no_surrogate_local_search_round(
+    report_path: str,
+    base_candidate_paths: str,
+    contract_path: str = "configs/experiment_contract_27b_9b_math500.json",
+    target_budget_gb: float = 0.0,
+    allowed_bits: str = "4,8,16",
+    group_value_prior_path: str = "",
+    ablation_profile_paths: str = "",
+    beam_size: int = 3,
+    max_candidates: int = 8,
+    output_name: str = "",
+    output_dir: str = "",
+) -> None:
+    from ta_mpq.local_search import build_no_surrogate_local_search_round
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    resolved_target_budget = (
+        float(target_budget_gb)
+        if target_budget_gb > 0
+        else float(contract.search_target_budget_gb or 0.0)
+    )
+    if resolved_target_budget <= 0.0:
+        raise ValueError("target_budget_gb must be positive or present in the contract")
+
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    report_payload["report_path"] = report_path
+    candidate_paths = [
+        item.strip()
+        for item in base_candidate_paths.replace("\n", ",").split(",")
+        if item.strip()
+    ]
+    if not candidate_paths:
+        raise ValueError("base_candidate_paths must include at least one candidate path")
+    candidate_payloads = [_load_json(PROJECT_ROOT / candidate_path) for candidate_path in candidate_paths]
+    normalized_allowed_bits = tuple(
+        sorted({int(part.strip()) for part in allowed_bits.split(",") if part.strip()})
+    )
+    group_value_prior_payload = (
+        _load_json(PROJECT_ROOT / group_value_prior_path) if group_value_prior_path else None
+    )
+    profile_paths = [
+        item.strip()
+        for item in ablation_profile_paths.replace("\n", ",").split(",")
+        if item.strip()
+    ]
+    ablation_profile_payloads = [_load_json(PROJECT_ROOT / path) for path in profile_paths]
+
+    effective_output_name = output_name or (
+        f"{Path(candidate_paths[0]).stem}-no-surrogate-local-search"
+    )
+    effective_output_dir = output_dir or (
+        PROJECT_ROOT / "outputs" / "policies" / _slugify(effective_output_name)
+    )
+    manifest = build_no_surrogate_local_search_round(
+        report_payload=report_payload,
+        base_candidate_payloads=candidate_payloads,
+        base_candidate_paths=candidate_paths,
+        target_budget_gb=resolved_target_budget,
+        output_dir=effective_output_dir,
+        allowed_bits=normalized_allowed_bits,
+        beam_size=beam_size,
+        max_candidates=max_candidates,
+        group_value_prior_payload=group_value_prior_payload,
+        group_value_prior_path=group_value_prior_path or None,
+        ablation_profile_payloads=ablation_profile_payloads,
+        ablation_profile_paths=profile_paths,
+    )
+    manifest["contract_path"] = contract_path
+    manifest["report_path"] = report_path
+    save_summary(
+        PROJECT_ROOT / "outputs" / "search" / f"{_slugify(effective_output_name)}.json",
+        manifest,
+    )
+
+
+@app.local_entrypoint()
+def run_evaluate_candidate_manifest(
+    candidate_manifest_path: str,
+    contract_path: str = "configs/experiment_contract_27b_9b_math500.json",
+    task_name: str = "",
+    limit: int = 25,
+    max_new_tokens: int = 32,
+    calibration_limit: int = 4,
+    policy_source: str = "llmcompressor",
+    backend_variant: str = "source",
+    output_name: str = "",
+) -> None:
+    from ta_mpq.local_search import select_best_candidate_from_evaluation_manifest
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    resolved_task_name = task_name or contract.task_name
+    manifest_payload = _load_json(PROJECT_ROOT / candidate_manifest_path)
+    manifest_label = _manifest_output_label(PROJECT_ROOT / candidate_manifest_path)
+    report_payload_path = manifest_payload.get("report_path")
+
+    candidate_records: list[dict[str, Any]] = []
+    for entry in manifest_payload.get("candidates", []):
+        candidate_path = str(entry["path"])
+        artifact_dir, report_output_path = _resolve_candidate_artifact_dir(
+            contract=contract,
+            candidate_path=candidate_path,
+            policy_source=policy_source,
+            backend_variant=backend_variant,
+            calibration_limit=calibration_limit,
+            report_payload_path=report_payload_path,
+        )
+        evaluation_summary = evaluate_task_source_model.remote(
+            model_ref=artifact_dir,
+            tokenizer_source=contract.compressed_source_model_id,
+            model_label=f"{contract.compressed_source_model_id}-{Path(candidate_path).stem}",
+            task_name=resolved_task_name,
+            limit=limit,
+            max_new_tokens=max_new_tokens,
+            load_dtype="auto",
+        )
+        evaluation_output_path = (
+            PROJECT_ROOT
+            / "outputs"
+            / "evaluations"
+            / f"{_slugify(manifest_label)}-{Path(candidate_path).stem}.json"
+        )
+        save_summary(evaluation_output_path, evaluation_summary)
+        candidate_records.append(
+            {
+                **entry,
+                "candidate_path": candidate_path,
+                "report_path": to_relative_path(Path(report_output_path), PROJECT_ROOT),
+                "evaluation_path": to_relative_path(evaluation_output_path, PROJECT_ROOT),
+                "accuracy": float(evaluation_summary.get("accuracy", 0.0)),
+                "num_correct": int(evaluation_summary.get("num_correct", 0)),
+            }
+        )
+
+    evaluation_manifest = {
+        "candidate_manifest_path": candidate_manifest_path,
+        "contract_path": contract_path,
+        "task_name": resolved_task_name,
+        "limit": limit,
+        "max_new_tokens": max_new_tokens,
+        "policy_source": policy_source,
+        "backend_variant": backend_variant,
+        "candidates": candidate_records,
+    }
+    best_candidate = select_best_candidate_from_evaluation_manifest(evaluation_manifest)
+    evaluation_manifest["best_candidate"] = best_candidate
+    effective_output_name = output_name or f"{manifest_label}-eval"
+    save_summary(
+        PROJECT_ROOT / "outputs" / "evaluations" / f"{_slugify(effective_output_name)}.json",
+        evaluation_manifest,
+    )
+
+
+@app.local_entrypoint()
 def run_task_sensitivity_probe(
     contract_path: str = "configs/experiment_contract_27b_9b.json",
     task_name: str = "",
@@ -779,6 +933,49 @@ def run_task_sensitivity_probe(
     )
     effective_output_name = output_name or (
         f"{contract.name}-{resolved_task_name}-{model_role}-{grouping}-sensitivity"
+    )
+    save_summary(
+        PROJECT_ROOT / "outputs" / "sensitivity" / f"{_slugify(effective_output_name)}.json",
+        profile,
+    )
+
+
+@app.local_entrypoint()
+def run_build_task_kl_sensitivity_profile(
+    report_path: str,
+    kl_stats_path: str,
+    grouping: str = "per_block_component",
+    kl_weight: float = 0.55,
+    output_name: str = "",
+) -> None:
+    from ta_mpq.search import layer_stats_from_report
+    from ta_mpq.sensitivity import ModuleKLDivergenceStat, build_task_kl_sensitivity_profile
+
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    kl_payload = _load_json(PROJECT_ROOT / kl_stats_path)
+    raw_stats = kl_payload.get("module_kl_stats", kl_payload)
+    if not isinstance(raw_stats, list):
+        raise ValueError("kl_stats_path must point to a JSON list or {'module_kl_stats': [...]} payload")
+
+    kl_stats = [
+        ModuleKLDivergenceStat(
+            name=str(item["name"]),
+            parameter_count=int(item["parameter_count"]),
+            mean_output_kl=float(item["mean_output_kl"]),
+            num_observations=int(item.get("num_observations", 0)),
+        )
+        for item in raw_stats
+    ]
+    profile = build_task_kl_sensitivity_profile(
+        layer_stats=layer_stats_from_report(report_payload),
+        kl_stats=kl_stats,
+        grouping=grouping,
+        kl_weight=kl_weight,
+    )
+    profile["source_report_path"] = report_path
+    profile["source_kl_stats_path"] = kl_stats_path
+    effective_output_name = output_name or (
+        f"{Path(report_path).stem}-{Path(kl_stats_path).stem}-{grouping}-kl-sensitivity"
     )
     save_summary(
         PROJECT_ROOT / "outputs" / "sensitivity" / f"{_slugify(effective_output_name)}.json",

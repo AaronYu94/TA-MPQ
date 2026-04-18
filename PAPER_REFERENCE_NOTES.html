@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TA-MPQ Paper Reference Notes</title>
+    <style>
+      :root {
+        --bg: #f6f2ea;
+        --paper: #fffdf8;
+        --ink: #1f1a16;
+        --muted: #6c6157;
+        --line: #ddd2c3;
+        --accent: #7b4b2a;
+        --accent-soft: #efe1d3;
+        --good: #1f6f46;
+        --warn: #8a5a14;
+        --shadow: 0 10px 30px rgba(40, 28, 17, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua",
+          Palatino, Georgia, serif;
+        background: linear-gradient(180deg, #f8f4ed 0%, var(--bg) 100%);
+        color: var(--ink);
+        line-height: 1.65;
+      }
+
+      .page {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 40px 24px 64px;
+      }
+
+      .hero {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px 30px;
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      h1 {
+        margin-top: 14px;
+        font-size: clamp(32px, 5vw, 52px);
+      }
+
+      .hero p {
+        margin: 16px 0 0;
+        max-width: 900px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      .stack {
+        display: grid;
+        gap: 24px;
+        margin-top: 28px;
+      }
+
+      .paper-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .paper-head {
+        padding: 24px 28px 20px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(180deg, #fffefb 0%, #faf4ec 100%);
+      }
+
+      .paper-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .tag {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--muted);
+      }
+
+      .paper-head h2 {
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+
+      .paper-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .paper-body {
+        padding: 26px 28px 30px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+
+      .section {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fffdfa;
+        padding: 18px 18px 16px;
+      }
+
+      .section h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .section p,
+      .section li {
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      .borrow-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+      }
+
+      .borrow-table th,
+      .borrow-table td {
+        text-align: left;
+        padding: 12px 12px;
+        vertical-align: top;
+        border-top: 1px solid var(--line);
+      }
+
+      .borrow-table thead th {
+        border-top: none;
+        font-size: 14px;
+        color: var(--muted);
+        background: #faf5ee;
+      }
+
+      .borrow-table td {
+        font-size: 15px;
+      }
+
+      .borrow-level {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .borrow-direct {
+        background: rgba(31, 111, 70, 0.12);
+        color: var(--good);
+      }
+
+      .borrow-adapt {
+        background: rgba(138, 90, 20, 0.14);
+        color: var(--warn);
+      }
+
+      .borrow-secondary {
+        background: rgba(72, 93, 124, 0.12);
+        color: #36506f;
+      }
+
+      .borrow-hold {
+        background: rgba(108, 97, 87, 0.12);
+        color: #5c5249;
+      }
+
+      .codeish {
+        font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+        font-size: 0.95em;
+        background: #f3ece2;
+        border: 1px solid #e4d5c1;
+        border-radius: 8px;
+        padding: 2px 7px;
+        color: #5a3b23;
+      }
+
+      .callout {
+        margin-top: 18px;
+        padding: 16px 18px;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        border-radius: 12px;
+      }
+
+      .callout strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .placeholder {
+        border: 2px dashed var(--line);
+        background: rgba(255, 255, 255, 0.55);
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          padding: 22px 14px 48px;
+        }
+
+        .hero,
+        .paper-head,
+        .paper-body {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .borrow-table,
+        .borrow-table thead,
+        .borrow-table tbody,
+        .borrow-table th,
+        .borrow-table td,
+        .borrow-table tr {
+          display: block;
+        }
+
+        .borrow-table thead {
+          display: none;
+        }
+
+        .borrow-table td {
+          border-top: none;
+          border-bottom: 1px solid var(--line);
+          padding: 10px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <span class="eyebrow">TA-MPQ Literature Notes</span>
+        <h1>可直接借鉴的论文方法整理</h1>
+        <p>
+          这页只做一件事：把每篇论文里值得吸收到
+          <span class="codeish">TA-MPQ</span>
+          当前路线里的方法点整理清楚。后续如果你再发论文，我们就在这页继续往下追加，不改现有结构。
+        </p>
+      </section>
+
+      <section class="stack">
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Cross-paper matrix</span>
+              <span class="tag">Decision support</span>
+              <span class="tag">TA-MPQ current route</span>
+            </div>
+            <h2>横向对照矩阵</h2>
+            <p>
+              这一块不再逐篇阅读，而是直接回答三个问题：哪篇更适合借信号，哪篇更适合借搜索，
+              哪篇更适合做 baseline 或部署侧参考。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <section class="section">
+              <h3>跨论文对照表</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>论文</th>
+                    <th>最适合借的层次</th>
+                    <th>当前价值</th>
+                    <th>对 TA-MPQ 现在最有用的点</th>
+                    <th>当前不建议怎么用</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>You Had One Job</strong></td>
+                    <td>Task-aware signal / ablation framing</td>
+                    <td><span class="borrow-level borrow-direct">高</span></td>
+                    <td>直接支持 task-aware PTQ、TAQO、TAQ-KL 和 calibration-vs-policy ablation。</td>
+                    <td>不要把它的 score-then-allocate 直接替换成我们现有的 search。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mixed-Precision Survey</strong></td>
+                    <td>Taxonomy / terminology / scope</td>
+                    <td><span class="borrow-level borrow-direct">高</span></td>
+                    <td>规范 mixed precision、granularity、MPW 范围和 related-work 语言。</td>
+                    <td>不要把它当搜索算法来源。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>GPTQ</strong></td>
+                    <td>PTQ baseline / second-order intuition</td>
+                    <td><span class="borrow-level borrow-adapt">中</span></td>
+                    <td>提供 Hessian-aware PTQ baseline 和 layer-wise reconstruction 参照系。</td>
+                    <td>不要把它当 task-aware allocation 方法。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>AWQ</strong></td>
+                    <td>Activation-aware saliency / baseline</td>
+                    <td><span class="borrow-level borrow-direct">高</span></td>
+                    <td>最适合支撑 activation-based importance 和“保护少量关键部分”这条逻辑。</td>
+                    <td>不要直接把 AWQ 当 uniform8-aware search 的替代方案。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>MorphServe</strong></td>
+                    <td>Serving / runtime adaptation</td>
+                    <td><span class="borrow-level borrow-secondary">补充</span></td>
+                    <td>支持 impact profiling 的系统价值，适合未来讲 deployment story。</td>
+                    <td>不要把主线切成 runtime adaptation。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>ScaleBITS</strong></td>
+                    <td>Budgeted allocation / scalable search</td>
+                    <td><span class="borrow-level borrow-direct">最高</span></td>
+                    <td>最接近我们当前问题：预算约束、硬件友好 partition、progressive sensitivity。</td>
+                    <td>不要忽略它对 search cost 和 partition granularity 的提醒。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>RAMP</strong></td>
+                    <td>Policy search / reward / feature design</td>
+                    <td><span class="borrow-level borrow-direct">最高</span></td>
+                    <td>最适合借 layer feature 设计、quality-prioritized reward、搜索器角色表述。</td>
+                    <td>不要现在就把主线从 surrogate+evolution 直接切成 RL。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">For TA-MPQ now</span>
+              <span class="tag">Decision layer</span>
+            </div>
+            <h2>当前路线下的决策区块</h2>
+            <p>
+              这一块只回答现在该吸收什么、接下来该做什么，以及哪些方向先不要扩。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>已经对齐当前主线的点</h3>
+                <ul>
+                  <li><strong>You Had One Job</strong>：TAQO 和 calibration-vs-policy framing，已经和当前 targeted ablation 方向高度对齐。</li>
+                  <li><strong>AWQ</strong>：activation-aware saliency 已经和我们现有的 prior / feature 设计兼容。</li>
+                  <li><strong>ScaleBITS</strong>：progressive sensitivity 和 budgeted allocation framing，最接近当前 uniform8-aware 路线。</li>
+                  <li><strong>RAMP</strong>：policy search、layer feature 和 reward 设计，最适合继续补强我们现在的搜索器。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>下一步最值得吸收的内容</h3>
+                <ul>
+                  <li>从 <strong>ScaleBITS</strong> 借 “围绕当前量化参考点估计 sensitivity” 的表述，强化现在 ablation-driven prior 的理论依据。</li>
+                  <li>从 <strong>RAMP</strong> 借 layer feature 分组方式，补强 surrogate dataset 的结构化特征。</li>
+                  <li>从 <strong>You Had One Job</strong> 借 TAQ-KL 类信号，作为现有 ablation 和 activation signal 之间的补充。</li>
+                  <li>从 <strong>AWQ</strong> 借 “只保护极少数真正值钱部分” 这条预算直觉，继续约束 16-bit 分配。</li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="grid two" style="margin-top: 18px">
+              <section class="section">
+                <h3>当前不建议优先推进的方向</h3>
+                <ul>
+                  <li><strong>MorphServe</strong> 式 runtime adaptation：对未来部署故事有帮助，但不是当前主瓶颈。</li>
+                  <li><strong>直接切 RL</strong>：RAMP 很有参考价值，但现在更值得先借 reward 和 feature，而不是整条训练范式换掉。</li>
+                  <li><strong>只靠 GPTQ/AWQ 做结论</strong>：它们更适合 baseline / reference，不足以替代 task-aware search 这条主线。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>如果把这页当知识库，现在最先看哪几篇</h3>
+                <ul>
+                  <li><strong>先看 ScaleBITS</strong>：它最接近当前预算约束 mixed-precision allocation 的问题定义。</li>
+                  <li><strong>再看 RAMP</strong>：它最接近当前搜索器层面的相关工作。</li>
+                  <li><strong>再看 You Had One Job</strong>：它最适合补 task-aware signal 和 ablation 设计。</li>
+                  <li><strong>AWQ / GPTQ</strong>：主要作为 baseline 和信号设计参照。</li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="callout">
+              <strong>当前最值得吸收的组合</strong>
+              如果只选一组最适合现在立刻并入 TA-MPQ 的内容，优先是：
+              <span class="codeish">ScaleBITS 的 progressive sensitivity</span> +
+              <span class="codeish">RAMP 的 feature / reward design</span> +
+              <span class="codeish">You Had One Job 的 task-aware ablation framing</span>。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Knowledge base layer</span>
+              <span class="tag">Project mapping</span>
+            </div>
+            <h2>项目知识库总表</h2>
+            <p>
+              这一块把文献直接映射到当前 TA-MPQ 工作流里，目标是减少“读完知道很好，但不知道现在怎么用”的情况。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <section class="section">
+              <h3>论文到工作流的直接映射</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>论文</th>
+                    <th>最匹配的工作流位置</th>
+                    <th>当前状态</th>
+                    <th>现在最合理的动作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>You Had One Job</strong></td>
+                    <td><span class="codeish">targeted ablation</span> / task signal / policy-vs-calibration ablation</td>
+                    <td><span class="borrow-level borrow-direct">已经吸收</span></td>
+                    <td>继续借 TAQO / TAQ-KL 的 framing，把真实掉点和任务敏感度信号讲得更硬。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mixed-Precision Survey</strong></td>
+                    <td>terminology / taxonomy / scope definition</td>
+                    <td><span class="borrow-level borrow-direct">已经吸收</span></td>
+                    <td>继续用它约束措辞，不要让 mixed precision / granularity 的表述变松。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>GPTQ</strong></td>
+                    <td>baseline / Hessian-aware PTQ reference</td>
+                    <td><span class="borrow-level borrow-secondary">应当补齐</span></td>
+                    <td>后面如果补正式 baseline，对照对象里最好明确加进 GPTQ 家族。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>AWQ</strong></td>
+                    <td>activation-aware importance / baseline</td>
+                    <td><span class="borrow-level borrow-direct">部分吸收</span></td>
+                    <td>继续把 activation-aware saliency 用在 prior / feature 上，同时保留它的 baseline 角色。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>MorphServe</strong></td>
+                    <td>deployment / serving / runtime adaptation</td>
+                    <td><span class="borrow-level borrow-hold">暂缓</span></td>
+                    <td>先不改主线；只有当我们开始讲 serving or deployment story 时再回来吸收。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>ScaleBITS</strong></td>
+                    <td><span class="codeish">group value prior</span> / budgeted allocation / search theory</td>
+                    <td><span class="borrow-level borrow-direct">下一步重点吸收</span></td>
+                    <td>把 progressive-quantization sensitivity 和 resource-allocation framing并进当前 uniform8-aware 搜索。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>RAMP</strong></td>
+                    <td><span class="codeish">surrogate features</span> / search objective / acquisition</td>
+                    <td><span class="borrow-level borrow-direct">下一步重点吸收</span></td>
+                    <td>优先借 layer feature 设计和 quality-prioritized reward，不急着整套换成 RL。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="grid two" style="margin-top: 18px">
+              <section class="section">
+                <h3>按模块分类看，现在缺什么</h3>
+                <ul>
+                  <li><strong>Signal</strong>：已经有 ablation 和 activation 线，下一步最值得补的是 TAQ-KL 类输出分布敏感度。</li>
+                  <li><strong>Search</strong>：已经有 surrogate + evolution，但最值得补的是 ScaleBITS 的 allocation framing 和 RAMP 的 reward / feature 设计。</li>
+                  <li><strong>Baseline</strong>：AWQ 和 GPTQ 都值得在正式实验矩阵里补齐。</li>
+                  <li><strong>Deployment</strong>：MorphServe 说明这块有价值，但不是当前瓶颈。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>如果团队只想抓最少的三篇</h3>
+                <ul>
+                  <li><strong>ScaleBITS</strong>：负责解决“预算约束下如何更合理地分 bit”。</li>
+                  <li><strong>RAMP</strong>：负责解决“搜索器该怎么建特征和目标”。</li>
+                  <li><strong>You Had One Job</strong>：负责解决“任务相关信号和 ablation 该怎么定义”。</li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="callout">
+              <strong>把这页当知识库时的使用顺序</strong>
+              先看“横向对照矩阵”，再看“当前路线下的决策区块”，最后看这张“项目知识库总表”。
+              只有当需要展开某篇论文的细节时，再往下看对应的 paper card。
+            </div>
+
+            <div class="grid two" style="margin-top: 18px">
+              <section class="section">
+                <h3>和仓库文件的直接映射</h3>
+                <ul>
+                  <li><strong>Task-aware signal / ablation</strong>：优先对应 <span class="codeish">src/ta_mpq/ablation.py</span>、<span class="codeish">src/ta_mpq/sensitivity.py</span>、<span class="codeish">src/ta_mpq/modal_feasibility_app.py</span>。</li>
+                  <li><strong>Search / allocation / reward</strong>：优先对应 <span class="codeish">src/ta_mpq/search.py</span>、<span class="codeish">src/ta_mpq/surrogate.py</span>、<span class="codeish">src/ta_mpq/closed_loop.py</span>。</li>
+                  <li><strong>Policy export / executable config</strong>：优先对应 <span class="codeish">src/ta_mpq/policy_export.py</span>。</li>
+                  <li><strong>Route handoff / exact next commands</strong>：优先看 <span class="codeish">README.md</span> 和 <span class="codeish">EVOLUTIONARY_ALGORITHM_WORKFLOW.html</span>。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>每类论文最自然对应的下一步实验</h3>
+                <ul>
+                  <li><strong>You Had One Job</strong>：补一版 TAQ-KL 风格信号，和现有 ablation prior 做对照。</li>
+                  <li><strong>AWQ</strong>：把 activation-aware saliency 显式并进现有 surrogate features。</li>
+                  <li><strong>ScaleBITS</strong>：把 progressive-quantization sensitivity 的表述和 current-reference prior 正式接到 uniform8-aware 搜索里。</li>
+                  <li><strong>RAMP</strong>：重构一版 layer/group feature schema，补 quality-prioritized reward 或 acquisition score。</li>
+                  <li><strong>GPTQ</strong>：后续补正式 baseline 时加入 GPTQ 对照。</li>
+                  <li><strong>MorphServe</strong>：只有当主线开始扩到 serving/deployment，再单独开支线实验。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>采纳状态面板</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>状态</th>
+                    <th>论文 / 思想</th>
+                    <th>说明</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="borrow-level borrow-direct">已经采纳</span></td>
+                    <td>You Had One Job（TAQO framing）, AWQ（activation-aware saliency）, Survey（taxonomy）</td>
+                    <td>已经体现在当前 task-aware ablation、activation/statistics、以及文档表述里。</td>
+                  </tr>
+                  <tr>
+                    <td><span class="borrow-level borrow-adapt">准备采纳</span></td>
+                    <td>ScaleBITS（progressive sensitivity / allocation framing）, RAMP（feature / reward design）</td>
+                    <td>这是最值得并进下一轮 uniform8-aware search 的两条线。</td>
+                  </tr>
+                  <tr>
+                    <td><span class="borrow-level borrow-secondary">基线补齐</span></td>
+                    <td>GPTQ, AWQ</td>
+                    <td>后面正式实验矩阵更完整时，应当明确加入这些 baseline。</td>
+                  </tr>
+                  <tr>
+                    <td><span class="borrow-level borrow-hold">暂不优先</span></td>
+                    <td>MorphServe（runtime adaptation）</td>
+                    <td>方向有价值，但和当前“如何把 16-bit 分到最值钱的 group”不是同一个主问题。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 01</span>
+              <span class="tag">Per-task PTQ</span>
+              <span class="tag">Task-aware mixed precision</span>
+              <span class="tag">Relevant to current route</span>
+            </div>
+            <h2>You Had One Job: Per-Task Quantization Using LLMs’ Hidden Representations</h2>
+            <p>
+              这篇论文的核心价值在于：它把“不同任务应当保护不同层的精度”这件事，
+              从动机、信号设计、实验对比和 ablation 结构上都讲完整了。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>这篇论文最值得引用的核心立场</h3>
+                <ul>
+                  <li>常见 PTQ 往往是 task-agnostic，会把 bit 花在对目标任务没那么重要的层上。</li>
+                  <li>应该用目标任务的小规模 calibration prompts 估计 layer importance，再做 mixed-precision allocation。</li>
+                  <li>任务相关的隐藏表示、单层量化掉点、输出分布敏感度，都可以成为 per-layer precision 的依据。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>和当前 TA-MPQ 的关系</h3>
+                <ul>
+                  <li>它和我们当前的方向一致：都在做 task-aware mixed-precision PTQ。</li>
+                  <li>它更偏“先给层打分，再直接分 bit”。</li>
+                  <li>我们更偏“把任务信号喂给 surrogate 和 evolutionary search，再在预算约束下搜 policy”。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Task-aware PTQ framing</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>这篇把“任务相关层需要更高精度”说得非常清楚，适合放在动机和 related work 里。</td>
+                    <td>作为我们当前 <span class="codeish">uniform8-aware 4/8/16</span> 路线的理论背景。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TAQO：单层/单组量化敏感度</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>这和我们现在做的 <span class="codeish">16→8</span> / <span class="codeish">8→4</span> targeted ablation 本质一致。</td>
+                    <td>继续把真实掉点写进 <span class="codeish">group value prior</span>，作为下一轮搜索的强监督信号。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TAQ-KL：输出分布敏感度</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它不需要标签，适合当额外的 label-free signal，尤其适合当前 surrogate 还偏弱的时候。</td>
+                    <td>把层扰动后的 logits KL 作为新特征，接到 <span class="codeish">surrogate dataset</span> 或 prior 里。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>TAQ：hidden representation scoring</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它把 hidden-state entropy 和 activation stability 合成层分数，这和我们已有的 sensitivity/profile 思路兼容。</td>
+                    <td>作为现有 task sensitivity / representation prior 的补充，而不是替代 closed-loop search。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Calibration vs Policy ablation</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它专门验证“收益到底来自 on-task calibration，还是来自 task-aware allocation policy 本身”。</td>
+                    <td>我们后面也应该把问题拆成：task data 对了，和 policy 真学会了，两者分别贡献多少。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="grid two" style="margin-top: 18px">
+              <section class="section">
+                <h3>最建议立刻吸收的部分</h3>
+                <ul>
+                  <li>
+                    把 <span class="codeish">TAQO</span> 当成我们当前
+                    <span class="codeish">targeted ablation</span> 的文献对齐版本。
+                  </li>
+                  <li>
+                    把 <span class="codeish">TAQ-KL</span> 做成新的 label-free layer/group sensitivity
+                    signal。
+                  </li>
+                  <li>
+                    把他们的 ablation framing 用到我们自己的实验结构里，而不只是复述结果。
+                  </li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>不建议直接照搬的部分</h3>
+                <ul>
+                  <li>不要直接把他们的“按分数排序后直接分 bit”替换掉我们现有的 surrogate + evolutionary search。</li>
+                  <li>不要直接照抄他们的 benchmark 组合；他们偏 <span class="codeish">TriviaQA / CodeMMLU / MMLU-Pro</span>，我们当前主线还是 <span class="codeish">MATH-500</span>。</li>
+                  <li>不要直接把他们的 layer 级别假设原样搬过来；我们现在主要在做 <span class="codeish">per_block_component</span> 的 group-level policy。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>建议在自己论文里怎么引用它</h3>
+              <ul>
+                <li>用它支持 “task-agnostic PTQ 会错配精度预算” 这个动机。</li>
+                <li>用它支持 “task-specific hidden signals / output sensitivity 可以指导 mixed-precision allocation” 这个方法论。</li>
+                <li>用它对齐我们现在的 targeted ablation：我们不是凭感觉调层，而是在做 task-level sensitivity estimation。</li>
+                <li>同时明确区别：他们是 score-then-allocate，我们是 signal-to-surrogate-to-search。</li>
+              </ul>
+            </section>
+
+            <div class="callout">
+              <strong>当前最有价值的借法</strong>
+              如果只选一个最适合现在吸收的点，优先借
+              <span class="codeish">TAQO</span>：
+              也就是把“单层/单组降精度后的真实掉点”正式定义成 task-aware sensitivity signal，
+              再回喂到我们现有的 surrogate 和 search 里。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 02</span>
+              <span class="tag">Survey</span>
+              <span class="tag">Mixed-precision taxonomy</span>
+              <span class="tag">Terminology / framing reference</span>
+            </div>
+            <h2>Mixed-Precision Quantization for Language Models: Techniques and Prospects</h2>
+            <p>
+              这篇不是提出一个新 task-aware 算法，而是给 mixed-precision LM quantization
+              做了一张非常系统的地图。它最适合借的不是某个具体分配策略，而是术语、taxonomy、
+              任务边界和 related-work framing。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>这篇论文最有价值的地方</h3>
+                <ul>
+                  <li>它把 mixed precision 在语言模型中的定义讲清楚了。</li>
+                  <li>它区分了 inter-layer 和 intra-layer allocation。</li>
+                  <li>它把 mixed-precision LM 框架按 <span class="codeish">MPW / MPW+UPA / MPW+MPA</span> 做了结构化 taxonomy。</li>
+                  <li>它把 weights、activations、KV cache、granularity 和 hardware constraints 放到了同一张图里。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>和当前 TA-MPQ 的关系</h3>
+                <ul>
+                  <li>它不会直接告诉我们哪几个 group 应该上 <span class="codeish">16-bit</span>。</li>
+                  <li>但它非常适合拿来统一我们现在文档和论文里的语言，避免 mixed-precision 这个词用得太松。</li>
+                  <li>对于当前 TA-MPQ，它更像“地图和术语层”的参考，而不是“搜索信号层”的参考。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Mixed precision 的严格定义</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它明确指出：只有权重低比特、激活保持 FP，或者权重统一低比特而激活统一另一种比特，不应在严格意义上都算 mixed precision。</td>
+                    <td>统一我们在 README / HTML / paper 里的措辞，避免把所有非全精度配置都叫 mixed precision。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Inter-layer vs Intra-layer distinction</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>这正好能把我们当前的 <span class="codeish">per_block_component</span> 说得更清楚：我们不是只在 layer 级别分 bit，而是在更细的 group/component 级别做 allocation。</td>
+                    <td>把 TA-MPQ 明确表述成更接近 <span class="codeish">intra-layer mixed-precision weight allocation</span> 的框架。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>MPW / MPW+UPA / MPW+MPA taxonomy</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它给了一个很好的分类框架，能帮助我们把自己的方法定位到更准确的位置。</td>
+                    <td>当前 TA-MPQ 可以明确定位成 <span class="codeish">MPW</span>：mixed-precision weights，activations 不作为当前主优化对象。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Granularity taxonomy</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它系统整理了 per-tensor / per-channel / per-group / per-token，这对解释我们为什么选 group-level 很有用。</td>
+                    <td>把当前 <span class="codeish">group-wise affine quantization + per_block_component allocation</span> 放到这个 taxonomy 里讲清楚。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Framework-level literature map</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它总结了 GPTQ、AWQ、SmoothQuant、QuaRot、OBS-style 等家族，更适合 related work，而不是直接拿来实现。</td>
+                    <td>用来组织背景章节：我们的方法是 mixed-precision search，不是单纯等价变换或单层重建型 PTQ。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hardware-aware discussion</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它提醒 mixed precision 不只是算法问题，还和 runtime、硬件支持、KV cache/activation handling 相关。</td>
+                    <td>后面如果我们补 deployment story，这篇可以作为“为什么只支持某些 bit 配置更现实”的引用来源。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="grid two" style="margin-top: 18px">
+              <section class="section">
+                <h3>最建议吸收的部分</h3>
+                <ul>
+                  <li>把 mixed precision 的定义说严谨。</li>
+                  <li>把我们的方法明确放进 <span class="codeish">MPW</span> 这一类。</li>
+                  <li>把当前搜索单位说明成介于 inter-layer 和 intra-layer 之间、偏 group/component-level 的分配。</li>
+                  <li>用它的 granularity taxonomy 解释为什么当前我们坚持 group-level 而不是 parameter-level。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>不建议直接照搬的部分</h3>
+                <ul>
+                  <li>它是 survey，不提供一个可以直接替代我们搜索系统的新算法。</li>
+                  <li>不要把它当成“怎样训练进化算法”的方法来源；它更像框架地图。</li>
+                  <li>不要因为它覆盖 activations / KV cache，就把当前项目范围无控制地扩展过去。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>建议在自己论文里怎么引用它</h3>
+              <ul>
+                <li>用它支持 mixed-precision LM quantization 的整体背景和 taxonomy。</li>
+                <li>用它定义我们当前方法的 precise scope：当前 TA-MPQ 属于 mixed-precision weights，而不是 activation/KV-aware 全栈量化。</li>
+                <li>用它帮助说明我们的方法和 GPTQ/AWQ/SmoothQuant 这些家族是什么关系。</li>
+                <li>用它来规范“mixed precision”这个词，避免表述过松。</li>
+              </ul>
+            </section>
+
+            <div class="callout">
+              <strong>当前最有价值的借法</strong>
+              这篇最适合借的是
+              <span class="codeish">定义、taxonomy、scope framing</span>，
+              而不是一个具体的 layer scoring rule。它能帮我们把
+              <span class="codeish">TA-MPQ</span>
+              放在 mixed-precision LLM quantization 这张大图里讲清楚。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 03</span>
+              <span class="tag">PTQ baseline</span>
+              <span class="tag">Hessian-aware reconstruction</span>
+              <span class="tag">Baseline / sensitivity reference</span>
+            </div>
+            <h2>GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers</h2>
+            <p>
+              这篇更适合当 baseline 和方法参照系。它不是 task-aware mixed-precision
+              search，但它把 Hessian-aware、layer-wise PTQ 和 second-order reconstruction
+              这条线定义得很清楚。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>最值得借的点</h3>
+                <ul>
+                  <li>把 PTQ 写成 layer-wise reconstruction 问题。</li>
+                  <li>用 approximate second-order / Hessian 信息衡量量化误差的重要方向。</li>
+                  <li>把 <span class="codeish">4-bit</span> 附近的高精度 PTQ 做成强 baseline，而不是只用简单 RTN。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>对 TA-MPQ 的作用</h3>
+                <ul>
+                  <li>它更适合做 baseline 和 sensitivity metric reference，而不是直接替代我们的 search。</li>
+                  <li>可以支持“纯 layer-wise reconstruction 不等于 task-aware allocation”这层对比。</li>
+                  <li>也适合引用到 related work 里，说明我们不是从零开始做 mixed-precision PTQ。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Hessian-aware reconstruction framing</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它给了 PTQ 一个非常清楚的优化表述，适合作为我们 mixed-precision search 的低层量化参考系。</td>
+                    <td>在 related work 里明确：我们不是只做 layer-wise reconstruction，而是在其上再做 task-aware allocation。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Second-order sensitivity intuition</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>虽然 GPTQ 自己不做 task-aware search，但它说明“不同方向的误差代价不同”。</td>
+                    <td>可以把 Hessian/Fisher 近似当作额外 group feature，补进 surrogate dataset。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Strong PTQ baseline role</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它是你们 paper 里最自然的 canonical PTQ baseline 之一。</td>
+                    <td>后面如果补更完整 baseline，对标对象里应当明确出现 GPTQ 家族。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="callout">
+              <strong>最合适的引用姿势</strong>
+              把 GPTQ 放在 “Hessian-aware PTQ / reconstruction-based PTQ baseline” 这一类，
+              用来衬托我们的方法是 <span class="codeish">task-aware signal + surrogate + search</span>，
+              而不是只做统一的 layer-wise reconstruction。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 04</span>
+              <span class="tag">PTQ baseline</span>
+              <span class="tag">Activation-aware saliency</span>
+              <span class="tag">Signal design reference</span>
+            </div>
+            <h2>AWQ: Activation-Aware Weight Quantization for On-Device LLM Compression and Acceleration</h2>
+            <p>
+              这篇最值得借的是“activation-aware saliency”这套信号设计，
+              不是它最后的实现形式。它说明 activation statistics 本身就能提供很强的量化重要性线索。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>最值得借的点</h3>
+                <ul>
+                  <li>不是所有权重同样重要，应该看 activation distribution 来识别 salient channels。</li>
+                  <li>它明确反对硬件不友好的随意 mixed precision，转而用 scaling 去保护 salient channels。</li>
+                  <li>不依赖 backprop 或 reconstruction，校准成本低，泛化也更稳。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>对 TA-MPQ 的作用</h3>
+                <ul>
+                  <li>非常适合支持我们“activation-based task signal”这条线。</li>
+                  <li>也适合用作 uniform / non-search baseline 的代表。</li>
+                  <li>但它不是直接告诉我们怎么做 <span class="codeish">4/8/16</span> search 的论文。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Activation-aware saliency</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>这和我们现在的 task sensitivity / ablation prior 很兼容，都是在找“哪些 group 更值得保精度”。</td>
+                    <td>继续把 activation statistics 作为 surrogate feature 和 group prior 的一部分。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Protect a small salient subset</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>AWQ 的核心不是“全部升 bit”，而是“只保护最关键的小部分”。</td>
+                    <td>这和我们现在在找“哪些 group 值得 16-bit”是同一个预算逻辑。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hardware-aware caution</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它明确提醒 mixed precision 不能只看精度，还要看 runtime 友好性。</td>
+                    <td>可以用来支持我们为什么坚持 group-level、budgeted、hardware-aware 搜索，而不是任意细粒度保护。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="callout">
+              <strong>最合适的引用姿势</strong>
+              把 AWQ 放在 “activation-aware but not task-conditioned” 这一类：
+              它说明 activation 信号很有价值，而我们进一步把这种信号和任务分数、closed-loop search 绑在一起。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 05</span>
+              <span class="tag">Serving / systems</span>
+              <span class="tag">Runtime adaptation</span>
+              <span class="tag">Secondary relevance</span>
+            </div>
+            <h2>MorphServe: Efficient and Workload-Aware LLM Serving via Runtime Quantized Layer Swapping and KV Cache Resizing</h2>
+            <p>
+              这篇不直接解决你们当前的 layer-wise search 问题，但它对“运行时按压力切换量化层”和
+              “sensitivity-based profiling”这两点很有启发。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>最值得借的点</h3>
+                <ul>
+                  <li>它把“哪些层影响小，适合在高压时切成量化版本”做成了 sensitivity-based profiling。</li>
+                  <li>它的 layer swapping 强调状态保持和低 runtime overhead。</li>
+                  <li>它明确把精度选择放到 workload-aware serving 语境下，而不只是离线压缩。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>对 TA-MPQ 的作用</h3>
+                <ul>
+                  <li>不是当前核心算法参考。</li>
+                  <li>更适合当“如果以后要讲 deployment / serving story，可以往哪扩”的参考。</li>
+                  <li>也能支持我们把 ablation profile 解读成“impactful vs less-impactful groups”。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Sensitivity-based profiling for layer swapping</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它和我们现在的 targeted ablation 很贴，只是目标从“runtime layer swapping”换成了“static allocation search”。</td>
+                    <td>把 ablation 掉点进一步解释成 “这些 groups 是 high-impact / low-impact”。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Accuracy-latency trade-off framing</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>如果后面要把结果写到更系统的部署故事里，这篇的 framing 会很好用。</td>
+                    <td>作为未来扩展方向，不建议现在直接改主线去做 runtime adaptation。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="callout">
+              <strong>最合适的引用姿势</strong>
+              这篇更像 deployment-side reference。它可以支持 “layer impact profiling 是有系统价值的”，
+              但不建议把它当成当前 TA-MPQ 训练进化算法的直接方法来源。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 06</span>
+              <span class="tag">Directly relevant</span>
+              <span class="tag">Bitwidth search</span>
+              <span class="tag">Hardware-aligned MPQ</span>
+            </div>
+            <h2>ScaleBITS: Scalable Bitwidth Search for Hardware-Aligned Mixed-Precision LLMs</h2>
+            <p>
+              这篇和当前 TA-MPQ 的问题最接近。它把 mixed-precision allocation 明确写成预算约束下的资源分配问题，
+              而且非常强调 hardware-aligned partitioning 和可扩展的 bitwidth search。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>这篇为什么特别重要</h3>
+                <ul>
+                  <li>它直接讨论了“预算约束下，怎么做 automated fine-grained bitwidth allocation”。</li>
+                  <li>它指出经典 greedy / RL / evolutionary 在超大搜索空间下会很贵，所以必须用可扩展近似。</li>
+                  <li>它还把 hardware-friendly partitioning 放在了方法中心，而不是最后补 runtime 解释。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>和 TA-MPQ 的关系</h3>
+                <ul>
+                  <li>它是你们当前 uniform8-aware 路线最值得正面对照的一篇。</li>
+                  <li>它和我们一样关注预算、bit allocation、hardware alignment。</li>
+                  <li>不同点在于：它更像 sensitivity-guided scalable allocation；我们是 surrogate + evolutionary closed loop。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Resource-allocation framing</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它把 mixed-precision allocation 写成 knapsack-style discrete resource allocation，这和我们当前预算约束目标高度一致。</td>
+                    <td>可以直接拿来强化我们 objective 的理论表述，而不只是工程搜索。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Progressive-quantization sensitivity</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它强调 sensitivity 应该围绕“当前已量化模型”来估计，而不是只看 full-precision 点。</td>
+                    <td>这和我们现在在 current candidate 上做 targeted ablation 非常一致，可以直接对齐成理论依据。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hardware-aligned block partitioning</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它说明 mixed precision 的 granularity 不只是统计问题，也是 kernel/partition 问题。</td>
+                    <td>我们现在的 <span class="codeish">per_block_component</span> 可以借它来解释“为什么要选硬件友好的 group-level 单位”。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Scalable approximation to greedy search</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它很适合当我们当前 evolutionary search 的对照思路：不是所有搜索都要靠 GA/RL。</td>
+                    <td>后面可以把它当 alternative allocator baseline，或者至少借它的分析来解释搜索开销问题。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="callout">
+              <strong>最合适的引用姿势</strong>
+              如果要给当前 TA-MPQ 找一篇“问题最像”的参考，优先引用这篇。
+              它最能支持我们现在这条线：预算约束、group-level allocation、search scalability、
+              以及“量化后的参考点上再估计 sensitivity”。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Paper 07</span>
+              <span class="tag">Directly relevant</span>
+              <span class="tag">RL search</span>
+              <span class="tag">Policy-based MPQ</span>
+            </div>
+            <h2>RAMP: Reinforcement Adaptive Mixed-Precision Quantization for Efficient On-Device LLM Inference</h2>
+            <p>
+              这篇最像“另一种 search engine”。它把 bit allocation 写成 sequential decision-making，
+              用 SAC 学 per-layer bit policy，是当前 TA-MPQ 搜索框架最直接的相关工作之一。
+            </p>
+          </div>
+
+          <div class="paper-body">
+            <div class="grid two">
+              <section class="section">
+                <h3>这篇为什么重要</h3>
+                <ul>
+                  <li>它直接反对 uniform bit-width，认为 layer sensitivity 有系统差异。</li>
+                  <li>它不是 heuristic 分配，而是显式学一个 bit-allocation policy。</li>
+                  <li>它还强调 policy transfer，这和我们现在希望 search 不只会记住单次结果很接近。</li>
+                </ul>
+              </section>
+
+              <section class="section">
+                <h3>和 TA-MPQ 的关系</h3>
+                <ul>
+                  <li>这篇和我们一样在做 mixed-precision policy search。</li>
+                  <li>它用 RL；我们现在用 surrogate-guided evolutionary closed loop。</li>
+                  <li>它非常适合当“搜索策略层”的 related work 和对照框架。</li>
+                </ul>
+              </section>
+            </div>
+
+            <section class="section" style="margin-top: 18px">
+              <h3>可以直接借鉴的方法点</h3>
+              <table class="borrow-table">
+                <thead>
+                  <tr>
+                    <th>方法点</th>
+                    <th>借鉴强度</th>
+                    <th>为什么适合当前项目</th>
+                    <th>在 TA-MPQ 里怎么落地</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Sequential decision framing</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它把 bit allocation 视为序列决策，这和我们“candidate 不是静态公式，而是搜索结果”非常一致。</td>
+                    <td>可以直接增强我们对进化算法角色的表述：它是 policy search，而不是手工打分器。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Layer feature embedding design</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它用 11 维 layer embedding 喂给 policy，这和我们当前 surrogate feature engineering 很接近。</td>
+                    <td>可以直接参考它的 activation / weight / structural / contextual feature 分组方式，补强当前 dataset 特征。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Quality-prioritized reward</strong></td>
+                    <td><span class="borrow-level borrow-direct">直接借</span></td>
+                    <td>它明确把质量放在首位、budget 当柔性约束，这和我们当前围绕 uniform8 的 objective 很贴。</td>
+                    <td>可用于继续改进当前 search objective / acquisition，而不一定非得改成 RL。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Policy transfer hypothesis</strong></td>
+                    <td><span class="borrow-level borrow-adapt">改造后借</span></td>
+                    <td>它提出“量化敏感度主要是 architectural”这一假设，这能帮助我们思考当前方法能否跨模型泛化。</td>
+                    <td>先作为 discussion / future work，不建议现在就把主线切成跨模型 transfer 实验。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+
+            <div class="callout">
+              <strong>最合适的引用姿势</strong>
+              这篇最适合拿来对照“搜索策略”层：
+              他们用 RL 学 bit policy，我们用 surrogate-guided evolutionary search。
+              两者都在解决同一个核心问题：怎样把 bit budget 分给真正值钱的层。
+            </div>
+          </div>
+        </article>
+
+        <article class="paper-card placeholder">
+          <div class="paper-head">
+            <div class="paper-meta">
+              <span class="tag">Reserved Slot</span>
+              <span class="tag">Next paper</span>
+            </div>
+            <h2>下一篇论文</h2>
+            <p>
+              你后面再发论文时，我们继续沿用同样的结构往下加：论文定位、可直接借的方法点、
+              和 TA-MPQ 的映射、以及不建议直接照搬的部分。
+            </p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

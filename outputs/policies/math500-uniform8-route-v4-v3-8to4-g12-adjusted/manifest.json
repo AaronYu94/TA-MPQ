@@ -1,0 +1,103 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "16": 79,
+        "4": 191,
+        "8": 227
+      },
+      "budget_alignment_score": 0.9709129450583179,
+      "conservative_prediction": 0.018508077481254638,
+      "estimated_average_bit_width": 7.7673035604665435,
+      "estimated_weight_footprint_gb": 23.16822052001953,
+      "fitness": 0.15580695401689185,
+      "group_value_alignment_score": 0.7175608954152652,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v4-v3-8to4-g12-adjusted/candidate-01.json",
+      "prediction_uncertainty": 0.02233863474593238,
+      "rank": 1,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.018508077481254638
+    },
+    {
+      "bit_counts": {
+        "16": 87,
+        "4": 169,
+        "8": 241
+      },
+      "budget_alignment_score": 0.9986091927562922,
+      "conservative_prediction": 0.006150298885424486,
+      "estimated_average_bit_width": 7.988873542050338,
+      "estimated_weight_footprint_gb": 23.829116821289062,
+      "fitness": 0.14909898948486694,
+      "group_value_alignment_score": 0.779023991408602,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v4-v3-8to4-g12-adjusted/candidate-02.json",
+      "prediction_uncertainty": 0.027079991759356034,
+      "rank": 2,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.006150298885424486
+    },
+    {
+      "bit_counts": {
+        "16": 83,
+        "4": 190,
+        "8": 224
+      },
+      "budget_alignment_score": 0.9997266344383057,
+      "conservative_prediction": 0.0051050827717835645,
+      "estimated_average_bit_width": 7.997813075506445,
+      "estimated_weight_footprint_gb": 23.85578155517578,
+      "fitness": 0.148867471211252,
+      "group_value_alignment_score": 0.7896455968973746,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v4-v3-8to4-g12-adjusted/candidate-03.json",
+      "prediction_uncertainty": 0.026921190222494534,
+      "rank": 3,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.0051050827717835645
+    },
+    {
+      "bit_counts": {
+        "16": 87,
+        "4": 184,
+        "8": 226
+      },
+      "budget_alignment_score": 0.9956133619807653,
+      "conservative_prediction": 0.004003078767185413,
+      "estimated_average_bit_width": 7.964906895846123,
+      "estimated_weight_footprint_gb": 23.75762939453125,
+      "fitness": 0.1488111255318886,
+      "group_value_alignment_score": 0.8084826044272464,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v4-v3-8to4-g12-adjusted/candidate-04.json",
+      "prediction_uncertainty": 0.027637192664055663,
+      "rank": 4,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.004003078767185413
+    },
+    {
+      "bit_counts": {
+        "16": 79,
+        "4": 180,
+        "8": 238
+      },
+      "budget_alignment_score": 0.9990200404133415,
+      "conservative_prediction": 0.005799997230951464,
+      "estimated_average_bit_width": 7.992160323306732,
+      "estimated_weight_footprint_gb": 23.83892059326172,
+      "fitness": 0.14550002670632503,
+      "group_value_alignment_score": 0.7385303321824012,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "outputs/policies/math500-uniform8-route-v4-v3-8to4-g12-adjusted/candidate-05.json",
+      "prediction_uncertainty": 0.02744860179289039,
+      "rank": 5,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": 0.005799997230951464
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json",
+  "search_result_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/search/math500-uniform8-route-search-v4-v3-8to4-g12-adjusted.json"
+}

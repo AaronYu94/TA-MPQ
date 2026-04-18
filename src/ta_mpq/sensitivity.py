@@ -20,6 +20,17 @@ class ModuleActivationStat:
 
 
 @dataclass(frozen=True, slots=True)
+class ModuleKLDivergenceStat:
+    name: str
+    parameter_count: int
+    mean_output_kl: float
+    num_observations: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True, slots=True)
 class TaskSensitivityGroupStat:
     name: str
     component_type: str
@@ -28,6 +39,8 @@ class TaskSensitivityGroupStat:
     prior_sensitivity: float
     activation_score: float
     normalized_activation_score: float
+    kl_divergence_score: float
+    normalized_kl_divergence_score: float
     combined_sensitivity: float
 
     def to_dict(self) -> dict[str, Any]:
@@ -126,27 +139,42 @@ def build_task_sensitivity_profile(
     activation_stats: list[ModuleActivationStat],
     grouping: str,
     activation_weight: float = 0.55,
+    kl_stats: list[ModuleKLDivergenceStat] | None = None,
+    kl_weight: float = 0.0,
 ) -> dict[str, Any]:
     from ta_mpq.search import build_search_groups
 
-    if not 0.0 <= activation_weight <= 1.0:
-        raise ValueError("activation_weight must be between 0 and 1")
+    if activation_weight < 0.0:
+        raise ValueError("activation_weight must be non-negative")
+    if kl_weight < 0.0:
+        raise ValueError("kl_weight must be non-negative")
+    if activation_weight + kl_weight > 1.0:
+        raise ValueError("activation_weight + kl_weight must not exceed 1.0")
 
     base_groups = build_search_groups(layer_stats, grouping=grouping)
     activation_lookup = {stat.name: stat for stat in activation_stats}
+    kl_lookup = {stat.name: stat for stat in (kl_stats or [])}
 
     raw_activation_scores: dict[str, float] = {}
+    raw_kl_scores: dict[str, float] = {}
     for group in base_groups:
         raw_activation_scores[group.name] = _group_activation_score(group.layer_names, activation_lookup)
+        raw_kl_scores[group.name] = _group_kl_score(group.layer_names, kl_lookup)
 
     normalized_scores = _normalize_scores(raw_activation_scores)
+    normalized_kl_scores = _normalize_scores(raw_kl_scores)
+    prior_weight = 1.0 - activation_weight - kl_weight
 
     groups_payload: list[dict[str, Any]] = []
     for group in base_groups:
         activation_score = raw_activation_scores[group.name]
         normalized_activation = normalized_scores[group.name]
-        combined = ((1.0 - activation_weight) * group.sensitivity) + (
-            activation_weight * normalized_activation
+        kl_score = raw_kl_scores[group.name]
+        normalized_kl = normalized_kl_scores[group.name]
+        combined = (
+            prior_weight * group.sensitivity
+            + activation_weight * normalized_activation
+            + kl_weight * normalized_kl
         )
         groups_payload.append(
             TaskSensitivityGroupStat(
@@ -157,6 +185,8 @@ def build_task_sensitivity_profile(
                 prior_sensitivity=group.sensitivity,
                 activation_score=activation_score,
                 normalized_activation_score=normalized_activation,
+                kl_divergence_score=kl_score,
+                normalized_kl_divergence_score=normalized_kl,
                 combined_sensitivity=combined,
             ).to_dict()
         )
@@ -164,11 +194,31 @@ def build_task_sensitivity_profile(
     return {
         "grouping": grouping,
         "activation_weight": activation_weight,
+        "kl_weight": kl_weight,
+        "prior_weight": prior_weight,
         "num_layer_stats": len(layer_stats),
         "num_activation_stats": len(activation_stats),
+        "num_kl_stats": len(kl_stats or []),
         "groups": groups_payload,
         "module_activation_stats": [stat.to_dict() for stat in activation_stats],
+        "module_kl_stats": [stat.to_dict() for stat in (kl_stats or [])],
     }
+
+
+def build_task_kl_sensitivity_profile(
+    layer_stats: list[LinearLayerStat],
+    kl_stats: list[ModuleKLDivergenceStat],
+    grouping: str,
+    kl_weight: float = 0.55,
+) -> dict[str, Any]:
+    return build_task_sensitivity_profile(
+        layer_stats=layer_stats,
+        activation_stats=[],
+        grouping=grouping,
+        activation_weight=0.0,
+        kl_stats=kl_stats,
+        kl_weight=kl_weight,
+    )
 
 
 def group_sensitivity_overrides_from_profile(
@@ -272,12 +322,31 @@ def _group_activation_score(
     return numerator / denominator
 
 
+def _group_kl_score(
+    layer_names: tuple[str, ...],
+    kl_lookup: dict[str, ModuleKLDivergenceStat],
+) -> float:
+    numerator = 0.0
+    denominator = 0.0
+    for layer_name in layer_names:
+        kl_stat = kl_lookup.get(layer_name)
+        if kl_stat is None:
+            continue
+        weight = kl_stat.parameter_count
+        numerator += weight * kl_stat.mean_output_kl
+        denominator += weight
+    if denominator == 0:
+        return 0.0
+    return numerator / denominator
+
+
 def _normalize_scores(scores: dict[str, float]) -> dict[str, float]:
     if not scores:
         return {}
     minimum = min(scores.values())
     maximum = max(scores.values())
     if maximum <= minimum:
-        return {name: 1.0 for name in scores}
+        fill_value = 0.0 if maximum == 0.0 else 1.0
+        return {name: fill_value for name in scores}
     scale = maximum - minimum
     return {name: (value - minimum) / scale for name, value in scores.items()}

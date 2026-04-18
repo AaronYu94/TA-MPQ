@@ -249,7 +249,15 @@ class SearchEngineTests(unittest.TestCase):
         misaligned = dict(aligned)
         aligned["block:0:mlp.down_proj"] = 8
         misaligned["block:0:mlp.down_proj"] = 4
-        score_map = {"block:0:mlp.down_proj": 0.05}
+        score_map = {
+            "block:0:mlp.down_proj": {
+                "score": 0.05,
+                "uplift_8_over_4": 0.05,
+                "uplift_16_over_8": 0.0,
+                "preferred_bit": 8,
+                "confidence": 1.0,
+            }
+        }
         self.assertGreater(
             estimate_group_value_alignment_score(groups, aligned, score_map),
             estimate_group_value_alignment_score(groups, misaligned, score_map),
@@ -267,8 +275,8 @@ class SearchEngineTests(unittest.TestCase):
                 },
             },
         )
-        self.assertAlmostEqual(resolved["block:0:mlp.down_proj"], 0.03)
-        self.assertAlmostEqual(resolved["block:0:linear_attn.out_proj"], -0.02)
+        self.assertAlmostEqual(resolved["block:0:mlp.down_proj"]["score"], 0.03)
+        self.assertAlmostEqual(resolved["block:0:linear_attn.out_proj"]["score"], -0.02)
 
     def test_value_guided_seed_assignments_uses_positive_group_scores(self) -> None:
         groups = build_search_groups(self.layer_stats, grouping="per_block_component")
@@ -276,8 +284,8 @@ class SearchEngineTests(unittest.TestCase):
             groups=groups,
             allowed_bits=(4, 8),
             group_value_scores={
-                "block:0:mlp.down_proj": 0.04,
-                "block:1:mlp.down_proj": -0.01,
+                "block:0:mlp.down_proj": {"score": 0.04, "uplift_8_over_4": 0.04, "preferred_bit": 8},
+                "block:1:mlp.down_proj": {"score": -0.01, "uplift_8_over_4": -0.01, "preferred_bit": 4},
             },
         )
         assert assignments is not None
@@ -290,9 +298,24 @@ class SearchEngineTests(unittest.TestCase):
             groups=groups,
             allowed_bits=(4, 8, 16),
             group_value_scores={
-                "block:0:mlp.down_proj": 0.08,
-                "block:1:mlp.down_proj": 0.03,
-                "block:0:linear_attn.out_proj": 0.01,
+                "block:0:mlp.down_proj": {
+                    "score": 0.12,
+                    "uplift_8_over_4": 0.08,
+                    "uplift_16_over_8": 0.04,
+                    "preferred_bit": 16,
+                },
+                "block:1:mlp.down_proj": {
+                    "score": 0.03,
+                    "uplift_8_over_4": 0.03,
+                    "uplift_16_over_8": 0.0,
+                    "preferred_bit": 8,
+                },
+                "block:0:linear_attn.out_proj": {
+                    "score": 0.01,
+                    "uplift_8_over_4": 0.01,
+                    "uplift_16_over_8": 0.0,
+                    "preferred_bit": 8,
+                },
             },
         )
         assert assignments is not None

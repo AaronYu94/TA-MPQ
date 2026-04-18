@@ -1,0 +1,14 @@
+{
+  "ablation_manifest_path": "outputs/ablations/math500-uniform8-route-v4-v3-8to4-g12-adjusted-reference-only-manifest.json",
+  "ablations": [],
+  "backend_variant": "source",
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "limit": 25,
+  "max_new_tokens": 32,
+  "policy_source": "llmcompressor",
+  "reference_accuracy": 0.28,
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v4-v3-8to4-g12-adjusted/candidate-01.json",
+  "reference_evaluation_path": "outputs/evaluations/math500-uniform8-route-v4-v3-8to4-g12-adjusted-reference-only-manifest-reference.json",
+  "reference_report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v4-v3-8to4-g12-adjusted-candidate-01-llmcompressor-source-report.json",
+  "task_name": "math500"
+}

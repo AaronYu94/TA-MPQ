@@ -18,11 +18,23 @@ from ta_mpq.surrogate import (
     build_ablation_adjusted_group_value_prior,
     build_group_value_prior_from_dataset,
     build_surrogate_dataset_from_manifest,
+    extract_surrogate_features,
     predict_surrogate_distribution,
     predict_surrogate_target,
     resolve_manifest_paths,
     train_surrogate_model,
 )
+from ta_mpq.search import SearchGroup
+
+
+def mock_group(name: str, component_type: str, parameter_count: int, sensitivity: float) -> SearchGroup:
+    return SearchGroup(
+        name=name,
+        component_type=component_type,
+        layer_names=(name,),
+        parameter_count=parameter_count,
+        sensitivity=sensitivity,
+    )
 
 
 class SurrogateTests(unittest.TestCase):
@@ -72,18 +84,26 @@ class SurrogateTests(unittest.TestCase):
                 {
                     "name": "block:0:linear_attn.out_proj",
                     "combined_sensitivity": 0.9,
+                    "normalized_activation_score": 0.8,
+                    "normalized_kl_divergence_score": 0.3,
                 },
                 {
                     "name": "block:0:mlp.down_proj",
                     "combined_sensitivity": 1.0,
+                    "normalized_activation_score": 1.0,
+                    "normalized_kl_divergence_score": 1.0,
                 },
                 {
                     "name": "block:1:linear_attn.out_proj",
                     "combined_sensitivity": 0.6,
+                    "normalized_activation_score": 0.1,
+                    "normalized_kl_divergence_score": 0.0,
                 },
                 {
                     "name": "block:1:mlp.down_proj",
                     "combined_sensitivity": 0.8,
+                    "normalized_activation_score": 0.5,
+                    "normalized_kl_divergence_score": 0.4,
                 },
             ]
         }
@@ -263,8 +283,12 @@ class SurrogateTests(unittest.TestCase):
 
         self.assertLess(adjusted["group_scores"]["block:0:linear_attn.out_proj"]["score"], 0.0)
         self.assertLessEqual(
-            adjusted["group_scores"]["block:0:mlp.down_proj"]["score"],
+            adjusted["group_scores"]["block:0:mlp.down_proj"]["uplift_16_over_8"],
             0.01,
+        )
+        self.assertNotEqual(
+            adjusted["group_scores"]["block:0:mlp.down_proj"]["preferred_bit"],
+            16.0,
         )
         self.assertGreaterEqual(
             adjusted["group_scores"]["block:1:linear_attn.out_proj"]["score"],
@@ -272,7 +296,7 @@ class SurrogateTests(unittest.TestCase):
         )
         self.assertEqual(len(adjusted["ablation_adjustments"]), 3)
 
-    def test_build_group_value_prior_from_dataset_summarizes_4bit_vs_8bit_uplift(self) -> None:
+    def test_build_group_value_prior_from_dataset_summarizes_progressive_uplift(self) -> None:
         dataset_payload = {
             "task_name": "math500",
             "baseline_metrics": {
@@ -320,14 +344,59 @@ class SurrogateTests(unittest.TestCase):
                         }
                     },
                 },
+                {
+                    "policy_id": "e",
+                    "target_values": {"accuracy_advantage_over_best_baseline": 0.04},
+                    "metadata": {
+                        "group_bit_assignments": {
+                            "block:0:mlp.down_proj": 16,
+                            "block:0:linear_attn.out_proj": 8,
+                        }
+                    },
+                },
+                {
+                    "policy_id": "f",
+                    "target_values": {"accuracy_advantage_over_best_baseline": 0.03},
+                    "metadata": {
+                        "group_bit_assignments": {
+                            "block:0:mlp.down_proj": 16,
+                            "block:0:linear_attn.out_proj": 8,
+                        }
+                    },
+                },
             ],
         }
 
         prior = build_group_value_prior_from_dataset(dataset_payload, min_support=2)
         self.assertEqual(prior["task_name"], "math500")
         self.assertGreater(prior["group_scores"]["block:0:mlp.down_proj"]["score"], 0.0)
+        self.assertGreater(prior["group_scores"]["block:0:mlp.down_proj"]["uplift_16_over_8"], 0.0)
+        self.assertEqual(prior["group_scores"]["block:0:mlp.down_proj"]["preferred_bit"], 16.0)
         self.assertLess(prior["group_scores"]["block:0:linear_attn.out_proj"]["score"], 0.0)
         self.assertIn("mlp.down_proj", prior["component_scores"])
+
+    def test_extract_surrogate_features_includes_activation_and_kl_alignment(self) -> None:
+        groups = [
+            mock_group("block:0:linear_attn.out_proj", "linear_attn.out_proj", 200, 0.9),
+            mock_group("block:0:mlp.down_proj", "mlp.down_proj", 300, 1.0),
+            mock_group("block:1:linear_attn.out_proj", "linear_attn.out_proj", 200, 0.6),
+            mock_group("block:1:mlp.down_proj", "mlp.down_proj", 300, 0.8),
+        ]
+        feature_values = extract_surrogate_features(
+            groups=groups,
+            group_bits={
+                "block:0:linear_attn.out_proj": 8,
+                "block:0:mlp.down_proj": 16,
+                "block:1:linear_attn.out_proj": 4,
+                "block:1:mlp.down_proj": 4,
+            },
+            report_payload=self.report_payload,
+            sensitivity_payload=self.sensitivity_payload,
+        )
+        self.assertIn("mlp_down_proj_16bit_fraction", feature_values)
+        self.assertGreater(feature_values["activation_saliency_alignment_score"], 0.0)
+        self.assertGreater(feature_values["kl_divergence_alignment_score"], 0.0)
+        self.assertGreater(feature_values["avg_16bit_group_sensitivity"], 0.0)
 
     def test_build_surrogate_dataset_requires_requested_uniform_baseline(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

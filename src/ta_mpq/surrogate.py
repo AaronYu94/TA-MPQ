@@ -180,6 +180,7 @@ def build_surrogate_example_from_record(
         groups=groups,
         group_bits=group_bits,
         report_payload=report_payload,
+        sensitivity_payload=sensitivity_payload,
     )
     target_values = extract_surrogate_targets(
         evaluation_payload,
@@ -213,6 +214,7 @@ def extract_surrogate_features(
     groups: list[SearchGroup],
     group_bits: dict[str, int],
     report_payload: dict[str, Any],
+    sensitivity_payload: dict[str, Any] | None = None,
 ) -> dict[str, float]:
     total_groups = len(groups)
     total_params = sum(group.parameter_count for group in groups)
@@ -220,6 +222,7 @@ def extract_surrogate_features(
     top_quartile_cutoff = max(1, total_groups // 4)
     high_sensitivity_groups = {group.name for group in sorted_groups[:top_quartile_cutoff]}
     low_sensitivity_groups = {group.name for group in sorted_groups[-top_quartile_cutoff:]}
+    profile_group_lookup = _profile_group_lookup(sensitivity_payload)
 
     feature_values: dict[str, float] = {
         "num_groups": float(total_groups),
@@ -236,11 +239,55 @@ def extract_surrogate_features(
         "policy_alignment_score": _policy_alignment_score(groups, group_bits),
         "avg_8bit_group_sensitivity": _mean_sensitivity_for_bit(groups, group_bits, 8),
         "avg_4bit_group_sensitivity": _mean_sensitivity_for_bit(groups, group_bits, 4),
+        "avg_16bit_group_sensitivity": _mean_sensitivity_for_bit(groups, group_bits, 16),
         "high_sensitivity_8bit_fraction": _sensitivity_bucket_fraction(
             groups, group_bits, high_sensitivity_groups, 8
         ),
         "low_sensitivity_8bit_fraction": _sensitivity_bucket_fraction(
             groups, group_bits, low_sensitivity_groups, 8
+        ),
+        "high_sensitivity_16bit_fraction": _sensitivity_bucket_fraction(
+            groups, group_bits, high_sensitivity_groups, 16
+        ),
+        "activation_saliency_alignment_score": _profile_signal_alignment_score(
+            groups,
+            group_bits,
+            profile_group_lookup,
+            field_name="normalized_activation_score",
+        ),
+        "kl_divergence_alignment_score": _profile_signal_alignment_score(
+            groups,
+            group_bits,
+            profile_group_lookup,
+            field_name="normalized_kl_divergence_score",
+        ),
+        "avg_8bit_activation_saliency": _profile_signal_mean_for_bit(
+            groups,
+            group_bits,
+            profile_group_lookup,
+            bit_width=8,
+            field_name="normalized_activation_score",
+        ),
+        "avg_16bit_activation_saliency": _profile_signal_mean_for_bit(
+            groups,
+            group_bits,
+            profile_group_lookup,
+            bit_width=16,
+            field_name="normalized_activation_score",
+        ),
+        "avg_8bit_kl_divergence": _profile_signal_mean_for_bit(
+            groups,
+            group_bits,
+            profile_group_lookup,
+            bit_width=8,
+            field_name="normalized_kl_divergence_score",
+        ),
+        "avg_16bit_kl_divergence": _profile_signal_mean_for_bit(
+            groups,
+            group_bits,
+            profile_group_lookup,
+            bit_width=16,
+            field_name="normalized_kl_divergence_score",
         ),
     }
 
@@ -256,6 +303,12 @@ def extract_surrogate_features(
             group_bits,
             component_name,
             8,
+        )
+        feature_values[f"{sanitized}_16bit_fraction"] = _component_bit_fraction(
+            groups,
+            group_bits,
+            component_name,
+            16,
         )
         feature_values[f"{sanitized}_4bit_fraction"] = _component_bit_fraction(
             groups,
@@ -314,11 +367,11 @@ def build_group_value_prior_from_dataset(
         )
         for group_name, bit_width in group_bit_assignments.items():
             bit = int(bit_width)
-            if bit not in (4, 8):
+            if bit not in (4, 8, 16):
                 continue
-            group_targets.setdefault(str(group_name), {4: [], 8: []})[bit].append(target)
+            group_targets.setdefault(str(group_name), {4: [], 8: [], 16: []})[bit].append(target)
             component_name = _component_name_from_group_name(str(group_name))
-            component_targets.setdefault(component_name, {4: [], 8: []})[bit].append(target)
+            component_targets.setdefault(component_name, {4: [], 8: [], 16: []})[bit].append(target)
 
     group_scores = {
         group_name: _summarize_value_score(bit_targets, min_support=min_support)
@@ -360,29 +413,46 @@ def build_ablation_adjusted_group_value_prior(
 
             score_payload = copy.deepcopy(group_scores.get(group_name, {}))
             original_score = float(score_payload.get("score", 0.0))
+            original_uplift_8 = float(score_payload.get("uplift_8_over_4", original_score))
+            original_uplift_16 = float(score_payload.get("uplift_16_over_8", 0.0))
             adjusted_score = original_score
+            adjusted_uplift_8 = original_uplift_8
+            adjusted_uplift_16 = original_uplift_16
             adjustment_reason = "no_change"
 
             if reference_bit_width == 8 and ablated_bit_width == 4:
                 if positive_drop <= zero_drop_tolerance:
-                    adjusted_score = min(
-                        original_score,
+                    adjusted_uplift_8 = min(
+                        original_uplift_8,
                         -max(no_evidence_four_bit_penalty, abs(original_score)),
                     )
                     adjustment_reason = "8_to_4_no_drop"
                 else:
-                    adjusted_score = max(original_score, positive_drop)
+                    adjusted_uplift_8 = max(original_uplift_8, positive_drop)
                     adjustment_reason = "8_to_4_positive_drop"
             elif reference_bit_width == 16 and ablated_bit_width == 8:
                 if positive_drop <= zero_drop_tolerance:
-                    if original_score > 0:
-                        adjusted_score = min(original_score, no_evidence_sixteen_bit_cap)
+                    if original_uplift_16 > 0:
+                        adjusted_uplift_16 = min(original_uplift_16, no_evidence_sixteen_bit_cap)
                         adjustment_reason = "16_to_8_no_drop"
                 else:
-                    adjusted_score = max(original_score, positive_drop)
+                    adjusted_uplift_16 = max(original_uplift_16, positive_drop)
                     adjustment_reason = "16_to_8_positive_drop"
 
+            adjusted_score = _overall_value_score_from_uplifts(
+                adjusted_uplift_8,
+                adjusted_uplift_16,
+            )
+            preferred_bit = _preferred_bit_from_uplifts(
+                adjusted_uplift_8,
+                adjusted_uplift_16,
+                fallback=int(score_payload.get("preferred_bit", 4)),
+            )
             score_payload["score"] = adjusted_score
+            score_payload["uplift_8_over_4"] = adjusted_uplift_8
+            score_payload["uplift_16_over_8"] = adjusted_uplift_16
+            score_payload["uplift_16_over_4"] = adjusted_uplift_8 + adjusted_uplift_16
+            score_payload["preferred_bit"] = float(preferred_bit)
             score_payload["ablation_reference_bit_width"] = reference_bit_width
             score_payload["ablation_ablated_bit_width"] = ablated_bit_width
             score_payload["ablation_accuracy_drop"] = accuracy_drop
@@ -398,6 +468,10 @@ def build_ablation_adjusted_group_value_prior(
                     "accuracy_drop": accuracy_drop,
                     "original_score": original_score,
                     "adjusted_score": adjusted_score,
+                    "original_uplift_8_over_4": original_uplift_8,
+                    "adjusted_uplift_8_over_4": adjusted_uplift_8,
+                    "original_uplift_16_over_8": original_uplift_16,
+                    "adjusted_uplift_16_over_8": adjusted_uplift_16,
                     "reason": adjustment_reason,
                 }
             )
@@ -1091,26 +1165,106 @@ def _summarize_value_score(
     bit_targets: dict[int, list[float]],
     min_support: int,
 ) -> dict[str, float]:
-    four_bit_targets = [float(value) for value in bit_targets.get(4, [])]
-    eight_bit_targets = [float(value) for value in bit_targets.get(8, [])]
-    if four_bit_targets and eight_bit_targets:
-        raw_uplift = statistics.fmean(eight_bit_targets) - statistics.fmean(four_bit_targets)
-        support = min(len(four_bit_targets), len(eight_bit_targets))
-        confidence = min(1.0, support / max(1, min_support))
-        score = raw_uplift * confidence
-    else:
-        raw_uplift = 0.0
-        support = 0
-        confidence = 0.0
-        score = 0.0
+    supported_bits = (4, 8, 16)
+    mean_targets = {
+        bit_width: (
+            statistics.fmean(float(value) for value in bit_targets.get(bit_width, []))
+            if bit_targets.get(bit_width)
+            else 0.0
+        )
+        for bit_width in supported_bits
+    }
+    support_counts = {
+        bit_width: len(bit_targets.get(bit_width, []))
+        for bit_width in supported_bits
+    }
+
+    support_8_over_4 = min(support_counts[4], support_counts[8])
+    confidence_8_over_4 = min(1.0, support_8_over_4 / max(1, min_support))
+    raw_uplift_8_over_4 = mean_targets[8] - mean_targets[4] if support_8_over_4 else 0.0
+    uplift_8_over_4 = raw_uplift_8_over_4 * confidence_8_over_4
+
+    support_16_over_8 = min(support_counts[8], support_counts[16])
+    confidence_16_over_8 = min(1.0, support_16_over_8 / max(1, min_support))
+    raw_uplift_16_over_8 = mean_targets[16] - mean_targets[8] if support_16_over_8 else 0.0
+    uplift_16_over_8 = raw_uplift_16_over_8 * confidence_16_over_8
+
+    confidence = max(confidence_8_over_4, confidence_16_over_8)
+    support = max(support_8_over_4, support_16_over_8)
+    score = _overall_value_score_from_uplifts(uplift_8_over_4, uplift_16_over_8)
+    preferred_bit = _preferred_bit_from_means(
+        mean_targets=mean_targets,
+        support_counts=support_counts,
+        min_support=min_support,
+    )
     return {
         "score": score,
-        "raw_uplift": raw_uplift,
+        "raw_uplift": raw_uplift_8_over_4,
         "confidence": confidence,
         "support": float(support),
-        "mean_4bit_target": statistics.fmean(four_bit_targets) if four_bit_targets else 0.0,
-        "mean_8bit_target": statistics.fmean(eight_bit_targets) if eight_bit_targets else 0.0,
+        "mean_4bit_target": mean_targets[4],
+        "mean_8bit_target": mean_targets[8],
+        "mean_16bit_target": mean_targets[16],
+        "support_4bit": float(support_counts[4]),
+        "support_8bit": float(support_counts[8]),
+        "support_16bit": float(support_counts[16]),
+        "uplift_8_over_4": uplift_8_over_4,
+        "uplift_16_over_8": uplift_16_over_8,
+        "uplift_16_over_4": uplift_8_over_4 + uplift_16_over_8,
+        "confidence_8_over_4": confidence_8_over_4,
+        "confidence_16_over_8": confidence_16_over_8,
+        "preferred_bit": float(preferred_bit),
     }
+
+
+def _overall_value_score_from_uplifts(
+    uplift_8_over_4: float,
+    uplift_16_over_8: float,
+) -> float:
+    return uplift_8_over_4 + 0.65 * uplift_16_over_8
+
+
+def _preferred_bit_from_means(
+    *,
+    mean_targets: dict[int, float],
+    support_counts: dict[int, int],
+    min_support: int,
+) -> int:
+    ranked_bits = [
+        bit_width
+        for bit_width, _ in sorted(
+            mean_targets.items(),
+            key=lambda item: (item[1], item[0]),
+            reverse=True,
+        )
+        if support_counts.get(bit_width, 0) >= min_support
+    ]
+    if ranked_bits:
+        return ranked_bits[0]
+    fallback_supported_bits = [
+        bit_width
+        for bit_width, count in support_counts.items()
+        if count > 0
+    ]
+    if fallback_supported_bits:
+        return max(
+            fallback_supported_bits,
+            key=lambda bit_width: (mean_targets[bit_width], bit_width),
+        )
+    return 4
+
+
+def _preferred_bit_from_uplifts(
+    uplift_8_over_4: float,
+    uplift_16_over_8: float,
+    *,
+    fallback: int = 4,
+) -> int:
+    if uplift_16_over_8 > 0:
+        return 16
+    if uplift_8_over_4 > 0:
+        return 8
+    return fallback if fallback in (4, 8, 16) else 4
 
 
 def _rule_hit_rate(report_payload: dict[str, Any]) -> float:
@@ -1137,6 +1291,67 @@ def _rule_hit_rate(report_payload: dict[str, Any]) -> float:
         return len(matched_rule_names & expected_rule_names) / len(expected_rule_names)
     matched = sum(1 for item in rule_hits if item.get("matched"))
     return matched / len(rule_hits)
+
+
+def _profile_group_lookup(
+    sensitivity_payload: dict[str, Any] | None,
+) -> dict[str, dict[str, Any]]:
+    if not sensitivity_payload:
+        return {}
+    groups_payload = sensitivity_payload.get("groups", [])
+    return {
+        str(group_payload["name"]): dict(group_payload)
+        for group_payload in groups_payload
+        if group_payload.get("name") is not None
+    }
+
+
+def _profile_signal_alignment_score(
+    groups: list[SearchGroup],
+    group_bits: dict[str, int],
+    profile_group_lookup: dict[str, dict[str, Any]],
+    *,
+    field_name: str,
+) -> float:
+    numerator = 0.0
+    denominator = 0.0
+    for group in groups:
+        group_payload = profile_group_lookup.get(group.name)
+        if not group_payload:
+            continue
+        signal_value = float(group_payload.get(field_name, 0.0))
+        if signal_value <= 0.0:
+            continue
+        numerator += (
+            group.parameter_count
+            * signal_value
+            * BIT_NORMALIZATION.get(group_bits[group.name], 0.0)
+        )
+        denominator += group.parameter_count * signal_value
+    if denominator == 0.0:
+        return 0.0
+    return numerator / denominator
+
+
+def _profile_signal_mean_for_bit(
+    groups: list[SearchGroup],
+    group_bits: dict[str, int],
+    profile_group_lookup: dict[str, dict[str, Any]],
+    *,
+    bit_width: int,
+    field_name: str,
+) -> float:
+    matching_values = []
+    for group in groups:
+        if group_bits[group.name] != bit_width:
+            continue
+        group_payload = profile_group_lookup.get(group.name)
+        if not group_payload:
+            continue
+        matching_values.append(float(group_payload.get(field_name, 0.0)))
+    if not matching_values:
+        return 0.0
+    return statistics.fmean(matching_values)
 
 
 def _sorted_feature_importances(

@@ -258,6 +258,7 @@ def run_surrogate_search_from_report(
         mutation_rate=mutation_rate,
         uncertainty_penalty=uncertainty_penalty,
         group_value_scores=group_value_scores,
+        sensitivity_profile_payload=sensitivity_profile if sensitivity_profile_path is not None else None,
         reference_accuracy=reference_accuracy,
         top_k=top_k,
         seed=seed,
@@ -308,7 +309,7 @@ def exploratory_seed_assignments(
 def value_guided_seed_assignments(
     groups: list[SearchGroup],
     allowed_bits: tuple[int, ...],
-    group_value_scores: dict[str, float] | None,
+    group_value_scores: dict[str, Any] | None,
 ) -> dict[str, int] | None:
     if not group_value_scores:
         return None
@@ -320,18 +321,27 @@ def value_guided_seed_assignments(
     positive_groups = [
         group
         for group in groups
-        if float(group_value_scores.get(group.name, 0.0)) > 0
+        if _group_value_profile(group_value_scores.get(group.name)).get("uplift_8_over_4", 0.0) > 0
     ]
     for group in positive_groups:
         assignments[group.name] = 8
     if 16 in normalized_bits and positive_groups:
         ranked_positive_groups = sorted(
             positive_groups,
-            key=lambda group: float(group_value_scores.get(group.name, 0.0)),
+            key=lambda group: (
+                _group_value_profile(group_value_scores.get(group.name)).get("uplift_16_over_8", 0.0),
+                _group_value_profile(group_value_scores.get(group.name)).get("score", 0.0),
+            ),
             reverse=True,
         )
-        promoted_count = max(1, len(ranked_positive_groups) // 5)
-        for group in ranked_positive_groups[:promoted_count]:
+        promotable_groups = [
+            group
+            for group in ranked_positive_groups
+            if _group_value_profile(group_value_scores.get(group.name)).get("uplift_16_over_8", 0.0) > 0.0
+            or _group_value_profile(group_value_scores.get(group.name)).get("preferred_bit", 4) >= 16
+        ]
+        promoted_count = max(1, len(promotable_groups) // 4) if promotable_groups else 0
+        for group in promotable_groups[:promoted_count]:
             assignments[group.name] = 16
     if not positive_groups:
         return None
@@ -507,7 +517,8 @@ def build_surrogate_candidate(
     allowed_bits: tuple[int, ...],
     provenance: str,
     uncertainty_penalty: float = 0.5,
-    group_value_scores: dict[str, float] | None = None,
+    group_value_scores: dict[str, Any] | None = None,
+    sensitivity_profile_payload: dict[str, Any] | None = None,
     reference_accuracy: float | None = None,
 ) -> SearchCandidate:
     from ta_mpq.surrogate import extract_surrogate_features
@@ -524,6 +535,7 @@ def build_surrogate_candidate(
         groups=groups,
         group_bits=assignments,
         report_payload=synthetic_report,
+        sensitivity_payload=sensitivity_profile_payload,
     )
     surrogate_prediction, prediction_uncertainty = surrogate_predictor(feature_values)
     conservative_prediction = surrogate_prediction - uncertainty_penalty * prediction_uncertainty
@@ -615,7 +627,8 @@ def run_surrogate_evolution_search(
     tournament_size: int = 3,
     mutation_rate: float = 0.1,
     uncertainty_penalty: float = 0.5,
-    group_value_scores: dict[str, float] | None = None,
+    group_value_scores: dict[str, Any] | None = None,
+    sensitivity_profile_payload: dict[str, Any] | None = None,
     reference_accuracy: float | None = None,
     top_k: int = 5,
     seed: int = 0,
@@ -662,6 +675,7 @@ def run_surrogate_evolution_search(
             provenance=provenance,
             uncertainty_penalty=uncertainty_penalty,
             group_value_scores=group_value_scores,
+            sensitivity_profile_payload=sensitivity_profile_payload,
             reference_accuracy=reference_target_value,
         ),
     )
@@ -1075,59 +1089,115 @@ def estimate_budget_alignment_score(
 def resolve_group_value_scores(
     groups: list[SearchGroup],
     group_value_prior_payload: dict[str, Any] | None,
-) -> dict[str, float]:
+) -> dict[str, dict[str, float]]:
     if not group_value_prior_payload:
         return {}
     group_scores_payload = group_value_prior_payload.get("group_scores", {})
     component_scores_payload = group_value_prior_payload.get("component_scores", {})
-    resolved_scores: dict[str, float] = {}
+    resolved_scores: dict[str, dict[str, float]] = {}
     for group in groups:
         group_score_payload = group_scores_payload.get(group.name)
         if group_score_payload is not None:
-            resolved_scores[group.name] = float(group_score_payload.get("score", 0.0))
+            resolved_scores[group.name] = _group_value_profile(group_score_payload)
             continue
         component_score_payload = component_scores_payload.get(group.component_type)
         if component_score_payload is not None:
-            resolved_scores[group.name] = float(component_score_payload.get("score", 0.0))
+            resolved_scores[group.name] = _group_value_profile(component_score_payload)
             continue
-        resolved_scores[group.name] = 0.0
+        resolved_scores[group.name] = _group_value_profile(None)
     return resolved_scores
 
 
 def estimate_group_value_alignment_score(
     groups: list[SearchGroup],
     assignments: dict[str, int],
-    group_value_scores: dict[str, float] | None,
+    group_value_scores: dict[str, Any] | None,
 ) -> float:
     if not group_value_scores:
         return 0.0
     numerator = 0.0
     denominator = 0.0
     for group in groups:
-        value_score = float(group_value_scores.get(group.name, 0.0))
-        if abs(value_score) <= 1e-12:
+        profile = _group_value_profile(group_value_scores.get(group.name))
+        value_score = float(profile.get("score", 0.0))
+        uplift_8_over_4 = float(profile.get("uplift_8_over_4", value_score))
+        uplift_16_over_8 = float(profile.get("uplift_16_over_8", 0.0))
+        confidence = max(float(profile.get("confidence", 0.0)), 0.05)
+        preferred_bit = int(profile.get("preferred_bit", 4))
+        magnitude = max(abs(value_score), abs(uplift_8_over_4), abs(uplift_16_over_8))
+        if magnitude <= 1e-12:
             continue
-        weight = group.parameter_count * abs(value_score)
+        weight = group.parameter_count * confidence * magnitude
         assigned_bit = assignments[group.name]
-        if value_score > 0:
-            if assigned_bit >= 16:
-                alignment = 1.0
-            elif assigned_bit >= 8:
-                alignment = 0.75
-            else:
-                alignment = 0.0
-        else:
-            if assigned_bit <= 4:
-                alignment = 1.0
-            elif assigned_bit <= 8:
-                alignment = 0.25
-            else:
-                alignment = 0.0
+        alignment = _progressive_bit_alignment(
+            assigned_bit=assigned_bit,
+            preferred_bit=preferred_bit,
+            uplift_8_over_4=uplift_8_over_4,
+            uplift_16_over_8=uplift_16_over_8,
+        )
         numerator += weight * alignment
         denominator += weight
     if denominator == 0:
         return 0.0
     return numerator / denominator
+
+
+def _group_value_profile(value: Any) -> dict[str, float]:
+    if isinstance(value, dict):
+        score = float(value.get("score", 0.0))
+        uplift_8 = float(value.get("uplift_8_over_4", score))
+        uplift_16 = float(value.get("uplift_16_over_8", 0.0))
+        preferred_bit = int(float(value.get("preferred_bit", 16 if uplift_16 > 0 else 8 if uplift_8 > 0 else 4)))
+        confidence = float(
+            value.get(
+                "confidence",
+                max(
+                    float(value.get("confidence_8_over_4", 0.0)),
+                    float(value.get("confidence_16_over_8", 0.0)),
+                ),
+            )
+        )
+        return {
+            "score": score,
+            "uplift_8_over_4": uplift_8,
+            "uplift_16_over_8": uplift_16,
+            "preferred_bit": float(preferred_bit),
+            "confidence": max(confidence, 0.0),
+        }
+    score = float(value or 0.0)
+    return {
+        "score": score,
+        "uplift_8_over_4": score,
+        "uplift_16_over_8": max(0.0, 0.5 * score) if score > 0 else 0.0,
+        "preferred_bit": float(16 if score > 0.04 else 8 if score > 0 else 4),
+        "confidence": 1.0 if abs(score) > 0 else 0.0,
+    }
+
+
+def _progressive_bit_alignment(
+    *,
+    assigned_bit: int,
+    preferred_bit: int,
+    uplift_8_over_4: float,
+    uplift_16_over_8: float,
+) -> float:
+    if preferred_bit >= 16 and uplift_16_over_8 > 0:
+        if assigned_bit >= 16:
+            return 1.0
+        if assigned_bit >= 8:
+            return 0.45 if uplift_8_over_4 > 0 else 0.25
+        return 0.0
+    if preferred_bit >= 8 and uplift_8_over_4 > 0:
+        if assigned_bit == 8:
+            return 1.0
+        if assigned_bit >= 16:
+            return 0.65
+        return 0.0
+    if assigned_bit <= 4:
+        return 1.0
+    if assigned_bit <= 8:
+        return 0.2
+    return 0.0
 
 
 def estimate_reference_advantage_score(

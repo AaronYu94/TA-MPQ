@@ -1,0 +1,320 @@
+{
+  "ablation_profile_paths": [
+    "outputs/sensitivity/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12-profile.json"
+  ],
+  "allowed_bits": [
+    4,
+    8,
+    16
+  ],
+  "base_candidate_paths": [
+    "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+  ],
+  "beam_size": 3,
+  "candidates": [
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9999808164518109,
+      "estimated_average_bit_width": 8.000153468385513,
+      "estimated_weight_footprint_gb": 23.862762451171875,
+      "group_value_alignment_score": 0.6789868705016732,
+      "moves": [
+        {
+          "component_type": "linear_attn.in_proj_qkv",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.0244140625,
+          "evidence_score": 0.124,
+          "from_bit": 8,
+          "group_name": "block:37:linear_attn.in_proj_qkv",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-01.json",
+      "proposal_score": 0.6555068639275731,
+      "rank": 1,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9995715674237774,
+      "estimated_average_bit_width": 8.003427460609782,
+      "estimated_weight_footprint_gb": 23.872528076171875,
+      "group_value_alignment_score": 0.6774683135810445,
+      "moves": [
+        {
+          "component_type": "linear_attn.in_proj_z",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.0146484375,
+          "evidence_score": 0.11793103448275866,
+          "from_bit": 8,
+          "group_name": "block:12:linear_attn.in_proj_z",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-02.json",
+      "proposal_score": 0.6490318747691975,
+      "rank": 2,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9999808164518109,
+      "estimated_average_bit_width": 8.000153468385513,
+      "estimated_weight_footprint_gb": 23.862762451171875,
+      "group_value_alignment_score": 0.6786878460216235,
+      "moves": [
+        {
+          "component_type": "linear_attn.in_proj_qkv",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.0244140625,
+          "evidence_score": 0.11666666666666667,
+          "from_bit": 8,
+          "group_name": "block:29:linear_attn.in_proj_qkv",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-03.json",
+      "proposal_score": 0.6481137256982298,
+      "rank": 3,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9993029977491303,
+      "estimated_average_bit_width": 7.994423981993043,
+      "estimated_weight_footprint_gb": 23.845672607421875,
+      "group_value_alignment_score": 0.680829948660525,
+      "moves": [
+        {
+          "component_type": "mlp.down_proj",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.04150390625,
+          "evidence_score": 0.11600000000000002,
+          "from_bit": 8,
+          "group_name": "block:5:mlp.down_proj",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-04.json",
+      "proposal_score": 0.6477060248836733,
+      "rank": 4,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9995715674237774,
+      "estimated_average_bit_width": 8.003427460609782,
+      "estimated_weight_footprint_gb": 23.872528076171875,
+      "group_value_alignment_score": 0.6773648892311005,
+      "moves": [
+        {
+          "component_type": "linear_attn.out_proj",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.0146484375,
+          "evidence_score": 0.11370370370370372,
+          "from_bit": 8,
+          "group_name": "block:34:linear_attn.out_proj",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-05.json",
+      "proposal_score": 0.6447838591201539,
+      "rank": 5,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9993029977491303,
+      "estimated_average_bit_width": 7.994423981993043,
+      "estimated_weight_footprint_gb": 23.845672607421875,
+      "group_value_alignment_score": 0.680501677899041,
+      "moves": [
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.04150390625,
+          "evidence_score": 0.11126436781609197,
+          "from_bit": 8,
+          "group_name": "block:18:mlp.up_proj",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-06.json",
+      "proposal_score": 0.6429047385474684,
+      "rank": 6,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9995715674237774,
+      "estimated_average_bit_width": 8.003427460609782,
+      "estimated_weight_footprint_gb": 23.872528076171875,
+      "group_value_alignment_score": 0.6773052093191992,
+      "moves": [
+        {
+          "component_type": "linear_attn.out_proj",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.0146484375,
+          "evidence_score": 0.11126436781609197,
+          "from_bit": 8,
+          "group_name": "block:33:linear_attn.out_proj",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-07.json",
+      "proposal_score": 0.642332587250162,
+      "rank": 7,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    },
+    {
+      "bit_counts": {
+        "16": 76,
+        "4": 171,
+        "8": 250
+      },
+      "budget_alignment_score": 0.9995715674237774,
+      "estimated_average_bit_width": 8.003427460609782,
+      "estimated_weight_footprint_gb": 23.872528076171875,
+      "group_value_alignment_score": 0.6773052093191991,
+      "moves": [
+        {
+          "component_type": "linear_attn.out_proj",
+          "direction": "downgrade",
+          "estimated_footprint_delta_gb": -0.0146484375,
+          "evidence_score": 0.11126436781609197,
+          "from_bit": 8,
+          "group_name": "block:38:linear_attn.out_proj",
+          "rationale": "prior-encourages-4bit",
+          "to_bit": 4
+        },
+        {
+          "component_type": "mlp.up_proj",
+          "direction": "upgrade",
+          "estimated_footprint_delta_gb": 0.04150390625,
+          "evidence_score": 0.1457142857142857,
+          "from_bit": 4,
+          "group_name": "block:26:mlp.up_proj",
+          "rationale": "prior-encourages-8bit",
+          "to_bit": 8
+        }
+      ],
+      "path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/policies/math500-no-surrogate-round-v1/candidate-08.json",
+      "proposal_score": 0.642332587250162,
+      "rank": 8,
+      "source_candidate_path": "outputs/policies/math500-uniform8-route-v5-paper-signals/candidate-01.json"
+    }
+  ],
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "group_value_prior_path": "outputs/surrogate/math500-uniform8-route-group-value-prior-v9-v5-paper-signals-ablation-adjusted.json",
+  "grouping": "per_block_component",
+  "max_candidates": 8,
+  "num_exported_candidates": 8,
+  "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v5-paper-signals-candidate-01-llmcompressor-source-report.json",
+  "strategy": "ablation_guided_beam_local_search",
+  "target_budget_gb": 23.8623046875
+}

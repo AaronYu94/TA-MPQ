@@ -1,0 +1,30 @@
+{
+  "ablation_manifest_path": "outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-009-single-manifest.json",
+  "ablations": [
+    {
+      "ablated_bit_width": 8,
+      "accuracy": 0.28,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-009.json",
+      "component_type": "linear_attn.in_proj_z",
+      "evaluation_path": "outputs/evaluations/ablation-009-single-manifest-block-56-linear_attn.in_proj_z.json",
+      "group_name": "block:56:linear_attn.in_proj_z",
+      "layer_names": [
+        "model.layers.56.linear_attn.in_proj_z"
+      ],
+      "parameter_count": 31457280,
+      "reference_bit_width": 16,
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12-ablation-009-llmcompressor-source-report.json",
+      "selection_score": 0.6212514632638937
+    }
+  ],
+  "backend_variant": "source",
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "limit": 25,
+  "max_new_tokens": 32,
+  "policy_source": "llmcompressor",
+  "reference_accuracy": 0.28,
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json",
+  "reference_evaluation_path": "outputs/evaluations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12-reference.json",
+  "reference_report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json",
+  "task_name": "math500"
+}

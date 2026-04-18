@@ -3,7 +3,7 @@
   "grouping": "per_block_component",
   "records": [
     {
-      "candidate_path": "outputs/policies/math500-27b-guided-v1/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-27b-guided-v1/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-guided-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "math500-guided-candidate-01",
       "provenance": "guided_task_specific",
@@ -13,7 +13,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-02.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-27b-guided-v2-limit-32/candidate-02.json",
       "evaluation_path": "outputs/evaluations/math500-guided-v2-candidate-02-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "math500-guided-v2-candidate-02",
       "provenance": "guided_task_specific",
@@ -23,7 +23,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-04.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-27b-guided-v2-limit-32/candidate-04.json",
       "evaluation_path": "outputs/evaluations/math500-guided-v2-candidate-04-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "math500-guided-v2-candidate-04",
       "provenance": "guided_task_specific",
@@ -33,7 +33,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-27b-guided-v2-limit-32/candidate-05.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-27b-guided-v2-limit-32/candidate-05.json",
       "evaluation_path": "outputs/evaluations/math500-guided-candidate-05-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "math500-guided-candidate-05",
       "provenance": "guided_task_specific",
@@ -43,7 +43,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-guided-v3/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-guided-v3/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-guided-v3-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "math500-surrogate-guided-v3-candidate-01",
       "provenance": "surrogate_guided",
@@ -53,7 +53,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-cross-task-candidate-01-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "candidate-01-on-math500",
       "provenance": "cross_task_candidate",
@@ -63,7 +63,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-02.json",
+      "candidate_path": "outputs/archive/legacy-policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-02.json",
       "evaluation_path": "outputs/evaluations/math500-cross-task-candidate-02-quantized-vs-native-9b-limit-25-quantized.json",
       "policy_id": "candidate-02-on-math500",
       "provenance": "cross_task_candidate",
@@ -73,7 +73,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-03.json",
+      "candidate_path": "outputs/archive/legacy-policies/gsm8k-qwen35-27b-vs-9b-v2/candidate-03.json",
       "evaluation_path": "outputs/evaluations/candidate-03-quantized-vs-native-9b-math500-limit-25-quantized.json",
       "policy_id": "candidate-03-on-math500",
       "provenance": "cross_task_candidate",
@@ -93,7 +93,7 @@
       "uniform_bit_width": 4
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v1-iter-01/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-closed-loop-v1-iter-01/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v1-iter-01-candidate-01-dev-quantized.json",
       "policy_id": "math500-surrogate-closed-loop-v1-iter-01-candidate-01",
       "provenance": "surrogate_guided_closed_loop",
@@ -105,7 +105,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v2-iter-01/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-closed-loop-v2-iter-01/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v2-iter-01-candidate-01-dev-quantized.json",
       "policy_id": "math500-surrogate-closed-loop-v2-iter-01-candidate-01",
       "provenance": "surrogate_guided_closed_loop",
@@ -117,7 +117,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-closed-loop-v3-iter-01/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-01-candidate-01-dev-quantized.json",
       "policy_id": "math500-surrogate-closed-loop-v3-iter-01-candidate-01",
       "provenance": "surrogate_guided_closed_loop",
@@ -129,7 +129,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v3-iter-02/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-closed-loop-v3-iter-02/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v3-iter-02-candidate-01-dev-quantized.json",
       "policy_id": "math500-surrogate-closed-loop-v3-iter-02-candidate-01",
       "provenance": "surrogate_guided_closed_loop",
@@ -141,7 +141,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-01.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-01.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01-dev-quantized.json",
       "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-01",
       "provenance": "surrogate_guided_closed_loop",
@@ -153,7 +153,7 @@
       "task_name": "math500"
     },
     {
-      "candidate_path": "outputs/policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-07.json",
+      "candidate_path": "outputs/archive/legacy-policies/math500-surrogate-closed-loop-v4-acquisition-iter-01/candidate-07.json",
       "evaluation_path": "outputs/evaluations/math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07-dev-quantized.json",
       "policy_id": "math500-surrogate-closed-loop-v4-acquisition-iter-01-candidate-07",
       "provenance": "surrogate_guided_closed_loop",

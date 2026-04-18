@@ -1,0 +1,48 @@
+{
+  "ablations": [
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12/ablation-011.json",
+      "component_type": "linear_attn.in_proj_qkv",
+      "group_name": "block:57:linear_attn.in_proj_qkv",
+      "layer_names": [
+        "model.layers.57.linear_attn.in_proj_qkv"
+      ],
+      "parameter_count": 52428800,
+      "reference_bit_width": 8,
+      "selection_score": 0.6825509858677965
+    },
+    {
+      "ablated_bit_width": 4,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12/ablation-012.json",
+      "component_type": "mlp.gate_proj",
+      "group_name": "block:59:mlp.gate_proj",
+      "layer_names": [
+        "model.layers.59.mlp.gate_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 8,
+      "selection_score": 0.6798562295031306
+    }
+  ],
+  "allowed_bits": [
+    4,
+    8,
+    16
+  ],
+  "floor_bit": 4,
+  "grouping": "per_block_component",
+  "num_ablations": 2,
+  "ranking_field": "combined_sensitivity",
+  "ranking_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+  "reference_bit_counts": {
+    "16": 83,
+    "4": 180,
+    "8": 234
+  },
+  "reference_bit_widths": [
+    8
+  ],
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json",
+  "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json"
+}

@@ -1,0 +1,83 @@
+{
+  "ablations": [
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-008.json",
+      "component_type": "mlp.up_proj",
+      "group_name": "block:62:mlp.up_proj",
+      "layer_names": [
+        "model.layers.62.mlp.up_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 16,
+      "selection_score": 0.6320869077613103
+    },
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-009.json",
+      "component_type": "linear_attn.in_proj_z",
+      "group_name": "block:56:linear_attn.in_proj_z",
+      "layer_names": [
+        "model.layers.56.linear_attn.in_proj_z"
+      ],
+      "parameter_count": 31457280,
+      "reference_bit_width": 16,
+      "selection_score": 0.6212514632638937
+    },
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-010.json",
+      "component_type": "linear_attn.in_proj_z",
+      "group_name": "block:52:linear_attn.in_proj_z",
+      "layer_names": [
+        "model.layers.52.linear_attn.in_proj_z"
+      ],
+      "parameter_count": 31457280,
+      "reference_bit_width": 16,
+      "selection_score": 0.6173013159260579
+    },
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-011.json",
+      "component_type": "mlp.up_proj",
+      "group_name": "block:61:mlp.up_proj",
+      "layer_names": [
+        "model.layers.61.mlp.up_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 16,
+      "selection_score": 0.6110781406040553
+    },
+    {
+      "ablated_bit_width": 8,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12/ablation-012.json",
+      "component_type": "linear_attn.in_proj_a",
+      "group_name": "block:52:linear_attn.in_proj_a",
+      "layer_names": [
+        "model.layers.52.linear_attn.in_proj_a"
+      ],
+      "parameter_count": 245760,
+      "reference_bit_width": 16,
+      "selection_score": 0.603514365151692
+    }
+  ],
+  "allowed_bits": [
+    8,
+    16
+  ],
+  "floor_bit": 8,
+  "grouping": "per_block_component",
+  "num_ablations": 5,
+  "ranking_field": "combined_sensitivity",
+  "ranking_profile_path": "outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json",
+  "reference_bit_counts": {
+    "16": 83,
+    "4": 180,
+    "8": 234
+  },
+  "reference_bit_widths": [
+    16
+  ],
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json",
+  "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json"
+}

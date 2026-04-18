@@ -13,7 +13,9 @@ if str(SRC_ROOT) not in sys.path:
 from ta_mpq.feasibility import LinearLayerStat
 from ta_mpq.sensitivity import (
     ModuleActivationStat,
+    ModuleKLDivergenceStat,
     build_task_sensitivity_profile,
+    build_task_kl_sensitivity_profile,
     group_sensitivity_overrides_from_profile,
 )
 
@@ -63,6 +65,26 @@ class TaskSensitivityTests(unittest.TestCase):
                 num_observations=4,
             ),
         ]
+        self.kl_stats = [
+            ModuleKLDivergenceStat(
+                name="model.layers.0.mlp.down_proj",
+                parameter_count=1_000_000,
+                mean_output_kl=0.12,
+                num_observations=4,
+            ),
+            ModuleKLDivergenceStat(
+                name="model.layers.0.linear_attn.in_proj_b",
+                parameter_count=250_000,
+                mean_output_kl=0.01,
+                num_observations=4,
+            ),
+            ModuleKLDivergenceStat(
+                name="model.layers.1.mlp.down_proj",
+                parameter_count=1_000_000,
+                mean_output_kl=0.10,
+                num_observations=4,
+            ),
+        ]
 
     def test_build_task_sensitivity_profile_blends_prior_and_activation(self) -> None:
         profile = build_task_sensitivity_profile(
@@ -93,6 +115,38 @@ class TaskSensitivityTests(unittest.TestCase):
         self.assertIn("block:0:mlp.down_proj", overrides)
         self.assertIn("block:0:linear_attn.in_proj_b", overrides)
         self.assertGreater(overrides["block:0:mlp.down_proj"], overrides["block:0:linear_attn.in_proj_b"])
+
+    def test_build_task_sensitivity_profile_can_include_kl_signal(self) -> None:
+        profile = build_task_sensitivity_profile(
+            layer_stats=self.layer_stats,
+            activation_stats=self.activation_stats,
+            grouping="per_component_family",
+            activation_weight=0.4,
+            kl_stats=self.kl_stats,
+            kl_weight=0.3,
+        )
+
+        groups = {group["name"]: group for group in profile["groups"]}
+        down_proj = groups["component:mlp.down_proj"]
+        in_proj_b = groups["component:linear_attn.in_proj_b"]
+        self.assertGreater(down_proj["normalized_kl_divergence_score"], in_proj_b["normalized_kl_divergence_score"])
+        self.assertGreater(down_proj["combined_sensitivity"], in_proj_b["combined_sensitivity"])
+
+    def test_build_task_kl_sensitivity_profile_works_without_activation_stats(self) -> None:
+        profile = build_task_kl_sensitivity_profile(
+            layer_stats=self.layer_stats,
+            kl_stats=self.kl_stats,
+            grouping="per_block_component",
+            kl_weight=0.7,
+        )
+
+        groups = {group["name"]: group for group in profile["groups"]}
+        self.assertIn("block:0:mlp.down_proj", groups)
+        self.assertGreater(
+            groups["block:0:mlp.down_proj"]["normalized_kl_divergence_score"],
+            groups["block:0:linear_attn.in_proj_b"]["normalized_kl_divergence_score"],
+        )
+        self.assertEqual(profile["num_activation_stats"], 0)
 
 
 if __name__ == "__main__":

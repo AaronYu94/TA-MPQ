@@ -1,0 +1,45 @@
+{
+  "ablation_manifest_path": "outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12/manifest-missing.json",
+  "ablations": [
+    {
+      "ablated_bit_width": 4,
+      "accuracy": 0.28,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12/ablation-011.json",
+      "component_type": "linear_attn.in_proj_qkv",
+      "evaluation_path": "outputs/evaluations/manifest-missing-block-57-linear_attn.in_proj_qkv.json",
+      "group_name": "block:57:linear_attn.in_proj_qkv",
+      "layer_names": [
+        "model.layers.57.linear_attn.in_proj_qkv"
+      ],
+      "parameter_count": 52428800,
+      "reference_bit_width": 8,
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12-ablation-011-llmcompressor-source-report.json",
+      "selection_score": 0.6825509858677965
+    },
+    {
+      "ablated_bit_width": 4,
+      "accuracy": 0.28,
+      "candidate_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/ablations/math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12/ablation-012.json",
+      "component_type": "mlp.gate_proj",
+      "evaluation_path": "outputs/evaluations/manifest-missing-block-59-mlp.gate_proj.json",
+      "group_name": "block:59:mlp.gate_proj",
+      "layer_names": [
+        "model.layers.59.mlp.gate_proj"
+      ],
+      "parameter_count": 89128960,
+      "reference_bit_width": 8,
+      "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-candidate-01-precision-ablation-8to4-g12-ablation-012-llmcompressor-source-report.json",
+      "selection_score": 0.6798562295031306
+    }
+  ],
+  "backend_variant": "source",
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "limit": 25,
+  "max_new_tokens": 32,
+  "policy_source": "llmcompressor",
+  "reference_accuracy": 0.28,
+  "reference_candidate_path": "outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json",
+  "reference_evaluation_path": "outputs/evaluations/manifest-missing-reference.json",
+  "reference_report_path": "/Users/aaronyu/Desktop/TA-MPQ/outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json",
+  "task_name": "math500"
+}
