@@ -126,20 +126,20 @@ def to_llmcompressor_recipe_config(
 ) -> dict[str, Any]:
     validate_backend_support(policy, backend="llmcompressor")
 
-    config_groups: dict[str, Any] = {
-        "default": {
-            "targets": list(policy.default_targets),
-            "weights": _weight_args(policy.default_bit_width, group_size=128, symmetric=True),
-            "format": _format_name(policy.default_bit_width),
-        }
-    }
+    config_groups: dict[str, Any] = {}
 
     for rule in policy.rules:
         config_groups[rule.name] = {
-            "targets": list(rule.targets),
+            "targets": list(_canonicalize_llmcompressor_rule_targets(rule.targets)),
             "weights": _weight_args(rule.bit_width, rule.group_size, rule.symmetric),
             "format": _format_name(rule.bit_width),
         }
+
+    config_groups["default"] = {
+        "targets": list(policy.default_targets),
+        "weights": _weight_args(policy.default_bit_width, group_size=128, symmetric=True),
+        "format": _format_name(policy.default_bit_width),
+    }
 
     return {
         "ignore": list(policy.ignore),
@@ -185,3 +185,17 @@ def _matches_target(module_name: str, pattern: str) -> bool:
     if pattern.startswith("re:"):
         return re.search(pattern[3:], module_name) is not None
     return fnmatch.fnmatch(module_name, pattern)
+
+
+def _canonicalize_llmcompressor_rule_targets(targets: tuple[str, ...]) -> tuple[str, ...]:
+    return tuple(_canonicalize_llmcompressor_rule_target(target) for target in targets)
+
+
+def _canonicalize_llmcompressor_rule_target(target: str) -> str:
+    if target.startswith("re:"):
+        return target
+    # llmcompressor has been unreliable at resolving exact per-module targets in
+    # saved mixed-precision recipes. Anchor every non-regex rule target as a
+    # suffix regex so old candidate payloads and new exports go through the same
+    # matching path at source quantization and reload time.
+    return f"re:.*{re.escape(target)}$"

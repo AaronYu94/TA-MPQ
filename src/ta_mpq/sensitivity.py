@@ -5,6 +5,7 @@ from typing import Any
 
 from ta_mpq.feasibility import LinearLayerStat
 from ta_mpq.tasks import load_task_adapter
+from ta_mpq.transformers_compat import apply_qwen3_5_fast_path_compat_patch
 
 
 @dataclass(frozen=True, slots=True)
@@ -43,6 +44,8 @@ def collect_task_activation_stats(
     max_prompt_tokens: int = 1024,
 ) -> list[ModuleActivationStat]:
     import torch
+
+    apply_qwen3_5_fast_path_compat_patch()
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     task = load_task_adapter(task_name)
@@ -56,7 +59,7 @@ def collect_task_activation_stats(
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="auto",
         low_cpu_mem_usage=True,
     )

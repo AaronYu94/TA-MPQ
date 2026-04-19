@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import importlib.machinery
 from pathlib import Path
+import random
 import re
 import sys
 from typing import Any
@@ -23,37 +25,46 @@ app = modal.App("ta-mpq-feasibility")
 
 cache_volume = modal.Volume.from_name("ta-mpq-hf-cache", create_if_missing=True)
 artifact_volume = modal.Volume.from_name("ta-mpq-artifacts", create_if_missing=True)
+hf_secret = modal.Secret.from_name("huggingface-secret")
 REFERENCE_ACCURACY_SENTINEL = -999.0
+TORCH_VERSION = "2.10.0"
+TORCH_PACKAGE = f"torch=={TORCH_VERSION}"
+ACCELERATE_PACKAGE = "accelerate==1.6.0"
+DATASETS_PACKAGE = "datasets==4.0.0"
+EINOPS_PACKAGE = "einops==0.8.2"
+HF_HUB_PACKAGE = "huggingface_hub==1.11.0"
+LLMCOMPRESSOR_PACKAGE = "llmcompressor==0.8.0"
+SAFETENSORS_PACKAGE = "safetensors==0.5.0"
+SENTENCEPIECE_PACKAGE = "sentencepiece==0.2.0"
+NINJA_PACKAGE = "ninja==1.11.1.4"
+DEFAULT_MODAL_GPU = "B200"
+A100_40GB_MODAL_GPU = "A100-40GB"
+DEFAULT_STAGE1_TURN_LIMIT = 10
+DEFAULT_STAGE2_TURN_LIMIT = 15
+DEFAULT_ROUND_PROPOSAL_EVAL_COUNT = 4
+DEFAULT_ROUND_SURVIVOR_EVAL_COUNT = 2
+FLASH_LINEAR_ATTENTION_INSTALL = (
+    "python -m pip uninstall -y fla-core flash-linear-attention || true && "
+    "python -m pip install -U fla-core==0.4.2 flash-linear-attention==0.4.2"
+)
 
 report_image = (
     modal.Image.debian_slim(python_version="3.11")
     .apt_install("git")
     .pip_install(
-        "torch>=2.10.0",
+        TORCH_PACKAGE,
         # Qwen3.5 loading currently requires a Transformers build that
         # recognizes the qwen3_5 architecture.
         "git+https://github.com/huggingface/transformers.git",
-        "datasets>=4.0.0",
-        "accelerate>=1.6.0",
-        "huggingface_hub>=0.30.0",
-        "safetensors>=0.5.0",
-        "sentencepiece>=0.2.0",
+        DATASETS_PACKAGE,
+        ACCELERATE_PACKAGE,
+        HF_HUB_PACKAGE,
+        SAFETENSORS_PACKAGE,
+        SENTENCEPIECE_PACKAGE,
+        EINOPS_PACKAGE,
+        NINJA_PACKAGE,
     )
-    .add_local_python_source("ta_mpq")
-)
-
-quant_image = (
-    modal.Image.debian_slim(python_version="3.11")
-    .pip_install(
-        "torch>=2.10.0",
-        "transformers>=4.56.1",
-        "datasets>=4.0.0",
-        "accelerate>=1.6.0",
-        "huggingface_hub>=0.30.0",
-        "safetensors>=0.5.0",
-        "sentencepiece>=0.2.0",
-        "llmcompressor>=0.8.0",
-    )
+    .run_commands(FLASH_LINEAR_ATTENTION_INSTALL)
     .add_local_python_source("ta_mpq")
 )
 
@@ -61,30 +72,159 @@ quant_source_image = (
     modal.Image.debian_slim(python_version="3.11")
     .apt_install("git")
     .pip_install(
-        "torch>=2.10.0",
+        # Keep the source quantization path on the same Torch build that the
+        # Modal GPU driver stack supports instead of letting pip float to a
+        # newer CUDA runtime and silently falling back to CPU.
+        TORCH_PACKAGE,
         "git+https://github.com/huggingface/transformers.git",
-        "datasets>=4.0.0",
-        "accelerate>=1.6.0",
-        "huggingface_hub>=0.30.0",
-        "safetensors>=0.5.0",
-        "sentencepiece>=0.2.0",
-        "compressed-tensors>=0.14.0",
+        DATASETS_PACKAGE,
+        ACCELERATE_PACKAGE,
+        HF_HUB_PACKAGE,
+        SAFETENSORS_PACKAGE,
+        SENTENCEPIECE_PACKAGE,
+        "auto-round>=0.10.2",
+        "frozendict==2.4.0",
         "loguru>=0.7.2",
+        "nvidia-ml-py>=12.560.30",
         "Pillow>=10.0.0",
+        "pydantic>=2.0",
+        "PyYAML>=6.0.1",
         "requests>=2.32.2",
-        "torchvision>=0.21.0",
+        "tqdm>=4.66.3",
+        EINOPS_PACKAGE,
+        NINJA_PACKAGE,
     )
     .run_commands(
+        # Qwen3.5 fast-path support is newer than the old pinned PyPI wheels we
+        # were using, so track the upstream FLA package while keeping the base
+        # layer in control of shared deps like Transformers and PyTorch.
+        FLASH_LINEAR_ATTENTION_INSTALL,
+        "python -m pip install --no-deps git+https://github.com/vllm-project/compressed-tensors.git",
         "python -m pip install --no-deps git+https://github.com/vllm-project/llm-compressor.git"
     )
     .add_local_python_source("ta_mpq")
 )
+
+# Keep the legacy "stable" quantization functions on the same working source
+# stack so Modal does not need to build an incompatible llmcompressor+torch
+# image that this project no longer relies on.
+quant_image = quant_source_image
 
 surrogate_image = (
     modal.Image.debian_slim(python_version="3.11")
     .pip_install("xgboost>=2.1.0")
     .add_local_python_source("ta_mpq")
 )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 10,
+    secrets=[hf_secret],
+)
+def probe_quant_source_runtime() -> str:
+    import importlib
+    import os
+    import subprocess
+
+    import torch
+
+    report: dict[str, Any] = {
+        "torch_version": torch.__version__,
+        "torch_cuda_version": torch.version.cuda,
+        "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES"),
+    }
+
+    try:
+        report["cuda_is_available"] = bool(torch.cuda.is_available())
+        report["cuda_device_count"] = int(torch.cuda.device_count())
+    except Exception as exc:
+        report["cuda_probe_error_type"] = type(exc).__name__
+        report["cuda_probe_error_message"] = str(exc)
+        report["cuda_is_available"] = False
+        report["cuda_device_count"] = 0
+        return report
+
+    if report["cuda_is_available"]:
+        try:
+            report["cuda_devices"] = [
+                torch.cuda.get_device_name(index) for index in range(report["cuda_device_count"])
+            ]
+            report["current_device_index"] = int(torch.cuda.current_device())
+        except Exception as exc:
+            report["cuda_device_query_error_type"] = type(exc).__name__
+            report["cuda_device_query_error_message"] = str(exc)
+
+    try:
+        result = subprocess.run(
+            ["nvidia-smi", "--query-gpu=name,driver_version", "--format=csv,noheader"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        report["nvidia_smi_returncode"] = int(result.returncode)
+        if result.stdout:
+            report["nvidia_smi"] = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+        if result.stderr:
+            report["nvidia_smi_stderr"] = result.stderr.strip()
+    except Exception as exc:
+        report["nvidia_smi_error_type"] = type(exc).__name__
+        report["nvidia_smi_error_message"] = str(exc)
+
+    optional_modules = ("fla", "causal_conv1d")
+    report["optional_module_specs"] = {
+        module_name: bool(importlib.machinery.PathFinder.find_spec(module_name))
+        for module_name in optional_modules
+    }
+    report["optional_module_imports"] = {}
+    for module_name in optional_modules:
+        try:
+            importlib.import_module(module_name)
+            report["optional_module_imports"][module_name] = {"available": True}
+        except Exception as exc:
+            report["optional_module_imports"][module_name] = {
+                "available": False,
+                "error_type": type(exc).__name__,
+                "error_message": str(exc),
+            }
+
+    try:
+        from transformers.utils import import_utils as transformers_import_utils
+
+        transformers_flags: dict[str, Any] = {}
+        for attribute_name in (
+            "is_flash_linear_attention_available",
+            "is_causal_conv1d_available",
+        ):
+            checker = getattr(transformers_import_utils, attribute_name, None)
+            if checker is None:
+                transformers_flags[attribute_name] = None
+                continue
+            try:
+                transformers_flags[attribute_name] = bool(checker())
+            except Exception as exc:
+                transformers_flags[attribute_name] = {
+                    "error_type": type(exc).__name__,
+                    "error_message": str(exc),
+                }
+        report["transformers_optional_kernels"] = transformers_flags
+    except Exception as exc:
+        report["transformers_optional_kernels_error_type"] = type(exc).__name__
+        report["transformers_optional_kernels_error_message"] = str(exc)
+
+    try:
+        qwen3_5_module = importlib.import_module("transformers.models.qwen3_5.modeling_qwen3_5")
+        report["qwen3_5_fast_path_available"] = getattr(
+            qwen3_5_module,
+            "is_fast_path_available",
+            None,
+        )
+    except Exception as exc:
+        report["qwen3_5_fast_path_error_type"] = type(exc).__name__
+        report["qwen3_5_fast_path_error_message"] = str(exc)
+
+    return json.dumps(report, sort_keys=True)
 
 
 def _resolve_remote_model_ref(
@@ -118,11 +258,23 @@ def _sync_artifact_volume() -> None:
         pass
 
 
+def _configure_hf_environment() -> None:
+    import os
+
+    os.environ["HF_HOME"] = "/cache/hf"
+    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    token = os.environ.get("HF_TOKEN")
+    if token:
+        os.environ.setdefault("HF_HUB_TOKEN", token)
+        os.environ.setdefault("HUGGING_FACE_HUB_TOKEN", token)
+
+
 @app.function(
     image=report_image,
-    gpu="A100-80GB",
+    gpu=DEFAULT_MODAL_GPU,
     timeout=60 * 60 * 4,
     volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
 )
 def probe_mixed_precision_report(
     contract_data: dict[str, Any],
@@ -131,10 +283,7 @@ def probe_mixed_precision_report(
     policy_label: str = "default-policy",
     precomputed_report: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     from ta_mpq.contracts import ExperimentContract
     from ta_mpq.feasibility import maybe_run_llmcompressor_oneshot
@@ -160,19 +309,17 @@ def probe_mixed_precision_report(
 
 @app.function(
     image=report_image,
-    gpu="A100-80GB",
+    gpu=DEFAULT_MODAL_GPU,
     timeout=60 * 60 * 4,
     volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
 )
 def probe_live_policy_target_matching(
     contract_data: dict[str, Any],
     policy_payload: dict[str, Any],
     policy_label: str = "default-policy",
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     from ta_mpq.contracts import ExperimentContract
     from ta_mpq.feasibility import inspect_live_policy_target_matching
@@ -190,23 +337,15 @@ def probe_live_policy_target_matching(
     return report
 
 
-@app.function(
-    image=quant_source_image,
-    gpu="A100-80GB",
-    timeout=60 * 60 * 4,
-    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
-)
-def probe_loaded_artifact_quantization_state(
+def _probe_loaded_artifact_quantization_state_impl(
     model_ref: str,
     policy_payload: dict[str, Any] | None = None,
     policy_label: str = "default-policy",
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     _apply_transformers_token_compat_patch()
+    _apply_compressed_tensors_distributed_compat_patch()
 
     from ta_mpq.feasibility import inspect_loaded_model_quantization_state
     from ta_mpq.quantization import MixedPrecisionPolicy
@@ -222,10 +361,49 @@ def probe_loaded_artifact_quantization_state(
 
 
 @app.function(
+    image=quant_source_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 4,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def probe_loaded_artifact_quantization_state(
+    model_ref: str,
+    policy_payload: dict[str, Any] | None = None,
+    policy_label: str = "default-policy",
+) -> dict[str, Any]:
+    return _probe_loaded_artifact_quantization_state_impl(
+        model_ref=model_ref,
+        policy_payload=policy_payload,
+        policy_label=policy_label,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 4,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def probe_loaded_artifact_quantization_state_a100(
+    model_ref: str,
+    policy_payload: dict[str, Any] | None = None,
+    policy_label: str = "default-policy",
+) -> dict[str, Any]:
+    return _probe_loaded_artifact_quantization_state_impl(
+        model_ref=model_ref,
+        policy_payload=policy_payload,
+        policy_label=policy_label,
+    )
+
+
+@app.function(
     image=quant_image,
-    gpu="A100-80GB",
+    gpu=DEFAULT_MODAL_GPU,
     timeout=60 * 60 * 8,
     volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
 )
 def probe_mixed_precision_feasibility(
     contract_data: dict[str, Any],
@@ -235,10 +413,7 @@ def probe_mixed_precision_feasibility(
     policy_label: str = "default-policy",
     precomputed_report: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     from ta_mpq.contracts import ExperimentContract
     from ta_mpq.feasibility import maybe_run_llmcompressor_oneshot
@@ -255,6 +430,7 @@ def probe_mixed_precision_feasibility(
         dry_run=dry_run,
         precomputed_report=precomputed_report,
         processor_strategy="tokenizer",
+        oneshot_device="cuda:0",
     )
     if not dry_run and output_dir.startswith("/artifacts/"):
         _sync_artifact_volume()
@@ -265,13 +441,7 @@ def probe_mixed_precision_feasibility(
     return report
 
 
-@app.function(
-    image=quant_source_image,
-    gpu="A100-80GB",
-    timeout=60 * 60 * 8,
-    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
-)
-def probe_mixed_precision_feasibility_source(
+def _probe_mixed_precision_feasibility_source_impl(
     contract_data: dict[str, Any],
     calibration_limit: int = 16,
     dry_run: bool = True,
@@ -279,12 +449,10 @@ def probe_mixed_precision_feasibility_source(
     policy_label: str = "default-policy",
     precomputed_report: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     _apply_transformers_token_compat_patch()
+    _apply_compressed_tensors_distributed_compat_patch()
 
     from ta_mpq.contracts import ExperimentContract
     from ta_mpq.feasibility import maybe_run_llmcompressor_oneshot
@@ -301,6 +469,7 @@ def probe_mixed_precision_feasibility_source(
         dry_run=dry_run,
         precomputed_report=precomputed_report,
         processor_strategy="tokenizer",
+        oneshot_device="cuda:0",
     )
     if not dry_run and output_dir.startswith("/artifacts/"):
         _sync_artifact_volume()
@@ -313,21 +482,70 @@ def probe_mixed_precision_feasibility_source(
 
 @app.function(
     image=quant_source_image,
-    gpu="A100-80GB",
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def probe_mixed_precision_feasibility_source(
+    contract_data: dict[str, Any],
+    calibration_limit: int = 16,
+    dry_run: bool = True,
+    policy_payload: dict[str, Any] | None = None,
+    policy_label: str = "default-policy",
+    precomputed_report: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return _probe_mixed_precision_feasibility_source_impl(
+        contract_data=contract_data,
+        calibration_limit=calibration_limit,
+        dry_run=dry_run,
+        policy_payload=policy_payload,
+        policy_label=policy_label,
+        precomputed_report=precomputed_report,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def probe_mixed_precision_feasibility_source_a100(
+    contract_data: dict[str, Any],
+    calibration_limit: int = 16,
+    dry_run: bool = True,
+    policy_payload: dict[str, Any] | None = None,
+    policy_label: str = "default-policy",
+    precomputed_report: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    return _probe_mixed_precision_feasibility_source_impl(
+        contract_data=contract_data,
+        calibration_limit=calibration_limit,
+        dry_run=dry_run,
+        policy_payload=policy_payload,
+        policy_label=policy_label,
+        precomputed_report=precomputed_report,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=DEFAULT_MODAL_GPU,
     timeout=60 * 60 * 2,
     volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
 )
 def smoke_test_quantized_artifact_source(
     artifact_dir: str,
     tokenizer_source: str,
     max_new_tokens: int = 8,
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     _apply_transformers_token_compat_patch()
+    _apply_compressed_tensors_distributed_compat_patch()
 
     from ta_mpq.feasibility import run_quantized_smoke_test
 
@@ -342,27 +560,22 @@ def smoke_test_quantized_artifact_source(
     return report
 
 
-@app.function(
-    image=quant_source_image,
-    gpu="A100-80GB",
-    timeout=60 * 60 * 4,
-    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
-)
-def evaluate_task_source_model(
+def _evaluate_task_source_model_impl(
     model_ref: str,
     tokenizer_source: str,
     model_label: str,
     task_name: str,
     limit: int,
     max_new_tokens: int,
+    split: str = "test",
+    example_ids: list[str] | None = None,
     load_dtype: str = "auto",
+    task_prompt_style: str = "",
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     _apply_transformers_token_compat_patch()
+    _apply_compressed_tensors_distributed_compat_patch()
 
     from ta_mpq.baseline import evaluate_task_model
 
@@ -374,17 +587,87 @@ def evaluate_task_source_model(
         model_label=model_label,
         limit=limit,
         max_new_tokens=max_new_tokens,
+        split=split,
+        example_ids=example_ids,
         load_dtype=load_dtype,
+        task_prompt_style=task_prompt_style,
     )
     summary["backend_variant"] = "source"
     return summary
 
 
 @app.function(
-    image=report_image,
-    gpu="A100-80GB",
+    image=quant_source_image,
+    gpu=DEFAULT_MODAL_GPU,
     timeout=60 * 60 * 4,
     volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def evaluate_task_source_model(
+    model_ref: str,
+    tokenizer_source: str,
+    model_label: str,
+    task_name: str,
+    limit: int,
+    max_new_tokens: int,
+    split: str = "test",
+    example_ids: list[str] | None = None,
+    load_dtype: str = "auto",
+    task_prompt_style: str = "",
+) -> dict[str, Any]:
+    return _evaluate_task_source_model_impl(
+        model_ref=model_ref,
+        tokenizer_source=tokenizer_source,
+        model_label=model_label,
+        task_name=task_name,
+        limit=limit,
+        max_new_tokens=max_new_tokens,
+        split=split,
+        example_ids=example_ids,
+        load_dtype=load_dtype,
+        task_prompt_style=task_prompt_style,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 4,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def evaluate_task_source_model_a100(
+    model_ref: str,
+    tokenizer_source: str,
+    model_label: str,
+    task_name: str,
+    limit: int,
+    max_new_tokens: int,
+    split: str = "test",
+    example_ids: list[str] | None = None,
+    load_dtype: str = "auto",
+    task_prompt_style: str = "",
+) -> dict[str, Any]:
+    return _evaluate_task_source_model_impl(
+        model_ref=model_ref,
+        tokenizer_source=tokenizer_source,
+        model_label=model_label,
+        task_name=task_name,
+        limit=limit,
+        max_new_tokens=max_new_tokens,
+        split=split,
+        example_ids=example_ids,
+        load_dtype=load_dtype,
+        task_prompt_style=task_prompt_style,
+    )
+
+
+@app.function(
+    image=report_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 4,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
 )
 def collect_task_sensitivity_profile_remote(
     contract_data: dict[str, Any],
@@ -395,10 +678,7 @@ def collect_task_sensitivity_profile_remote(
     max_prompt_tokens: int = 1024,
     activation_weight: float = 0.55,
 ) -> dict[str, Any]:
-    import os
-
-    os.environ["HF_HOME"] = "/cache/hf"
-    os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+    _configure_hf_environment()
 
     from ta_mpq.contracts import ExperimentContract
     from ta_mpq.feasibility import LinearLayerStat
@@ -438,6 +718,25 @@ def collect_task_sensitivity_profile_remote(
     profile["num_examples"] = limit
     profile["max_prompt_tokens"] = max_prompt_tokens
     return profile
+
+
+@app.function(
+    image=report_image,
+    timeout=60 * 10,
+    volumes={"/cache": cache_volume},
+    secrets=[hf_secret],
+)
+def load_task_example_ids_remote(
+    task_name: str,
+    split: str,
+) -> list[str]:
+    _configure_hf_environment()
+
+    from ta_mpq.tasks import load_task_adapter
+
+    task = load_task_adapter(task_name)
+    examples = task.load_examples(limit=None, split=split)
+    return [str(example.example_id) for example in examples]
 
 
 @app.function(
@@ -485,29 +784,56 @@ def run_surrogate_search_remote(
     reference_accuracy: float | None = None,
     top_k: int = 5,
     seed: int = 0,
+    search_group_names: list[str] | None = None,
+    fixed_assignments: dict[str, int] | None = None,
+    extra_seed_assignments: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     from ta_mpq.search import (
         build_search_groups,
         layer_stats_from_report,
         resolve_group_value_scores,
+        resolve_sensitivity_overrides,
         run_surrogate_evolution_search,
     )
 
-    sensitivity_overrides = None
-    if sensitivity_profile_payload is not None:
-        from ta_mpq.sensitivity import group_sensitivity_overrides_from_profile
-
-        sensitivity_overrides = group_sensitivity_overrides_from_profile(
-            sensitivity_profile_payload,
-            field=sensitivity_field,
-        )
-
+    layer_stats = layer_stats_from_report(report_payload)
+    sensitivity_overrides = resolve_sensitivity_overrides(
+        layer_stats=layer_stats,
+        grouping=grouping,
+        sensitivity_profile_payload=sensitivity_profile_payload,
+        field=sensitivity_field,
+    )
     groups = build_search_groups(
-        layer_stats_from_report(report_payload),
+        layer_stats,
         grouping=grouping,
         sensitivity_overrides=sensitivity_overrides,
     )
-    group_value_scores = resolve_group_value_scores(groups, group_value_prior_payload)
+    group_value_scores = resolve_group_value_scores(
+        groups,
+        group_value_prior_payload,
+        layer_stats=layer_stats,
+        target_grouping=grouping,
+    )
+    search_groups = None
+    if search_group_names:
+        requested_names = {str(name) for name in search_group_names}
+        search_groups = [group for group in groups if group.name in requested_names]
+        missing_group_names = sorted(requested_names - {group.name for group in search_groups})
+        if missing_group_names:
+            raise ValueError(f"Unknown search groups: {missing_group_names[:5]}")
+    normalized_extra_seeds = None
+    if extra_seed_assignments:
+        normalized_extra_seeds = []
+        for item in extra_seed_assignments:
+            normalized_extra_seeds.append(
+                {
+                    "provenance": str(item.get("provenance", "extra_seed")),
+                    "assignments": {
+                        str(group_name): int(bit_width)
+                        for group_name, bit_width in dict(item.get("assignments", {})).items()
+                    },
+                }
+            )
     result = run_surrogate_evolution_search(
         groups=groups,
         report_payload=report_payload,
@@ -526,8 +852,25 @@ def run_surrogate_search_remote(
         reference_accuracy=reference_accuracy,
         top_k=top_k,
         seed=seed,
+        search_groups=search_groups,
+        fixed_assignments=fixed_assignments,
+        extra_seed_assignments=[
+            (item["provenance"], item["assignments"])
+            for item in normalized_extra_seeds or []
+        ],
     )
     return result.to_dict()
+
+
+@app.local_entrypoint()
+def run_quant_source_runtime_probe(
+    output_name: str = "quant-source-runtime-probe",
+) -> None:
+    report = json.loads(probe_quant_source_runtime.remote())
+    save_summary(
+        PROJECT_ROOT / "outputs" / "feasibility" / f"{_slugify(output_name)}.json",
+        report,
+    )
 
 
 @app.local_entrypoint()
@@ -720,11 +1063,13 @@ def run_quantized_vs_native_eval(
     contract_path: str = "configs/experiment_contract_27b_9b.json",
     task_name: str = "",
     limit: int = 5,
-    max_new_tokens: int = 32,
+    max_new_tokens: int = 0,
+    split: str = "test",
     output_prefix: str = "candidate-01-quantized-vs-native-9b",
 ) -> None:
     contract = load_contract(PROJECT_ROOT / contract_path)
     resolved_task_name = task_name or contract.task_name
+    resolved_max_new_tokens = _resolve_default_max_new_tokens(resolved_task_name, max_new_tokens)
 
     quantized_summary = evaluate_task_source_model.remote(
         model_ref=artifact_dir,
@@ -732,7 +1077,8 @@ def run_quantized_vs_native_eval(
         model_label=f"{contract.compressed_source_model_id}-quantized",
         task_name=resolved_task_name,
         limit=limit,
-        max_new_tokens=max_new_tokens,
+        max_new_tokens=resolved_max_new_tokens,
+        split=split,
         load_dtype="auto",
     )
     native_summary = evaluate_task_source_model.remote(
@@ -741,7 +1087,8 @@ def run_quantized_vs_native_eval(
         model_label=contract.native_baseline_model_id,
         task_name=resolved_task_name,
         limit=limit,
-        max_new_tokens=max_new_tokens,
+        max_new_tokens=resolved_max_new_tokens,
+        split=split,
         load_dtype="bfloat16",
     )
 
@@ -752,6 +1099,831 @@ def run_quantized_vs_native_eval(
     save_summary(
         PROJECT_ROOT / "outputs" / "evaluations" / f"{_slugify(output_prefix)}-native.json",
         native_summary,
+    )
+
+
+@app.local_entrypoint()
+def run_named_task_model_eval(
+    model_ref: str,
+    tokenizer_source: str = "",
+    model_label: str = "",
+    task_name: str = "gsm8k",
+    limit: int = 25,
+    max_new_tokens: int = 0,
+    split: str = "test",
+    load_dtype: str = "bfloat16",
+    task_prompt_style: str = "",
+    gpu_type: str = DEFAULT_MODAL_GPU,
+    output_name: str = "",
+) -> None:
+    resolved_tokenizer_source = tokenizer_source or model_ref
+    resolved_model_label = model_label or model_ref
+    resolved_max_new_tokens = _resolve_default_max_new_tokens(task_name, max_new_tokens)
+    eval_remote = _resolve_eval_remote(gpu_type)
+    summary = eval_remote.remote(
+        model_ref=model_ref,
+        tokenizer_source=resolved_tokenizer_source,
+        model_label=resolved_model_label,
+        task_name=task_name,
+        limit=limit,
+        max_new_tokens=resolved_max_new_tokens,
+        split=split,
+        load_dtype=load_dtype,
+        task_prompt_style=task_prompt_style,
+    )
+    effective_output_name = output_name or (
+        f"{task_name}-{Path(model_ref).name}-native-eval"
+    )
+    save_summary(
+        PROJECT_ROOT / "outputs" / "evaluations" / f"{_slugify(effective_output_name)}.json",
+        summary,
+    )
+
+
+@app.local_entrypoint()
+def run_uniform_int4_task_baseline(
+    report_path: str,
+    contract_path: str = "configs/experiment_contract_9b_math500_int8.json",
+    task_name: str = "",
+    task_prompt_style: str = "simple_evals_nonthinking",
+    split: str = "last100",
+    limit: int = 100,
+    max_new_tokens: int = 4096,
+    calibration_limit: int = 4,
+    gpu_type: str = A100_40GB_MODAL_GPU,
+    output_name: str = "",
+) -> None:
+    from ta_mpq.search import build_search_groups, estimate_candidate_weight_footprint_gb, layer_stats_from_report
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    resolved_task_name = task_name or contract.task_name
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    layer_stats = layer_stats_from_report(report_payload)
+    groups = build_search_groups(layer_stats, grouping="per_block_component")
+    fixed_assignments = _resolve_sprint_fixed_assignments(groups)
+    group_bits = {group.name: 4 for group in groups}
+    group_bits.update(fixed_assignments)
+    target_budget_gb = estimate_candidate_weight_footprint_gb(groups, group_bits)
+    effective_output_name = output_name or (
+        f"{contract.name}-{resolved_task_name}-uniform-int4-{split}"
+    )
+    output_slug = _slugify(effective_output_name)
+    policy_output_dir = PROJECT_ROOT / "outputs" / "policies" / output_slug
+    policy_output_dir.mkdir(parents=True, exist_ok=True)
+
+    record = _run_surrogate_free_candidate_eval(
+        candidate_key="baseline-uniform-int4",
+        report_payload=report_payload,
+        group_bits=group_bits,
+        proposal_score=0.0,
+        provenance="uniform_int4_seed",
+        contract=contract,
+        task_name=resolved_task_name,
+        task_prompt_style=task_prompt_style,
+        calibration_limit=calibration_limit,
+        target_budget_gb=target_budget_gb,
+        dev_split=split,
+        dev_limit=limit,
+        max_new_tokens=max_new_tokens,
+        output_slug=output_slug,
+        policy_output_dir=policy_output_dir,
+        gpu_type=gpu_type,
+    )
+    save_summary(
+        PROJECT_ROOT / "outputs" / "search" / f"{output_slug}.json",
+        {
+            "strategy": "uniform_int4_task_baseline",
+            "contract_path": contract_path,
+            "report_path": report_path,
+            "task_name": resolved_task_name,
+            "task_prompt_style": task_prompt_style,
+            "split": split,
+            "limit": limit,
+            "max_new_tokens": max_new_tokens,
+            "gpu_type": gpu_type,
+            "target_budget_gb": target_budget_gb,
+            "candidate": _candidate_result_snapshot(record),
+        },
+    )
+
+
+@app.local_entrypoint()
+def run_surrogate_free_math500_sprint(
+    report_path: str,
+    contract_path: str = "configs/experiment_contract_27b_9b_math500.json",
+    task_name: str = "",
+    task_prompt_style: str = "",
+    group_value_prior_path: str = "",
+    sensitivity_profile_path: str = "",
+    sensitivity_field: str = "combined_sensitivity",
+    target_budget_gb: float = 0.0,
+    allowed_bits: str = "4,8,16",
+    calibration_limit: int = 4,
+    max_new_tokens: int = 2048,
+    search_split: str = "",
+    dev_split: str = "dev100",
+    accept_split: str = "accept200",
+    final_split: str = "full500",
+    turn_limit: int = 0,
+    stage1_turn_limit: int = 0,
+    stage2_turn_limit: int = 0,
+    dev_limit_override: int = 0,
+    accept_limit_override: int = 0,
+    final_limit_override: int = 0,
+    promotable_count: int = 30,
+    demotable_count: int = 60,
+    seed_provenances: str = "",
+    seed_mode: str = "",
+    max_seed_candidates: int = 0,
+    beam_width: int = 3,
+    rounds: int = 4,
+    round_eval_count: int = 3,
+    round_proposal_eval_count: int = 0,
+    round_survivor_eval_count: int = 0,
+    min_budget_utilization: float = 0.99,
+    use_sensitivity_selection: bool = True,
+    baseline_mode: str = "default",
+    gpu_type: str = DEFAULT_MODAL_GPU,
+    defer_accept_eval: bool = False,
+    enable_finalist_config_refinement: bool = False,
+    evaluate_full500: bool = False,
+    resume_output_slug: str = "",
+    output_name: str = "",
+) -> None:
+    from ta_mpq.search import (
+        build_search_groups,
+        build_surrogate_free_seed_assignments,
+        estimate_assignment_search_score,
+        estimate_candidate_weight_footprint_gb,
+        generate_surrogate_free_neighbor_assignments,
+        layer_stats_from_report,
+        resolve_group_value_scores,
+        resolve_sensitivity_overrides,
+        resolve_surrogate_free_priority_lists,
+        resolve_surrogate_free_priority_scores,
+    )
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    resolved_task_name = task_name or contract.task_name
+    if resolved_task_name.lower() not in {"math500", "math-500"}:
+        raise ValueError("run_surrogate_free_math500_sprint only supports MATH-500")
+    resolved_max_new_tokens = _resolve_default_max_new_tokens(resolved_task_name, max_new_tokens)
+
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    group_value_prior_payload = (
+        _load_json(PROJECT_ROOT / group_value_prior_path) if group_value_prior_path else None
+    )
+    sensitivity_profile_payload = (
+        _load_json(PROJECT_ROOT / sensitivity_profile_path) if sensitivity_profile_path else None
+    )
+    resolved_search_split = search_split or dev_split
+    normalized_allowed_bits = tuple(
+        sorted({int(part.strip()) for part in allowed_bits.split(",") if part.strip()})
+    )
+    if normalized_allowed_bits not in {(4, 8, 16), (2, 4, 8)}:
+        raise ValueError("The sprint runner currently expects allowed_bits to be exactly 4,8,16 or 2,4,8")
+
+    layer_stats = layer_stats_from_report(report_payload)
+    groups = build_search_groups(
+        layer_stats,
+        grouping="per_block_component",
+        sensitivity_overrides=resolve_sensitivity_overrides(
+            layer_stats=layer_stats,
+            grouping="per_block_component",
+            sensitivity_profile_payload=sensitivity_profile_payload,
+            field=sensitivity_field,
+        ),
+    )
+    fixed_assignments = _resolve_sprint_fixed_assignments(groups)
+    if target_budget_gb > 0:
+        resolved_target_budget_gb = target_budget_gb
+    elif normalized_allowed_bits == (2, 4, 8):
+        uniform_int4_budget = {
+            group.name: 4
+            for group in groups
+        }
+        uniform_int4_budget.update(fixed_assignments)
+        resolved_target_budget_gb = float(
+            estimate_candidate_weight_footprint_gb(groups, uniform_int4_budget)
+        )
+    else:
+        resolved_target_budget_gb = contract.search_target_budget_gb or 0.0
+    if resolved_target_budget_gb <= 0:
+        raise ValueError("target_budget_gb must be positive")
+    group_value_scores = resolve_group_value_scores(
+        groups,
+        group_value_prior_payload,
+        layer_stats=layer_stats,
+        target_grouping="per_block_component",
+    )
+    if use_sensitivity_selection:
+        group_priority_scores = resolve_surrogate_free_priority_scores(
+            groups,
+            group_value_scores=group_value_scores,
+        )
+        priority_lists = resolve_surrogate_free_priority_lists(
+            groups=groups,
+            group_priority_scores=group_priority_scores,
+            promotable_count=promotable_count,
+            demotable_count=demotable_count,
+            excluded_group_names=set(fixed_assignments),
+        )
+        promotable_group_names = priority_lists["promotable_group_names"]
+        demotable_group_names = priority_lists["demotable_group_names"]
+    else:
+        eligible_groups = [group for group in groups if group.name not in set(fixed_assignments)]
+        group_priority_scores = {group.name: 0.0 for group in groups}
+        promotable_group_names = [group.name for group in eligible_groups]
+        demotable_group_names = [group.name for group in eligible_groups]
+    selected_seed_provenances = tuple(
+        part.strip() for part in seed_provenances.split(",") if part.strip()
+    ) or None
+    if not selected_seed_provenances and seed_mode:
+        normalized_seed_mode = tuple(part.strip() for part in seed_mode.split(",") if part.strip())
+        if normalized_seed_mode:
+            selected_seed_provenances = normalized_seed_mode
+
+    effective_output_name = (
+        output_name
+        or resume_output_slug
+        or f"{contract.name}-{resolved_task_name}-surrogate-free"
+    )
+    output_slug = _slugify(resume_output_slug or effective_output_name)
+    policy_output_dir = PROJECT_ROOT / "outputs" / "policies" / output_slug
+    policy_output_dir.mkdir(parents=True, exist_ok=True)
+
+    stage1_limit = (
+        stage1_turn_limit
+        or turn_limit
+        or dev_limit_override
+        or DEFAULT_STAGE1_TURN_LIMIT
+    )
+    stage2_limit = stage2_turn_limit or DEFAULT_STAGE2_TURN_LIMIT
+    dev_limit = stage1_limit
+    accept_limit = accept_limit_override or _task_limit_for_split(accept_split)
+    final_limit = final_limit_override or _task_limit_for_split(final_split)
+    survivor_eval_count = round_survivor_eval_count or round_eval_count or DEFAULT_ROUND_SURVIVOR_EVAL_COUNT
+    provisional_eval_count = max(
+        survivor_eval_count,
+        round_proposal_eval_count or max(
+            DEFAULT_ROUND_PROPOSAL_EVAL_COUNT,
+            round_eval_count,
+        ),
+    )
+    search_deck = (
+        _initialize_search_deck(resolved_task_name, resolved_search_split, output_slug)
+        if stage1_limit > 0
+        else None
+    )
+
+    resume_state = None
+    if resume_output_slug:
+        resume_state = _load_surrogate_free_resume_state(
+            output_slug=output_slug,
+            split_name=resolved_search_split,
+            beam_width=beam_width,
+        )
+        if search_deck is not None:
+            _advance_search_deck_for_resume(
+                deck_state=search_deck,
+                resumed_records=resume_state["ordered_records"],
+                stage1_turn_limit=stage1_limit,
+                stage2_turn_limit=stage2_limit,
+                split_name=resolved_search_split,
+            )
+
+    baseline_records = {
+        "native_bf16": {},
+    }
+    eval_remote = _resolve_eval_remote(gpu_type)
+    if resume_state is not None:
+        baseline_records = {}
+    elif baseline_mode == "default":
+        baseline_model_ref = contract.upper_bound_model_id or contract.compressed_source_model_id
+        for split_name, split_limit in (
+            (resolved_search_split, dev_limit),
+            (accept_split, accept_limit),
+        ):
+            summary = eval_remote.remote(
+                model_ref=baseline_model_ref,
+                tokenizer_source=contract.compressed_source_model_id,
+                model_label=f"{baseline_model_ref}-bf16",
+                task_name=resolved_task_name,
+                limit=split_limit,
+                max_new_tokens=resolved_max_new_tokens,
+                split=split_name,
+                load_dtype="bfloat16",
+                task_prompt_style=task_prompt_style,
+            )
+            summary_path = (
+                PROJECT_ROOT
+                / "outputs"
+                / "evaluations"
+                / f"{output_slug}-native-bf16-{_slugify(split_name)}.json"
+            )
+            save_summary(summary_path, summary)
+            baseline_records["native_bf16"][split_name] = {
+                "path": to_relative_path(summary_path, PROJECT_ROOT),
+                "accuracy": float(summary.get("accuracy", 0.0)),
+                "task_split": split_name,
+            }
+    else:
+        baseline_records = {}
+
+    all_candidate_records: list[dict[str, Any]]
+    seen_signatures: set[tuple[tuple[str, int], ...]]
+    beam_records: list[dict[str, Any]]
+    round_summaries: list[dict[str, Any]]
+    start_round_index = 1
+    uniform_record = None
+    if resume_state is not None:
+        all_candidate_records = list(resume_state["records"])
+        seen_signatures = set(resume_state["seen_signatures"])
+        beam_records = list(resume_state["beam_records"])
+        round_summaries = list(resume_state["round_summaries"])
+        start_round_index = int(resume_state["next_round_index"])
+    else:
+        seed_assignments = build_surrogate_free_seed_assignments(
+            groups=groups,
+            target_budget_gb=resolved_target_budget_gb,
+            allowed_bits=normalized_allowed_bits,
+            group_priority_scores=group_priority_scores,
+            promotable_group_names=promotable_group_names,
+            demotable_group_names=demotable_group_names,
+            fixed_assignments=fixed_assignments,
+            min_budget_utilization=min_budget_utilization,
+            max_seed_count=max_seed_candidates,
+            selected_seed_provenances=selected_seed_provenances,
+        )
+        all_candidate_records = []
+        seen_signatures = set()
+        for seed_index, (provenance, assignments) in enumerate(seed_assignments, start=1):
+            search_turn = (
+                _consume_search_turn_examples(search_deck, stage1_limit)
+                if search_deck is not None
+                else None
+            )
+            record = _run_surrogate_free_candidate_eval(
+                candidate_key=f"seed-{seed_index:02d}-{_slugify(provenance)}",
+                report_payload=report_payload,
+                group_bits=assignments,
+                proposal_score=estimate_assignment_search_score(
+                    groups=groups,
+                    assignments=assignments,
+                    target_budget_gb=resolved_target_budget_gb,
+                    group_priority_scores=group_priority_scores,
+                ),
+                provenance=provenance,
+                contract=contract,
+                task_name=resolved_task_name,
+                task_prompt_style=task_prompt_style,
+                calibration_limit=calibration_limit,
+                target_budget_gb=resolved_target_budget_gb,
+                dev_split=resolved_search_split,
+                dev_limit=stage1_limit,
+                max_new_tokens=resolved_max_new_tokens,
+                output_slug=output_slug,
+                policy_output_dir=policy_output_dir,
+                example_ids=(search_turn["example_ids"] if search_deck is not None else None),
+                evaluation_metadata=(
+                    {
+                        "deck_segments": search_turn["segments"],
+                        "deck_cursor_after": search_turn["cursor_after"],
+                        "reshuffle_count_after": search_turn["reshuffle_count_after"],
+                    }
+                    if search_deck is not None
+                    else None
+                ),
+                gpu_type=gpu_type,
+            )
+            all_candidate_records.append(record)
+            seen_signatures.add(_assignment_signature(assignments))
+
+        beam_records = _select_best_direct_eval_records(
+            all_candidate_records,
+            split_name=resolved_search_split,
+            limit=beam_width,
+        )
+        round_summaries = []
+
+    if resume_state is None and baseline_mode == "default":
+        uniform_record = next(
+            (
+                record
+                for record in all_candidate_records
+                if str(record.get("provenance")) == "uniform_int8_seed"
+            ),
+            None,
+        )
+        if uniform_record is None:
+            uniform_seed_assignments = build_surrogate_free_seed_assignments(
+                groups=groups,
+                target_budget_gb=resolved_target_budget_gb,
+                allowed_bits=normalized_allowed_bits,
+                group_priority_scores=group_priority_scores,
+                promotable_group_names=promotable_group_names,
+                demotable_group_names=demotable_group_names,
+                fixed_assignments=fixed_assignments,
+                min_budget_utilization=min_budget_utilization,
+                max_seed_count=1,
+                selected_seed_provenances=("uniform_int8_seed",),
+            )
+            uniform_assignments = uniform_seed_assignments[0][1]
+            seen_signatures.add(_assignment_signature(uniform_assignments))
+            search_turn = (
+                _consume_search_turn_examples(search_deck, stage1_limit)
+                if search_deck is not None
+                else None
+            )
+            uniform_record = _run_surrogate_free_candidate_eval(
+                candidate_key="baseline-uniform-int8",
+                report_payload=report_payload,
+                group_bits=uniform_assignments,
+                proposal_score=estimate_assignment_search_score(
+                    groups=groups,
+                    assignments=uniform_assignments,
+                    target_budget_gb=resolved_target_budget_gb,
+                    group_priority_scores=group_priority_scores,
+                ),
+                provenance="uniform_int8_seed",
+                contract=contract,
+                task_name=resolved_task_name,
+                task_prompt_style=task_prompt_style,
+                calibration_limit=calibration_limit,
+                target_budget_gb=resolved_target_budget_gb,
+                dev_split=resolved_search_split,
+                dev_limit=stage1_limit,
+                max_new_tokens=resolved_max_new_tokens,
+                output_slug=output_slug,
+                policy_output_dir=policy_output_dir,
+                example_ids=(search_turn["example_ids"] if search_turn is not None else None),
+                evaluation_metadata=(
+                    {
+                        "deck_segments": search_turn["segments"],
+                        "deck_cursor_after": search_turn["cursor_after"],
+                        "reshuffle_count_after": search_turn["reshuffle_count_after"],
+                    }
+                    if search_turn is not None
+                    else None
+                ),
+                gpu_type=gpu_type,
+            )
+            all_candidate_records.append(uniform_record)
+
+    for round_index in range(start_round_index, rounds + 1):
+        proposals: list[dict[str, Any]] = []
+        for beam_record in beam_records:
+            neighbors = generate_surrogate_free_neighbor_assignments(
+                groups=groups,
+                base_assignments=dict(beam_record["group_bit_assignments"]),
+                target_budget_gb=resolved_target_budget_gb,
+                allowed_bits=normalized_allowed_bits,
+                group_priority_scores=group_priority_scores,
+                promotable_group_names=promotable_group_names,
+                demotable_group_names=demotable_group_names,
+                fixed_assignments=fixed_assignments,
+                min_budget_utilization=min_budget_utilization,
+            )
+            for provenance, assignments in neighbors:
+                signature = _assignment_signature(assignments)
+                if signature in seen_signatures:
+                    continue
+                proposals.append(
+                    {
+                        "provenance": provenance,
+                        "group_bits": assignments,
+                        "proposal_score": estimate_assignment_search_score(
+                            groups=groups,
+                            assignments=assignments,
+                            target_budget_gb=resolved_target_budget_gb,
+                            group_priority_scores=group_priority_scores,
+                        ),
+                        "parent_candidate_key": beam_record["candidate_key"],
+                        "assignment_signature": signature,
+                    }
+                )
+        if not proposals:
+            break
+
+        selected_proposals = sorted(
+            proposals,
+            key=lambda item: (float(item["proposal_score"]), item["parent_candidate_key"]),
+            reverse=True,
+        )[:provisional_eval_count]
+        stage1_turn = (
+            _consume_search_turn_examples(search_deck, stage1_limit)
+            if search_deck is not None
+            else None
+        )
+        evaluated_round_records: list[dict[str, Any]] = []
+        for candidate_index, proposal in enumerate(selected_proposals, start=1):
+            record = _run_surrogate_free_candidate_eval(
+                candidate_key=f"round-{round_index:02d}-candidate-{candidate_index:02d}",
+                report_payload=report_payload,
+                group_bits=proposal["group_bits"],
+                proposal_score=float(proposal["proposal_score"]),
+                provenance=str(proposal["provenance"]),
+                contract=contract,
+                task_name=resolved_task_name,
+                task_prompt_style=task_prompt_style,
+                calibration_limit=calibration_limit,
+                target_budget_gb=resolved_target_budget_gb,
+                dev_split=resolved_search_split,
+                dev_limit=stage1_limit,
+                max_new_tokens=resolved_max_new_tokens,
+                output_slug=output_slug,
+                policy_output_dir=policy_output_dir,
+                parent_candidate_key=str(proposal["parent_candidate_key"]),
+                example_ids=(stage1_turn["example_ids"] if stage1_turn is not None else None),
+                evaluation_metadata=(
+                    {
+                        "deck_segments": stage1_turn["segments"],
+                        "deck_cursor_after": stage1_turn["cursor_after"],
+                        "reshuffle_count_after": stage1_turn["reshuffle_count_after"],
+                    }
+                    if stage1_turn is not None
+                    else None
+                ),
+                evaluation_stage="stage1",
+                gpu_type=gpu_type,
+            )
+            evaluated_round_records.append(record)
+            all_candidate_records.append(record)
+            seen_signatures.add(proposal["assignment_signature"])
+
+        provisional_ranked_records = _select_best_direct_eval_records(
+            evaluated_round_records,
+            split_name=resolved_search_split,
+            limit=len(evaluated_round_records),
+        )
+        rechecked_records: list[dict[str, Any]] = []
+        stage2_turn = None
+        for record in provisional_ranked_records[:survivor_eval_count]:
+            if stage2_turn is None and search_deck is not None:
+                stage2_turn = _consume_search_turn_examples(search_deck, stage2_limit)
+            _ensure_candidate_task_eval(
+                record=record,
+                contract=contract,
+                task_name=resolved_task_name,
+                task_prompt_style=task_prompt_style,
+                split_name=resolved_search_split,
+                split_limit=stage2_limit,
+                max_new_tokens=resolved_max_new_tokens,
+                output_slug=output_slug,
+                example_ids=(stage2_turn["example_ids"] if stage2_turn is not None else None),
+                evaluation_metadata=(
+                    {
+                        "deck_segments": stage2_turn["segments"],
+                        "deck_cursor_after": stage2_turn["cursor_after"],
+                        "reshuffle_count_after": stage2_turn["reshuffle_count_after"],
+                    }
+                    if stage2_turn is not None
+                    else None
+                ),
+                evaluation_stage="stage2",
+                gpu_type=gpu_type,
+            )
+            rechecked_records.append(record)
+
+        stage2_keys = {str(record["candidate_key"]) for record in rechecked_records}
+        round_rank_records = list(rechecked_records) + [
+            record for record in provisional_ranked_records if str(record["candidate_key"]) not in stage2_keys
+        ]
+        beam_records = _select_best_direct_eval_records(
+            round_rank_records,
+            split_name=resolved_search_split,
+            limit=beam_width,
+        )
+        round_summaries.append(
+            {
+                "round_index": round_index,
+                "proposal_count": len(proposals),
+                "provisional_pool_size": len(selected_proposals),
+                "evaluated_candidates": [
+                    _candidate_round_snapshot(record, resolved_search_split)
+                    for record in evaluated_round_records
+                ],
+                "provisional_candidates": [
+                    _candidate_round_snapshot(record, resolved_search_split)
+                    for record in provisional_ranked_records
+                ],
+                "rechecked_candidates": [
+                    _candidate_round_snapshot(record, resolved_search_split)
+                    for record in rechecked_records
+                ],
+                "beam_candidates": [
+                    _candidate_round_snapshot(record, resolved_search_split)
+                    for record in beam_records
+                ],
+            }
+        )
+
+    if enable_finalist_config_refinement:
+        _run_optional_finalist_config_refinement(
+            all_candidate_records=all_candidate_records,
+            report_payload=report_payload,
+            groups=groups,
+            layer_stats=layer_stats,
+            group_value_scores=group_value_scores,
+            resolved_target_budget_gb=resolved_target_budget_gb,
+            contract=contract,
+            task_name=resolved_task_name,
+            task_prompt_style=task_prompt_style,
+            calibration_limit=calibration_limit,
+            dev_split=resolved_search_split,
+            dev_limit=dev_limit,
+            max_new_tokens=max_new_tokens,
+            output_slug=output_slug,
+            policy_output_dir=policy_output_dir,
+        )
+
+    if uniform_record is not None and not defer_accept_eval:
+        _ensure_candidate_task_eval(
+            record=uniform_record,
+            contract=contract,
+            task_name=resolved_task_name,
+            task_prompt_style=task_prompt_style,
+            split_name=accept_split,
+            split_limit=accept_limit,
+            max_new_tokens=resolved_max_new_tokens,
+            output_slug=output_slug,
+            gpu_type=gpu_type,
+        )
+
+    top_mixed_candidates = [
+        record
+        for record in _select_best_direct_eval_records(
+            [
+                record
+                for record in all_candidate_records
+                if bool(record.get("is_mixed"))
+            ],
+            split_name=resolved_search_split,
+            limit=2,
+        )
+        if bool(record.get("integrity_clean"))
+    ]
+    if not defer_accept_eval:
+        for record in top_mixed_candidates:
+            _ensure_candidate_task_eval(
+                record=record,
+                contract=contract,
+                task_name=resolved_task_name,
+                task_prompt_style=task_prompt_style,
+                split_name=accept_split,
+                split_limit=accept_limit,
+                max_new_tokens=resolved_max_new_tokens,
+                output_slug=output_slug,
+                gpu_type=gpu_type,
+            )
+
+    best_mixed_candidate = next(
+        (
+            record
+            for record in _select_best_direct_eval_records(
+                top_mixed_candidates,
+                split_name=accept_split,
+                limit=1,
+            )
+            if record.get("evaluations", {}).get(accept_split)
+        ),
+        None,
+    )
+    if (
+        evaluate_full500
+        and not defer_accept_eval
+        and best_mixed_candidate is not None
+        and uniform_record is not None
+        and _candidate_accuracy(best_mixed_candidate, accept_split)
+        >= _candidate_accuracy(uniform_record, accept_split)
+    ):
+        _ensure_candidate_task_eval(
+            record=best_mixed_candidate,
+            contract=contract,
+            task_name=resolved_task_name,
+            task_prompt_style=task_prompt_style,
+            split_name=final_split,
+            split_limit=final_limit,
+            max_new_tokens=resolved_max_new_tokens,
+            output_slug=output_slug,
+        )
+        _ensure_candidate_task_eval(
+            record=uniform_record,
+            contract=contract,
+            task_name=resolved_task_name,
+            task_prompt_style=task_prompt_style,
+            split_name=final_split,
+            split_limit=final_limit,
+            max_new_tokens=resolved_max_new_tokens,
+            output_slug=output_slug,
+        )
+        summary = eval_remote.remote(
+            model_ref=baseline_model_ref,
+            tokenizer_source=contract.compressed_source_model_id,
+            model_label=f"{baseline_model_ref}-bf16",
+            task_name=resolved_task_name,
+            limit=final_limit,
+            max_new_tokens=resolved_max_new_tokens,
+            split=final_split,
+            load_dtype="bfloat16",
+            task_prompt_style=task_prompt_style,
+        )
+        summary_path = (
+            PROJECT_ROOT
+            / "outputs"
+            / "evaluations"
+            / f"{output_slug}-native-bf16-{_slugify(final_split)}.json"
+        )
+        save_summary(summary_path, summary)
+        baseline_records["native_bf16"][final_split] = {
+            "path": to_relative_path(summary_path, PROJECT_ROOT),
+            "accuracy": float(summary.get("accuracy", 0.0)),
+            "task_split": final_split,
+        }
+
+    search_summary = {
+        "strategy": "surrogate_free_direct_eval",
+        "task_name": resolved_task_name,
+        "report_path": report_path,
+        "contract_path": contract_path,
+        "grouping": "per_block_component",
+        "allowed_bits": list(normalized_allowed_bits),
+        "target_budget_gb": resolved_target_budget_gb,
+        "budget_accounting_mode": "matched_linear_weight_budget",
+        "matched_linear_budget_gb": resolved_target_budget_gb,
+        "estimated_non_linear_weight_footprint_gb": float(
+            report_payload.get("estimated_non_linear_weight_footprint_gb", 0.0)
+        ),
+        "estimated_uniform_full_model_weight_footprint_gb": float(
+            report_payload.get("estimated_full_model_weight_footprint_gb", 0.0)
+        ),
+        "fixed_assignments": fixed_assignments,
+        "promotable_group_names": promotable_group_names,
+        "demotable_group_names": demotable_group_names,
+        "use_sensitivity_selection": use_sensitivity_selection,
+        "seed_provenances": list(selected_seed_provenances or []),
+        "seed_mode": seed_mode or None,
+        "max_seed_candidates": int(max_seed_candidates),
+        "search_split": resolved_search_split,
+        "turn_limit": int(stage1_limit),
+        "stage1_turn_limit": int(stage1_limit),
+        "stage2_turn_limit": int(stage2_limit),
+        "round_proposal_eval_count": int(provisional_eval_count),
+        "round_survivor_eval_count": int(survivor_eval_count),
+        "gpu_type": gpu_type,
+        "baseline_mode": baseline_mode,
+        "defer_accept_eval": defer_accept_eval,
+        "resume_output_slug": resume_output_slug or None,
+        "dev_split": resolved_search_split,
+        "dev_limit": dev_limit,
+        "accept_split": accept_split,
+        "accept_limit": accept_limit,
+        "task_prompt_style": task_prompt_style or None,
+        "final_split": final_split if evaluate_full500 else None,
+        "final_limit": final_limit if evaluate_full500 else None,
+        "rounds": round_summaries,
+        "baselines": baseline_records,
+        "uniform_int8_record": (
+            _candidate_result_snapshot(uniform_record) if uniform_record is not None else None
+        ),
+        "top_mixed_candidates": [
+            _candidate_result_snapshot(record)
+            for record in top_mixed_candidates
+        ],
+        "search_deck": (
+            {
+                "split_name": search_deck["split_name"],
+                "deck_size": len(search_deck["ordered_example_ids"]),
+                "cursor": int(search_deck["cursor"]),
+                "reshuffle_count": int(search_deck["reshuffle_count"]),
+                "shuffle_seed": search_deck["shuffle_seed"],
+                "ordered_example_ids": list(search_deck["ordered_example_ids"]),
+            }
+            if search_deck is not None
+            else None
+        ),
+        "resume_state": (
+            {
+                "resumed_candidate_count": len(resume_state["records"]),
+                "next_round_index": int(resume_state["next_round_index"]),
+                "completed_turns": int(resume_state["completed_turns"]),
+                "resumed_candidate_keys": [record["candidate_key"] for record in resume_state["ordered_records"]],
+            }
+            if resume_state is not None
+            else None
+        ),
+        "all_candidate_records": [
+            _candidate_result_snapshot(record)
+            for record in _select_best_direct_eval_records(
+                all_candidate_records,
+                split_name=resolved_search_split,
+                limit=min(20, len(all_candidate_records)),
+            )
+        ],
+    }
+    save_summary(
+        PROJECT_ROOT / "outputs" / "search" / f"{output_slug}.json",
+        search_summary,
     )
 
 
@@ -1110,6 +2282,102 @@ def run_guided_proxy_search(
 
 
 @app.local_entrypoint()
+def run_budgeted_bf16_allocator_search(
+    report_path: str,
+    contract_path: str = "configs/experiment_contract_27b_9b_math500.json",
+    target_budget_gb: float = 0.0,
+    grouping: str = "per_block_component",
+    group_value_prior_path: str = "",
+    sensitivity_profile_path: str = "",
+    sensitivity_field: str = "combined_sensitivity",
+    bf16_candidate_fraction: float = 0.15,
+    bf16_rescue_scale: float = 0.5,
+    bf16_sensitivity_weight: float = 0.35,
+    output_name: str = "",
+    export_dir: str = "",
+) -> None:
+    from ta_mpq.policy_export import export_top_candidates
+    from ta_mpq.search import (
+        build_search_groups,
+        layer_stats_from_report,
+        resolve_group_value_scores,
+        resolve_sensitivity_overrides,
+        run_budgeted_bf16_allocator,
+    )
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    group_value_prior_payload = (
+        _load_json(PROJECT_ROOT / group_value_prior_path) if group_value_prior_path else None
+    )
+    sensitivity_profile_payload = (
+        _load_json(PROJECT_ROOT / sensitivity_profile_path) if sensitivity_profile_path else None
+    )
+    resolved_target_budget_gb = target_budget_gb or (contract.search_target_budget_gb or 0.0)
+    if resolved_target_budget_gb <= 0:
+        raise ValueError("target_budget_gb must be positive")
+
+    layer_stats = layer_stats_from_report(report_payload)
+    groups = build_search_groups(
+        layer_stats,
+        grouping=grouping,
+        sensitivity_overrides=resolve_sensitivity_overrides(
+            layer_stats=layer_stats,
+            grouping=grouping,
+            sensitivity_profile_payload=sensitivity_profile_payload,
+            field=sensitivity_field,
+        ),
+    )
+    fixed_assignments = _resolve_sprint_fixed_assignments(groups)
+    group_value_scores = resolve_group_value_scores(
+        groups,
+        group_value_prior_payload,
+        layer_stats=layer_stats,
+        target_grouping=grouping,
+    )
+    result, manifest = run_budgeted_bf16_allocator(
+        groups=groups,
+        target_budget_gb=resolved_target_budget_gb,
+        allowed_bits=(4, 8, 16),
+        grouping=grouping,
+        group_value_scores=group_value_scores,
+        fixed_assignments=fixed_assignments,
+        bf16_candidate_fraction=bf16_candidate_fraction,
+        bf16_rescue_scale=bf16_rescue_scale,
+        bf16_sensitivity_weight=bf16_sensitivity_weight,
+    )
+
+    effective_output_name = output_name or (
+        f"{contract.name}-{Path(report_path).stem}-budgeted-bf16-allocator"
+    )
+    output_slug = _slugify(effective_output_name)
+    search_output_path = PROJECT_ROOT / "outputs" / "search" / f"{output_slug}.json"
+    manifest_output_path = PROJECT_ROOT / "outputs" / "search" / f"{output_slug}-manifest.json"
+    save_summary(search_output_path, result.to_dict())
+    manifest.update(
+        {
+            "report_path": report_path,
+            "contract_path": contract_path,
+            "group_value_prior_path": group_value_prior_path or None,
+            "sensitivity_profile_path": sensitivity_profile_path or None,
+            "sensitivity_field": sensitivity_field,
+            "fixed_assignments": fixed_assignments,
+        }
+    )
+    save_summary(manifest_output_path, manifest)
+
+    effective_export_dir = export_dir or (
+        str(PROJECT_ROOT / "outputs" / "policies" / output_slug)
+    )
+    export_top_candidates(
+        report_path=PROJECT_ROOT / report_path,
+        search_result_path=search_output_path,
+        output_dir=effective_export_dir,
+        top_k=1,
+    )
+
+
+@app.local_entrypoint()
 def build_surrogate_dataset(
     manifest_path: str,
     target_metric: str = "",
@@ -1302,6 +2570,290 @@ def run_surrogate_guided_search(
 
     effective_export_dir = export_dir or (
         str(PROJECT_ROOT / "outputs" / "policies" / _slugify(effective_output_name))
+    )
+    export_top_candidates(
+        report_path=PROJECT_ROOT / report_path,
+        search_result_path=search_output_path,
+        output_dir=effective_export_dir,
+        top_k=top_k,
+    )
+
+
+@app.local_entrypoint()
+def run_hierarchical_uniform8_search(
+    report_path: str,
+    surrogate_summary_path: str = "",
+    surrogate_model_path: str = "",
+    target_budget_gb: float = 0.0,
+    allowed_bits: str = "",
+    contract_path: str = "configs/experiment_contract_27b_9b.json",
+    group_value_prior_path: str = "",
+    sensitivity_profile_path: str = "",
+    sensitivity_field: str = "combined_sensitivity",
+    window_size: int = 4,
+    max_promoted_fine_groups: int = 160,
+    coarse_population_size: int = 80,
+    coarse_generations: int = 24,
+    fine_population_size: int = 64,
+    fine_generations: int = 24,
+    config_group_sizes: str = "32,64,128",
+    config_symmetric_options: str = "true,false",
+    max_tunable_config_groups: int = 48,
+    config_population_size: int = 40,
+    config_generations: int = 16,
+    config_seed_candidate_count: int = 3,
+    elite_count: int = 4,
+    tournament_size: int = 3,
+    mutation_rate: float = 0.1,
+    uncertainty_penalty: float = 0.5,
+    reference_accuracy: float = REFERENCE_ACCURACY_SENTINEL,
+    top_k: int = 5,
+    seed: int = 0,
+    output_name: str = "",
+    export_dir: str = "",
+) -> None:
+    from ta_mpq.policy_export import export_top_candidates
+    from ta_mpq.search import (
+        SearchCandidate,
+        build_hierarchical_promotion_manifest,
+        build_search_groups,
+        expand_group_assignments,
+        layer_stats_from_report,
+        refine_candidate_quantization_configs,
+        resolve_group_value_scores,
+        resolve_sensitivity_overrides,
+        run_proxy_evolution_search,
+    )
+
+    if window_size != 4:
+        raise ValueError("window_size is fixed to 4 for v1")
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    if bool(surrogate_summary_path) != bool(surrogate_model_path):
+        raise ValueError(
+            "surrogate_summary_path and surrogate_model_path must both be provided "
+            "or both be omitted"
+        )
+    surrogate_summary_payload = (
+        _load_json(PROJECT_ROOT / surrogate_summary_path) if surrogate_summary_path else None
+    )
+    surrogate_model_json = (
+        (PROJECT_ROOT / surrogate_model_path).read_text(encoding="utf-8")
+        if surrogate_model_path
+        else ""
+    )
+    group_value_prior_payload = (
+        _load_json(PROJECT_ROOT / group_value_prior_path) if group_value_prior_path else None
+    )
+    sensitivity_profile_payload = (
+        _load_json(PROJECT_ROOT / sensitivity_profile_path) if sensitivity_profile_path else None
+    )
+    resolved_target_budget_gb = target_budget_gb or (contract.search_target_budget_gb or 0.0)
+    if resolved_target_budget_gb <= 0:
+        raise ValueError("target_budget_gb must be positive")
+    normalized_allowed_bits = (
+        tuple(sorted({int(part.strip()) for part in allowed_bits.split(",") if part.strip()}))
+        if allowed_bits
+        else tuple(contract.quantization_bits)
+    )
+    normalized_config_group_sizes = tuple(
+        sorted({int(part.strip()) for part in config_group_sizes.split(",") if part.strip()})
+    )
+    normalized_config_symmetric_options = tuple(
+        dict.fromkeys(
+            part.strip().lower() not in {"false", "0", "no"}
+            for part in config_symmetric_options.split(",")
+            if part.strip()
+        )
+    )
+    resolved_target_metric = str(
+        (surrogate_summary_payload or {}).get("target_metric")
+        or contract.surrogate_target_metric
+        or "accuracy"
+    )
+    resolved_reference_accuracy = _resolve_reference_accuracy(
+        reference_accuracy,
+        resolved_target_metric,
+    )
+
+    layer_stats = layer_stats_from_report(report_payload)
+    coarse_grouping = "per_block_window_component"
+    fine_grouping = "per_block_component"
+    coarse_groups = build_search_groups(
+        layer_stats,
+        grouping=coarse_grouping,
+        sensitivity_overrides=resolve_sensitivity_overrides(
+            layer_stats=layer_stats,
+            grouping=coarse_grouping,
+            sensitivity_profile_payload=sensitivity_profile_payload,
+            field=sensitivity_field,
+        ),
+    )
+    fine_groups = build_search_groups(
+        layer_stats,
+        grouping=fine_grouping,
+        sensitivity_overrides=resolve_sensitivity_overrides(
+            layer_stats=layer_stats,
+            grouping=fine_grouping,
+            sensitivity_profile_payload=sensitivity_profile_payload,
+            field=sensitivity_field,
+        ),
+    )
+    coarse_group_value_scores = resolve_group_value_scores(
+        coarse_groups,
+        group_value_prior_payload,
+        layer_stats=layer_stats,
+        target_grouping=coarse_grouping,
+    )
+    fine_group_value_scores = resolve_group_value_scores(
+        fine_groups,
+        group_value_prior_payload,
+        layer_stats=layer_stats,
+        target_grouping=fine_grouping,
+    )
+    coarse_result = run_proxy_evolution_search(
+        groups=coarse_groups,
+        target_budget_gb=resolved_target_budget_gb,
+        allowed_bits=normalized_allowed_bits,
+        grouping=coarse_grouping,
+        population_size=coarse_population_size,
+        generations=coarse_generations,
+        elite_count=min(elite_count, coarse_population_size),
+        tournament_size=tournament_size,
+        mutation_rate=mutation_rate,
+        top_k=8,
+        seed=seed,
+    )
+    if not coarse_result.top_candidates:
+        raise RuntimeError("Coarse proxy search did not produce any candidates")
+
+    best_coarse_assignments = coarse_result.top_candidates[0].bits_dict()
+    expanded_best_assignments = expand_group_assignments(
+        best_coarse_assignments,
+        target_groups=fine_groups,
+        source_grouping=coarse_grouping,
+    )
+    promotion_manifest = build_hierarchical_promotion_manifest(
+        coarse_groups=coarse_groups,
+        coarse_candidates=list(coarse_result.top_candidates),
+        fine_groups=fine_groups,
+        coarse_group_value_scores=coarse_group_value_scores,
+        source_grouping=coarse_grouping,
+        max_promoted_fine_groups=max_promoted_fine_groups,
+    )
+    promotion_manifest["best_coarse_candidate_bits"] = best_coarse_assignments
+    promotion_manifest["expanded_best_fine_assignments"] = expanded_best_assignments
+
+    promoted_fine_group_names = set(promotion_manifest["promoted_fine_group_names"])
+    frozen_fine_group_names = set(promotion_manifest["frozen_fine_group_names"])
+    active_search_groups = [
+        group for group in fine_groups if group.name in promoted_fine_group_names
+    ]
+    fixed_assignments = {
+        group_name: expanded_best_assignments[group_name]
+        for group_name in frozen_fine_group_names
+    }
+
+    effective_output_name = output_name or (
+        f"{Path(surrogate_summary_path).stem}-{Path(report_path).stem}-hierarchical-search"
+    )
+    output_slug = _slugify(effective_output_name)
+    coarse_output_path = PROJECT_ROOT / "outputs" / "search" / f"{output_slug}-coarse.json"
+    promotion_manifest_path = (
+        PROJECT_ROOT / "outputs" / "search" / f"{output_slug}-promotion-manifest.json"
+    )
+    config_refinement_manifest_path = (
+        PROJECT_ROOT / "outputs" / "search" / f"{output_slug}-config-refinement.json"
+    )
+    search_output_path = PROJECT_ROOT / "outputs" / "search" / f"{output_slug}.json"
+    save_summary(coarse_output_path, coarse_result.to_dict())
+    save_summary(promotion_manifest_path, promotion_manifest)
+
+    if surrogate_summary_payload is not None:
+        fine_result = run_surrogate_search_remote.remote(
+            report_payload=report_payload,
+            surrogate_summary_payload=surrogate_summary_payload,
+            surrogate_model_json=surrogate_model_json,
+            target_budget_gb=resolved_target_budget_gb,
+            allowed_bits=normalized_allowed_bits,
+            grouping=fine_grouping,
+            group_value_prior_payload=group_value_prior_payload,
+            sensitivity_profile_payload=sensitivity_profile_payload,
+            sensitivity_field=sensitivity_field,
+            population_size=fine_population_size,
+            generations=fine_generations,
+            elite_count=min(elite_count, fine_population_size),
+            tournament_size=tournament_size,
+            mutation_rate=mutation_rate,
+            uncertainty_penalty=uncertainty_penalty,
+            reference_accuracy=resolved_reference_accuracy,
+            top_k=top_k,
+            seed=seed,
+            search_group_names=[group.name for group in active_search_groups],
+            fixed_assignments=fixed_assignments,
+            extra_seed_assignments=[
+                {
+                    "provenance": "expanded_best_coarse_candidate",
+                    "assignments": expanded_best_assignments,
+                }
+            ],
+        )
+        fine_result["fine_search_mode"] = "surrogate"
+    else:
+        fine_result = run_proxy_evolution_search(
+            groups=fine_groups,
+            target_budget_gb=resolved_target_budget_gb,
+            allowed_bits=normalized_allowed_bits,
+            grouping=fine_grouping,
+            population_size=fine_population_size,
+            generations=fine_generations,
+            elite_count=min(elite_count, fine_population_size),
+            tournament_size=tournament_size,
+            mutation_rate=mutation_rate,
+            top_k=top_k,
+            seed=seed,
+            search_groups=active_search_groups,
+            fixed_assignments=fixed_assignments,
+            extra_seed_assignments=[
+                ("expanded_best_coarse_candidate", expanded_best_assignments)
+            ],
+        ).to_dict()
+        fine_result["fine_search_mode"] = "proxy"
+    fine_top_candidates = [
+        SearchCandidate.from_dict(candidate_payload)
+        for candidate_payload in fine_result.get("top_candidates", [])
+    ]
+    config_refinement = refine_candidate_quantization_configs(
+        groups=fine_groups,
+        layer_stats=layer_stats,
+        base_candidates=fine_top_candidates,
+        group_value_scores=fine_group_value_scores,
+        allowed_group_names=promoted_fine_group_names,
+        group_size_options=normalized_config_group_sizes,
+        symmetric_options=normalized_config_symmetric_options,
+        max_tunable_groups=max_tunable_config_groups,
+        population_size=config_population_size,
+        generations=config_generations,
+        top_k=top_k,
+        seed=seed,
+        seed_candidate_count=config_seed_candidate_count,
+    )
+    save_summary(config_refinement_manifest_path, config_refinement)
+    fine_result["top_candidates"] = list(config_refinement["top_candidates"])
+    fine_result["config_refinement"] = {
+        "manifest_path": str(config_refinement_manifest_path),
+        "group_size_options": list(normalized_config_group_sizes),
+        "symmetric_options": list(normalized_config_symmetric_options),
+        "max_tunable_groups": max_tunable_config_groups,
+        "population_size": config_population_size,
+        "generations": config_generations,
+        "seed_candidate_count": config_seed_candidate_count,
+    }
+    save_summary(search_output_path, fine_result)
+
+    effective_export_dir = export_dir or (
+        str(PROJECT_ROOT / "outputs" / "policies" / output_slug)
     )
     export_top_candidates(
         report_path=PROJECT_ROOT / report_path,
@@ -1818,6 +3370,911 @@ def to_relative_path(path: str | Path, base_dir: str | Path) -> str:
         return str(resolved_path)
 
 
+def _task_limit_for_split(split_name: str) -> int:
+    normalized = str(split_name or "test").lower()
+    if normalized == "dev100":
+        return 100
+    if normalized == "accept200":
+        return 200
+    if normalized == "train200":
+        return 200
+    if normalized == "test300":
+        return 300
+    if normalized == "first300":
+        return 300
+    if normalized == "last100":
+        return 100
+    if normalized == "full500":
+        return 500
+    return 25
+
+
+def _resolve_default_max_new_tokens(task_name: str, max_new_tokens: int) -> int:
+    if max_new_tokens > 0:
+        return int(max_new_tokens)
+    normalized_task_name = str(task_name or "").strip().lower()
+    if normalized_task_name in {"math500", "math-500"}:
+        return 2048
+    return 64
+
+
+def _resolve_sprint_fixed_assignments(groups: list[Any]) -> dict[str, int]:
+    fixed_assignments: dict[str, int] = {}
+    for group in groups:
+        if "lm_head" in str(group.name):
+            fixed_assignments[str(group.name)] = 8
+    return fixed_assignments
+
+
+def _assignment_signature(assignments: dict[str, int]) -> tuple[tuple[str, int], ...]:
+    return tuple(sorted((str(group_name), int(bit_width)) for group_name, bit_width in assignments.items()))
+
+
+def _resolve_eval_remote(gpu_type: str):
+    if gpu_type == A100_40GB_MODAL_GPU:
+        return evaluate_task_source_model_a100
+    return evaluate_task_source_model
+
+
+def _resolve_feasibility_remote(gpu_type: str):
+    if gpu_type == A100_40GB_MODAL_GPU:
+        return probe_mixed_precision_feasibility_source_a100
+    return probe_mixed_precision_feasibility_source
+
+
+def _resolve_loaded_probe_remote(gpu_type: str):
+    if gpu_type == A100_40GB_MODAL_GPU:
+        return probe_loaded_artifact_quantization_state_a100
+    return probe_loaded_artifact_quantization_state
+
+
+def _initialize_search_deck(
+    task_name: str,
+    split_name: str,
+    run_slug: str,
+) -> dict[str, Any]:
+    ordered_example_ids = list(load_task_example_ids_remote.remote(task_name=task_name, split=split_name))
+    if not ordered_example_ids:
+        raise ValueError(f"No examples available for search deck split {split_name}")
+    return {
+        "run_slug": run_slug,
+        "task_name": task_name,
+        "split_name": split_name,
+        "ordered_example_ids": ordered_example_ids,
+        "active_example_ids": list(ordered_example_ids),
+        "cursor": 0,
+        "reshuffle_count": 0,
+        "shuffle_seed": f"{run_slug}:deck:0",
+    }
+
+
+def _consume_search_turn_examples(
+    deck_state: dict[str, Any],
+    turn_limit: int,
+) -> dict[str, Any]:
+    if turn_limit <= 0:
+        raise ValueError("turn_limit must be positive")
+
+    selected_ids: list[str] = []
+    segment_details: list[dict[str, Any]] = []
+    cursor = int(deck_state["cursor"])
+    reshuffle_count = int(deck_state["reshuffle_count"])
+    active_ids = list(deck_state["active_example_ids"])
+    ordered_ids = list(deck_state["ordered_example_ids"])
+
+    while len(selected_ids) < turn_limit:
+        remaining_in_deck = len(active_ids) - cursor
+        if remaining_in_deck == 0:
+            reshuffle_count += 1
+            rng = random.Random(f"{deck_state['run_slug']}:deck:{reshuffle_count}")
+            active_ids = list(ordered_ids)
+            rng.shuffle(active_ids)
+            cursor = 0
+            remaining_in_deck = len(active_ids)
+        take_count = min(turn_limit - len(selected_ids), remaining_in_deck)
+        start = cursor
+        end = cursor + take_count
+        segment_ids = active_ids[start:end]
+        segment_details.append(
+            {
+                "reshuffle_count": reshuffle_count,
+                "deck_start": start,
+                "deck_end": end,
+                "example_ids": segment_ids,
+            }
+        )
+        selected_ids.extend(segment_ids)
+        cursor = end
+
+    deck_state["active_example_ids"] = active_ids
+    deck_state["cursor"] = cursor
+    deck_state["reshuffle_count"] = reshuffle_count
+    deck_state["shuffle_seed"] = f"{deck_state['run_slug']}:deck:{reshuffle_count}"
+    return {
+        "example_ids": selected_ids,
+        "segments": segment_details,
+        "cursor_after": cursor,
+        "reshuffle_count_after": reshuffle_count,
+    }
+
+
+def _candidate_key_sort_key(candidate_key: str) -> tuple[int, int, int, str]:
+    seed_match = re.match(r"^seed-(\d+)-", candidate_key)
+    if seed_match:
+        return (0, int(seed_match.group(1)), 0, candidate_key)
+    round_match = re.match(r"^round-(\d+)-candidate-(\d+)$", candidate_key)
+    if round_match:
+        return (1, int(round_match.group(1)), int(round_match.group(2)), candidate_key)
+    return (2, 0, 0, candidate_key)
+
+
+def _round_index_from_candidate_key(candidate_key: str) -> int | None:
+    match = re.match(r"^round-(\d+)-candidate-\d+$", candidate_key)
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def _load_resumed_candidate_record(
+    output_slug: str,
+    candidate_key: str,
+    split_name: str,
+) -> dict[str, Any] | None:
+    candidate_path = PROJECT_ROOT / "outputs" / "policies" / output_slug / f"{candidate_key}.json"
+    feasibility_report_path = (
+        PROJECT_ROOT / "outputs" / "feasibility" / f"{output_slug}-{candidate_key}-source-report.json"
+    )
+    loaded_artifact_probe_path = (
+        PROJECT_ROOT / "outputs" / "feasibility" / f"{output_slug}-{candidate_key}-loaded-artifact-probe.json"
+    )
+    integrity_manifest_path = (
+        PROJECT_ROOT / "outputs" / "feasibility" / f"{output_slug}-{candidate_key}-integrity.json"
+    )
+    evaluation_path = _evaluation_output_path(output_slug, candidate_key, split_name)
+    stage1_path = _evaluation_output_path(output_slug, candidate_key, split_name, "stage1")
+    stage2_path = _evaluation_output_path(output_slug, candidate_key, split_name, "stage2")
+    required_paths = [candidate_path, feasibility_report_path, integrity_manifest_path]
+    if not all(path.exists() for path in required_paths):
+        return None
+    if not evaluation_path.exists() and not stage1_path.exists():
+        return None
+
+    candidate_payload = _load_json(candidate_path)
+    source_report = _load_json(feasibility_report_path)
+    integrity_manifest = _load_json(integrity_manifest_path)
+    if stage1_path.exists():
+        stage1_summary = _load_json(stage1_path)
+        split_payload = _merge_staged_evaluation_payload(
+            None,
+            "stage1",
+            _build_evaluation_payload(stage1_summary, split_name, stage1_path),
+        )
+        if stage2_path.exists():
+            stage2_summary = _load_json(stage2_path)
+            split_payload = _merge_staged_evaluation_payload(
+                split_payload,
+                "stage2",
+                _build_evaluation_payload(stage2_summary, split_name, stage2_path),
+            )
+    else:
+        evaluation_summary = _load_json(evaluation_path)
+        split_payload = _build_evaluation_payload(evaluation_summary, split_name, evaluation_path)
+
+    evaluations: dict[str, Any] = {
+        split_name: split_payload,
+    }
+    record: dict[str, Any] = {
+        "candidate_key": candidate_key,
+        "candidate_path": to_relative_path(candidate_path, PROJECT_ROOT),
+        "artifact_dir": str(source_report.get("output_dir") or "") or None,
+        "group_bit_assignments": {
+            str(group_name): int(bit_width)
+            for group_name, bit_width in dict(
+                candidate_payload.get("group_bit_assignments", {})
+            ).items()
+        },
+        "bit_counts": candidate_payload.get("bit_counts", {}),
+        "matched_linear_weight_footprint_gb": float(
+            candidate_payload.get("matched_linear_weight_footprint_gb") or 0.0
+        ),
+        "estimated_full_model_weight_footprint_gb": float(
+            candidate_payload.get("estimated_full_model_weight_footprint_gb") or 0.0
+        ),
+        "estimated_average_bit_width": float(candidate_payload.get("estimated_average_bit_width") or 0.0),
+        "proposal_score": float(candidate_payload.get("fitness") or 0.0),
+        "budget_alignment_score": float(candidate_payload.get("budget_alignment_score") or 0.0),
+        "provenance": str(candidate_payload.get("provenance", candidate_key)),
+        "parent_candidate_key": None,
+        "feasibility_report_path": to_relative_path(feasibility_report_path, PROJECT_ROOT),
+        "loaded_artifact_probe_path": (
+            to_relative_path(loaded_artifact_probe_path, PROJECT_ROOT)
+            if loaded_artifact_probe_path.exists()
+            else None
+        ),
+        "integrity_manifest_path": to_relative_path(integrity_manifest_path, PROJECT_ROOT),
+        "integrity_clean": bool(integrity_manifest.get("is_clean")),
+        "unresolved_target_warnings": integrity_manifest.get("unresolved_target_warnings", []),
+        "smoke_test_passed": bool(source_report.get("quantized_model_runnable")),
+        "is_mixed": any(
+            int(bit_width) != 8
+            for bit_width in dict(candidate_payload.get("group_bit_assignments", {})).values()
+        ),
+        "evaluations": evaluations,
+    }
+    return record
+
+
+def _load_surrogate_free_resume_state(
+    output_slug: str,
+    split_name: str,
+    beam_width: int,
+) -> dict[str, Any]:
+    policy_dir = PROJECT_ROOT / "outputs" / "policies" / output_slug
+    if not policy_dir.exists():
+        raise FileNotFoundError(f"Resume policy directory not found: {policy_dir}")
+
+    candidate_keys = [
+        path.stem
+        for path in policy_dir.glob("*.json")
+        if path.stem.startswith("seed-") or path.stem.startswith("round-")
+    ]
+    records: list[dict[str, Any]] = []
+    ordered_records: list[dict[str, Any]] = []
+    for candidate_key in sorted(candidate_keys, key=_candidate_key_sort_key):
+        record = _load_resumed_candidate_record(output_slug, candidate_key, split_name)
+        if record is None:
+            continue
+        ordered_records.append(record)
+        records.append(record)
+    if not ordered_records:
+        raise ValueError(f"No completed search candidates found to resume for slug {output_slug}")
+
+    seen_signatures = {
+        _assignment_signature(dict(record.get("group_bit_assignments", {})))
+        for record in ordered_records
+    }
+    beam_records = _select_best_direct_eval_records(records, split_name=split_name, limit=beam_width)
+    completed_round_indices = [
+        round_index
+        for record in ordered_records
+        if (round_index := _round_index_from_candidate_key(str(record["candidate_key"]))) is not None
+    ]
+    next_round_index = (max(completed_round_indices) + 1) if completed_round_indices else 1
+
+    round_summaries: list[dict[str, Any]] = []
+    grouped_round_records: dict[int, list[dict[str, Any]]] = {}
+    for record in ordered_records:
+        round_index = _round_index_from_candidate_key(str(record["candidate_key"]))
+        if round_index is None:
+            continue
+        grouped_round_records.setdefault(round_index, []).append(record)
+    for round_index in sorted(grouped_round_records):
+        provisional_records = _select_best_direct_eval_records(
+            grouped_round_records[round_index],
+            split_name=split_name,
+            limit=len(grouped_round_records[round_index]),
+        )
+        rechecked_records = [
+            record
+            for record in provisional_records
+            if _candidate_stage_accuracy(record, split_name, "stage2") is not None
+        ]
+        round_summaries.append(
+            {
+                "round_index": round_index,
+                "proposal_count": None,
+                "provisional_pool_size": len(grouped_round_records[round_index]),
+                "evaluated_candidates": [
+                    _candidate_round_snapshot(record, split_name)
+                    for record in grouped_round_records[round_index]
+                ],
+                "provisional_candidates": [
+                    _candidate_round_snapshot(record, split_name)
+                    for record in provisional_records
+                ],
+                "rechecked_candidates": [
+                    _candidate_round_snapshot(record, split_name)
+                    for record in rechecked_records
+                ],
+                "beam_candidates": [],
+            }
+        )
+
+    return {
+        "records": records,
+        "ordered_records": ordered_records,
+        "seen_signatures": seen_signatures,
+        "beam_records": beam_records,
+        "round_summaries": round_summaries,
+        "next_round_index": next_round_index,
+        "completed_turns": len(ordered_records),
+    }
+
+
+def _advance_search_deck_for_resume(
+    deck_state: dict[str, Any],
+    resumed_records: list[dict[str, Any]],
+    stage1_turn_limit: int,
+    stage2_turn_limit: int,
+    split_name: str,
+) -> None:
+    replayed_stage_keys: set[tuple[int, str]] = set()
+    for record in resumed_records:
+        evaluation = dict(record.get("evaluations", {})).get(split_name, {})
+        round_index = _round_index_from_candidate_key(str(record["candidate_key"]))
+        stage1_ids = list(evaluation.get("stage1_evaluated_example_ids", []))
+        stage2_ids = list(evaluation.get("stage2_evaluated_example_ids", []))
+        if stage1_ids or stage2_ids:
+            if round_index is None:
+                raise ValueError(
+                    "Staged evaluation metadata is only supported for round candidates during resume"
+                )
+            stage1_key = (round_index, "stage1")
+            if stage1_ids and stage1_key not in replayed_stage_keys:
+                consumed = _consume_search_turn_examples(deck_state, stage1_turn_limit)
+                if stage1_ids != list(consumed["example_ids"]):
+                    raise ValueError(
+                        "Resume deck replay diverged from saved stage1 example ids for "
+                        f"{record['candidate_key']}"
+                    )
+                replayed_stage_keys.add(stage1_key)
+            stage2_key = (round_index, "stage2")
+            if stage2_ids and stage2_key not in replayed_stage_keys:
+                consumed = _consume_search_turn_examples(deck_state, stage2_turn_limit)
+                if stage2_ids != list(consumed["example_ids"]):
+                    raise ValueError(
+                        "Resume deck replay diverged from saved stage2 example ids for "
+                        f"{record['candidate_key']}"
+                    )
+                replayed_stage_keys.add(stage2_key)
+            continue
+
+        expected_ids = _evaluation_example_ids(evaluation)
+        if not expected_ids:
+            continue
+        consumed = _consume_search_turn_examples(deck_state, stage1_turn_limit)
+        if expected_ids != list(consumed["example_ids"]):
+            raise ValueError(
+                "Resume deck replay diverged from saved example ids for "
+                f"{record['candidate_key']}"
+            )
+
+
+def _normalize_source_smoke_result(report: dict[str, Any], tokenizer_source: str) -> dict[str, Any]:
+    if (
+        report.get("status") == "smoke_test_failed"
+        and report.get("artifact_dir_exists")
+        and report.get("smoke_test_error_type") == "OutOfMemoryError"
+    ):
+        clean_smoke_test = smoke_test_quantized_artifact_source.remote(
+            artifact_dir=report["output_dir"],
+            tokenizer_source=tokenizer_source,
+            max_new_tokens=4,
+        )
+        report["same_process_smoke_test"] = {
+            "status": "failed",
+            "error_type": report.get("smoke_test_error_type"),
+            "error_message": report.get("smoke_test_error_message"),
+        }
+        report["smoke_test"] = clean_smoke_test
+        report["smoke_test_mode"] = "clean_process_retry"
+        report["quantized_model_runnable"] = True
+        report["status"] = "smoke_test_succeeded"
+    return report
+
+
+def _build_candidate_integrity_manifest(
+    candidate_payload: dict[str, Any],
+    source_report: dict[str, Any],
+    loaded_probe: dict[str, Any] | None,
+) -> dict[str, Any]:
+    from ta_mpq.feasibility import build_policy_target_integrity_manifest
+    from ta_mpq.quantization import MixedPrecisionPolicy
+
+    policy = MixedPrecisionPolicy.from_dict(
+        candidate_payload["backend_projections"]["llmcompressor"]["projected_policy"]
+    )
+    integrity_manifest = build_policy_target_integrity_manifest(
+        policy=policy,
+        source_target_matching=source_report.get("policy_target_matching"),
+        reload_target_matching=(loaded_probe or {}).get("policy_target_matching"),
+    )
+    integrity_manifest["candidate_rank"] = candidate_payload.get("rank")
+    integrity_manifest["candidate_provenance"] = candidate_payload.get("provenance")
+    integrity_manifest["candidate_path"] = candidate_payload.get("candidate_path")
+    integrity_manifest["matched_linear_weight_footprint_gb"] = candidate_payload.get(
+        "matched_linear_weight_footprint_gb"
+    )
+    integrity_manifest["estimated_full_model_weight_footprint_gb"] = candidate_payload.get(
+        "estimated_full_model_weight_footprint_gb"
+    )
+    return integrity_manifest
+
+
+def _candidate_accuracy(record: dict[str, Any], split_name: str) -> float:
+    evaluations = dict(record.get("evaluations", {}))
+    payload = evaluations.get(split_name) or {}
+    if payload.get("combined_accuracy") is not None:
+        return float(payload["combined_accuracy"])
+    if payload.get("accuracy") is not None:
+        return float(payload["accuracy"])
+    if payload.get("stage1_accuracy") is not None:
+        return float(payload["stage1_accuracy"])
+    return -1.0
+
+
+def _candidate_stage_accuracy(record: dict[str, Any], split_name: str, stage_name: str) -> float | None:
+    evaluations = dict(record.get("evaluations", {}))
+    payload = evaluations.get(split_name) or {}
+    value = payload.get(f"{stage_name}_accuracy")
+    if value is None:
+        return None
+    return float(value)
+
+
+def _evaluation_output_path(
+    output_slug: str,
+    candidate_key: str,
+    split_name: str,
+    evaluation_stage: str | None = None,
+) -> Path:
+    suffix = f"-{evaluation_stage}" if evaluation_stage else ""
+    return (
+        PROJECT_ROOT
+        / "outputs"
+        / "evaluations"
+        / f"{output_slug}-{candidate_key}-{_slugify(split_name)}{suffix}-quantized.json"
+    )
+
+
+def _build_evaluation_payload(
+    summary: dict[str, Any],
+    split_name: str,
+    evaluation_path: Path,
+    evaluation_metadata: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    payload = {
+        "path": to_relative_path(evaluation_path, PROJECT_ROOT),
+        "accuracy": float(summary.get("accuracy", 0.0)),
+        "num_correct": int(summary.get("num_correct", 0)),
+        "num_examples": int(summary.get("num_examples", 0)),
+        "task_split": split_name,
+        "evaluated_example_ids": list(summary.get("evaluated_example_ids", [])),
+    }
+    if evaluation_metadata:
+        payload.update(evaluation_metadata)
+    return payload
+
+
+def _merge_staged_evaluation_payload(
+    existing_payload: dict[str, Any] | None,
+    stage_name: str,
+    stage_payload: dict[str, Any],
+) -> dict[str, Any]:
+    merged = dict(existing_payload or {})
+    for key in ("path", "accuracy", "num_correct", "num_examples", "evaluated_example_ids"):
+        merged[f"{stage_name}_{key}"] = stage_payload.get(key)
+    merged["task_split"] = stage_payload["task_split"]
+    for metadata_key, metadata_value in stage_payload.items():
+        if metadata_key in {"path", "accuracy", "num_correct", "num_examples", "task_split", "evaluated_example_ids"}:
+            continue
+        merged[f"{stage_name}_{metadata_key}"] = metadata_value
+
+    stage1_correct = merged.get("stage1_num_correct")
+    stage1_examples = merged.get("stage1_num_examples")
+    stage1_accuracy = merged.get("stage1_accuracy")
+    stage1_ids = list(merged.get("stage1_evaluated_example_ids", []))
+    stage2_correct = merged.get("stage2_num_correct")
+    stage2_examples = merged.get("stage2_num_examples")
+    stage2_accuracy = merged.get("stage2_accuracy")
+    stage2_ids = list(merged.get("stage2_evaluated_example_ids", []))
+
+    if stage2_correct is not None and stage2_examples is not None and stage1_correct is not None and stage1_examples is not None:
+        total_correct = int(stage1_correct) + int(stage2_correct)
+        total_examples = int(stage1_examples) + int(stage2_examples)
+        merged["combined_num_correct"] = total_correct
+        merged["combined_num_examples"] = total_examples
+        merged["combined_accuracy"] = 0.0 if total_examples == 0 else total_correct / total_examples
+        merged["accuracy"] = float(merged["combined_accuracy"])
+        merged["num_correct"] = total_correct
+        merged["num_examples"] = total_examples
+        merged["evaluated_example_ids"] = stage1_ids + stage2_ids
+        merged["path"] = merged.get("stage2_path") or merged.get("stage1_path")
+    else:
+        merged["combined_num_correct"] = None
+        merged["combined_num_examples"] = None
+        merged["combined_accuracy"] = None
+        merged["accuracy"] = float(stage1_accuracy if stage1_accuracy is not None else stage_payload["accuracy"])
+        merged["num_correct"] = int(stage1_correct if stage1_correct is not None else stage_payload["num_correct"])
+        merged["num_examples"] = int(stage1_examples if stage1_examples is not None else stage_payload["num_examples"])
+        merged["evaluated_example_ids"] = stage1_ids or list(stage_payload.get("evaluated_example_ids", []))
+        merged["path"] = merged.get("stage1_path") or stage_payload.get("path")
+    return merged
+
+
+def _evaluation_example_ids(payload: dict[str, Any]) -> list[str]:
+    stage1_ids = payload.get("stage1_evaluated_example_ids")
+    stage2_ids = payload.get("stage2_evaluated_example_ids")
+    if stage1_ids is not None or stage2_ids is not None:
+        return list(stage1_ids or []) + list(stage2_ids or [])
+    return list(payload.get("evaluated_example_ids", []))
+
+
+def _direct_eval_sort_key(record: dict[str, Any], split_name: str) -> tuple[Any, ...]:
+    return (
+        _candidate_accuracy(record, split_name),
+        1 if bool(record.get("integrity_clean")) else 0,
+        float(record.get("budget_alignment_score", 0.0)),
+        1 if bool(record.get("smoke_test_passed")) else 0,
+        float(record.get("proposal_score", 0.0)),
+    )
+
+
+def _select_best_direct_eval_records(
+    records: list[dict[str, Any]],
+    split_name: str,
+    limit: int,
+) -> list[dict[str, Any]]:
+    deduped: list[dict[str, Any]] = []
+    seen_signatures: set[tuple[tuple[str, int], ...]] = set()
+    for record in sorted(records, key=lambda item: _direct_eval_sort_key(item, split_name), reverse=True):
+        signature = _assignment_signature(dict(record.get("group_bit_assignments", {})))
+        if signature in seen_signatures:
+            continue
+        deduped.append(record)
+        seen_signatures.add(signature)
+        if len(deduped) == limit:
+            break
+    return deduped
+
+
+def _candidate_round_snapshot(record: dict[str, Any], split_name: str) -> dict[str, Any]:
+    return {
+        "candidate_key": record["candidate_key"],
+        "provenance": record["provenance"],
+        "proposal_score": record.get("proposal_score"),
+        "accuracy": _candidate_accuracy(record, split_name),
+        "stage1_accuracy": _candidate_stage_accuracy(record, split_name, "stage1"),
+        "stage2_accuracy": _candidate_stage_accuracy(record, split_name, "stage2"),
+        "integrity_clean": record.get("integrity_clean"),
+        "smoke_test_passed": record.get("smoke_test_passed"),
+        "matched_linear_weight_footprint_gb": record.get("matched_linear_weight_footprint_gb"),
+        "estimated_full_model_weight_footprint_gb": record.get(
+            "estimated_full_model_weight_footprint_gb"
+        ),
+        "parent_candidate_key": record.get("parent_candidate_key"),
+    }
+
+
+def _candidate_result_snapshot(record: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "candidate_key": record["candidate_key"],
+        "candidate_path": record.get("candidate_path"),
+        "artifact_dir": record.get("artifact_dir"),
+        "provenance": record.get("provenance"),
+        "proposal_score": record.get("proposal_score"),
+        "is_mixed": record.get("is_mixed"),
+        "integrity_clean": record.get("integrity_clean"),
+        "unresolved_target_warnings": record.get("unresolved_target_warnings"),
+        "smoke_test_passed": record.get("smoke_test_passed"),
+        "budget_alignment_score": record.get("budget_alignment_score"),
+        "matched_linear_weight_footprint_gb": record.get("matched_linear_weight_footprint_gb"),
+        "estimated_full_model_weight_footprint_gb": record.get(
+            "estimated_full_model_weight_footprint_gb"
+        ),
+        "bit_counts": record.get("bit_counts"),
+        "evaluations": record.get("evaluations", {}),
+        "feasibility_report_path": record.get("feasibility_report_path"),
+        "loaded_artifact_probe_path": record.get("loaded_artifact_probe_path"),
+        "integrity_manifest_path": record.get("integrity_manifest_path"),
+    }
+
+
+def _run_surrogate_free_candidate_eval(
+    candidate_key: str,
+    report_payload: dict[str, Any],
+    group_bits: dict[str, int],
+    proposal_score: float,
+    provenance: str,
+    contract: Any,
+    task_name: str,
+    task_prompt_style: str,
+    calibration_limit: int,
+    target_budget_gb: float,
+    dev_split: str,
+    dev_limit: int,
+    max_new_tokens: int,
+    output_slug: str,
+    policy_output_dir: Path,
+    parent_candidate_key: str | None = None,
+    group_quantization_overrides: dict[str, dict[str, Any]] | None = None,
+    example_ids: list[str] | None = None,
+    evaluation_metadata: dict[str, Any] | None = None,
+    evaluation_stage: str | None = None,
+    gpu_type: str = DEFAULT_MODAL_GPU,
+) -> dict[str, Any]:
+    from ta_mpq.policy_export import export_candidate_from_group_bits
+    from ta_mpq.search import estimate_budget_alignment_score
+
+    candidate_payload = export_candidate_from_group_bits(
+        report_payload=report_payload,
+        grouping="per_block_component",
+        group_bits=group_bits,
+        group_quantization_overrides=group_quantization_overrides,
+        rank=0,
+        metadata={
+            "fitness": proposal_score,
+            "proxy_quality_score": proposal_score,
+            "estimated_average_bit_width": None,
+            "estimated_weight_footprint_gb": None,
+            "provenance": provenance,
+        },
+    )
+    candidate_path = policy_output_dir / f"{candidate_key}.json"
+    candidate_payload["candidate_path"] = to_relative_path(candidate_path, PROJECT_ROOT)
+    save_summary(candidate_path, candidate_payload)
+
+    policy_payload = candidate_payload["backend_projections"]["llmcompressor"]["projected_policy"]
+    feasibility_remote = _resolve_feasibility_remote(gpu_type)
+    loaded_probe_remote = _resolve_loaded_probe_remote(gpu_type)
+
+    report = feasibility_remote.remote(
+        contract.to_dict(),
+        calibration_limit=calibration_limit,
+        dry_run=False,
+        policy_payload=policy_payload,
+        policy_label=f"{output_slug}-{candidate_key}",
+        precomputed_report=report_payload,
+    )
+    report = _normalize_source_smoke_result(report, contract.compressed_source_model_id)
+    report["candidate_path"] = candidate_payload["candidate_path"]
+    feasibility_report_path = (
+        PROJECT_ROOT / "outputs" / "feasibility" / f"{output_slug}-{candidate_key}-source-report.json"
+    )
+    save_summary(feasibility_report_path, report)
+
+    artifact_dir = str(report.get("output_dir") or "")
+    loaded_probe: dict[str, Any] | None = None
+    loaded_probe_path: Path | None = None
+    if artifact_dir and report.get("artifact_dir_exists"):
+        loaded_probe = loaded_probe_remote.remote(
+            model_ref=artifact_dir,
+            policy_payload=policy_payload,
+            policy_label=f"{output_slug}-{candidate_key}",
+        )
+        loaded_probe["candidate_path"] = candidate_payload["candidate_path"]
+        loaded_probe_path = (
+            PROJECT_ROOT
+            / "outputs"
+            / "feasibility"
+            / f"{output_slug}-{candidate_key}-loaded-artifact-probe.json"
+        )
+        save_summary(loaded_probe_path, loaded_probe)
+
+    integrity_manifest = _build_candidate_integrity_manifest(
+        candidate_payload=candidate_payload,
+        source_report=report,
+        loaded_probe=loaded_probe,
+    )
+    integrity_manifest_path = (
+        PROJECT_ROOT / "outputs" / "feasibility" / f"{output_slug}-{candidate_key}-integrity.json"
+    )
+    save_summary(integrity_manifest_path, integrity_manifest)
+
+    record: dict[str, Any] = {
+        "candidate_key": candidate_key,
+        "candidate_path": to_relative_path(candidate_path, PROJECT_ROOT),
+        "artifact_dir": artifact_dir or None,
+        "group_bit_assignments": {
+            str(group_name): int(bit_width)
+            for group_name, bit_width in group_bits.items()
+        },
+        "bit_counts": candidate_payload.get("bit_counts", {}),
+        "matched_linear_weight_footprint_gb": float(
+            candidate_payload.get("matched_linear_weight_footprint_gb", 0.0)
+        ),
+        "estimated_full_model_weight_footprint_gb": float(
+            candidate_payload.get("estimated_full_model_weight_footprint_gb", 0.0)
+        ),
+        "estimated_average_bit_width": float(candidate_payload.get("estimated_average_bit_width", 0.0)),
+        "proposal_score": float(proposal_score),
+        "budget_alignment_score": estimate_budget_alignment_score(
+            footprint_gb=float(candidate_payload.get("matched_linear_weight_footprint_gb", 0.0)),
+            target_budget_gb=float(target_budget_gb),
+        ),
+        "provenance": provenance,
+        "parent_candidate_key": parent_candidate_key,
+        "feasibility_report_path": to_relative_path(feasibility_report_path, PROJECT_ROOT),
+        "loaded_artifact_probe_path": (
+            to_relative_path(loaded_probe_path, PROJECT_ROOT) if loaded_probe_path else None
+        ),
+        "integrity_manifest_path": to_relative_path(integrity_manifest_path, PROJECT_ROOT),
+        "integrity_clean": bool(integrity_manifest.get("is_clean")),
+        "unresolved_target_warnings": integrity_manifest.get("unresolved_target_warnings", []),
+        "smoke_test_passed": bool(report.get("quantized_model_runnable")),
+        "is_mixed": any(int(bit_width) != 8 for bit_width in group_bits.values()),
+        "evaluations": {},
+    }
+    _ensure_candidate_task_eval(
+        record=record,
+        contract=contract,
+        task_name=task_name,
+        task_prompt_style=task_prompt_style,
+        split_name=dev_split,
+        split_limit=dev_limit,
+        max_new_tokens=max_new_tokens,
+        output_slug=output_slug,
+        example_ids=example_ids,
+        evaluation_metadata=evaluation_metadata,
+        evaluation_stage=evaluation_stage,
+        gpu_type=gpu_type,
+    )
+    return record
+
+
+def _ensure_candidate_task_eval(
+    record: dict[str, Any],
+    contract: Any,
+    task_name: str,
+    task_prompt_style: str,
+    split_name: str,
+    split_limit: int,
+    max_new_tokens: int,
+    output_slug: str,
+    example_ids: list[str] | None = None,
+    evaluation_metadata: dict[str, Any] | None = None,
+    evaluation_stage: str | None = None,
+    gpu_type: str = DEFAULT_MODAL_GPU,
+) -> None:
+    evaluations = dict(record.get("evaluations", {}))
+    existing_payload = dict(evaluations.get(split_name, {}))
+    if evaluation_stage:
+        if f"{evaluation_stage}_path" in existing_payload:
+            record["evaluations"] = evaluations
+            return
+    elif split_name in evaluations:
+        record["evaluations"] = evaluations
+        return
+    if not record.get("artifact_dir") or not record.get("integrity_clean") or not record.get("smoke_test_passed"):
+        skipped_payload = {
+            "status": "skipped_integrity_gate",
+            "accuracy": -1.0,
+            "num_correct": 0,
+            "num_examples": 0,
+            "task_split": split_name,
+        }
+        evaluations[split_name] = (
+            _merge_staged_evaluation_payload(existing_payload, evaluation_stage, skipped_payload)
+            if evaluation_stage
+            else skipped_payload
+        )
+        record["evaluations"] = evaluations
+        return
+
+    eval_remote = _resolve_eval_remote(gpu_type)
+    summary = eval_remote.remote(
+        model_ref=str(record["artifact_dir"]),
+        tokenizer_source=contract.compressed_source_model_id,
+        model_label=f"{contract.compressed_source_model_id}-{record['candidate_key']}",
+        task_name=task_name,
+        limit=split_limit,
+        max_new_tokens=max_new_tokens,
+        split=split_name,
+        example_ids=example_ids,
+        load_dtype="auto",
+        task_prompt_style=task_prompt_style,
+    )
+    evaluation_path = _evaluation_output_path(
+        output_slug=output_slug,
+        candidate_key=str(record["candidate_key"]),
+        split_name=split_name,
+        evaluation_stage=evaluation_stage,
+    )
+    save_summary(evaluation_path, summary)
+    evaluation_payload = _build_evaluation_payload(
+        summary=summary,
+        split_name=split_name,
+        evaluation_path=evaluation_path,
+        evaluation_metadata=evaluation_metadata,
+    )
+    evaluations[split_name] = (
+        _merge_staged_evaluation_payload(existing_payload, evaluation_stage, evaluation_payload)
+        if evaluation_stage
+        else evaluation_payload
+    )
+    record["evaluations"] = evaluations
+
+
+def _run_optional_finalist_config_refinement(
+    all_candidate_records: list[dict[str, Any]],
+    report_payload: dict[str, Any],
+    groups: list[Any],
+    layer_stats: list[Any],
+    group_value_scores: dict[str, float],
+    resolved_target_budget_gb: float,
+    contract: Any,
+    task_name: str,
+    task_prompt_style: str,
+    calibration_limit: int,
+    dev_split: str,
+    dev_limit: int,
+    max_new_tokens: int,
+    output_slug: str,
+    policy_output_dir: Path,
+) -> None:
+    from ta_mpq.search import SearchCandidate, refine_candidate_quantization_configs
+
+    top_mixed = _select_best_direct_eval_records(
+        [
+            record
+            for record in all_candidate_records
+            if bool(record.get("is_mixed")) and bool(record.get("integrity_clean"))
+        ],
+        split_name=dev_split,
+        limit=1,
+    )
+    if not top_mixed:
+        return
+    uniform_records = [
+        record
+        for record in all_candidate_records
+        if str(record.get("provenance")) == "uniform_int8_seed"
+    ]
+    if uniform_records and _candidate_accuracy(top_mixed[0], dev_split) < _candidate_accuracy(
+        uniform_records[0],
+        dev_split,
+    ):
+        return
+
+    base_record = top_mixed[0]
+    base_candidate = SearchCandidate(
+        group_bits=tuple(sorted(dict(base_record["group_bit_assignments"]).items())),
+        estimated_average_bit_width=float(base_record.get("estimated_average_bit_width", 0.0)),
+        estimated_weight_footprint_gb=float(base_record.get("matched_linear_weight_footprint_gb", 0.0)),
+        proxy_quality_score=float(base_record.get("proposal_score", 0.0)),
+        fitness=float(base_record.get("proposal_score", 0.0)),
+        provenance=str(base_record["candidate_key"]),
+    )
+    refinement = refine_candidate_quantization_configs(
+        groups=groups,
+        layer_stats=layer_stats,
+        base_candidates=[base_candidate],
+        group_value_scores=group_value_scores,
+        group_size_options=(64, 128),
+        symmetric_options=(True, False),
+        max_tunable_groups=8,
+        population_size=8,
+        generations=4,
+        top_k=4,
+        seed=0,
+        seed_candidate_count=1,
+    )
+    for candidate_index, candidate_payload in enumerate(refinement.get("top_candidates", [])[:4], start=1):
+        record = _run_surrogate_free_candidate_eval(
+            candidate_key=f"refinement-{candidate_index:02d}",
+            report_payload=report_payload,
+            group_bits={
+                str(group_name): int(bit_width)
+                for group_name, bit_width in dict(candidate_payload.get("group_bits", {})).items()
+            },
+            group_quantization_overrides=dict(candidate_payload.get("group_quantization_overrides", {})),
+            proposal_score=float(candidate_payload.get("fitness", 0.0)),
+            provenance=f"finalist_config_refinement_{candidate_index}",
+            contract=contract,
+            task_name=task_name,
+            task_prompt_style=task_prompt_style,
+            calibration_limit=calibration_limit,
+            target_budget_gb=resolved_target_budget_gb,
+            dev_split=dev_split,
+            dev_limit=dev_limit,
+            max_new_tokens=max_new_tokens,
+            output_slug=output_slug,
+            policy_output_dir=policy_output_dir,
+            parent_candidate_key=str(base_record["candidate_key"]),
+        )
+        all_candidate_records.append(record)
+
+
 def _resolve_candidate_artifact_dir(
     contract: Any,
     candidate_path: str,
@@ -1873,26 +4330,8 @@ def _resolve_candidate_artifact_dir(
         else:
             raise ValueError(f"Unknown backend_variant: {backend_variant}")
 
-        if (
-            backend_variant == "source"
-            and report.get("status") == "smoke_test_failed"
-            and report.get("artifact_dir_exists")
-            and report.get("smoke_test_error_type") == "OutOfMemoryError"
-        ):
-            clean_smoke_test = smoke_test_quantized_artifact_source.remote(
-                artifact_dir=report["output_dir"],
-                tokenizer_source=contract.compressed_source_model_id,
-                max_new_tokens=4,
-            )
-            report["same_process_smoke_test"] = {
-                "status": "failed",
-                "error_type": report.get("smoke_test_error_type"),
-                "error_message": report.get("smoke_test_error_message"),
-            }
-            report["smoke_test"] = clean_smoke_test
-            report["smoke_test_mode"] = "clean_process_retry"
-            report["quantized_model_runnable"] = True
-            report["status"] = "smoke_test_succeeded"
+        if backend_variant == "source":
+            report = _normalize_source_smoke_result(report, contract.compressed_source_model_id)
 
         report["candidate_path"] = candidate_path
         report["policy_source"] = policy_source
@@ -1924,3 +4363,58 @@ def _apply_transformers_token_compat_patch() -> None:
 
         setattr(patched, "_ta_mpq_token_compat_patched", True)
         cls.from_pretrained = patched
+
+
+def _apply_compressed_tensors_distributed_compat_patch() -> None:
+    import sys
+    import types
+    from typing import Callable, Hashable, TypeVar
+
+    try:
+        import compressed_tensors
+    except Exception:
+        return
+
+    if "compressed_tensors.distributed" in sys.modules:
+        return
+
+    T = TypeVar("T", bound=Hashable)
+
+    def greedy_bin_packing(
+        items: list[T],
+        num_bins: int,
+        item_weight_fn: Callable[[T], int | float] = lambda x: 1,
+    ) -> tuple[list[T], list[list[T]], dict[T, int]]:
+        items.sort(key=item_weight_fn, reverse=True)
+        bin_to_items: list[list[T]] = [[] for _ in range(num_bins)]
+        item_to_bin: dict[T, int] = {}
+        bin_weights: list[float] = [0 for _ in range(num_bins)]
+        for item in items:
+            target_bin = bin_weights.index(min(bin_weights))
+            bin_to_items[target_bin].append(item)
+            item_to_bin[item] = target_bin
+            bin_weights[target_bin] += float(item_weight_fn(item))
+        return items, bin_to_items, item_to_bin
+
+    def wait_for_comms(pending_comms) -> None:
+        for comm in list(pending_comms):
+            comm.wait()
+        pending_comms.clear()
+
+    distributed_module = types.ModuleType("compressed_tensors.distributed")
+    distributed_module.greedy_bin_packing = greedy_bin_packing
+    distributed_module.wait_for_comms = wait_for_comms
+    distributed_module.__all__ = ["greedy_bin_packing", "wait_for_comms"]
+
+    assign_module = types.ModuleType("compressed_tensors.distributed.assign")
+    assign_module.greedy_bin_packing = greedy_bin_packing
+    assign_module.__all__ = ["greedy_bin_packing"]
+
+    utils_module = types.ModuleType("compressed_tensors.distributed.utils")
+    utils_module.wait_for_comms = wait_for_comms
+    utils_module.__all__ = ["wait_for_comms"]
+
+    sys.modules["compressed_tensors.distributed"] = distributed_module
+    sys.modules["compressed_tensors.distributed.assign"] = assign_module
+    sys.modules["compressed_tensors.distributed.utils"] = utils_module
+    setattr(compressed_tensors, "distributed", distributed_module)

@@ -1,0 +1,486 @@
+{
+  "candidate_path": "outputs/policies/math500-surrogate-free-train200-test300-max512-b200/round-01-candidate-01.json",
+  "model_ref": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train200-test300-max512-b200-round-01-candidate-01-source",
+  "num_linear_named_modules": 497,
+  "num_named_modules": 1063,
+  "policy_label": "math500-surrogate-free-train200-test300-max512-b200-round-01-candidate-01",
+  "policy_target_matching": {
+    "all_matched_modules_sample": [
+      "lm_head",
+      "model.layers.0.linear_attn.in_proj_a",
+      "model.layers.0.linear_attn.in_proj_b",
+      "model.layers.0.linear_attn.in_proj_qkv",
+      "model.layers.0.linear_attn.in_proj_z",
+      "model.layers.0.linear_attn.out_proj",
+      "model.layers.0.mlp.down_proj",
+      "model.layers.0.mlp.gate_proj",
+      "model.layers.0.mlp.up_proj",
+      "model.layers.1.linear_attn.in_proj_a",
+      "model.layers.1.linear_attn.in_proj_b",
+      "model.layers.1.linear_attn.in_proj_qkv",
+      "model.layers.1.linear_attn.in_proj_z",
+      "model.layers.1.linear_attn.out_proj",
+      "model.layers.1.mlp.down_proj",
+      "model.layers.1.mlp.gate_proj",
+      "model.layers.1.mlp.up_proj",
+      "model.layers.10.linear_attn.in_proj_a",
+      "model.layers.10.linear_attn.in_proj_b",
+      "model.layers.10.linear_attn.in_proj_qkv",
+      "model.layers.10.linear_attn.in_proj_z",
+      "model.layers.10.linear_attn.out_proj",
+      "model.layers.10.mlp.down_proj",
+      "model.layers.10.mlp.gate_proj",
+      "model.layers.10.mlp.up_proj",
+      "model.layers.11.mlp.down_proj",
+      "model.layers.11.mlp.gate_proj",
+      "model.layers.11.mlp.up_proj",
+      "model.layers.11.self_attn.k_proj",
+      "model.layers.11.self_attn.o_proj",
+      "model.layers.11.self_attn.q_proj",
+      "model.layers.11.self_attn.v_proj",
+      "model.layers.12.linear_attn.in_proj_a",
+      "model.layers.12.linear_attn.in_proj_b",
+      "model.layers.12.linear_attn.in_proj_qkv",
+      "model.layers.12.linear_attn.in_proj_z",
+      "model.layers.12.linear_attn.out_proj",
+      "model.layers.12.mlp.down_proj",
+      "model.layers.12.mlp.gate_proj",
+      "model.layers.12.mlp.up_proj"
+    ],
+    "all_targets": [
+      "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+      "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+      "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+      "re:.*model\\.layers\\.32\\.linear_attn\\.in_proj_qkv$",
+      "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+      "re:.*model\\.layers\\.5\\.mlp\\.down_proj$",
+      "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$",
+      "Linear"
+    ],
+    "all_unmatched_targets": [],
+    "group_summaries": {
+      "bit_4_gs_128_sym": {
+        "matched_module_count": 7,
+        "matched_modules_sample": [
+          "model.layers.12.linear_attn.in_proj_z",
+          "model.layers.14.mlp.gate_proj",
+          "model.layers.29.linear_attn.in_proj_qkv",
+          "model.layers.32.linear_attn.in_proj_qkv",
+          "model.layers.37.linear_attn.in_proj_qkv",
+          "model.layers.5.mlp.down_proj",
+          "model.layers.7.self_attn.o_proj"
+        ],
+        "matched_target_count": 7,
+        "matched_targets": [
+          "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+          "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+          "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+          "re:.*model\\.layers\\.32\\.linear_attn\\.in_proj_qkv$",
+          "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+          "re:.*model\\.layers\\.5\\.mlp\\.down_proj$",
+          "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+        ],
+        "matched_targets_sample": [
+          "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+          "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+          "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+          "re:.*model\\.layers\\.32\\.linear_attn\\.in_proj_qkv$",
+          "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+          "re:.*model\\.layers\\.5\\.mlp\\.down_proj$",
+          "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+        ],
+        "num_targets": 7,
+        "per_target_match_counts": {
+          "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$": 1,
+          "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$": 1,
+          "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$": 1,
+          "re:.*model\\.layers\\.32\\.linear_attn\\.in_proj_qkv$": 1,
+          "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$": 1,
+          "re:.*model\\.layers\\.5\\.mlp\\.down_proj$": 1,
+          "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$": 1
+        },
+        "per_target_match_counts_sample": {
+          "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$": 1,
+          "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$": 1,
+          "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$": 1,
+          "re:.*model\\.layers\\.32\\.linear_attn\\.in_proj_qkv$": 1,
+          "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$": 1,
+          "re:.*model\\.layers\\.5\\.mlp\\.down_proj$": 1,
+          "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$": 1
+        },
+        "target_kind_counts": {
+          "class_name": 0,
+          "exact_name": 0,
+          "regex": 7,
+          "unknown": 0
+        },
+        "unmatched_target_count": 0,
+        "unmatched_targets": []
+      },
+      "default": {
+        "matched_module_count": 497,
+        "matched_modules_sample": [
+          "lm_head",
+          "model.layers.0.linear_attn.in_proj_a",
+          "model.layers.0.linear_attn.in_proj_b",
+          "model.layers.0.linear_attn.in_proj_qkv",
+          "model.layers.0.linear_attn.in_proj_z",
+          "model.layers.0.linear_attn.out_proj",
+          "model.layers.0.mlp.down_proj",
+          "model.layers.0.mlp.gate_proj",
+          "model.layers.0.mlp.up_proj",
+          "model.layers.1.linear_attn.in_proj_a",
+          "model.layers.1.linear_attn.in_proj_b",
+          "model.layers.1.linear_attn.in_proj_qkv",
+          "model.layers.1.linear_attn.in_proj_z",
+          "model.layers.1.linear_attn.out_proj",
+          "model.layers.1.mlp.down_proj",
+          "model.layers.1.mlp.gate_proj",
+          "model.layers.1.mlp.up_proj",
+          "model.layers.10.linear_attn.in_proj_a",
+          "model.layers.10.linear_attn.in_proj_b",
+          "model.layers.10.linear_attn.in_proj_qkv"
+        ],
+        "matched_target_count": 1,
+        "matched_targets": [
+          "Linear"
+        ],
+        "matched_targets_sample": [
+          "Linear"
+        ],
+        "num_targets": 1,
+        "per_target_match_counts": {
+          "Linear": 497
+        },
+        "per_target_match_counts_sample": {
+          "Linear": 497
+        },
+        "target_kind_counts": {
+          "class_name": 1,
+          "exact_name": 0,
+          "regex": 0,
+          "unknown": 0
+        },
+        "unmatched_target_count": 0,
+        "unmatched_targets": []
+      }
+    },
+    "ignore_matched_module_count": 2,
+    "ignore_matched_modules_sample": [
+      "model.layers.26.mlp.up_proj",
+      "model.layers.35.mlp.up_proj"
+    ],
+    "ignore_matched_target_count": 2,
+    "ignore_matched_targets": [
+      "model.layers.26.mlp.up_proj",
+      "model.layers.35.mlp.up_proj"
+    ],
+    "ignore_per_target_match_counts": {
+      "model.layers.26.mlp.up_proj": 1,
+      "model.layers.35.mlp.up_proj": 1
+    },
+    "ignore_target_kind_counts": {
+      "class_name": 0,
+      "exact_name": 2,
+      "regex": 0,
+      "unknown": 0
+    },
+    "ignore_targets": [
+      "model.layers.26.mlp.up_proj",
+      "model.layers.35.mlp.up_proj"
+    ],
+    "ignore_unmatched_target_count": 0,
+    "ignore_unmatched_targets": [],
+    "matched_module_count": 497,
+    "matched_target_count": 8,
+    "matched_targets": [
+      "Linear",
+      "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+      "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+      "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+      "re:.*model\\.layers\\.32\\.linear_attn\\.in_proj_qkv$",
+      "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+      "re:.*model\\.layers\\.5\\.mlp\\.down_proj$",
+      "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+    ],
+    "num_named_modules": 1063,
+    "num_recipe_targets": 8,
+    "target_kind_counts": {
+      "class_name": 1,
+      "exact_name": 0,
+      "regex": 7,
+      "unknown": 0
+    },
+    "unmatched_target_count": 0
+  },
+  "probe_mode": "loaded_model_quantization_state",
+  "quantized_8bit_modules_sample": [
+    "model.layers.0.linear_attn.out_proj",
+    "model.layers.0.linear_attn.in_proj_qkv",
+    "model.layers.0.linear_attn.in_proj_z",
+    "model.layers.0.linear_attn.in_proj_b",
+    "model.layers.0.linear_attn.in_proj_a",
+    "model.layers.0.mlp.gate_proj",
+    "model.layers.0.mlp.up_proj",
+    "model.layers.0.mlp.down_proj",
+    "model.layers.1.linear_attn.out_proj",
+    "model.layers.1.linear_attn.in_proj_qkv",
+    "model.layers.1.linear_attn.in_proj_z",
+    "model.layers.1.linear_attn.in_proj_b",
+    "model.layers.1.linear_attn.in_proj_a",
+    "model.layers.1.mlp.gate_proj",
+    "model.layers.1.mlp.up_proj",
+    "model.layers.1.mlp.down_proj",
+    "model.layers.2.linear_attn.out_proj",
+    "model.layers.2.linear_attn.in_proj_qkv",
+    "model.layers.2.linear_attn.in_proj_z",
+    "model.layers.2.linear_attn.in_proj_b",
+    "model.layers.2.linear_attn.in_proj_a",
+    "model.layers.2.mlp.gate_proj",
+    "model.layers.2.mlp.up_proj",
+    "model.layers.2.mlp.down_proj",
+    "model.layers.3.self_attn.q_proj",
+    "model.layers.3.self_attn.k_proj",
+    "model.layers.3.self_attn.v_proj",
+    "model.layers.3.self_attn.o_proj",
+    "model.layers.3.mlp.gate_proj",
+    "model.layers.3.mlp.up_proj",
+    "model.layers.3.mlp.down_proj",
+    "model.layers.4.linear_attn.out_proj",
+    "model.layers.4.linear_attn.in_proj_qkv",
+    "model.layers.4.linear_attn.in_proj_z",
+    "model.layers.4.linear_attn.in_proj_b",
+    "model.layers.4.linear_attn.in_proj_a",
+    "model.layers.4.mlp.gate_proj",
+    "model.layers.4.mlp.up_proj",
+    "model.layers.4.mlp.down_proj",
+    "model.layers.5.linear_attn.out_proj",
+    "model.layers.5.linear_attn.in_proj_qkv",
+    "model.layers.5.linear_attn.in_proj_z",
+    "model.layers.5.linear_attn.in_proj_b",
+    "model.layers.5.linear_attn.in_proj_a",
+    "model.layers.5.mlp.gate_proj",
+    "model.layers.5.mlp.up_proj",
+    "model.layers.6.linear_attn.out_proj",
+    "model.layers.6.linear_attn.in_proj_qkv",
+    "model.layers.6.linear_attn.in_proj_z",
+    "model.layers.6.linear_attn.in_proj_b",
+    "model.layers.6.linear_attn.in_proj_a",
+    "model.layers.6.mlp.gate_proj",
+    "model.layers.6.mlp.up_proj",
+    "model.layers.6.mlp.down_proj",
+    "model.layers.7.self_attn.q_proj",
+    "model.layers.7.self_attn.k_proj",
+    "model.layers.7.self_attn.v_proj",
+    "model.layers.7.mlp.gate_proj",
+    "model.layers.7.mlp.up_proj",
+    "model.layers.7.mlp.down_proj"
+  ],
+  "quantized_module_count": 495,
+  "quantized_modules_sample": [
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.linear_attn.out_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.linear_attn.in_proj_qkv",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.linear_attn.in_proj_z",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.linear_attn.in_proj_b",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.linear_attn.in_proj_a",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.mlp.gate_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.mlp.up_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.0.mlp.down_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.linear_attn.out_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.linear_attn.in_proj_qkv",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.linear_attn.in_proj_z",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.linear_attn.in_proj_b",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.linear_attn.in_proj_a",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.mlp.gate_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.mlp.up_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.1.mlp.down_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.linear_attn.out_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.linear_attn.in_proj_qkv",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.linear_attn.in_proj_z",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.linear_attn.in_proj_b",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.linear_attn.in_proj_a",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.mlp.gate_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.mlp.up_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.2.mlp.down_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.self_attn.q_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.self_attn.k_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.self_attn.v_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.self_attn.o_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.mlp.gate_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.mlp.up_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.3.mlp.down_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.linear_attn.out_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.linear_attn.in_proj_qkv",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.linear_attn.in_proj_z",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.linear_attn.in_proj_b",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.linear_attn.in_proj_a",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.mlp.gate_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.mlp.up_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.4.mlp.down_proj",
+      "weight_bits": 8
+    },
+    {
+      "module_class": "Linear",
+      "name": "model.layers.5.linear_attn.out_proj",
+      "weight_bits": 8
+    }
+  ],
+  "quantized_weight_bit_histogram": {
+    "4": 7,
+    "8": 488
+  }
+}

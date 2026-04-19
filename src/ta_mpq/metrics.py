@@ -18,6 +18,9 @@ class ExampleResult:
     resident_memory_mb: float
     generation_peak_delta_mb: float
     total_peak_memory_mb: float
+    answer_extraction_source: str | None = None
+    has_boxed_answer: bool | None = None
+    length_capped: bool | None = None
 
     def to_dict(self) -> dict[str, object]:
         return asdict(self)
@@ -40,6 +43,11 @@ def summarize_results(
             "mean_resident_memory_mb": 0.0,
             "mean_generation_peak_delta_mb": 0.0,
             "mean_total_peak_memory_mb": 0.0,
+            "length_capped_count": 0,
+            "boxed_answer_count": 0,
+            "fallback_answer_count": 0,
+            "no_answer_count": 0,
+            "max_completion_tokens": 0,
             "results": [],
         }
 
@@ -48,6 +56,12 @@ def summarize_results(
     generation_peak_deltas = [result.generation_peak_delta_mb for result in results]
     total_peaks = [result.total_peak_memory_mb for result in results]
     num_correct = sum(1 for result in results if result.is_correct)
+    length_capped_count = sum(1 for result in results if result.length_capped)
+    boxed_answer_count = sum(1 for result in results if result.answer_extraction_source == "boxed")
+    fallback_answer_count = sum(
+        1 for result in results if result.answer_extraction_source in {"inline_math", "last_line"}
+    )
+    no_answer_count = sum(1 for result in results if result.answer_extraction_source == "none")
 
     return {
         "model_id": model_id,
@@ -61,6 +75,11 @@ def summarize_results(
         "mean_resident_memory_mb": statistics.fmean(resident_memories),
         "mean_generation_peak_delta_mb": statistics.fmean(generation_peak_deltas),
         "mean_total_peak_memory_mb": statistics.fmean(total_peaks),
+        "length_capped_count": length_capped_count,
+        "boxed_answer_count": boxed_answer_count,
+        "fallback_answer_count": fallback_answer_count,
+        "no_answer_count": no_answer_count,
+        "max_completion_tokens": max(result.completion_tokens for result in results),
         "results": [result.to_dict() for result in results],
     }
 

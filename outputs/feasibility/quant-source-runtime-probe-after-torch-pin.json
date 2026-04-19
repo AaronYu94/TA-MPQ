@@ -1,0 +1,15 @@
+{
+  "cuda_device_count": 1,
+  "cuda_devices": [
+    "NVIDIA A100 80GB PCIe"
+  ],
+  "cuda_is_available": true,
+  "cuda_visible_devices": null,
+  "current_device_index": 0,
+  "nvidia_smi": [
+    "NVIDIA A100 80GB PCIe, 580.95.05"
+  ],
+  "nvidia_smi_returncode": 0,
+  "torch_cuda_version": "12.8",
+  "torch_version": "2.10.0+cu128"
+}

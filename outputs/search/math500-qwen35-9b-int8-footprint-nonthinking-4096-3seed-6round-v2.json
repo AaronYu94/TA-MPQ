@@ -1,0 +1,648 @@
+{
+  "accept_limit": 25,
+  "accept_split": "test300",
+  "all_candidate_records": [
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-source",
+      "bit_counts": {
+        "8": 249
+      },
+      "budget_alignment_score": 1.0,
+      "candidate_key": "baseline-uniform-int8",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/baseline-uniform-int8.json",
+      "estimated_full_model_weight_footprint_gb": 9.28713321685791,
+      "evaluations": {
+        "test300": {
+          "accuracy": 0.8,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-test300-quantized.json",
+          "task_split": "test300"
+        },
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-integrity.json",
+      "is_mixed": false,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.390625,
+      "proposal_score": 0.1,
+      "provenance": "uniform_int8_seed",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-source",
+      "bit_counts": {
+        "16": 3,
+        "4": 1,
+        "8": 245
+      },
+      "budget_alignment_score": 0.9995044926004228,
+      "candidate_key": "round-01-candidate-01",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-01-candidate-01.json",
+      "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+      "evaluations": {
+        "test300": {
+          "accuracy": 0.8,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-test300-quantized.json",
+          "task_split": "test300"
+        },
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.386962890625,
+      "proposal_score": 0.09983161484377814,
+      "provenance": "add_rescue_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-source",
+      "bit_counts": {
+        "16": 3,
+        "4": 1,
+        "8": 245
+      },
+      "budget_alignment_score": 0.9995044926004228,
+      "candidate_key": "round-02-candidate-02",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-02-candidate-02.json",
+      "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+      "evaluations": {
+        "test300": {
+          "accuracy": 0.8,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-test300-quantized.json",
+          "task_split": "test300"
+        },
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.386962890625,
+      "proposal_score": 0.09980095470643907,
+      "provenance": "swap_demotion_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-02-late_layer_rescue_seed-source",
+      "bit_counts": {
+        "16": 2,
+        "4": 1,
+        "8": 246
+      },
+      "budget_alignment_score": 0.9994879756871036,
+      "candidate_key": "seed-02-late_layer_rescue_seed",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/seed-02-late_layer_rescue_seed.json",
+      "estimated_full_model_weight_footprint_gb": 9.28334903717041,
+      "evaluations": {
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-02-late_layer_rescue_seed-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-02-late_layer_rescue_seed-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-02-late_layer_rescue_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-02-late_layer_rescue_seed-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.3868408203125,
+      "proposal_score": 0.09980406773100649,
+      "provenance": "late_layer_rescue_seed",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-02-source",
+      "bit_counts": {
+        "16": 2,
+        "4": 1,
+        "8": 246
+      },
+      "budget_alignment_score": 0.9994879756871036,
+      "candidate_key": "round-01-candidate-02",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-01-candidate-02.json",
+      "estimated_full_model_weight_footprint_gb": 9.28334903717041,
+      "evaluations": {
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-02-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-02-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-02-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-02-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.3868408203125,
+      "proposal_score": 0.09977340759366742,
+      "provenance": "swap_demotion_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-03-candidate-01-source",
+      "bit_counts": {
+        "16": 3,
+        "4": 1,
+        "8": 245
+      },
+      "budget_alignment_score": 0.9989924682875264,
+      "candidate_key": "round-03-candidate-01",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-03-candidate-01.json",
+      "estimated_full_model_weight_footprint_gb": 9.27968692779541,
+      "evaluations": {
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-03-candidate-01-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-03-candidate-01-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-03-candidate-01-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-03-candidate-01-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.3831787109375,
+      "proposal_score": 0.0990764410779388,
+      "provenance": "swap_rescue_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-01-single_priority_rescue_seed-source",
+      "bit_counts": {
+        "16": 1,
+        "4": 1,
+        "8": 247
+      },
+      "budget_alignment_score": 0.998959434460888,
+      "candidate_key": "seed-01-single_priority_rescue_seed",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/seed-01-single_priority_rescue_seed.json",
+      "estimated_full_model_weight_footprint_gb": 9.27944278717041,
+      "evaluations": {
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-01-single_priority_rescue_seed-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-01-single_priority_rescue_seed-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-01-single_priority_rescue_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-01-single_priority_rescue_seed-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.3829345703125,
+      "proposal_score": 0.09902734664251275,
+      "provenance": "single_priority_rescue_seed",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-01-source",
+      "bit_counts": {
+        "16": 4,
+        "4": 1,
+        "8": 244
+      },
+      "budget_alignment_score": 0.9995210095137421,
+      "candidate_key": "round-02-candidate-01",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-02-candidate-01.json",
+      "estimated_full_model_weight_footprint_gb": 9.28359317779541,
+      "evaluations": {
+        "train200": {
+          "accuracy": 0.6666666666666666,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-01-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-01-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-01-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-01-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.3870849609375,
+      "proposal_score": 0.09985587002755297,
+      "provenance": "add_rescue_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-03-compression_first_seed-source",
+      "bit_counts": {
+        "16": 2,
+        "4": 12,
+        "8": 235
+      },
+      "budget_alignment_score": 0.9913121035940803,
+      "candidate_key": "seed-03-compression_first_seed",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/seed-03-compression_first_seed.json",
+      "estimated_full_model_weight_footprint_gb": 9.22292423248291,
+      "evaluations": {
+        "train200": {
+          "accuracy": 0.6666666666666666,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-03-compression_first_seed-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-03-compression_first_seed-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-03-compression_first_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-seed-03-compression_first_seed-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.326416015625,
+      "proposal_score": 0.09065620164544655,
+      "provenance": "compression_first_seed",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    }
+  ],
+  "allowed_bits": [
+    4,
+    8,
+    16
+  ],
+  "baselines": {
+    "native_bf16": {
+      "test300": {
+        "accuracy": 0.76,
+        "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-native-bf16-test300.json",
+        "task_split": "test300"
+      },
+      "train200": {
+        "accuracy": 0.8333333333333334,
+        "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-native-bf16-train200.json",
+        "task_split": "train200"
+      }
+    }
+  },
+  "budget_accounting_mode": "matched_linear_weight_budget",
+  "contract_path": "configs/experiment_contract_9b_math500_int8.json",
+  "demotable_group_names": [
+    "block:3:self_attn.o_proj",
+    "block:7:self_attn.o_proj",
+    "block:11:self_attn.o_proj",
+    "block:15:self_attn.o_proj",
+    "block:19:self_attn.o_proj",
+    "block:23:self_attn.o_proj",
+    "block:27:self_attn.o_proj",
+    "block:3:self_attn.v_proj",
+    "block:7:self_attn.v_proj",
+    "block:11:self_attn.v_proj",
+    "block:3:self_attn.k_proj",
+    "block:7:self_attn.k_proj",
+    "block:31:self_attn.o_proj",
+    "block:11:self_attn.k_proj",
+    "block:15:self_attn.v_proj",
+    "block:15:self_attn.k_proj",
+    "block:0:mlp.gate_proj",
+    "block:1:mlp.gate_proj",
+    "block:1:linear_attn.in_proj_z",
+    "block:0:mlp.up_proj",
+    "block:2:mlp.gate_proj",
+    "block:3:mlp.gate_proj",
+    "block:1:mlp.up_proj",
+    "block:1:linear_attn.in_proj_b",
+    "block:19:self_attn.v_proj",
+    "block:2:mlp.up_proj",
+    "block:4:mlp.gate_proj",
+    "block:2:linear_attn.in_proj_b",
+    "block:2:linear_attn.in_proj_z",
+    "block:11:self_attn.q_proj",
+    "block:0:linear_attn.out_proj",
+    "block:1:linear_attn.out_proj",
+    "block:2:linear_attn.out_proj",
+    "block:3:mlp.up_proj",
+    "block:19:self_attn.k_proj",
+    "block:4:linear_attn.out_proj",
+    "block:5:linear_attn.out_proj",
+    "block:6:linear_attn.out_proj",
+    "block:8:linear_attn.out_proj",
+    "block:9:linear_attn.out_proj",
+    "block:10:linear_attn.out_proj",
+    "block:13:linear_attn.out_proj",
+    "block:15:self_attn.q_proj",
+    "block:12:linear_attn.out_proj",
+    "block:1:linear_attn.in_proj_a",
+    "block:5:mlp.gate_proj",
+    "block:4:mlp.up_proj",
+    "block:16:linear_attn.out_proj"
+  ],
+  "dev_limit": 6,
+  "dev_split": "train200",
+  "estimated_non_linear_weight_footprint_gb": 1.8965082168579102,
+  "estimated_uniform_full_model_weight_footprint_gb": 7.76271915435791,
+  "final_limit": null,
+  "final_split": null,
+  "fixed_assignments": {
+    "global::lm_head": 8
+  },
+  "grouping": "per_block_component",
+  "matched_linear_budget_gb": 7.390625,
+  "max_seed_candidates": 3,
+  "promotable_group_names": [
+    "block:0:linear_attn.in_proj_a",
+    "block:28:linear_attn.in_proj_a",
+    "block:31:self_attn.v_proj",
+    "block:29:linear_attn.in_proj_a",
+    "block:30:linear_attn.in_proj_a",
+    "block:28:linear_attn.in_proj_qkv",
+    "block:29:mlp.gate_proj",
+    "block:0:linear_attn.in_proj_qkv",
+    "block:28:linear_attn.in_proj_z",
+    "block:31:mlp.gate_proj",
+    "block:25:linear_attn.in_proj_qkv",
+    "block:30:mlp.gate_proj",
+    "block:30:linear_attn.in_proj_qkv",
+    "block:28:mlp.gate_proj",
+    "block:0:linear_attn.in_proj_z",
+    "block:24:linear_attn.in_proj_qkv",
+    "block:24:linear_attn.in_proj_a",
+    "block:26:linear_attn.in_proj_a",
+    "block:25:linear_attn.in_proj_a",
+    "block:30:linear_attn.in_proj_z",
+    "block:26:linear_attn.in_proj_qkv",
+    "block:29:linear_attn.in_proj_z",
+    "block:29:linear_attn.in_proj_qkv",
+    "block:21:linear_attn.in_proj_qkv"
+  ],
+  "report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-default-policy-source-report.json",
+  "rounds": [
+    {
+      "beam_candidates": [
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "baseline-uniform-int8",
+          "estimated_full_model_weight_footprint_gb": 9.28713321685791,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.390625,
+          "parent_candidate_key": null,
+          "proposal_score": 0.1,
+          "provenance": "uniform_int8_seed",
+          "smoke_test_passed": true
+        },
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-01-candidate-01",
+          "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.386962890625,
+          "parent_candidate_key": "seed-02-late_layer_rescue_seed",
+          "proposal_score": 0.09983161484377814,
+          "provenance": "add_rescue_neighbor",
+          "smoke_test_passed": true
+        }
+      ],
+      "evaluated_candidates": [
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-01-candidate-01",
+          "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.386962890625,
+          "parent_candidate_key": "seed-02-late_layer_rescue_seed",
+          "proposal_score": 0.09983161484377814,
+          "provenance": "add_rescue_neighbor",
+          "smoke_test_passed": true
+        },
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-01-candidate-02",
+          "estimated_full_model_weight_footprint_gb": 9.28334903717041,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.3868408203125,
+          "parent_candidate_key": "seed-02-late_layer_rescue_seed",
+          "proposal_score": 0.09977340759366742,
+          "provenance": "swap_demotion_neighbor",
+          "smoke_test_passed": true
+        }
+      ],
+      "proposal_count": 6,
+      "round_index": 1
+    },
+    {
+      "beam_candidates": [
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "baseline-uniform-int8",
+          "estimated_full_model_weight_footprint_gb": 9.28713321685791,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.390625,
+          "parent_candidate_key": null,
+          "proposal_score": 0.1,
+          "provenance": "uniform_int8_seed",
+          "smoke_test_passed": true
+        },
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-01-candidate-01",
+          "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.386962890625,
+          "parent_candidate_key": "seed-02-late_layer_rescue_seed",
+          "proposal_score": 0.09983161484377814,
+          "provenance": "add_rescue_neighbor",
+          "smoke_test_passed": true
+        }
+      ],
+      "evaluated_candidates": [
+        {
+          "accuracy": 0.6666666666666666,
+          "candidate_key": "round-02-candidate-01",
+          "estimated_full_model_weight_footprint_gb": 9.28359317779541,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.3870849609375,
+          "parent_candidate_key": "round-01-candidate-01",
+          "proposal_score": 0.09985587002755297,
+          "provenance": "add_rescue_neighbor",
+          "smoke_test_passed": true
+        },
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-02-candidate-02",
+          "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.386962890625,
+          "parent_candidate_key": "round-01-candidate-01",
+          "proposal_score": 0.09980095470643907,
+          "provenance": "swap_demotion_neighbor",
+          "smoke_test_passed": true
+        }
+      ],
+      "proposal_count": 3,
+      "round_index": 2
+    },
+    {
+      "beam_candidates": [
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "baseline-uniform-int8",
+          "estimated_full_model_weight_footprint_gb": 9.28713321685791,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.390625,
+          "parent_candidate_key": null,
+          "proposal_score": 0.1,
+          "provenance": "uniform_int8_seed",
+          "smoke_test_passed": true
+        },
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-01-candidate-01",
+          "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.386962890625,
+          "parent_candidate_key": "seed-02-late_layer_rescue_seed",
+          "proposal_score": 0.09983161484377814,
+          "provenance": "add_rescue_neighbor",
+          "smoke_test_passed": true
+        }
+      ],
+      "evaluated_candidates": [
+        {
+          "accuracy": 0.8333333333333334,
+          "candidate_key": "round-03-candidate-01",
+          "estimated_full_model_weight_footprint_gb": 9.27968692779541,
+          "integrity_clean": true,
+          "matched_linear_weight_footprint_gb": 7.3831787109375,
+          "parent_candidate_key": "round-01-candidate-01",
+          "proposal_score": 0.0990764410779388,
+          "provenance": "swap_rescue_neighbor",
+          "smoke_test_passed": true
+        }
+      ],
+      "proposal_count": 1,
+      "round_index": 3
+    }
+  ],
+  "seed_provenances": [
+    "single_priority_rescue_seed",
+    "late_layer_rescue_seed",
+    "compression_first_seed"
+  ],
+  "strategy": "surrogate_free_direct_eval",
+  "target_budget_gb": 7.390625,
+  "task_name": "math500",
+  "task_prompt_style": "simple_evals_nonthinking",
+  "top_mixed_candidates": [
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-source",
+      "bit_counts": {
+        "16": 3,
+        "4": 1,
+        "8": 245
+      },
+      "budget_alignment_score": 0.9995044926004228,
+      "candidate_key": "round-01-candidate-01",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-01-candidate-01.json",
+      "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+      "evaluations": {
+        "test300": {
+          "accuracy": 0.8,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-test300-quantized.json",
+          "task_split": "test300"
+        },
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-01-candidate-01-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.386962890625,
+      "proposal_score": 0.09983161484377814,
+      "provenance": "add_rescue_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-source",
+      "bit_counts": {
+        "16": 3,
+        "4": 1,
+        "8": 245
+      },
+      "budget_alignment_score": 0.9995044926004228,
+      "candidate_key": "round-02-candidate-02",
+      "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/round-02-candidate-02.json",
+      "estimated_full_model_weight_footprint_gb": 9.28347110748291,
+      "evaluations": {
+        "test300": {
+          "accuracy": 0.8,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-test300-quantized.json",
+          "task_split": "test300"
+        },
+        "train200": {
+          "accuracy": 0.8333333333333334,
+          "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-train200-quantized.json",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-round-02-candidate-02-loaded-artifact-probe.json",
+      "matched_linear_weight_footprint_gb": 7.386962890625,
+      "proposal_score": 0.09980095470643907,
+      "provenance": "swap_demotion_neighbor",
+      "smoke_test_passed": true,
+      "unresolved_target_warnings": []
+    }
+  ],
+  "uniform_int8_record": {
+    "artifact_dir": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-source",
+    "bit_counts": {
+      "8": 249
+    },
+    "budget_alignment_score": 1.0,
+    "candidate_key": "baseline-uniform-int8",
+    "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/baseline-uniform-int8.json",
+    "estimated_full_model_weight_footprint_gb": 9.28713321685791,
+    "evaluations": {
+      "test300": {
+        "accuracy": 0.8,
+        "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-test300-quantized.json",
+        "task_split": "test300"
+      },
+      "train200": {
+        "accuracy": 0.8333333333333334,
+        "path": "outputs/evaluations/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-train200-quantized.json",
+        "task_split": "train200"
+      }
+    },
+    "feasibility_report_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-source-report.json",
+    "integrity_clean": true,
+    "integrity_manifest_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-integrity.json",
+    "is_mixed": false,
+    "loaded_artifact_probe_path": "outputs/feasibility/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2-baseline-uniform-int8-loaded-artifact-probe.json",
+    "matched_linear_weight_footprint_gb": 7.390625,
+    "proposal_score": 0.1,
+    "provenance": "uniform_int8_seed",
+    "smoke_test_passed": true,
+    "unresolved_target_warnings": []
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "accuracy": 0.0,
+  "backend_variant": "source",
+  "mean_generation_peak_delta_mb": 282.134765625,
+  "mean_latency_sec": 67.80857392499999,
+  "mean_resident_memory_mb": 51300.0966796875,
+  "mean_total_peak_memory_mb": 51582.2333984375,
+  "median_latency_sec": 67.80857392499999,
+  "model_id": "Qwen/Qwen3.5-27B-bf16-current-script-smoke",
+  "num_correct": 0,
+  "num_examples": 1,
+  "p95_latency_sec": 67.80857392499999,
+  "results": [
+    {
+      "completion_tokens": 7,
+      "example_id": "test/number_theory/417.json",
+      "generation_peak_delta_mb": 282.134765625,
+      "is_correct": false,
+      "latency_sec": 67.80857392499999,
+      "model_id": "Qwen/Qwen3.5-27B-bf16-current-script-smoke",
+      "predicted_answer": "111000",
+      "prompt_tokens": 73,
+      "raw_completion": "111000",
+      "reference_answer": "11,111,111,100",
+      "resident_memory_mb": 51300.0966796875,
+      "total_peak_memory_mb": 51582.2333984375
+    }
+  ],
+  "task_name": "math500",
+  "task_prompt_style": null,
+  "task_split": "full500"
+}

@@ -1,0 +1,350 @@
+{
+  "accept_limit": 40,
+  "accept_split": "test300",
+  "all_candidate_records": [
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train25-test40-thinking-2048-b200-seed-01-uniform_int8_seed-source",
+      "bit_counts": {
+        "8": 497
+      },
+      "budget_alignment_score": 1.0,
+      "candidate_key": "seed-01-uniform_int8_seed",
+      "candidate_path": "outputs/policies/math500-surrogate-free-train25-test40-thinking-2048-b200/seed-01-uniform_int8_seed.json",
+      "estimated_full_model_weight_footprint_gb": 23.8623046875,
+      "evaluations": {
+        "test300": {
+          "accuracy": -1.0,
+          "status": "skipped_integrity_gate",
+          "task_split": "test300"
+        },
+        "train200": {
+          "accuracy": -1.0,
+          "status": "skipped_integrity_gate",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-01-uniform_int8_seed-source-report.json",
+      "integrity_clean": true,
+      "integrity_manifest_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-01-uniform_int8_seed-integrity.json",
+      "is_mixed": false,
+      "loaded_artifact_probe_path": null,
+      "matched_linear_weight_footprint_gb": 23.8623046875,
+      "proposal_score": 0.1,
+      "provenance": "uniform_int8_seed",
+      "smoke_test_passed": false,
+      "unresolved_target_warnings": []
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train25-test40-thinking-2048-b200-seed-03-two_rescue_seed-source",
+      "bit_counts": {
+        "16": 2,
+        "4": 7,
+        "8": 488
+      },
+      "budget_alignment_score": 0.9995907509719665,
+      "candidate_key": "seed-03-two_rescue_seed",
+      "candidate_path": "outputs/policies/math500-surrogate-free-train25-test40-thinking-2048-b200/seed-03-two_rescue_seed.json",
+      "estimated_full_model_weight_footprint_gb": 23.8525390625,
+      "evaluations": {
+        "train200": {
+          "accuracy": -1.0,
+          "status": "skipped_integrity_gate",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-03-two_rescue_seed-source-report.json",
+      "integrity_clean": false,
+      "integrity_manifest_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-03-two_rescue_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": null,
+      "matched_linear_weight_footprint_gb": 23.8525390625,
+      "proposal_score": 0.15017140337874496,
+      "provenance": "two_rescue_seed",
+      "smoke_test_passed": false,
+      "unresolved_target_warnings": [
+        "model.layers.26.mlp.up_proj",
+        "model.layers.35.mlp.up_proj",
+        "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+        "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+        "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.34\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.5\\.mlp\\.down_proj$",
+        "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+      ]
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train25-test40-thinking-2048-b200-seed-04-late_layer_rescue_seed-source",
+      "bit_counts": {
+        "16": 2,
+        "4": 5,
+        "8": 490
+      },
+      "budget_alignment_score": 0.9986699406588909,
+      "candidate_key": "seed-04-late_layer_rescue_seed",
+      "candidate_path": "outputs/policies/math500-surrogate-free-train25-test40-thinking-2048-b200/seed-04-late_layer_rescue_seed.json",
+      "estimated_full_model_weight_footprint_gb": 23.83056640625,
+      "evaluations": {
+        "train200": {
+          "accuracy": -1.0,
+          "status": "skipped_integrity_gate",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-04-late_layer_rescue_seed-source-report.json",
+      "integrity_clean": false,
+      "integrity_manifest_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-04-late_layer_rescue_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": null,
+      "matched_linear_weight_footprint_gb": 23.83056640625,
+      "proposal_score": 0.12649524256984956,
+      "provenance": "late_layer_rescue_seed",
+      "smoke_test_passed": false,
+      "unresolved_target_warnings": [
+        "model.layers.61.mlp.gate_proj",
+        "model.layers.63.self_attn.k_proj",
+        "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+        "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+        "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+      ]
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train25-test40-thinking-2048-b200-seed-02-single_priority_rescue_seed-source",
+      "bit_counts": {
+        "16": 1,
+        "4": 5,
+        "8": 491
+      },
+      "budget_alignment_score": 0.9984653161448741,
+      "candidate_key": "seed-02-single_priority_rescue_seed",
+      "candidate_path": "outputs/policies/math500-surrogate-free-train25-test40-thinking-2048-b200/seed-02-single_priority_rescue_seed.json",
+      "estimated_full_model_weight_footprint_gb": 23.82568359375,
+      "evaluations": {
+        "train200": {
+          "accuracy": -1.0,
+          "status": "skipped_integrity_gate",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-02-single_priority_rescue_seed-source-report.json",
+      "integrity_clean": false,
+      "integrity_manifest_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-02-single_priority_rescue_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": null,
+      "matched_linear_weight_footprint_gb": 23.82568359375,
+      "proposal_score": 0.1308844018302236,
+      "provenance": "single_priority_rescue_seed",
+      "smoke_test_passed": false,
+      "unresolved_target_warnings": [
+        "model.layers.35.mlp.up_proj",
+        "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+        "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+        "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+      ]
+    },
+    {
+      "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train25-test40-thinking-2048-b200-seed-05-compression_first_seed-source",
+      "bit_counts": {
+        "16": 2,
+        "4": 22,
+        "8": 473
+      },
+      "budget_alignment_score": 0.991400974524248,
+      "candidate_key": "seed-05-compression_first_seed",
+      "candidate_path": "outputs/policies/math500-surrogate-free-train25-test40-thinking-2048-b200/seed-05-compression_first_seed.json",
+      "estimated_full_model_weight_footprint_gb": 23.65711212158203,
+      "evaluations": {
+        "train200": {
+          "accuracy": -1.0,
+          "status": "skipped_integrity_gate",
+          "task_split": "train200"
+        }
+      },
+      "feasibility_report_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-05-compression_first_seed-source-report.json",
+      "integrity_clean": false,
+      "integrity_manifest_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-05-compression_first_seed-integrity.json",
+      "is_mixed": true,
+      "loaded_artifact_probe_path": null,
+      "matched_linear_weight_footprint_gb": 23.65711212158203,
+      "proposal_score": 0.177471704765843,
+      "provenance": "compression_first_seed",
+      "smoke_test_passed": false,
+      "unresolved_target_warnings": [
+        "model.layers.26.mlp.up_proj",
+        "model.layers.35.mlp.up_proj",
+        "re:.*model\\.layers\\.0\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.10\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+        "re:.*model\\.layers\\.13\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+        "re:.*model\\.layers\\.16\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.16\\.mlp\\.gate_proj$",
+        "re:.*model\\.layers\\.17\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.1\\.linear_attn\\.in_proj_qkv$",
+        "re:.*model\\.layers\\.1\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.21\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.25\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.26\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.2\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.36\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.38\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.4\\.linear_attn\\.in_proj_a$",
+        "re:.*model\\.layers\\.4\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.5\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.6\\.linear_attn\\.out_proj$",
+        "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$",
+        "re:.*model\\.layers\\.9\\.linear_attn\\.out_proj$"
+      ]
+    }
+  ],
+  "allowed_bits": [
+    4,
+    8,
+    16
+  ],
+  "baselines": {
+    "native_bf16": {
+      "test300": {
+        "accuracy": 0.125,
+        "path": "outputs/evaluations/math500-surrogate-free-train25-test40-thinking-2048-b200-native-bf16-test300.json",
+        "task_split": "test300"
+      },
+      "train200": {
+        "accuracy": 0.16,
+        "path": "outputs/evaluations/math500-surrogate-free-train25-test40-thinking-2048-b200-native-bf16-train200.json",
+        "task_split": "train200"
+      }
+    }
+  },
+  "budget_accounting_mode": "matched_linear_weight_budget",
+  "contract_path": "configs/experiment_contract_27b_9b_math500.json",
+  "demotable_group_names": [
+    "block:37:linear_attn.in_proj_qkv",
+    "block:7:self_attn.o_proj",
+    "block:12:linear_attn.in_proj_z",
+    "block:29:linear_attn.in_proj_qkv",
+    "block:14:mlp.gate_proj",
+    "block:5:mlp.down_proj",
+    "block:34:linear_attn.out_proj",
+    "block:44:linear_attn.in_proj_b",
+    "block:32:linear_attn.in_proj_qkv",
+    "block:28:linear_attn.out_proj",
+    "block:41:mlp.up_proj",
+    "block:4:linear_attn.in_proj_a",
+    "block:10:linear_attn.out_proj",
+    "block:33:linear_attn.out_proj",
+    "block:38:linear_attn.out_proj",
+    "block:18:mlp.up_proj",
+    "block:14:linear_attn.in_proj_b",
+    "block:46:linear_attn.out_proj",
+    "block:1:linear_attn.in_proj_qkv",
+    "block:5:linear_attn.in_proj_qkv",
+    "block:19:mlp.gate_proj",
+    "block:3:mlp.down_proj",
+    "block:0:linear_attn.out_proj",
+    "block:13:linear_attn.out_proj",
+    "block:16:linear_attn.out_proj",
+    "block:1:linear_attn.out_proj",
+    "block:21:linear_attn.out_proj",
+    "block:25:linear_attn.out_proj",
+    "block:2:linear_attn.out_proj",
+    "block:30:linear_attn.out_proj",
+    "block:32:linear_attn.out_proj",
+    "block:36:linear_attn.out_proj",
+    "block:42:linear_attn.out_proj",
+    "block:44:linear_attn.out_proj",
+    "block:4:linear_attn.out_proj",
+    "block:5:linear_attn.out_proj",
+    "block:6:linear_attn.out_proj",
+    "block:9:linear_attn.out_proj",
+    "block:16:mlp.gate_proj",
+    "block:6:mlp.down_proj",
+    "block:14:linear_attn.in_proj_qkv",
+    "block:40:mlp.up_proj",
+    "block:17:mlp.down_proj",
+    "block:50:linear_attn.in_proj_b",
+    "block:17:linear_attn.out_proj",
+    "block:26:linear_attn.out_proj",
+    "block:37:linear_attn.out_proj",
+    "block:12:linear_attn.in_proj_qkv"
+  ],
+  "dev_limit": 25,
+  "dev_split": "train200",
+  "estimated_non_linear_weight_footprint_gb": 0.0,
+  "estimated_uniform_full_model_weight_footprint_gb": 0.0,
+  "final_limit": null,
+  "final_split": null,
+  "fixed_assignments": {
+    "global::lm_head": 8
+  },
+  "grouping": "per_block_component",
+  "matched_linear_budget_gb": 23.8623046875,
+  "promotable_group_names": [
+    "block:35:mlp.up_proj",
+    "block:26:mlp.up_proj",
+    "block:9:linear_attn.in_proj_a",
+    "block:33:mlp.gate_proj",
+    "block:63:self_attn.k_proj",
+    "block:20:mlp.up_proj",
+    "block:23:mlp.gate_proj",
+    "block:30:mlp.down_proj",
+    "block:38:linear_attn.in_proj_b",
+    "block:52:linear_attn.in_proj_z",
+    "block:36:mlp.up_proj",
+    "block:7:mlp.up_proj",
+    "block:26:linear_attn.in_proj_b",
+    "block:20:linear_attn.in_proj_a",
+    "block:34:mlp.gate_proj",
+    "block:18:linear_attn.in_proj_a",
+    "block:41:mlp.gate_proj",
+    "block:30:mlp.up_proj",
+    "block:29:linear_attn.in_proj_b",
+    "block:31:mlp.up_proj",
+    "block:36:linear_attn.in_proj_b",
+    "block:21:mlp.gate_proj",
+    "block:22:mlp.gate_proj",
+    "block:61:mlp.gate_proj"
+  ],
+  "report_path": "outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform-8bit-candidate-01-llmcompressor-source-report.json",
+  "rounds": [],
+  "strategy": "surrogate_free_direct_eval",
+  "target_budget_gb": 23.8623046875,
+  "task_name": "math500",
+  "top_mixed_candidates": [],
+  "uniform_int8_record": {
+    "artifact_dir": "/artifacts/math500-qwen35-27b-vs-9b-feasibility-math500-surrogate-free-train25-test40-thinking-2048-b200-seed-01-uniform_int8_seed-source",
+    "bit_counts": {
+      "8": 497
+    },
+    "budget_alignment_score": 1.0,
+    "candidate_key": "seed-01-uniform_int8_seed",
+    "candidate_path": "outputs/policies/math500-surrogate-free-train25-test40-thinking-2048-b200/seed-01-uniform_int8_seed.json",
+    "estimated_full_model_weight_footprint_gb": 23.8623046875,
+    "evaluations": {
+      "test300": {
+        "accuracy": -1.0,
+        "status": "skipped_integrity_gate",
+        "task_split": "test300"
+      },
+      "train200": {
+        "accuracy": -1.0,
+        "status": "skipped_integrity_gate",
+        "task_split": "train200"
+      }
+    },
+    "feasibility_report_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-01-uniform_int8_seed-source-report.json",
+    "integrity_clean": true,
+    "integrity_manifest_path": "outputs/feasibility/math500-surrogate-free-train25-test40-thinking-2048-b200-seed-01-uniform_int8_seed-integrity.json",
+    "is_mixed": false,
+    "loaded_artifact_probe_path": null,
+    "matched_linear_weight_footprint_gb": 23.8623046875,
+    "proposal_score": 0.1,
+    "provenance": "uniform_int8_seed",
+    "smoke_test_passed": false,
+    "unresolved_target_warnings": []
+  }
+}
