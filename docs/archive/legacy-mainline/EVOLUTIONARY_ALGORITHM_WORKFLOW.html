@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TA-MPQ Evolutionary Algorithm Workflow</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #fffdf8;
+      --ink: #1d1b16;
+      --muted: #6d6658;
+      --line: #e3dccd;
+      --accent: #a44f2b;
+      --accent-soft: #f6e4db;
+      --accent-2: #2f6c63;
+      --accent-2-soft: #e2f1ed;
+      --warn: #8a6a11;
+      --warn-soft: #f9f0cc;
+      --shadow: 0 18px 40px rgba(50, 35, 20, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff7e8 0, transparent 30%),
+        radial-gradient(circle at top right, #f2efe5 0, transparent 28%),
+        linear-gradient(180deg, #f8f5ee 0%, #f2eee5 100%);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fff8ee 0%, #fffdf8 42%, #f4efe5 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(164,79,43,0.14) 0%, rgba(164,79,43,0.04) 45%, transparent 70%);
+    }
+
+    h1, h2, h3 { margin: 0 0 10px; line-height: 1.2; }
+    h1 { font-size: 38px; letter-spacing: -0.02em; max-width: 760px; }
+    h2 { font-size: 24px; margin-top: 28px; }
+    h3 { font-size: 18px; }
+
+    p.lead {
+      max-width: 860px;
+      color: var(--muted);
+      font-size: 18px;
+      margin: 14px 0 0;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.7);
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 22px 20px;
+    }
+
+    .card.half { grid-column: span 6; }
+    .card.third { grid-column: span 4; }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .small {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .stat {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .stat .box {
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .box strong {
+      display: block;
+      font-size: 24px;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 36px;
+      bottom: -14px;
+      width: 2px;
+      height: 14px;
+      background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 16px;
+      margin-top: 2px;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 10px 0 0;
+    }
+
+    li { margin: 6px 0; }
+
+    code {
+      font-family: "SFMono-Regular", "Menlo", "Monaco", monospace;
+      background: #f6f1e7;
+      border: 1px solid #eadfcb;
+      border-radius: 8px;
+      padding: 1px 6px;
+      font-size: 0.95em;
+    }
+
+    pre {
+      overflow-x: auto;
+      background: #fff8ee;
+      color: #1f1a14;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #d8ccb8;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 12px 0 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    pre code {
+      display: block;
+      white-space: pre;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .callout {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      margin-top: 14px;
+    }
+
+    .callout.good {
+      background: var(--accent-2-soft);
+      border-color: #c4dfd7;
+    }
+
+    .callout.warn {
+      background: var(--warn-soft);
+      border-color: #eadb9d;
+    }
+
+    .board {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      overflow: auto;
+    }
+
+    svg.flowchart {
+      display: block;
+      width: 100%;
+      min-width: 1360px;
+      height: auto;
+    }
+
+    .lane-title {
+      font-size: 18px;
+      font-weight: 700;
+      fill: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .node-title {
+      font-size: 20px;
+      font-weight: 700;
+      fill: var(--ink);
+    }
+
+    .node-text {
+      font-size: 15px;
+      fill: var(--muted);
+    }
+
+    .note-text {
+      font-size: 14px;
+      fill: var(--muted);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 700;
+      background: #faf7f0;
+    }
+
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .card.half, .card.third { grid-column: span 12; }
+      .two-col { grid-template-columns: 1fr; }
+      .stat { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="label">Workflow Overview</div>
+      <h1>TA-MPQ 进化算法工作流</h1>
+      <p class="lead">
+        这份页面聚焦于 <strong>进化算法 / surrogate / closed-loop search</strong> 这一条方法线，
+        用来说明当前搜索系统的结构、输入输出关系，以及下一轮应如何继续推进。
+      </p>
+      <div class="meta">
+        <div class="pill">当前主线：uniform8-aware</div>
+        <div class="pill">任务：MATH-500</div>
+        <div class="pill">搜索空间：{4, 8, 16}</div>
+        <div class="pill">预算目标：≈ uniform 8-bit 27B</div>
+        <div class="pill">当前目标：TA-MPQ &gt; uniform8 &gt; native9B</div>
+      </div>
+    </section>
+
+    <section class="board">
+      <svg class="flowchart" viewBox="0 0 1420 1280" role="img" aria-label="TA-MPQ evolutionary algorithm flowchart">
+        <defs>
+          <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M0,0 L12,6 L0,12 Z" fill="#9b5a36"></path>
+          </marker>
+          <marker id="arrow-green" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M0,0 L12,6 L0,12 Z" fill="#2f6c63"></path>
+          </marker>
+          <marker id="arrow-gold" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <path d="M0,0 L12,6 L0,12 Z" fill="#8a6a11"></path>
+          </marker>
+        </defs>
+
+        <rect x="12" y="12" width="1396" height="1256" rx="28" fill="#fffdf9" stroke="#ddd2c0" />
+
+        <rect x="48" y="70" width="1324" height="280" rx="24" fill="#faf5eb" stroke="#e3d9c9" />
+        <rect x="48" y="390" width="1324" height="414" rx="24" fill="#f9fbf9" stroke="#d8e4de" />
+        <rect x="48" y="846" width="1324" height="348" rx="24" fill="#fcf8ee" stroke="#e7dcc6" />
+
+        <text x="70" y="108" class="lane-title">A. 真实任务信号层</text>
+        <text x="70" y="428" class="lane-title">B. surrogate + 进化搜索层</text>
+        <text x="70" y="884" class="lane-title">C. 真实验证与回喂层</text>
+
+        <rect x="84" y="138" width="252" height="154" rx="22" fill="#fff" stroke="#ddd2c0" />
+        <text x="108" y="176" class="node-title">1. 当前输入</text>
+        <text x="108" y="208" class="node-text">executed manifest</text>
+        <text x="108" y="232" class="node-text">current candidate</text>
+        <text x="108" y="256" class="node-text">contract + ranking profile</text>
+
+        <rect x="410" y="138" width="290" height="154" rx="22" fill="#fff" stroke="#ddd2c0" />
+        <text x="434" y="176" class="node-title">2. targeted ablation</text>
+        <text x="434" y="208" class="node-text">16 → 8</text>
+        <text x="434" y="232" class="node-text">8 → 4</text>
+        <text x="434" y="256" class="node-text">测单个 group 降精度的真实掉点</text>
+
+        <rect x="780" y="138" width="270" height="154" rx="22" fill="#fff" stroke="#ddd2c0" />
+        <text x="804" y="176" class="node-title">3. ablation profile</text>
+        <text x="804" y="208" class="node-text">哪些组降精度不掉分</text>
+        <text x="804" y="232" class="node-text">哪些组一降就掉分</text>
+        <text x="804" y="256" class="node-text">得到真实边际价值</text>
+
+        <rect x="1112" y="138" width="222" height="154" rx="22" fill="#fff" stroke="#ddd2c0" />
+        <text x="1136" y="176" class="node-title">4. value prior</text>
+        <text x="1136" y="208" class="node-text">把 ablation 掉点</text>
+        <text x="1136" y="232" class="node-text">写回 group value prior</text>
+        <text x="1136" y="256" class="node-text">纠正高精度分配</text>
+
+        <path d="M336 215 L410 215" stroke="#9b5a36" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+        <path d="M700 215 L780 215" stroke="#9b5a36" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+        <path d="M1050 215 L1112 215" stroke="#9b5a36" stroke-width="4" fill="none" marker-end="url(#arrow)" />
+
+        <rect x="84" y="474" width="272" height="168" rx="22" fill="#fff" stroke="#cdded7" />
+        <text x="108" y="514" class="node-title">5. surrogate dataset</text>
+        <text x="108" y="548" class="node-text">从 executed policies 抽特征</text>
+        <text x="108" y="572" class="node-text">target = advantage over uniform8</text>
+        <text x="108" y="596" class="node-text">不是绝对 accuracy</text>
+
+        <rect x="404" y="474" width="272" height="168" rx="22" fill="#fff" stroke="#cdded7" />
+        <text x="428" y="514" class="node-title">6. train surrogate</text>
+        <text x="428" y="548" class="node-text">XGBoost ensemble</text>
+        <text x="428" y="572" class="node-text">输出 prediction + uncertainty</text>
+        <text x="428" y="596" class="node-text">小样本下做保守预测</text>
+
+        <rect x="724" y="458" width="308" height="200" rx="22" fill="#fff" stroke="#cdded7" />
+        <text x="748" y="498" class="node-title">7. evolutionary search</text>
+        <text x="748" y="532" class="node-text">search space = {4, 8, 16}</text>
+        <text x="748" y="556" class="node-text">budget ≈ uniform 8-bit 27B</text>
+        <text x="748" y="580" class="node-text">fitness = conservative prediction</text>
+        <text x="748" y="604" class="node-text">+ budget alignment + value alignment</text>
+        <text x="748" y="628" class="node-text">adaptive mutation + immigrants</text>
+
+        <rect x="1080" y="474" width="254" height="168" rx="22" fill="#fff" stroke="#cdded7" />
+        <text x="1104" y="514" class="node-title">8. candidate ranking</text>
+        <text x="1104" y="548" class="node-text">top-k candidates</text>
+        <text x="1104" y="572" class="node-text">不是全量真实量化</text>
+        <text x="1104" y="596" class="node-text">只保留最值得真跑的点</text>
+
+        <path d="M356 558 L404 558" stroke="#2f6c63" stroke-width="4" fill="none" marker-end="url(#arrow-green)" />
+        <path d="M676 558 L724 558" stroke="#2f6c63" stroke-width="4" fill="none" marker-end="url(#arrow-green)" />
+        <path d="M1032 558 L1080 558" stroke="#2f6c63" stroke-width="4" fill="none" marker-end="url(#arrow-green)" />
+
+        <path d="M1222 138 L1222 390" stroke="#8a6a11" stroke-width="4" fill="none" marker-end="url(#arrow-gold)" />
+        <text x="1238" y="330" class="note-text">value prior 直接喂给搜索</text>
+
+        <rect x="84" y="938" width="282" height="166" rx="22" fill="#fff" stroke="#e4d7b5" />
+        <text x="108" y="978" class="node-title">9. closed-loop 选点</text>
+        <text x="108" y="1012" class="node-text">exploitation</text>
+        <text x="108" y="1036" class="node-text">+ exploration</text>
+        <text x="108" y="1060" class="node-text">+ diversity</text>
+
+        <rect x="426" y="938" width="282" height="166" rx="22" fill="#fff" stroke="#e4d7b5" />
+        <text x="450" y="978" class="node-title">10. 真实 PTQ</text>
+        <text x="450" y="1012" class="node-text">量化 top candidate</text>
+        <text x="450" y="1036" class="node-text">确认 artifact 可运行</text>
+        <text x="450" y="1060" class="node-text">不是只看 surrogate</text>
+
+        <rect x="768" y="938" width="282" height="166" rx="22" fill="#fff" stroke="#e4d7b5" />
+        <text x="792" y="978" class="node-title">11. 真实评测</text>
+        <text x="792" y="1012" class="node-text">先 dev / small sample</text>
+        <text x="792" y="1036" class="node-text">通过后再 large sample</text>
+        <text x="792" y="1060" class="node-text">对比 uniform8 和 native9B</text>
+
+        <rect x="1110" y="938" width="224" height="166" rx="22" fill="#fff" stroke="#e4d7b5" />
+        <text x="1134" y="978" class="node-title">12. 回喂</text>
+        <text x="1134" y="1012" class="node-text">append executed manifest</text>
+        <text x="1134" y="1036" class="node-text">更新 dataset / prior</text>
+        <text x="1134" y="1060" class="node-text">进入下一轮</text>
+
+        <path d="M366 1022 L426 1022" stroke="#8a6a11" stroke-width="4" fill="none" marker-end="url(#arrow-gold)" />
+        <path d="M708 1022 L768 1022" stroke="#8a6a11" stroke-width="4" fill="none" marker-end="url(#arrow-gold)" />
+        <path d="M1050 1022 L1110 1022" stroke="#8a6a11" stroke-width="4" fill="none" marker-end="url(#arrow-gold)" />
+
+        <path d="M1222 1104 L1222 1160 L220 1160 L220 642" stroke="#9b5a36" stroke-width="5" fill="none" marker-end="url(#arrow)" />
+        <text x="1240" y="1130" class="note-text">真实分数回喂</text>
+        <text x="236" y="1146" class="note-text">下一轮 surrogate / search</text>
+
+        <rect x="1078" y="706" width="256" height="72" rx="18" fill="#f8efcf" stroke="#e0d09a" />
+        <text x="1100" y="736" class="node-title" style="font-size:17px; fill:#8a6a11;">当前方法约束</text>
+        <text x="1100" y="762" class="note-text" style="fill:#7b6a2b;">先用 ablation 修正搜索，再决定是否值得继续大样本验证。</text>
+      </svg>
+    </section>
+
+    <div class="grid">
+      <section class="card half">
+        <div class="label">Validated Result</div>
+        <h2>当前已经验证完的结果</h2>
+        <div class="stat">
+          <div class="box">
+            <strong>36%</strong>
+            <span>TA-MPQ quantized 27B</span>
+          </div>
+          <div class="box">
+            <strong>39%</strong>
+            <span>uniform 8-bit 27B</span>
+          </div>
+          <div class="box">
+            <strong>29%</strong>
+            <span>native 9B</span>
+          </div>
+        </div>
+        <div class="callout warn">
+          当前比较稳的结论是：<strong>TA-MPQ &gt; native 9B</strong>，但相对 <strong>uniform 8-bit</strong> 的优势还没有被稳定证明。
+        </div>
+      </section>
+
+      <section class="card half">
+        <div class="label">Current Diagnosis</div>
+        <h2>现在进化算法真正卡住的地方</h2>
+        <ul>
+          <li>不是 backend 执行错了，而是 <strong>16-bit 预算还没分到最值钱的 group</strong>。</li>
+          <li>surrogate 现在已经有用，但对 “哪些组该上 16-bit” 的排序仍然不够准。</li>
+          <li>所以不能只靠“再跑更多代”，要先用 <strong>targeted ablation</strong> 纠正 value prior。</li>
+        </ul>
+        <div class="callout good">
+          当前方法不是盲搜，而是：<strong>ablation → prior → surrogate → search → PTQ → eval → 回喂</strong>。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="label">Algorithm Role</div>
+        <h2>这个进化算法在项目里的定位</h2>
+        <p>
+          它不是直接训练大模型，也不是直接跑最终 benchmark 的主体。
+          它的定位是一个 <strong>budget-constrained policy search engine</strong>：
+          在固定预算下，为每个 <code>layer group</code> 选择 <code>4 / 8 / 16-bit</code>，生成最值得拿去做真实 PTQ 的候选策略。
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>模块</th>
+              <th>作用</th>
+              <th>当前实现</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>编码</td>
+              <td>把 candidate 表示成 group-level bit allocation</td>
+              <td><code>per_block_component</code> 上的 <code>{4,8,16}</code></td>
+            </tr>
+            <tr>
+              <td>fitness</td>
+              <td>不直接看真实分数，而看 surrogate 的保守预测</td>
+              <td><code>conservative_prediction</code> + budget alignment + prior alignment</td>
+            </tr>
+            <tr>
+              <td>evolution</td>
+              <td>selection / crossover / mutation / immigrants</td>
+              <td>已经做了稳定化</td>
+            </tr>
+            <tr>
+              <td>closed loop</td>
+              <td>只真实验证少数有价值 candidate，再把结果回灌</td>
+              <td>按 exploitation + exploration + diversity 选点</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="label">Workflow</div>
+        <h2>单独进化算法工作流</h2>
+        <div class="workflow">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h3>收集真实执行记录</h3>
+              <p class="small">
+                从 executed manifest 读取已经真实 PTQ + benchmark 过的 policy。
+              </p>
+              <ul>
+                <li>输入：<code>outputs/closed_loop/math500-uniform8-aware-executed-manifest-v3-ablation16.json</code></li>
+                <li>输出：可训练的 executed-policy dataset</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h3>构建 surrogate dataset</h3>
+              <p class="small">
+                把每条 policy 展开成特征，并把目标设成当前路线真正想优化的指标。
+              </p>
+              <ul>
+                <li>当前路线的 target 是：<code>accuracy_advantage_over_uniform</code></li>
+                <li>也就是直接学 “比 uniform 8-bit 强多少”</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h3>训练 surrogate</h3>
+              <p class="small">
+                训练一个 small-data 友好的 ensemble surrogate，用来近似预测 candidate 的真实 benchmark 表现。
+              </p>
+              <ul>
+                <li>当前是 XGBoost ensemble</li>
+                <li>输出均值预测和不确定性</li>
+                <li>搜索时用的是 <code>prediction - penalty × uncertainty</code></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <h3>注入 group value prior</h3>
+              <p class="small">
+                不让进化算法只看 surrogate，还要给它一个“哪些组值得高精度”的先验。
+              </p>
+              <ul>
+                <li>当前 prior 来自执行数据和 targeted ablation</li>
+                <li>这一步是把 “16-bit 该给谁” 这个问题显式喂回搜索</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">5</div>
+            <div>
+              <h3>运行进化搜索</h3>
+              <p class="small">
+                在 <code>{4,8,16}</code> 空间里搜索 top-k candidates。
+              </p>
+              <ul>
+                <li>population：32</li>
+                <li>generations：15</li>
+                <li>支持 adaptive mutation + immigrants + 去重</li>
+                <li>目标预算：≈ uniform 8-bit 27B</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">6</div>
+            <div>
+              <h3>closed-loop 选点</h3>
+              <p class="small">
+                不是真实量化所有 candidate，而是挑少数“最有价值”的点去真跑。
+              </p>
+              <ul>
+                <li>一部分看 exploitation：当前预测强不强</li>
+                <li>一部分看 exploration：不确定性高不高</li>
+                <li>一部分看 diversity：和已执行 policy 差得够不够远</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">7</div>
+            <div>
+              <h3>真实 PTQ + dev benchmark</h3>
+              <p class="small">
+                对选中的 candidate 做真实量化、真实运行、真实测分。
+              </p>
+              <ul>
+                <li>先小样本 dev（通常 <code>limit=25</code>）</li>
+                <li>只有新 winner 才值得再上大样本</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">8</div>
+            <div>
+              <h3>回喂到下一轮</h3>
+              <p class="small">
+                把新的 PTQ report、evaluation、ablation 掉点重新写回 manifest，再进入下一轮。
+              </p>
+              <ul>
+                <li>这一步才是 closed-loop 的核心</li>
+                <li>真实分数负责纠正 surrogate 和 value prior</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card half">
+        <div class="label">Current Inputs</div>
+        <h2>当前这一轮进化算法真正吃的输入</h2>
+        <ul>
+          <li>contract：<code>configs/experiment_contract_27b_9b_math500.json</code></li>
+          <li>executed manifest：<code>outputs/closed_loop/math500-uniform8-aware-executed-manifest-v3-ablation16.json</code></li>
+          <li>ranking profile：<code>outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json</code></li>
+          <li>latest search candidate：<code>outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json</code></li>
+          <li>latest PTQ report：<code>outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json</code></li>
+        </ul>
+      </section>
+
+      <section class="card half">
+        <div class="label">Recommended Next Step</div>
+        <h2>当前更值得优先推进的工作</h2>
+        <ol>
+          <li>跑完 <code>16 -> 8</code> 和 <code>8 -> 4</code> 的 targeted ablation</li>
+          <li>把真实掉点并进新的 <code>group value prior</code></li>
+          <li>重训 surrogate</li>
+          <li>重跑 uniform8-aware 的 <code>{4,8,16}</code> search</li>
+          <li>只把新 top-1 做 PTQ 和大样本 benchmark</li>
+        </ol>
+        <div class="callout warn">
+          当前性价比最低的做法，是继续拿旧 winner 重复跑大样本，或者仅仅把 generations 从 15 机械地抬到 30。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="label">Next Steps</div>
+        <h2>接下来的步骤</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>阶段</th>
+              <th>要做什么</th>
+              <th>产出</th>
+              <th>目的</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1. 补齐当前 ablation</td>
+              <td>完成当前 <code>16 -> 8</code> 与 <code>8 -> 4</code> 的 g12 批次，并整理掉点结果</td>
+              <td>两个完整的 ablation profile</td>
+              <td>确认哪些 group 的高精度有真实边际收益，哪些只是占预算</td>
+            </tr>
+            <tr>
+              <td>2. 更新 prior</td>
+              <td>把新的 ablation 掉点并入 group value prior</td>
+              <td>新的 ablation-adjusted prior</td>
+              <td>让搜索不再主要依赖结构先验</td>
+            </tr>
+            <tr>
+              <td>3. 重训 surrogate</td>
+              <td>用更新后的 manifest / dataset / prior 重新训练 surrogate ensemble</td>
+              <td>新的 surrogate summary 和 model</td>
+              <td>提高对 “哪些 group 值得 16-bit” 的排序质量</td>
+            </tr>
+            <tr>
+              <td>4. 重跑搜索</td>
+              <td>在同样的 <code>{4,8,16}</code> 与 uniform8 budget 下重跑搜索</td>
+              <td>新的 top-k candidates</td>
+              <td>检验修正后的 value signal 是否会改变精度分配</td>
+            </tr>
+            <tr>
+              <td>5. 真实 PTQ</td>
+              <td>只对新的 top-1 做真实量化和 artifact 验证</td>
+              <td>可运行的 quantized candidate</td>
+              <td>避免在还没收敛前把预算花在太多候选上</td>
+            </tr>
+            <tr>
+              <td>6. 重新验证 benchmark</td>
+              <td>先跑 dev，再决定是否上新的 large-sample eval</td>
+              <td>新的 head-to-head 结果</td>
+              <td>判断是否已经有必要再次挑战 uniform8</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout good">
+          当前建议的推进顺序是：<strong>先修正高精度分配，再重训搜索，再做新的 benchmark 验证</strong>。
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="label">Operational Commands</div>
+        <h2>当前继续这条进化算法线时的常用命令</h2>
+
+        <h3>1. targeted ablation</h3>
+        <pre><code>python3 -m modal run src/ta_mpq/modal_feasibility_app.py::run_precision_ablation_sensitivity \
+  --report-path outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json \
+  --candidate-path outputs/policies/math500-uniform8-route-v3-ablation16/candidate-01.json \
+  --contract-path configs/experiment_contract_27b_9b_math500.json \
+  --ranking-profile-path outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json \
+  --ranking-field combined_sensitivity \
+  --max-groups 12 \
+  --floor-bit 8 \
+  --allowed-bits 8,16 \
+  --reference-bits 16 \
+  --policy-source llmcompressor \
+  --backend-variant source \
+  --task-name math500 \
+  --limit 25 \
+  --max-new-tokens 32 \
+  --calibration-limit 4 \
+  --prior-weight 0.25 \
+  --output-name math500-uniform8-route-v3-candidate-01-precision-ablation-16to8-g12</code></pre>
+
+        <h3>2. build dataset</h3>
+        <pre><code>python3 -m modal run src/ta_mpq/modal_feasibility_app.py::build_surrogate_dataset \
+  --manifest-path outputs/closed_loop/math500-uniform8-aware-executed-manifest-v3-ablation16.json \
+  --contract-path configs/experiment_contract_27b_9b_math500.json \
+  --output-name math500-uniform8-route-dataset-next</code></pre>
+
+        <h3>3. train surrogate</h3>
+        <pre><code>python3 -m modal run src/ta_mpq/modal_feasibility_app.py::run_surrogate_training \
+  --dataset-path outputs/surrogate/math500-uniform8-route-dataset-next.json \
+  --output-name math500-uniform8-route-surrogate-next \
+  --ensemble-size 8</code></pre>
+
+        <h3>4. rerun search</h3>
+        <pre><code>python3 -m modal run src/ta_mpq/modal_feasibility_app.py::run_surrogate_guided_search \
+  --report-path outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json \
+  --surrogate-summary-path outputs/surrogate/math500-uniform8-route-surrogate-next.json \
+  --surrogate-model-path outputs/surrogate/math500-uniform8-route-surrogate-next-model.json \
+  --contract-path configs/experiment_contract_27b_9b_math500.json \
+  --group-value-prior-path outputs/surrogate/<new-prior>.json \
+  --sensitivity-profile-path outputs/sensitivity/math500-27b-task-sensitivity-v2-limit-32.json \
+  --output-name math500-uniform8-route-search-next \
+  --export-dir outputs/policies/math500-uniform8-route-next</code></pre>
+      </section>
+
+      <section class="card">
+        <div class="label">System Boundary</div>
+        <h2>这个搜索系统的角色边界</h2>
+        <div class="callout good">
+          <strong>它不是在训练模型权重本身，而是在预算约束下搜索“哪些 layer groups 应该分配 4 / 8 / 16-bit”。</strong>
+        </div>
+        <div class="two-col">
+          <div>
+            <h3>系统负责的部分</h3>
+            <ul>
+              <li>生成 candidate policy</li>
+              <li>用 surrogate 快速估分</li>
+              <li>在预算约束下搜更好的 precision allocation</li>
+              <li>只挑少量 candidate 去做昂贵的真实 PTQ</li>
+            </ul>
+          </div>
+          <div>
+            <h3>系统不直接负责的部分</h3>
+            <ul>
+              <li>不直接训练 Qwen3.5-27B 权重</li>
+              <li>不直接产生最终结论</li>
+              <li>不替代真实 benchmark</li>
+              <li>不靠单轮 search 就结束</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">
+      文件建议：把这页和 <code>README.md</code> 配合使用。
+      <code>README.md</code> 负责“当前路线怎么续跑”，这页负责“进化算法自己到底在做什么”。
+    </div>
+  </div>
+</body>
+</html>
