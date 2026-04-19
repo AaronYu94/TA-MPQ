@@ -1,0 +1,1756 @@
+{
+  "groups": {
+    "block:0:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.8425,
+      "demotion_cost_4_to_2": 0.8425,
+      "param_count": 131072,
+      "risk_4": 0.8425,
+      "score": 0.8425
+    },
+    "block:0:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5210085141539608,
+      "demotion_cost_4_to_2": 0.5210085141539608,
+      "param_count": 131072,
+      "risk_4": 0.5210085141539608,
+      "score": 0.5210085141539608
+    },
+    "block:0:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.7078914075914962,
+      "demotion_cost_4_to_2": 0.7078914075914962,
+      "param_count": 33554432,
+      "risk_4": 0.7078914075914962,
+      "score": 0.7078914075914962
+    },
+    "block:0:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6807342112291759,
+      "demotion_cost_4_to_2": 0.6807342112291759,
+      "param_count": 16777216,
+      "risk_4": 0.6807342112291759,
+      "score": 0.6807342112291759
+    },
+    "block:0:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.42758170830553327,
+      "demotion_cost_4_to_2": 0.42758170830553327,
+      "param_count": 16777216,
+      "risk_4": 0.42758170830553327,
+      "score": 0.42758170830553327
+    },
+    "block:0:mlp.down_proj": {
+      "benefit_8_over_4": 0.44999999999999996,
+      "demotion_cost_4_to_2": 0.44999999999999996,
+      "param_count": 50331648,
+      "risk_4": 0.44999999999999996,
+      "score": 0.44999999999999996
+    },
+    "block:0:mlp.gate_proj": {
+      "benefit_8_over_4": 0.38219366745657907,
+      "demotion_cost_4_to_2": 0.38219366745657907,
+      "param_count": 50331648,
+      "risk_4": 0.38219366745657907,
+      "score": 0.38219366745657907
+    },
+    "block:0:mlp.up_proj": {
+      "benefit_8_over_4": 0.40306536181270847,
+      "demotion_cost_4_to_2": 0.40306536181270847,
+      "param_count": 50331648,
+      "risk_4": 0.40306536181270847,
+      "score": 0.40306536181270847
+    },
+    "block:10:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5069683790913886,
+      "demotion_cost_4_to_2": 0.5069683790913886,
+      "param_count": 131072,
+      "risk_4": 0.5069683790913886,
+      "score": 0.5069683790913886
+    },
+    "block:10:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4888946764568785,
+      "demotion_cost_4_to_2": 0.4888946764568785,
+      "param_count": 131072,
+      "risk_4": 0.4888946764568785,
+      "score": 0.4888946764568785
+    },
+    "block:10:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5451709496623476,
+      "demotion_cost_4_to_2": 0.5451709496623476,
+      "param_count": 33554432,
+      "risk_4": 0.5451709496623476,
+      "score": 0.5451709496623476
+    },
+    "block:10:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5189609011310776,
+      "demotion_cost_4_to_2": 0.5189609011310776,
+      "param_count": 16777216,
+      "risk_4": 0.5189609011310776,
+      "score": 0.5189609011310776
+    },
+    "block:10:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.43634114771068955,
+      "demotion_cost_4_to_2": 0.43634114771068955,
+      "param_count": 16777216,
+      "risk_4": 0.43634114771068955,
+      "score": 0.43634114771068955
+    },
+    "block:10:mlp.down_proj": {
+      "benefit_8_over_4": 0.4659867837099498,
+      "demotion_cost_4_to_2": 0.4659867837099498,
+      "param_count": 50331648,
+      "risk_4": 0.4659867837099498,
+      "score": 0.4659867837099498
+    },
+    "block:10:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4610334749376398,
+      "demotion_cost_4_to_2": 0.4610334749376398,
+      "param_count": 50331648,
+      "risk_4": 0.4610334749376398,
+      "score": 0.4610334749376398
+    },
+    "block:10:mlp.up_proj": {
+      "benefit_8_over_4": 0.4689820422662865,
+      "demotion_cost_4_to_2": 0.4689820422662865,
+      "param_count": 50331648,
+      "risk_4": 0.4689820422662865,
+      "score": 0.4689820422662865
+    },
+    "block:11:mlp.down_proj": {
+      "benefit_8_over_4": 0.46578333642394426,
+      "demotion_cost_4_to_2": 0.46578333642394426,
+      "param_count": 50331648,
+      "risk_4": 0.46578333642394426,
+      "score": 0.46578333642394426
+    },
+    "block:11:mlp.gate_proj": {
+      "benefit_8_over_4": 0.46544473780300155,
+      "demotion_cost_4_to_2": 0.46544473780300155,
+      "param_count": 50331648,
+      "risk_4": 0.46544473780300155,
+      "score": 0.46544473780300155
+    },
+    "block:11:mlp.up_proj": {
+      "benefit_8_over_4": 0.47077015813607354,
+      "demotion_cost_4_to_2": 0.47077015813607354,
+      "param_count": 50331648,
+      "risk_4": 0.47077015813607354,
+      "score": 0.47077015813607354
+    },
+    "block:11:self_attn.k_proj": {
+      "benefit_8_over_4": 0.36117163872373304,
+      "demotion_cost_4_to_2": 0.36117163872373304,
+      "param_count": 4194304,
+      "risk_4": 0.36117163872373304,
+      "score": 0.36117163872373304
+    },
+    "block:11:self_attn.o_proj": {
+      "benefit_8_over_4": 0.24016771112735524,
+      "demotion_cost_4_to_2": 0.24016771112735524,
+      "param_count": 16777216,
+      "risk_4": 0.24016771112735524,
+      "score": 0.24016771112735524
+    },
+    "block:11:self_attn.q_proj": {
+      "benefit_8_over_4": 0.42596023432524843,
+      "demotion_cost_4_to_2": 0.42596023432524843,
+      "param_count": 33554432,
+      "risk_4": 0.42596023432524843,
+      "score": 0.42596023432524843
+    },
+    "block:11:self_attn.v_proj": {
+      "benefit_8_over_4": 0.34727311337449596,
+      "demotion_cost_4_to_2": 0.34727311337449596,
+      "param_count": 4194304,
+      "risk_4": 0.34727311337449596,
+      "score": 0.34727311337449596
+    },
+    "block:12:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5155071626182586,
+      "demotion_cost_4_to_2": 0.5155071626182586,
+      "param_count": 131072,
+      "risk_4": 0.5155071626182586,
+      "score": 0.5155071626182586
+    },
+    "block:12:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4952441990965816,
+      "demotion_cost_4_to_2": 0.4952441990965816,
+      "param_count": 131072,
+      "risk_4": 0.4952441990965816,
+      "score": 0.4952441990965816
+    },
+    "block:12:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5504800611839206,
+      "demotion_cost_4_to_2": 0.5504800611839206,
+      "param_count": 33554432,
+      "risk_4": 0.5504800611839206,
+      "score": 0.5504800611839206
+    },
+    "block:12:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5126788913184336,
+      "demotion_cost_4_to_2": 0.5126788913184336,
+      "param_count": 16777216,
+      "risk_4": 0.5126788913184336,
+      "score": 0.5126788913184336
+    },
+    "block:12:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.43734410732290574,
+      "demotion_cost_4_to_2": 0.43734410732290574,
+      "param_count": 16777216,
+      "risk_4": 0.43734410732290574,
+      "score": 0.43734410732290574
+    },
+    "block:12:mlp.down_proj": {
+      "benefit_8_over_4": 0.4664448290525234,
+      "demotion_cost_4_to_2": 0.4664448290525234,
+      "param_count": 50331648,
+      "risk_4": 0.4664448290525234,
+      "score": 0.4664448290525234
+    },
+    "block:12:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4664445333813765,
+      "demotion_cost_4_to_2": 0.4664445333813765,
+      "param_count": 50331648,
+      "risk_4": 0.4664445333813765,
+      "score": 0.4664445333813765
+    },
+    "block:12:mlp.up_proj": {
+      "benefit_8_over_4": 0.47371540041708055,
+      "demotion_cost_4_to_2": 0.47371540041708055,
+      "param_count": 50331648,
+      "risk_4": 0.47371540041708055,
+      "score": 0.47371540041708055
+    },
+    "block:13:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.49806924606606584,
+      "demotion_cost_4_to_2": 0.49806924606606584,
+      "param_count": 131072,
+      "risk_4": 0.49806924606606584,
+      "score": 0.49806924606606584
+    },
+    "block:13:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4913477493743238,
+      "demotion_cost_4_to_2": 0.4913477493743238,
+      "param_count": 131072,
+      "risk_4": 0.4913477493743238,
+      "score": 0.4913477493743238
+    },
+    "block:13:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.552413731009435,
+      "demotion_cost_4_to_2": 0.552413731009435,
+      "param_count": 33554432,
+      "risk_4": 0.552413731009435,
+      "score": 0.552413731009435
+    },
+    "block:13:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5579919440926312,
+      "demotion_cost_4_to_2": 0.5579919440926312,
+      "param_count": 16777216,
+      "risk_4": 0.5579919440926312,
+      "score": 0.5579919440926312
+    },
+    "block:13:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4367973087163286,
+      "demotion_cost_4_to_2": 0.4367973087163286,
+      "param_count": 16777216,
+      "risk_4": 0.4367973087163286,
+      "score": 0.4367973087163286
+    },
+    "block:13:mlp.down_proj": {
+      "benefit_8_over_4": 0.4668555815080797,
+      "demotion_cost_4_to_2": 0.4668555815080797,
+      "param_count": 50331648,
+      "risk_4": 0.4668555815080797,
+      "score": 0.4668555815080797
+    },
+    "block:13:mlp.gate_proj": {
+      "benefit_8_over_4": 0.46694039183801683,
+      "demotion_cost_4_to_2": 0.46694039183801683,
+      "param_count": 50331648,
+      "risk_4": 0.46694039183801683,
+      "score": 0.46694039183801683
+    },
+    "block:13:mlp.up_proj": {
+      "benefit_8_over_4": 0.4753987763279288,
+      "demotion_cost_4_to_2": 0.4753987763279288,
+      "param_count": 50331648,
+      "risk_4": 0.4753987763279288,
+      "score": 0.4753987763279288
+    },
+    "block:14:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5021076755976702,
+      "demotion_cost_4_to_2": 0.5021076755976702,
+      "param_count": 131072,
+      "risk_4": 0.5021076755976702,
+      "score": 0.5021076755976702
+    },
+    "block:14:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.47351616773913385,
+      "demotion_cost_4_to_2": 0.47351616773913385,
+      "param_count": 131072,
+      "risk_4": 0.47351616773913385,
+      "score": 0.47351616773913385
+    },
+    "block:14:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5546520645376567,
+      "demotion_cost_4_to_2": 0.5546520645376567,
+      "param_count": 33554432,
+      "risk_4": 0.5546520645376567,
+      "score": 0.5546520645376567
+    },
+    "block:14:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5325063071051539,
+      "demotion_cost_4_to_2": 0.5325063071051539,
+      "param_count": 16777216,
+      "risk_4": 0.5325063071051539,
+      "score": 0.5325063071051539
+    },
+    "block:14:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.44012442188022005,
+      "demotion_cost_4_to_2": 0.44012442188022005,
+      "param_count": 16777216,
+      "risk_4": 0.44012442188022005,
+      "score": 0.44012442188022005
+    },
+    "block:14:mlp.down_proj": {
+      "benefit_8_over_4": 0.4683906080866963,
+      "demotion_cost_4_to_2": 0.4683906080866963,
+      "param_count": 50331648,
+      "risk_4": 0.4683906080866963,
+      "score": 0.4683906080866963
+    },
+    "block:14:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4658512555586197,
+      "demotion_cost_4_to_2": 0.4658512555586197,
+      "param_count": 50331648,
+      "risk_4": 0.4658512555586197,
+      "score": 0.4658512555586197
+    },
+    "block:14:mlp.up_proj": {
+      "benefit_8_over_4": 0.47729616427217425,
+      "demotion_cost_4_to_2": 0.47729616427217425,
+      "param_count": 50331648,
+      "risk_4": 0.47729616427217425,
+      "score": 0.47729616427217425
+    },
+    "block:15:mlp.down_proj": {
+      "benefit_8_over_4": 0.4686275457470188,
+      "demotion_cost_4_to_2": 0.4686275457470188,
+      "param_count": 50331648,
+      "risk_4": 0.4686275457470188,
+      "score": 0.4686275457470188
+    },
+    "block:15:mlp.gate_proj": {
+      "benefit_8_over_4": 0.470297649878384,
+      "demotion_cost_4_to_2": 0.470297649878384,
+      "param_count": 50331648,
+      "risk_4": 0.470297649878384,
+      "score": 0.470297649878384
+    },
+    "block:15:mlp.up_proj": {
+      "benefit_8_over_4": 0.48022170627300176,
+      "demotion_cost_4_to_2": 0.48022170627300176,
+      "param_count": 50331648,
+      "risk_4": 0.48022170627300176,
+      "score": 0.48022170627300176
+    },
+    "block:15:self_attn.k_proj": {
+      "benefit_8_over_4": 0.3795256854964978,
+      "demotion_cost_4_to_2": 0.3795256854964978,
+      "param_count": 4194304,
+      "risk_4": 0.3795256854964978,
+      "score": 0.3795256854964978
+    },
+    "block:15:self_attn.o_proj": {
+      "benefit_8_over_4": 0.24076156491345846,
+      "demotion_cost_4_to_2": 0.24076156491345846,
+      "param_count": 16777216,
+      "risk_4": 0.24076156491345846,
+      "score": 0.24076156491345846
+    },
+    "block:15:self_attn.q_proj": {
+      "benefit_8_over_4": 0.4371800622275025,
+      "demotion_cost_4_to_2": 0.4371800622275025,
+      "param_count": 33554432,
+      "risk_4": 0.4371800622275025,
+      "score": 0.4371800622275025
+    },
+    "block:15:self_attn.v_proj": {
+      "benefit_8_over_4": 0.3670441121700885,
+      "demotion_cost_4_to_2": 0.3670441121700885,
+      "param_count": 4194304,
+      "risk_4": 0.3670441121700885,
+      "score": 0.3670441121700885
+    },
+    "block:16:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5305315279993407,
+      "demotion_cost_4_to_2": 0.5305315279993407,
+      "param_count": 131072,
+      "risk_4": 0.5305315279993407,
+      "score": 0.5305315279993407
+    },
+    "block:16:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.502189939698793,
+      "demotion_cost_4_to_2": 0.502189939698793,
+      "param_count": 131072,
+      "risk_4": 0.502189939698793,
+      "score": 0.502189939698793
+    },
+    "block:16:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5585157719690254,
+      "demotion_cost_4_to_2": 0.5585157719690254,
+      "param_count": 33554432,
+      "risk_4": 0.5585157719690254,
+      "score": 0.5585157719690254
+    },
+    "block:16:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.537995166945302,
+      "demotion_cost_4_to_2": 0.537995166945302,
+      "param_count": 16777216,
+      "risk_4": 0.537995166945302,
+      "score": 0.537995166945302
+    },
+    "block:16:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4393189240466838,
+      "demotion_cost_4_to_2": 0.4393189240466838,
+      "param_count": 16777216,
+      "risk_4": 0.4393189240466838,
+      "score": 0.4393189240466838
+    },
+    "block:16:mlp.down_proj": {
+      "benefit_8_over_4": 0.4712034081046215,
+      "demotion_cost_4_to_2": 0.4712034081046215,
+      "param_count": 50331648,
+      "risk_4": 0.4712034081046215,
+      "score": 0.4712034081046215
+    },
+    "block:16:mlp.gate_proj": {
+      "benefit_8_over_4": 0.47725017953493015,
+      "demotion_cost_4_to_2": 0.47725017953493015,
+      "param_count": 50331648,
+      "risk_4": 0.47725017953493015,
+      "score": 0.47725017953493015
+    },
+    "block:16:mlp.up_proj": {
+      "benefit_8_over_4": 0.48577641545271655,
+      "demotion_cost_4_to_2": 0.48577641545271655,
+      "param_count": 50331648,
+      "risk_4": 0.48577641545271655,
+      "score": 0.48577641545271655
+    },
+    "block:17:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5259494610603285,
+      "demotion_cost_4_to_2": 0.5259494610603285,
+      "param_count": 131072,
+      "risk_4": 0.5259494610603285,
+      "score": 0.5259494610603285
+    },
+    "block:17:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4998110760334611,
+      "demotion_cost_4_to_2": 0.4998110760334611,
+      "param_count": 131072,
+      "risk_4": 0.4998110760334611,
+      "score": 0.4998110760334611
+    },
+    "block:17:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5765696763558523,
+      "demotion_cost_4_to_2": 0.5765696763558523,
+      "param_count": 33554432,
+      "risk_4": 0.5765696763558523,
+      "score": 0.5765696763558523
+    },
+    "block:17:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.582640276457422,
+      "demotion_cost_4_to_2": 0.582640276457422,
+      "param_count": 16777216,
+      "risk_4": 0.582640276457422,
+      "score": 0.582640276457422
+    },
+    "block:17:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.44002346637332457,
+      "demotion_cost_4_to_2": 0.44002346637332457,
+      "param_count": 16777216,
+      "risk_4": 0.44002346637332457,
+      "score": 0.44002346637332457
+    },
+    "block:17:mlp.down_proj": {
+      "benefit_8_over_4": 0.47399466185599454,
+      "demotion_cost_4_to_2": 0.47399466185599454,
+      "param_count": 50331648,
+      "risk_4": 0.47399466185599454,
+      "score": 0.47399466185599454
+    },
+    "block:17:mlp.gate_proj": {
+      "benefit_8_over_4": 0.48006966148958635,
+      "demotion_cost_4_to_2": 0.48006966148958635,
+      "param_count": 50331648,
+      "risk_4": 0.48006966148958635,
+      "score": 0.48006966148958635
+    },
+    "block:17:mlp.up_proj": {
+      "benefit_8_over_4": 0.4902067448316006,
+      "demotion_cost_4_to_2": 0.4902067448316006,
+      "param_count": 50331648,
+      "risk_4": 0.4902067448316006,
+      "score": 0.4902067448316006
+    },
+    "block:18:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5448495255250418,
+      "demotion_cost_4_to_2": 0.5448495255250418,
+      "param_count": 131072,
+      "risk_4": 0.5448495255250418,
+      "score": 0.5448495255250418
+    },
+    "block:18:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4933971074117874,
+      "demotion_cost_4_to_2": 0.4933971074117874,
+      "param_count": 131072,
+      "risk_4": 0.4933971074117874,
+      "score": 0.4933971074117874
+    },
+    "block:18:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5809179769875362,
+      "demotion_cost_4_to_2": 0.5809179769875362,
+      "param_count": 33554432,
+      "risk_4": 0.5809179769875362,
+      "score": 0.5809179769875362
+    },
+    "block:18:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5597870313956472,
+      "demotion_cost_4_to_2": 0.5597870313956472,
+      "param_count": 16777216,
+      "risk_4": 0.5597870313956472,
+      "score": 0.5597870313956472
+    },
+    "block:18:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4464083675488366,
+      "demotion_cost_4_to_2": 0.4464083675488366,
+      "param_count": 16777216,
+      "risk_4": 0.4464083675488366,
+      "score": 0.4464083675488366
+    },
+    "block:18:mlp.down_proj": {
+      "benefit_8_over_4": 0.48379235709495183,
+      "demotion_cost_4_to_2": 0.48379235709495183,
+      "param_count": 50331648,
+      "risk_4": 0.48379235709495183,
+      "score": 0.48379235709495183
+    },
+    "block:18:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4944416650054292,
+      "demotion_cost_4_to_2": 0.4944416650054292,
+      "param_count": 50331648,
+      "risk_4": 0.4944416650054292,
+      "score": 0.4944416650054292
+    },
+    "block:18:mlp.up_proj": {
+      "benefit_8_over_4": 0.5013444069625117,
+      "demotion_cost_4_to_2": 0.5013444069625117,
+      "param_count": 50331648,
+      "risk_4": 0.5013444069625117,
+      "score": 0.5013444069625117
+    },
+    "block:19:mlp.down_proj": {
+      "benefit_8_over_4": 0.4895424256266505,
+      "demotion_cost_4_to_2": 0.4895424256266505,
+      "param_count": 50331648,
+      "risk_4": 0.4895424256266505,
+      "score": 0.4895424256266505
+    },
+    "block:19:mlp.gate_proj": {
+      "benefit_8_over_4": 0.5123581797717087,
+      "demotion_cost_4_to_2": 0.5123581797717087,
+      "param_count": 50331648,
+      "risk_4": 0.5123581797717087,
+      "score": 0.5123581797717087
+    },
+    "block:19:mlp.up_proj": {
+      "benefit_8_over_4": 0.5109855022040478,
+      "demotion_cost_4_to_2": 0.5109855022040478,
+      "param_count": 50331648,
+      "risk_4": 0.5109855022040478,
+      "score": 0.5109855022040478
+    },
+    "block:19:self_attn.k_proj": {
+      "benefit_8_over_4": 0.4298484064454341,
+      "demotion_cost_4_to_2": 0.4298484064454341,
+      "param_count": 4194304,
+      "risk_4": 0.4298484064454341,
+      "score": 0.4298484064454341
+    },
+    "block:19:self_attn.o_proj": {
+      "benefit_8_over_4": 0.25194489423952054,
+      "demotion_cost_4_to_2": 0.25194489423952054,
+      "param_count": 16777216,
+      "risk_4": 0.25194489423952054,
+      "score": 0.25194489423952054
+    },
+    "block:19:self_attn.q_proj": {
+      "benefit_8_over_4": 0.4603192785951673,
+      "demotion_cost_4_to_2": 0.4603192785951673,
+      "param_count": 33554432,
+      "risk_4": 0.4603192785951673,
+      "score": 0.4603192785951673
+    },
+    "block:19:self_attn.v_proj": {
+      "benefit_8_over_4": 0.4174863911231411,
+      "demotion_cost_4_to_2": 0.4174863911231411,
+      "param_count": 4194304,
+      "risk_4": 0.4174863911231411,
+      "score": 0.4174863911231411
+    },
+    "block:1:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.4379320961346894,
+      "demotion_cost_4_to_2": 0.4379320961346894,
+      "param_count": 131072,
+      "risk_4": 0.4379320961346894,
+      "score": 0.4379320961346894
+    },
+    "block:1:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.41707193628372596,
+      "demotion_cost_4_to_2": 0.41707193628372596,
+      "param_count": 131072,
+      "risk_4": 0.41707193628372596,
+      "score": 0.41707193628372596
+    },
+    "block:1:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.45911505258528895,
+      "demotion_cost_4_to_2": 0.45911505258528895,
+      "param_count": 33554432,
+      "risk_4": 0.45911505258528895,
+      "score": 0.45911505258528895
+    },
+    "block:1:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.3979447925143518,
+      "demotion_cost_4_to_2": 0.3979447925143518,
+      "param_count": 16777216,
+      "risk_4": 0.3979447925143518,
+      "score": 0.3979447925143518
+    },
+    "block:1:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4278821412378475,
+      "demotion_cost_4_to_2": 0.4278821412378475,
+      "param_count": 16777216,
+      "risk_4": 0.4278821412378475,
+      "score": 0.4278821412378475
+    },
+    "block:1:mlp.down_proj": {
+      "benefit_8_over_4": 0.4511120731062763,
+      "demotion_cost_4_to_2": 0.4511120731062763,
+      "param_count": 50331648,
+      "risk_4": 0.4511120731062763,
+      "score": 0.4511120731062763
+    },
+    "block:1:mlp.gate_proj": {
+      "benefit_8_over_4": 0.39393103206675173,
+      "demotion_cost_4_to_2": 0.39393103206675173,
+      "param_count": 50331648,
+      "risk_4": 0.39393103206675173,
+      "score": 0.39393103206675173
+    },
+    "block:1:mlp.up_proj": {
+      "benefit_8_over_4": 0.4138615243837524,
+      "demotion_cost_4_to_2": 0.4138615243837524,
+      "param_count": 50331648,
+      "risk_4": 0.4138615243837524,
+      "score": 0.4138615243837524
+    },
+    "block:20:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.6134781932131329,
+      "demotion_cost_4_to_2": 0.6134781932131329,
+      "param_count": 131072,
+      "risk_4": 0.6134781932131329,
+      "score": 0.6134781932131329
+    },
+    "block:20:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5168957021102936,
+      "demotion_cost_4_to_2": 0.5168957021102936,
+      "param_count": 131072,
+      "risk_4": 0.5168957021102936,
+      "score": 0.5168957021102936
+    },
+    "block:20:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.6574358641734774,
+      "demotion_cost_4_to_2": 0.6574358641734774,
+      "param_count": 33554432,
+      "risk_4": 0.6574358641734774,
+      "score": 0.6574358641734774
+    },
+    "block:20:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6061735754597628,
+      "demotion_cost_4_to_2": 0.6061735754597628,
+      "param_count": 16777216,
+      "risk_4": 0.6061735754597628,
+      "score": 0.6061735754597628
+    },
+    "block:20:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4494057397770908,
+      "demotion_cost_4_to_2": 0.4494057397770908,
+      "param_count": 16777216,
+      "risk_4": 0.4494057397770908,
+      "score": 0.4494057397770908
+    },
+    "block:20:mlp.down_proj": {
+      "benefit_8_over_4": 0.491501860730471,
+      "demotion_cost_4_to_2": 0.491501860730471,
+      "param_count": 50331648,
+      "risk_4": 0.491501860730471,
+      "score": 0.491501860730471
+    },
+    "block:20:mlp.gate_proj": {
+      "benefit_8_over_4": 0.5320161528472345,
+      "demotion_cost_4_to_2": 0.5320161528472345,
+      "param_count": 50331648,
+      "risk_4": 0.5320161528472345,
+      "score": 0.5320161528472345
+    },
+    "block:20:mlp.up_proj": {
+      "benefit_8_over_4": 0.521155526475123,
+      "demotion_cost_4_to_2": 0.521155526475123,
+      "param_count": 50331648,
+      "risk_4": 0.521155526475123,
+      "score": 0.521155526475123
+    },
+    "block:21:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.6416601569674353,
+      "demotion_cost_4_to_2": 0.6416601569674353,
+      "param_count": 131072,
+      "risk_4": 0.6416601569674353,
+      "score": 0.6416601569674353
+    },
+    "block:21:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5256429600714009,
+      "demotion_cost_4_to_2": 0.5256429600714009,
+      "param_count": 131072,
+      "risk_4": 0.5256429600714009,
+      "score": 0.5256429600714009
+    },
+    "block:21:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.6637910271204545,
+      "demotion_cost_4_to_2": 0.6637910271204545,
+      "param_count": 33554432,
+      "risk_4": 0.6637910271204545,
+      "score": 0.6637910271204545
+    },
+    "block:21:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6105289835889296,
+      "demotion_cost_4_to_2": 0.6105289835889296,
+      "param_count": 16777216,
+      "risk_4": 0.6105289835889296,
+      "score": 0.6105289835889296
+    },
+    "block:21:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.45301972166801796,
+      "demotion_cost_4_to_2": 0.45301972166801796,
+      "param_count": 16777216,
+      "risk_4": 0.45301972166801796,
+      "score": 0.45301972166801796
+    },
+    "block:21:mlp.down_proj": {
+      "benefit_8_over_4": 0.4957128489526722,
+      "demotion_cost_4_to_2": 0.4957128489526722,
+      "param_count": 50331648,
+      "risk_4": 0.4957128489526722,
+      "score": 0.4957128489526722
+    },
+    "block:21:mlp.gate_proj": {
+      "benefit_8_over_4": 0.5359602073004215,
+      "demotion_cost_4_to_2": 0.5359602073004215,
+      "param_count": 50331648,
+      "risk_4": 0.5359602073004215,
+      "score": 0.5359602073004215
+    },
+    "block:21:mlp.up_proj": {
+      "benefit_8_over_4": 0.52678879824316,
+      "demotion_cost_4_to_2": 0.52678879824316,
+      "param_count": 50331648,
+      "risk_4": 0.52678879824316,
+      "score": 0.52678879824316
+    },
+    "block:22:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.631742359587332,
+      "demotion_cost_4_to_2": 0.631742359587332,
+      "param_count": 131072,
+      "risk_4": 0.631742359587332,
+      "score": 0.631742359587332
+    },
+    "block:22:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4924037308505699,
+      "demotion_cost_4_to_2": 0.4924037308505699,
+      "param_count": 131072,
+      "risk_4": 0.4924037308505699,
+      "score": 0.4924037308505699
+    },
+    "block:22:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.6431251798014594,
+      "demotion_cost_4_to_2": 0.6431251798014594,
+      "param_count": 33554432,
+      "risk_4": 0.6431251798014594,
+      "score": 0.6431251798014594
+    },
+    "block:22:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.628123023193738,
+      "demotion_cost_4_to_2": 0.628123023193738,
+      "param_count": 16777216,
+      "risk_4": 0.628123023193738,
+      "score": 0.628123023193738
+    },
+    "block:22:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.45235116161731825,
+      "demotion_cost_4_to_2": 0.45235116161731825,
+      "param_count": 16777216,
+      "risk_4": 0.45235116161731825,
+      "score": 0.45235116161731825
+    },
+    "block:22:mlp.down_proj": {
+      "benefit_8_over_4": 0.5082071453067055,
+      "demotion_cost_4_to_2": 0.5082071453067055,
+      "param_count": 50331648,
+      "risk_4": 0.5082071453067055,
+      "score": 0.5082071453067055
+    },
+    "block:22:mlp.gate_proj": {
+      "benefit_8_over_4": 0.5876039487338899,
+      "demotion_cost_4_to_2": 0.5876039487338899,
+      "param_count": 50331648,
+      "risk_4": 0.5876039487338899,
+      "score": 0.5876039487338899
+    },
+    "block:22:mlp.up_proj": {
+      "benefit_8_over_4": 0.5478153079843946,
+      "demotion_cost_4_to_2": 0.5478153079843946,
+      "param_count": 50331648,
+      "risk_4": 0.5478153079843946,
+      "score": 0.5478153079843946
+    },
+    "block:23:mlp.down_proj": {
+      "benefit_8_over_4": 0.5068988552289435,
+      "demotion_cost_4_to_2": 0.5068988552289435,
+      "param_count": 50331648,
+      "risk_4": 0.5068988552289435,
+      "score": 0.5068988552289435
+    },
+    "block:23:mlp.gate_proj": {
+      "benefit_8_over_4": 0.5778236995959776,
+      "demotion_cost_4_to_2": 0.5778236995959776,
+      "param_count": 50331648,
+      "risk_4": 0.5778236995959776,
+      "score": 0.5778236995959776
+    },
+    "block:23:mlp.up_proj": {
+      "benefit_8_over_4": 0.5429949882172581,
+      "demotion_cost_4_to_2": 0.5429949882172581,
+      "param_count": 50331648,
+      "risk_4": 0.5429949882172581,
+      "score": 0.5429949882172581
+    },
+    "block:23:self_attn.k_proj": {
+      "benefit_8_over_4": 0.4657346762167514,
+      "demotion_cost_4_to_2": 0.4657346762167514,
+      "param_count": 4194304,
+      "risk_4": 0.4657346762167514,
+      "score": 0.4657346762167514
+    },
+    "block:23:self_attn.o_proj": {
+      "benefit_8_over_4": 0.2594247445717329,
+      "demotion_cost_4_to_2": 0.2594247445717329,
+      "param_count": 16777216,
+      "risk_4": 0.2594247445717329,
+      "score": 0.2594247445717329
+    },
+    "block:23:self_attn.q_proj": {
+      "benefit_8_over_4": 0.4806752483348325,
+      "demotion_cost_4_to_2": 0.4806752483348325,
+      "param_count": 33554432,
+      "risk_4": 0.4806752483348325,
+      "score": 0.4806752483348325
+    },
+    "block:23:self_attn.v_proj": {
+      "benefit_8_over_4": 0.45003603470646436,
+      "demotion_cost_4_to_2": 0.45003603470646436,
+      "param_count": 4194304,
+      "risk_4": 0.45003603470646436,
+      "score": 0.45003603470646436
+    },
+    "block:24:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.6766537396452181,
+      "demotion_cost_4_to_2": 0.6766537396452181,
+      "param_count": 131072,
+      "risk_4": 0.6766537396452181,
+      "score": 0.6766537396452181
+    },
+    "block:24:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5314608304767087,
+      "demotion_cost_4_to_2": 0.5314608304767087,
+      "param_count": 131072,
+      "risk_4": 0.5314608304767087,
+      "score": 0.5314608304767087
+    },
+    "block:24:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.6792639680300072,
+      "demotion_cost_4_to_2": 0.6792639680300072,
+      "param_count": 33554432,
+      "risk_4": 0.6792639680300072,
+      "score": 0.6792639680300072
+    },
+    "block:24:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6167491184820661,
+      "demotion_cost_4_to_2": 0.6167491184820661,
+      "param_count": 16777216,
+      "risk_4": 0.6167491184820661,
+      "score": 0.6167491184820661
+    },
+    "block:24:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4618387436842098,
+      "demotion_cost_4_to_2": 0.4618387436842098,
+      "param_count": 16777216,
+      "risk_4": 0.4618387436842098,
+      "score": 0.4618387436842098
+    },
+    "block:24:mlp.down_proj": {
+      "benefit_8_over_4": 0.5058917706140943,
+      "demotion_cost_4_to_2": 0.5058917706140943,
+      "param_count": 50331648,
+      "risk_4": 0.5058917706140943,
+      "score": 0.5058917706140943
+    },
+    "block:24:mlp.gate_proj": {
+      "benefit_8_over_4": 0.5894933571215718,
+      "demotion_cost_4_to_2": 0.5894933571215718,
+      "param_count": 50331648,
+      "risk_4": 0.5894933571215718,
+      "score": 0.5894933571215718
+    },
+    "block:24:mlp.up_proj": {
+      "benefit_8_over_4": 0.5477812578448567,
+      "demotion_cost_4_to_2": 0.5477812578448567,
+      "param_count": 50331648,
+      "risk_4": 0.5477812578448567,
+      "score": 0.5477812578448567
+    },
+    "block:25:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.67169869850875,
+      "demotion_cost_4_to_2": 0.67169869850875,
+      "param_count": 131072,
+      "risk_4": 0.67169869850875,
+      "score": 0.67169869850875
+    },
+    "block:25:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5326241798477749,
+      "demotion_cost_4_to_2": 0.5326241798477749,
+      "param_count": 131072,
+      "risk_4": 0.5326241798477749,
+      "score": 0.5326241798477749
+    },
+    "block:25:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.697454381819245,
+      "demotion_cost_4_to_2": 0.697454381819245,
+      "param_count": 33554432,
+      "risk_4": 0.697454381819245,
+      "score": 0.697454381819245
+    },
+    "block:25:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.631073032523077,
+      "demotion_cost_4_to_2": 0.631073032523077,
+      "param_count": 16777216,
+      "risk_4": 0.631073032523077,
+      "score": 0.631073032523077
+    },
+    "block:25:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4600249180896879,
+      "demotion_cost_4_to_2": 0.4600249180896879,
+      "param_count": 16777216,
+      "risk_4": 0.4600249180896879,
+      "score": 0.4600249180896879
+    },
+    "block:25:mlp.down_proj": {
+      "benefit_8_over_4": 0.508617202052773,
+      "demotion_cost_4_to_2": 0.508617202052773,
+      "param_count": 50331648,
+      "risk_4": 0.508617202052773,
+      "score": 0.508617202052773
+    },
+    "block:25:mlp.gate_proj": {
+      "benefit_8_over_4": 0.612787564112903,
+      "demotion_cost_4_to_2": 0.612787564112903,
+      "param_count": 50331648,
+      "risk_4": 0.612787564112903,
+      "score": 0.612787564112903
+    },
+    "block:25:mlp.up_proj": {
+      "benefit_8_over_4": 0.5567856090937707,
+      "demotion_cost_4_to_2": 0.5567856090937707,
+      "param_count": 50331648,
+      "risk_4": 0.5567856090937707,
+      "score": 0.5567856090937707
+    },
+    "block:26:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.6757329949986518,
+      "demotion_cost_4_to_2": 0.6757329949986518,
+      "param_count": 131072,
+      "risk_4": 0.6757329949986518,
+      "score": 0.6757329949986518
+    },
+    "block:26:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5657908160294558,
+      "demotion_cost_4_to_2": 0.5657908160294558,
+      "param_count": 131072,
+      "risk_4": 0.5657908160294558,
+      "score": 0.5657908160294558
+    },
+    "block:26:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.670442342195143,
+      "demotion_cost_4_to_2": 0.670442342195143,
+      "param_count": 33554432,
+      "risk_4": 0.670442342195143,
+      "score": 0.670442342195143
+    },
+    "block:26:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6403876549057768,
+      "demotion_cost_4_to_2": 0.6403876549057768,
+      "param_count": 16777216,
+      "risk_4": 0.6403876549057768,
+      "score": 0.6403876549057768
+    },
+    "block:26:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.46107848262563506,
+      "demotion_cost_4_to_2": 0.46107848262563506,
+      "param_count": 16777216,
+      "risk_4": 0.46107848262563506,
+      "score": 0.46107848262563506
+    },
+    "block:26:mlp.down_proj": {
+      "benefit_8_over_4": 0.5184314538157219,
+      "demotion_cost_4_to_2": 0.5184314538157219,
+      "param_count": 50331648,
+      "risk_4": 0.5184314538157219,
+      "score": 0.5184314538157219
+    },
+    "block:26:mlp.gate_proj": {
+      "benefit_8_over_4": 0.6387525161115155,
+      "demotion_cost_4_to_2": 0.6387525161115155,
+      "param_count": 50331648,
+      "risk_4": 0.6387525161115155,
+      "score": 0.6387525161115155
+    },
+    "block:26:mlp.up_proj": {
+      "benefit_8_over_4": 0.569739086848907,
+      "demotion_cost_4_to_2": 0.569739086848907,
+      "param_count": 50331648,
+      "risk_4": 0.569739086848907,
+      "score": 0.569739086848907
+    },
+    "block:27:mlp.down_proj": {
+      "benefit_8_over_4": 0.5224385633718392,
+      "demotion_cost_4_to_2": 0.5224385633718392,
+      "param_count": 50331648,
+      "risk_4": 0.5224385633718392,
+      "score": 0.5224385633718392
+    },
+    "block:27:mlp.gate_proj": {
+      "benefit_8_over_4": 0.6540088883235418,
+      "demotion_cost_4_to_2": 0.6540088883235418,
+      "param_count": 50331648,
+      "risk_4": 0.6540088883235418,
+      "score": 0.6540088883235418
+    },
+    "block:27:mlp.up_proj": {
+      "benefit_8_over_4": 0.5773873478317493,
+      "demotion_cost_4_to_2": 0.5773873478317493,
+      "param_count": 50331648,
+      "risk_4": 0.5773873478317493,
+      "score": 0.5773873478317493
+    },
+    "block:27:self_attn.k_proj": {
+      "benefit_8_over_4": 0.48154697961348464,
+      "demotion_cost_4_to_2": 0.48154697961348464,
+      "param_count": 4194304,
+      "risk_4": 0.48154697961348464,
+      "score": 0.48154697961348464
+    },
+    "block:27:self_attn.o_proj": {
+      "benefit_8_over_4": 0.27741701905069827,
+      "demotion_cost_4_to_2": 0.27741701905069827,
+      "param_count": 16777216,
+      "risk_4": 0.27741701905069827,
+      "score": 0.27741701905069827
+    },
+    "block:27:self_attn.q_proj": {
+      "benefit_8_over_4": 0.4732325437239211,
+      "demotion_cost_4_to_2": 0.4732325437239211,
+      "param_count": 33554432,
+      "risk_4": 0.4732325437239211,
+      "score": 0.4732325437239211
+    },
+    "block:27:self_attn.v_proj": {
+      "benefit_8_over_4": 0.5247022049828668,
+      "demotion_cost_4_to_2": 0.5247022049828668,
+      "param_count": 4194304,
+      "risk_4": 0.5247022049828668,
+      "score": 0.5247022049828668
+    },
+    "block:28:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.7544005265363947,
+      "demotion_cost_4_to_2": 0.7544005265363947,
+      "param_count": 131072,
+      "risk_4": 0.7544005265363947,
+      "score": 0.7544005265363947
+    },
+    "block:28:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.523771537122349,
+      "demotion_cost_4_to_2": 0.523771537122349,
+      "param_count": 131072,
+      "risk_4": 0.523771537122349,
+      "score": 0.523771537122349
+    },
+    "block:28:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.7185369826693202,
+      "demotion_cost_4_to_2": 0.7185369826693202,
+      "param_count": 33554432,
+      "risk_4": 0.7185369826693202,
+      "score": 0.7185369826693202
+    },
+    "block:28:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6976509056999408,
+      "demotion_cost_4_to_2": 0.6976509056999408,
+      "param_count": 16777216,
+      "risk_4": 0.6976509056999408,
+      "score": 0.6976509056999408
+    },
+    "block:28:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.47587212802685186,
+      "demotion_cost_4_to_2": 0.47587212802685186,
+      "param_count": 16777216,
+      "risk_4": 0.47587212802685186,
+      "score": 0.47587212802685186
+    },
+    "block:28:mlp.down_proj": {
+      "benefit_8_over_4": 0.5299014929622092,
+      "demotion_cost_4_to_2": 0.5299014929622092,
+      "param_count": 50331648,
+      "risk_4": 0.5299014929622092,
+      "score": 0.5299014929622092
+    },
+    "block:28:mlp.gate_proj": {
+      "benefit_8_over_4": 0.6832245646111699,
+      "demotion_cost_4_to_2": 0.6832245646111699,
+      "param_count": 50331648,
+      "risk_4": 0.6832245646111699,
+      "score": 0.6832245646111699
+    },
+    "block:28:mlp.up_proj": {
+      "benefit_8_over_4": 0.5876698578853756,
+      "demotion_cost_4_to_2": 0.5876698578853756,
+      "param_count": 50331648,
+      "risk_4": 0.5876698578853756,
+      "score": 0.5876698578853756
+    },
+    "block:29:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.7353980481635596,
+      "demotion_cost_4_to_2": 0.7353980481635596,
+      "param_count": 131072,
+      "risk_4": 0.7353980481635596,
+      "score": 0.7353980481635596
+    },
+    "block:29:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5714510769941604,
+      "demotion_cost_4_to_2": 0.5714510769941604,
+      "param_count": 131072,
+      "risk_4": 0.5714510769941604,
+      "score": 0.5714510769941604
+    },
+    "block:29:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.6683882005512636,
+      "demotion_cost_4_to_2": 0.6683882005512636,
+      "param_count": 33554432,
+      "risk_4": 0.6683882005512636,
+      "score": 0.6683882005512636
+    },
+    "block:29:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6698523057407553,
+      "demotion_cost_4_to_2": 0.6698523057407553,
+      "param_count": 16777216,
+      "risk_4": 0.6698523057407553,
+      "score": 0.6698523057407553
+    },
+    "block:29:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.48040095970652946,
+      "demotion_cost_4_to_2": 0.48040095970652946,
+      "param_count": 16777216,
+      "risk_4": 0.48040095970652946,
+      "score": 0.48040095970652946
+    },
+    "block:29:mlp.down_proj": {
+      "benefit_8_over_4": 0.5431942624127184,
+      "demotion_cost_4_to_2": 0.5431942624127184,
+      "param_count": 50331648,
+      "risk_4": 0.5431942624127184,
+      "score": 0.5431942624127184
+    },
+    "block:29:mlp.gate_proj": {
+      "benefit_8_over_4": 0.7116506583534605,
+      "demotion_cost_4_to_2": 0.7116506583534605,
+      "param_count": 50331648,
+      "risk_4": 0.7116506583534605,
+      "score": 0.7116506583534605
+    },
+    "block:29:mlp.up_proj": {
+      "benefit_8_over_4": 0.6028587119909538,
+      "demotion_cost_4_to_2": 0.6028587119909538,
+      "param_count": 50331648,
+      "risk_4": 0.6028587119909538,
+      "score": 0.6028587119909538
+    },
+    "block:2:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.449733954241334,
+      "demotion_cost_4_to_2": 0.449733954241334,
+      "param_count": 131072,
+      "risk_4": 0.449733954241334,
+      "score": 0.449733954241334
+    },
+    "block:2:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.42358401839118887,
+      "demotion_cost_4_to_2": 0.42358401839118887,
+      "param_count": 131072,
+      "risk_4": 0.42358401839118887,
+      "score": 0.42358401839118887
+    },
+    "block:2:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.47830120066289566,
+      "demotion_cost_4_to_2": 0.47830120066289566,
+      "param_count": 33554432,
+      "risk_4": 0.47830120066289566,
+      "score": 0.47830120066289566
+    },
+    "block:2:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.4239473895564811,
+      "demotion_cost_4_to_2": 0.4239473895564811,
+      "param_count": 16777216,
+      "risk_4": 0.4239473895564811,
+      "score": 0.4239473895564811
+    },
+    "block:2:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.42854938541582693,
+      "demotion_cost_4_to_2": 0.42854938541582693,
+      "param_count": 16777216,
+      "risk_4": 0.42854938541582693,
+      "score": 0.42854938541582693
+    },
+    "block:2:mlp.down_proj": {
+      "benefit_8_over_4": 0.45247505798821674,
+      "demotion_cost_4_to_2": 0.45247505798821674,
+      "param_count": 50331648,
+      "risk_4": 0.45247505798821674,
+      "score": 0.45247505798821674
+    },
+    "block:2:mlp.gate_proj": {
+      "benefit_8_over_4": 0.40398823879366896,
+      "demotion_cost_4_to_2": 0.40398823879366896,
+      "param_count": 50331648,
+      "risk_4": 0.40398823879366896,
+      "score": 0.40398823879366896
+    },
+    "block:2:mlp.up_proj": {
+      "benefit_8_over_4": 0.42227499987193046,
+      "demotion_cost_4_to_2": 0.42227499987193046,
+      "param_count": 50331648,
+      "risk_4": 0.42227499987193046,
+      "score": 0.42227499987193046
+    },
+    "block:30:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.724196768434813,
+      "demotion_cost_4_to_2": 0.724196768434813,
+      "param_count": 131072,
+      "risk_4": 0.724196768434813,
+      "score": 0.724196768434813
+    },
+    "block:30:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.5732265009727202,
+      "demotion_cost_4_to_2": 0.5732265009727202,
+      "param_count": 131072,
+      "risk_4": 0.5732265009727202,
+      "score": 0.5732265009727202
+    },
+    "block:30:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.6921752615469263,
+      "demotion_cost_4_to_2": 0.6921752615469263,
+      "param_count": 33554432,
+      "risk_4": 0.6921752615469263,
+      "score": 0.6921752615469263
+    },
+    "block:30:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.6716812991999717,
+      "demotion_cost_4_to_2": 0.6716812991999717,
+      "param_count": 16777216,
+      "risk_4": 0.6716812991999717,
+      "score": 0.6716812991999717
+    },
+    "block:30:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.5151421876481352,
+      "demotion_cost_4_to_2": 0.5151421876481352,
+      "param_count": 16777216,
+      "risk_4": 0.5151421876481352,
+      "score": 0.5151421876481352
+    },
+    "block:30:mlp.down_proj": {
+      "benefit_8_over_4": 0.564044604580995,
+      "demotion_cost_4_to_2": 0.564044604580995,
+      "param_count": 50331648,
+      "risk_4": 0.564044604580995,
+      "score": 0.564044604580995
+    },
+    "block:30:mlp.gate_proj": {
+      "benefit_8_over_4": 0.6962488975265728,
+      "demotion_cost_4_to_2": 0.6962488975265728,
+      "param_count": 50331648,
+      "risk_4": 0.6962488975265728,
+      "score": 0.6962488975265728
+    },
+    "block:30:mlp.up_proj": {
+      "benefit_8_over_4": 0.6238823962991623,
+      "demotion_cost_4_to_2": 0.6238823962991623,
+      "param_count": 50331648,
+      "risk_4": 0.6238823962991623,
+      "score": 0.6238823962991623
+    },
+    "block:31:mlp.down_proj": {
+      "benefit_8_over_4": 0.6446801411707985,
+      "demotion_cost_4_to_2": 0.6446801411707985,
+      "param_count": 50331648,
+      "risk_4": 0.6446801411707985,
+      "score": 0.6446801411707985
+    },
+    "block:31:mlp.gate_proj": {
+      "benefit_8_over_4": 0.6976468504680746,
+      "demotion_cost_4_to_2": 0.6976468504680746,
+      "param_count": 50331648,
+      "risk_4": 0.6976468504680746,
+      "score": 0.6976468504680746
+    },
+    "block:31:mlp.up_proj": {
+      "benefit_8_over_4": 0.6583951509409051,
+      "demotion_cost_4_to_2": 0.6583951509409051,
+      "param_count": 50331648,
+      "risk_4": 0.6583951509409051,
+      "score": 0.6583951509409051
+    },
+    "block:31:self_attn.k_proj": {
+      "benefit_8_over_4": 0.472519975946028,
+      "demotion_cost_4_to_2": 0.472519975946028,
+      "param_count": 4194304,
+      "risk_4": 0.472519975946028,
+      "score": 0.472519975946028
+    },
+    "block:31:self_attn.o_proj": {
+      "benefit_8_over_4": 0.35969232535768925,
+      "demotion_cost_4_to_2": 0.35969232535768925,
+      "param_count": 16777216,
+      "risk_4": 0.35969232535768925,
+      "score": 0.35969232535768925
+    },
+    "block:31:self_attn.q_proj": {
+      "benefit_8_over_4": 0.5185601724113171,
+      "demotion_cost_4_to_2": 0.5185601724113171,
+      "param_count": 33554432,
+      "risk_4": 0.5185601724113171,
+      "score": 0.5185601724113171
+    },
+    "block:31:self_attn.v_proj": {
+      "benefit_8_over_4": 0.7387156417375855,
+      "demotion_cost_4_to_2": 0.7387156417375855,
+      "param_count": 4194304,
+      "risk_4": 0.7387156417375855,
+      "score": 0.7387156417375855
+    },
+    "block:3:mlp.down_proj": {
+      "benefit_8_over_4": 0.4539829486046502,
+      "demotion_cost_4_to_2": 0.4539829486046502,
+      "param_count": 50331648,
+      "risk_4": 0.4539829486046502,
+      "score": 0.4539829486046502
+    },
+    "block:3:mlp.gate_proj": {
+      "benefit_8_over_4": 0.41177428703104246,
+      "demotion_cost_4_to_2": 0.41177428703104246,
+      "param_count": 50331648,
+      "risk_4": 0.41177428703104246,
+      "score": 0.41177428703104246
+    },
+    "block:3:mlp.up_proj": {
+      "benefit_8_over_4": 0.4291481656128881,
+      "demotion_cost_4_to_2": 0.4291481656128881,
+      "param_count": 50331648,
+      "risk_4": 0.4291481656128881,
+      "score": 0.4291481656128881
+    },
+    "block:3:self_attn.k_proj": {
+      "benefit_8_over_4": 0.35357333323977647,
+      "demotion_cost_4_to_2": 0.35357333323977647,
+      "param_count": 4194304,
+      "risk_4": 0.35357333323977647,
+      "score": 0.35357333323977647
+    },
+    "block:3:self_attn.o_proj": {
+      "benefit_8_over_4": 0.22735972039069274,
+      "demotion_cost_4_to_2": 0.22735972039069274,
+      "param_count": 16777216,
+      "risk_4": 0.22735972039069274,
+      "score": 0.22735972039069274
+    },
+    "block:3:self_attn.q_proj": {
+      "benefit_8_over_4": 0.5553353453940597,
+      "demotion_cost_4_to_2": 0.5553353453940597,
+      "param_count": 33554432,
+      "risk_4": 0.5553353453940597,
+      "score": 0.5553353453940597
+    },
+    "block:3:self_attn.v_proj": {
+      "benefit_8_over_4": 0.33532101045497464,
+      "demotion_cost_4_to_2": 0.33532101045497464,
+      "param_count": 4194304,
+      "risk_4": 0.33532101045497464,
+      "score": 0.33532101045497464
+    },
+    "block:4:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.4911515092631069,
+      "demotion_cost_4_to_2": 0.4911515092631069,
+      "param_count": 131072,
+      "risk_4": 0.4911515092631069,
+      "score": 0.4911515092631069
+    },
+    "block:4:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.442906230242777,
+      "demotion_cost_4_to_2": 0.442906230242777,
+      "param_count": 131072,
+      "risk_4": 0.442906230242777,
+      "score": 0.442906230242777
+    },
+    "block:4:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5038441415788597,
+      "demotion_cost_4_to_2": 0.5038441415788597,
+      "param_count": 33554432,
+      "risk_4": 0.5038441415788597,
+      "score": 0.5038441415788597
+    },
+    "block:4:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.4459539422819651,
+      "demotion_cost_4_to_2": 0.4459539422819651,
+      "param_count": 16777216,
+      "risk_4": 0.4459539422819651,
+      "score": 0.4459539422819651
+    },
+    "block:4:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4301580590478675,
+      "demotion_cost_4_to_2": 0.4301580590478675,
+      "param_count": 16777216,
+      "risk_4": 0.4301580590478675,
+      "score": 0.4301580590478675
+    },
+    "block:4:mlp.down_proj": {
+      "benefit_8_over_4": 0.4555480876559924,
+      "demotion_cost_4_to_2": 0.4555480876559924,
+      "param_count": 50331648,
+      "risk_4": 0.4555480876559924,
+      "score": 0.4555480876559924
+    },
+    "block:4:mlp.gate_proj": {
+      "benefit_8_over_4": 0.422817931042227,
+      "demotion_cost_4_to_2": 0.422817931042227,
+      "param_count": 50331648,
+      "risk_4": 0.422817931042227,
+      "score": 0.422817931042227
+    },
+    "block:4:mlp.up_proj": {
+      "benefit_8_over_4": 0.4384593261562102,
+      "demotion_cost_4_to_2": 0.4384593261562102,
+      "param_count": 50331648,
+      "risk_4": 0.4384593261562102,
+      "score": 0.4384593261562102
+    },
+    "block:5:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.4986899822311982,
+      "demotion_cost_4_to_2": 0.4986899822311982,
+      "param_count": 131072,
+      "risk_4": 0.4986899822311982,
+      "score": 0.4986899822311982
+    },
+    "block:5:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4615534866037795,
+      "demotion_cost_4_to_2": 0.4615534866037795,
+      "param_count": 131072,
+      "risk_4": 0.4615534866037795,
+      "score": 0.4615534866037795
+    },
+    "block:5:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5196942912358238,
+      "demotion_cost_4_to_2": 0.5196942912358238,
+      "param_count": 33554432,
+      "risk_4": 0.5196942912358238,
+      "score": 0.5196942912358238
+    },
+    "block:5:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.4748761649295984,
+      "demotion_cost_4_to_2": 0.4748761649295984,
+      "param_count": 16777216,
+      "risk_4": 0.4748761649295984,
+      "score": 0.4748761649295984
+    },
+    "block:5:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4318318357920821,
+      "demotion_cost_4_to_2": 0.4318318357920821,
+      "param_count": 16777216,
+      "risk_4": 0.4318318357920821,
+      "score": 0.4318318357920821
+    },
+    "block:5:mlp.down_proj": {
+      "benefit_8_over_4": 0.45823825829523707,
+      "demotion_cost_4_to_2": 0.45823825829523707,
+      "param_count": 50331648,
+      "risk_4": 0.45823825829523707,
+      "score": 0.45823825829523707
+    },
+    "block:5:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4381098544200845,
+      "demotion_cost_4_to_2": 0.4381098544200845,
+      "param_count": 50331648,
+      "risk_4": 0.4381098544200845,
+      "score": 0.4381098544200845
+    },
+    "block:5:mlp.up_proj": {
+      "benefit_8_over_4": 0.44657016168748254,
+      "demotion_cost_4_to_2": 0.44657016168748254,
+      "param_count": 50331648,
+      "risk_4": 0.44657016168748254,
+      "score": 0.44657016168748254
+    },
+    "block:6:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5034645222562082,
+      "demotion_cost_4_to_2": 0.5034645222562082,
+      "param_count": 131072,
+      "risk_4": 0.5034645222562082,
+      "score": 0.5034645222562082
+    },
+    "block:6:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.48519564348851124,
+      "demotion_cost_4_to_2": 0.48519564348851124,
+      "param_count": 131072,
+      "risk_4": 0.48519564348851124,
+      "score": 0.48519564348851124
+    },
+    "block:6:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5248613058416024,
+      "demotion_cost_4_to_2": 0.5248613058416024,
+      "param_count": 33554432,
+      "risk_4": 0.5248613058416024,
+      "score": 0.5248613058416024
+    },
+    "block:6:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5022737955310759,
+      "demotion_cost_4_to_2": 0.5022737955310759,
+      "param_count": 16777216,
+      "risk_4": 0.5022737955310759,
+      "score": 0.5022737955310759
+    },
+    "block:6:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4347920248783659,
+      "demotion_cost_4_to_2": 0.4347920248783659,
+      "param_count": 16777216,
+      "risk_4": 0.4347920248783659,
+      "score": 0.4347920248783659
+    },
+    "block:6:mlp.down_proj": {
+      "benefit_8_over_4": 0.46181312091825255,
+      "demotion_cost_4_to_2": 0.46181312091825255,
+      "param_count": 50331648,
+      "risk_4": 0.46181312091825255,
+      "score": 0.46181312091825255
+    },
+    "block:6:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4498578316821051,
+      "demotion_cost_4_to_2": 0.4498578316821051,
+      "param_count": 50331648,
+      "risk_4": 0.4498578316821051,
+      "score": 0.4498578316821051
+    },
+    "block:6:mlp.up_proj": {
+      "benefit_8_over_4": 0.45527601124058953,
+      "demotion_cost_4_to_2": 0.45527601124058953,
+      "param_count": 50331648,
+      "risk_4": 0.45527601124058953,
+      "score": 0.45527601124058953
+    },
+    "block:7:mlp.down_proj": {
+      "benefit_8_over_4": 0.4624228964118117,
+      "demotion_cost_4_to_2": 0.4624228964118117,
+      "param_count": 50331648,
+      "risk_4": 0.4624228964118117,
+      "score": 0.4624228964118117
+    },
+    "block:7:mlp.gate_proj": {
+      "benefit_8_over_4": 0.461354676806463,
+      "demotion_cost_4_to_2": 0.461354676806463,
+      "param_count": 50331648,
+      "risk_4": 0.461354676806463,
+      "score": 0.461354676806463
+    },
+    "block:7:mlp.up_proj": {
+      "benefit_8_over_4": 0.45927372660385246,
+      "demotion_cost_4_to_2": 0.45927372660385246,
+      "param_count": 50331648,
+      "risk_4": 0.45927372660385246,
+      "score": 0.45927372660385246
+    },
+    "block:7:self_attn.k_proj": {
+      "benefit_8_over_4": 0.35883710152870785,
+      "demotion_cost_4_to_2": 0.35883710152870785,
+      "param_count": 4194304,
+      "risk_4": 0.35883710152870785,
+      "score": 0.35883710152870785
+    },
+    "block:7:self_attn.o_proj": {
+      "benefit_8_over_4": 0.2351528348053309,
+      "demotion_cost_4_to_2": 0.2351528348053309,
+      "param_count": 16777216,
+      "risk_4": 0.2351528348053309,
+      "score": 0.2351528348053309
+    },
+    "block:7:self_attn.q_proj": {
+      "benefit_8_over_4": 0.46241412048899877,
+      "demotion_cost_4_to_2": 0.46241412048899877,
+      "param_count": 33554432,
+      "risk_4": 0.46241412048899877,
+      "score": 0.46241412048899877
+    },
+    "block:7:self_attn.v_proj": {
+      "benefit_8_over_4": 0.3426078127877211,
+      "demotion_cost_4_to_2": 0.3426078127877211,
+      "param_count": 4194304,
+      "risk_4": 0.3426078127877211,
+      "score": 0.3426078127877211
+    },
+    "block:8:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5111364097048712,
+      "demotion_cost_4_to_2": 0.5111364097048712,
+      "param_count": 131072,
+      "risk_4": 0.5111364097048712,
+      "score": 0.5111364097048712
+    },
+    "block:8:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.46729368951717964,
+      "demotion_cost_4_to_2": 0.46729368951717964,
+      "param_count": 131072,
+      "risk_4": 0.46729368951717964,
+      "score": 0.46729368951717964
+    },
+    "block:8:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5442682706051358,
+      "demotion_cost_4_to_2": 0.5442682706051358,
+      "param_count": 33554432,
+      "risk_4": 0.5442682706051358,
+      "score": 0.5442682706051358
+    },
+    "block:8:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.4909675392307725,
+      "demotion_cost_4_to_2": 0.4909675392307725,
+      "param_count": 16777216,
+      "risk_4": 0.4909675392307725,
+      "score": 0.4909675392307725
+    },
+    "block:8:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.43505825576872104,
+      "demotion_cost_4_to_2": 0.43505825576872104,
+      "param_count": 16777216,
+      "risk_4": 0.43505825576872104,
+      "score": 0.43505825576872104
+    },
+    "block:8:mlp.down_proj": {
+      "benefit_8_over_4": 0.4632538384408112,
+      "demotion_cost_4_to_2": 0.4632538384408112,
+      "param_count": 50331648,
+      "risk_4": 0.4632538384408112,
+      "score": 0.4632538384408112
+    },
+    "block:8:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4637992633459968,
+      "demotion_cost_4_to_2": 0.4637992633459968,
+      "param_count": 50331648,
+      "risk_4": 0.4637992633459968,
+      "score": 0.4637992633459968
+    },
+    "block:8:mlp.up_proj": {
+      "benefit_8_over_4": 0.462307746491046,
+      "demotion_cost_4_to_2": 0.462307746491046,
+      "param_count": 50331648,
+      "risk_4": 0.462307746491046,
+      "score": 0.462307746491046
+    },
+    "block:9:linear_attn.in_proj_a": {
+      "benefit_8_over_4": 0.5190583894915278,
+      "demotion_cost_4_to_2": 0.5190583894915278,
+      "param_count": 131072,
+      "risk_4": 0.5190583894915278,
+      "score": 0.5190583894915278
+    },
+    "block:9:linear_attn.in_proj_b": {
+      "benefit_8_over_4": 0.4743296342404937,
+      "demotion_cost_4_to_2": 0.4743296342404937,
+      "param_count": 131072,
+      "risk_4": 0.4743296342404937,
+      "score": 0.4743296342404937
+    },
+    "block:9:linear_attn.in_proj_qkv": {
+      "benefit_8_over_4": 0.5515959970819242,
+      "demotion_cost_4_to_2": 0.5515959970819242,
+      "param_count": 33554432,
+      "risk_4": 0.5515959970819242,
+      "score": 0.5515959970819242
+    },
+    "block:9:linear_attn.in_proj_z": {
+      "benefit_8_over_4": 0.5197627450574632,
+      "demotion_cost_4_to_2": 0.5197627450574632,
+      "param_count": 16777216,
+      "risk_4": 0.5197627450574632,
+      "score": 0.5197627450574632
+    },
+    "block:9:linear_attn.out_proj": {
+      "benefit_8_over_4": 0.4355695101686615,
+      "demotion_cost_4_to_2": 0.4355695101686615,
+      "param_count": 16777216,
+      "risk_4": 0.4355695101686615,
+      "score": 0.4355695101686615
+    },
+    "block:9:mlp.down_proj": {
+      "benefit_8_over_4": 0.46388027808590676,
+      "demotion_cost_4_to_2": 0.46388027808590676,
+      "param_count": 50331648,
+      "risk_4": 0.46388027808590676,
+      "score": 0.46388027808590676
+    },
+    "block:9:mlp.gate_proj": {
+      "benefit_8_over_4": 0.4615667510641098,
+      "demotion_cost_4_to_2": 0.4615667510641098,
+      "param_count": 50331648,
+      "risk_4": 0.4615667510641098,
+      "score": 0.4615667510641098
+    },
+    "block:9:mlp.up_proj": {
+      "benefit_8_over_4": 0.4654265158105876,
+      "demotion_cost_4_to_2": 0.4654265158105876,
+      "param_count": 50331648,
+      "risk_4": 0.4654265158105876,
+      "score": 0.4654265158105876
+    },
+    "global::lm_head": {
+      "benefit_8_over_4": 0.7393500025659999,
+      "demotion_cost_4_to_2": 0.7393500025659999,
+      "param_count": 1017118720,
+      "risk_4": 0.7393500025659999,
+      "score": 0.7393500025659999
+    }
+  },
+  "metadata": {
+    "calibration_split": "first300",
+    "method": "bootstrap_from_existing_activation_profile",
+    "model_id": "Qwen/Qwen3.5-9B",
+    "num_calibration_prompts": 16,
+    "seed": 42,
+    "source_profile": "outputs/sensitivity/math500-qwen35-9b-task-sensitivity-v1-limit16.json",
+    "task": "math500"
+  }
+}

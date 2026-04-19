@@ -42,6 +42,8 @@ def collect_task_activation_stats(
     task_name: str,
     limit: int,
     max_prompt_tokens: int = 1024,
+    split: str = "",
+    task_prompt_style: str = "",
 ) -> list[ModuleActivationStat]:
     import torch
 
@@ -85,8 +87,19 @@ def collect_task_activation_stats(
         hooks.append(module.register_forward_hook(_build_activation_hook(module_name, module_accumulators)))
 
     try:
-        for example in task.load_examples(limit=limit):
-            prompt = _render_prompt(tokenizer, task.build_messages(example.question))
+        if split:
+            examples = task.load_examples(limit=limit, split=split)
+        else:
+            examples = task.load_examples(limit=limit)
+        for example in examples:
+            prompt = _render_prompt(
+                tokenizer,
+                _build_task_messages(
+                    task=task,
+                    question=example.question,
+                    task_prompt_style=task_prompt_style,
+                ),
+            )
             inputs = tokenizer(
                 prompt,
                 return_tensors="pt",
@@ -221,6 +234,19 @@ def _render_prompt(tokenizer: Any, messages: list[dict[str, str]]) -> str:
             tokenize=False,
             add_generation_prompt=True,
         )
+
+
+def _build_task_messages(
+    task: Any,
+    question: str,
+    task_prompt_style: str,
+) -> list[dict[str, str]]:
+    if task_prompt_style:
+        try:
+            return task.build_messages(question, prompt_style=task_prompt_style)
+        except TypeError:
+            pass
+    return task.build_messages(question)
 
 
 def _infer_model_device(model: Any) -> Any:

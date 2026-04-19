@@ -1,0 +1,26 @@
+{
+  "count": 0,
+  "mode": "greedy_path_frontier",
+  "path_manifest": "/Users/zhangletian/Projects/15642/TA-MPQ/artifacts/policies/task_sensitivity_exact_budget/greedy_path_manifest.json",
+  "policy_selection": {
+    "coordinate": "realized_8bit_param_mass_fraction",
+    "count": 4,
+    "dedupe_by_assignment_hash": true,
+    "include_seed": true,
+    "method": "local_evenly_spaced_path_snapshots"
+  },
+  "refined_policy_hashes": [],
+  "refined_policy_ids": [],
+  "seed_selection": {
+    "allow_top2_for_candidate_generation": true,
+    "default": "best_unique_coarse_policy_only",
+    "do_not_evaluate_4_per_seed_unconditionally": true,
+    "second_seed_conditions": {
+      "max_score_gap_correct_answers": 1,
+      "min_realized_fraction_distance": 0.04,
+      "must_have_unique_policy_hash": true
+    }
+  },
+  "selected_path_indices": [],
+  "source_results": "/Users/zhangletian/Projects/15642/TA-MPQ/artifacts/results/task_sensitivity_exact_budget/frontier_coarse.csv"
+}

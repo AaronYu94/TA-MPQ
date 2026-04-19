@@ -1,0 +1,41 @@
+{
+  "count": 4,
+  "mode": "greedy_path_frontier",
+  "path_manifest": "artifacts/policies/task_sensitivity_exact_budget_q301_400_first64/greedy_path_manifest.json",
+  "policy_selection": {
+    "coordinate": "realized_8bit_param_mass_fraction",
+    "count": 4,
+    "dedupe_by_assignment_hash": true,
+    "include_seed": true,
+    "method": "local_evenly_spaced_path_snapshots"
+  },
+  "refined_policy_hashes": [
+    "0b5fd3efa904113efc57bf27194fe70cfc2aa958ed7a43a2c08604a161a20979",
+    "0408c76fa4872fca3d84c28bcc7f3e027525b67466d39371c9acedc2c0565746",
+    "9bbaf3a7d0e0273028f1e1c0a64d4e1c485d8c3e440b0a9d532a45e0b259b9e9",
+    "5f468ccee3e4ca67866127f1048af631492c1c09913c28d154263b417082d038"
+  ],
+  "refined_policy_ids": [
+    "gpf_refine_00_i0104",
+    "gpf_refine_01_i0108",
+    "gpf_refine_02_i0110",
+    "gpf_refine_03_i0112"
+  ],
+  "seed_selection": {
+    "allow_top2_for_candidate_generation": true,
+    "default": "best_unique_coarse_policy_only",
+    "do_not_evaluate_4_per_seed_unconditionally": true,
+    "second_seed_conditions": {
+      "max_score_gap_correct_answers": 1,
+      "min_realized_fraction_distance": 0.04,
+      "must_have_unique_policy_hash": true
+    }
+  },
+  "selected_path_indices": [
+    104,
+    108,
+    110,
+    112
+  ],
+  "source_results": "artifacts/results/task_sensitivity_exact_budget_q301_400_first64/frontier_coarse.csv"
+}

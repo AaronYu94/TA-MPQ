@@ -107,6 +107,8 @@ class Math500ParsingTests(unittest.TestCase):
         first300 = select_examples_for_split(examples, "first300")
         hard = select_examples_for_split(examples, "hard50")
         last100 = select_examples_for_split(examples, "last100")
+        q301_400 = select_examples_for_split(examples, "q301_400")
+        middle100 = select_examples_for_split(examples, "middle100")
         full = select_examples_for_split(examples, "full500")
 
         self.assertEqual(len(dev), 100)
@@ -116,6 +118,8 @@ class Math500ParsingTests(unittest.TestCase):
         self.assertEqual(len(first300), 300)
         self.assertEqual(len(hard), 50)
         self.assertEqual(len(last100), 100)
+        self.assertEqual(len(q301_400), 100)
+        self.assertEqual(len(middle100), 100)
         self.assertEqual(len(full), 500)
         self.assertEqual(len({example.example_id for example in dev}), 100)
         self.assertEqual(len({example.example_id for example in accept}), 200)
@@ -124,6 +128,8 @@ class Math500ParsingTests(unittest.TestCase):
         self.assertEqual(len({example.example_id for example in first300}), 300)
         self.assertEqual(len({example.example_id for example in hard}), 50)
         self.assertEqual(len({example.example_id for example in last100}), 100)
+        self.assertEqual(len({example.example_id for example in q301_400}), 100)
+        self.assertEqual(len({example.example_id for example in middle100}), 100)
         self.assertEqual(
             {example.example_id for example in dev}.intersection(
                 {example.example_id for example in accept}
@@ -149,6 +155,18 @@ class Math500ParsingTests(unittest.TestCase):
             set(),
         )
         self.assertEqual(
+            {example.example_id for example in first300}.intersection(
+                {example.example_id for example in q301_400}
+            ),
+            set(),
+        )
+        self.assertEqual(
+            {example.example_id for example in q301_400}.intersection(
+                {example.example_id for example in last100}
+            ),
+            set(),
+        )
+        self.assertEqual(
             {example.example_id for example in train}.union(
                 {example.example_id for example in test}
             ),
@@ -161,6 +179,14 @@ class Math500ParsingTests(unittest.TestCase):
         self.assertEqual(
             {example.example_id for example in last100},
             {example.example_id for example in full[400:500]},
+        )
+        self.assertEqual(
+            {example.example_id for example in q301_400},
+            {example.example_id for example in full[300:400]},
+        )
+        self.assertEqual(
+            [example.example_id for example in q301_400],
+            [example.example_id for example in middle100],
         )
         self.assertEqual(
             {example.example_id for example in hard},

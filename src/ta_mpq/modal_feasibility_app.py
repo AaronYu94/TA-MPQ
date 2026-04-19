@@ -739,6 +739,207 @@ def load_task_example_ids_remote(
     return [str(example.example_id) for example in examples]
 
 
+def _collect_taq_kl_lite_profile_remote_impl(
+    model_id: str,
+    task_name: str,
+    split: str,
+    num_prompts: int,
+    grouping: str = "per_block_component",
+    temperature: float = 1.0,
+    seed: int = 42,
+    noise_bits: tuple[int, ...] = (2, 4, 8),
+    max_prompt_tokens: int = 1024,
+    task_prompt_style: str = "simple_evals_nonthinking",
+    batch_size: int = 8,
+) -> dict[str, Any]:
+    _configure_hf_environment()
+
+    from ta_mpq.quant_search.group_registry import build_group_registry_from_model
+    from ta_mpq.quant_search.sensitivity import profile_taq_kl_lite
+
+    groups = build_group_registry_from_model(model_id=model_id, grouping=grouping)
+    payload = profile_taq_kl_lite(
+        model_id=model_id,
+        task_name=task_name,
+        groups=groups,
+        split=split,
+        num_prompts=num_prompts,
+        output_path=None,
+        temperature=temperature,
+        seed=seed,
+        noise_bits=tuple(int(bit) for bit in noise_bits),
+        max_prompt_tokens=max_prompt_tokens,
+        task_prompt_style=task_prompt_style,
+        resume=False,
+        batch_size=batch_size,
+    )
+    return {
+        "group_registry": [group.to_dict() for group in groups],
+        "sensitivity_profile": payload,
+    }
+
+
+def _collect_paper_task_sensitivity_profile_remote_impl(
+    model_id: str,
+    task_name: str,
+    split: str,
+    num_prompts: int,
+    grouping: str = "per_block_component",
+    activation_weight: float = 0.55,
+    max_prompt_tokens: int = 1024,
+    task_prompt_style: str = "simple_evals_nonthinking",
+) -> dict[str, Any]:
+    _configure_hf_environment()
+
+    from ta_mpq.quant_search.group_registry import build_group_registry_from_model
+    from ta_mpq.quant_search.sensitivity import profile_paper_task_sensitivity
+
+    groups = build_group_registry_from_model(model_id=model_id, grouping=grouping)
+    payload = profile_paper_task_sensitivity(
+        model_id=model_id,
+        task_name=task_name,
+        groups=groups,
+        split=split,
+        num_prompts=num_prompts,
+        output_path=None,
+        activation_weight=activation_weight,
+        max_prompt_tokens=max_prompt_tokens,
+        task_prompt_style=task_prompt_style,
+    )
+    return {
+        "group_registry": [group.to_dict() for group in groups],
+        "sensitivity_profile": payload,
+    }
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def collect_taq_kl_lite_profile_remote(
+    model_id: str,
+    task_name: str,
+    split: str,
+    num_prompts: int,
+    grouping: str = "per_block_component",
+    temperature: float = 1.0,
+    seed: int = 42,
+    noise_bits: tuple[int, ...] = (2, 4, 8),
+    max_prompt_tokens: int = 1024,
+    task_prompt_style: str = "simple_evals_nonthinking",
+    batch_size: int = 8,
+) -> dict[str, Any]:
+    return _collect_taq_kl_lite_profile_remote_impl(
+        model_id=model_id,
+        task_name=task_name,
+        split=split,
+        num_prompts=num_prompts,
+        grouping=grouping,
+        temperature=temperature,
+        seed=seed,
+        noise_bits=noise_bits,
+        max_prompt_tokens=max_prompt_tokens,
+        task_prompt_style=task_prompt_style,
+        batch_size=batch_size,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def collect_taq_kl_lite_profile_remote_a100(
+    model_id: str,
+    task_name: str,
+    split: str,
+    num_prompts: int,
+    grouping: str = "per_block_component",
+    temperature: float = 1.0,
+    seed: int = 42,
+    noise_bits: tuple[int, ...] = (2, 4, 8),
+    max_prompt_tokens: int = 1024,
+    task_prompt_style: str = "simple_evals_nonthinking",
+    batch_size: int = 8,
+) -> dict[str, Any]:
+    return _collect_taq_kl_lite_profile_remote_impl(
+        model_id=model_id,
+        task_name=task_name,
+        split=split,
+        num_prompts=num_prompts,
+        grouping=grouping,
+        temperature=temperature,
+        seed=seed,
+        noise_bits=noise_bits,
+        max_prompt_tokens=max_prompt_tokens,
+        task_prompt_style=task_prompt_style,
+        batch_size=batch_size,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def collect_paper_task_sensitivity_profile_remote(
+    model_id: str,
+    task_name: str,
+    split: str,
+    num_prompts: int,
+    grouping: str = "per_block_component",
+    activation_weight: float = 0.55,
+    max_prompt_tokens: int = 1024,
+    task_prompt_style: str = "simple_evals_nonthinking",
+) -> dict[str, Any]:
+    return _collect_paper_task_sensitivity_profile_remote_impl(
+        model_id=model_id,
+        task_name=task_name,
+        split=split,
+        num_prompts=num_prompts,
+        grouping=grouping,
+        activation_weight=activation_weight,
+        max_prompt_tokens=max_prompt_tokens,
+        task_prompt_style=task_prompt_style,
+    )
+
+
+@app.function(
+    image=quant_source_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def collect_paper_task_sensitivity_profile_remote_a100(
+    model_id: str,
+    task_name: str,
+    split: str,
+    num_prompts: int,
+    grouping: str = "per_block_component",
+    activation_weight: float = 0.55,
+    max_prompt_tokens: int = 1024,
+    task_prompt_style: str = "simple_evals_nonthinking",
+) -> dict[str, Any]:
+    return _collect_paper_task_sensitivity_profile_remote_impl(
+        model_id=model_id,
+        task_name=task_name,
+        split=split,
+        num_prompts=num_prompts,
+        grouping=grouping,
+        activation_weight=activation_weight,
+        max_prompt_tokens=max_prompt_tokens,
+        task_prompt_style=task_prompt_style,
+    )
+
+
 @app.function(
     image=surrogate_image,
     cpu=4,
