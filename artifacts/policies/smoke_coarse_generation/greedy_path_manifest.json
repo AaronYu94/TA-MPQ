@@ -1,0 +1,1619 @@
+{
+  "coarse_policy_ids": [
+    "gpf_coarse_00_i0068",
+    "gpf_coarse_01_i0084",
+    "gpf_coarse_02_i0101",
+    "gpf_coarse_03_i0115",
+    "gpf_coarse_04_i0124",
+    "gpf_coarse_05_i0132",
+    "gpf_coarse_06_i0142",
+    "gpf_coarse_07_i0150"
+  ],
+  "coarse_selected_path_indices": [
+    68,
+    84,
+    101,
+    115,
+    124,
+    132,
+    142,
+    150
+  ],
+  "endpoint_policy_id": "gpf_endpoint_diagnostic",
+  "endpoint_stats": {
+    "budget_slack_bits": 8388608,
+    "budget_slack_fraction": 0.0002642706131078224,
+    "changed_groups_vs_uniform_int4": 246,
+    "fourbit_mass_fraction": 0.14085623678646936,
+    "fourbit_param_count": 1117782016,
+    "num_2bit": 91,
+    "num_4bit": 3,
+    "num_8bit": 155,
+    "path_index": 155,
+    "promoted_param_count": 2271215616,
+    "promotion_mass_fraction": 0.28620507399577166,
+    "raw_weight_bits": 31734104064,
+    "realized_2bit_param_mass_fraction": 0.572938689217759,
+    "realized_4bit_param_mass_fraction": 0.14085623678646936,
+    "realized_8bit_param_mass_fraction": 0.28620507399577166,
+    "target_int4_bits": 31742492672,
+    "total_param_count": 7935623168,
+    "twobit_mass_fraction": 0.572938689217759,
+    "twobit_param_count": 4546625536
+  },
+  "mode": "greedy_path_frontier",
+  "num_path_states": 156,
+  "num_unique_path_states": 156,
+  "path": [
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "uniform_int4_anchor",
+      "path_index": 0,
+      "policy_hash": "c8172e29cd077d0cf55ec239e3d5c72d143d8adc1b4eb9da63094ce427e98446",
+      "policy_id": "gpf_uniform_int4_anchor",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_uniform_int4_anchor.json",
+      "realized_2bit_param_mass_fraction": 0.0,
+      "realized_8bit_param_mass_fraction": 0.0
+    },
+    {
+      "budget_slack_fraction": 0.00315473044397463,
+      "endpoint_kind": "",
+      "path_index": 1,
+      "policy_hash": "d99beefef40f9c3d7e7b64f391cf22b2aa7ec992d7fc165b9486a7acf570afcd",
+      "policy_id": "gpf_path_0001",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0001.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 1.65169133192389e-05
+    },
+    {
+      "budget_slack_fraction": 0.003138213530655391,
+      "endpoint_kind": "",
+      "path_index": 2,
+      "policy_hash": "d375870bc832479381404dcb3943e6efc02ab6471b6d0d806c1f94e57d030bd3",
+      "policy_id": "gpf_path_0002",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0002.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 3.30338266384778e-05
+    },
+    {
+      "budget_slack_fraction": 0.003121696617336152,
+      "endpoint_kind": "",
+      "path_index": 3,
+      "policy_hash": "82f91a490709beded039e3de7ed70f1cc97c8bcb9686617aeb8fc612c137ffa0",
+      "policy_id": "gpf_path_0003",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0003.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 4.95507399577167e-05
+    },
+    {
+      "budget_slack_fraction": 0.0031051797040169134,
+      "endpoint_kind": "",
+      "path_index": 4,
+      "policy_hash": "e07b0ae71b326cae2ad123e66a3b71c9b02bfc37a689bbe3c5e3a4dba64940ef",
+      "policy_id": "gpf_path_0004",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0004.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 6.60676532769556e-05
+    },
+    {
+      "budget_slack_fraction": 0.0030886627906976743,
+      "endpoint_kind": "",
+      "path_index": 5,
+      "policy_hash": "17ca6ba593c6d57740630a7c0a06bbdf699c212596008d60c13e1af7a342638f",
+      "policy_id": "gpf_path_0005",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0005.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 8.25845665961945e-05
+    },
+    {
+      "budget_slack_fraction": 0.0030721458773784356,
+      "endpoint_kind": "",
+      "path_index": 6,
+      "policy_hash": "abb19fcd6e223827a3f7a3c69b3b5d68f1e7d8d132876596f82a3f5a65e37a87",
+      "policy_id": "gpf_path_0006",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0006.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 9.91014799154334e-05
+    },
+    {
+      "budget_slack_fraction": 0.0030556289640591965,
+      "endpoint_kind": "",
+      "path_index": 7,
+      "policy_hash": "f99bf64417781a2ab6196c28e21ab07bc3fa2e281cce8cd701a789dcf970a246",
+      "policy_id": "gpf_path_0007",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0007.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0001156183932346723
+    },
+    {
+      "budget_slack_fraction": 0.003039112050739958,
+      "endpoint_kind": "",
+      "path_index": 8,
+      "policy_hash": "dc958b363b6d50630a2d8831b0405309fdc46eddd75345f08e3afea610bd0d2b",
+      "policy_id": "gpf_path_0008",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0008.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0001321353065539112
+    },
+    {
+      "budget_slack_fraction": 0.003022595137420719,
+      "endpoint_kind": "",
+      "path_index": 9,
+      "policy_hash": "0b39ab686ea498e64b700e66e6a63918dbc348977be962a05a959f6a6f5152ba",
+      "policy_id": "gpf_path_0009",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0009.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0001486522198731501
+    },
+    {
+      "budget_slack_fraction": 0.00300607822410148,
+      "endpoint_kind": "",
+      "path_index": 10,
+      "policy_hash": "b673f125dd9034c03b5c416f4ecce68375a29c056c8873a631ec963926d186c3",
+      "policy_id": "gpf_path_0010",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0010.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.000165169133192389
+    },
+    {
+      "budget_slack_fraction": 0.002989561310782241,
+      "endpoint_kind": "",
+      "path_index": 11,
+      "policy_hash": "ef6df8e209f956f186d53cbcf9b740463c264fabab7d121ba0af886f13d3f110",
+      "policy_id": "gpf_path_0011",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0011.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0001816860465116279
+    },
+    {
+      "budget_slack_fraction": 0.002973044397463002,
+      "endpoint_kind": "",
+      "path_index": 12,
+      "policy_hash": "2976376c6ab043927289ebb82caceaba5cf511842fc2365db0f5704c5c306f46",
+      "policy_id": "gpf_path_0012",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0012.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0001982029598308668
+    },
+    {
+      "budget_slack_fraction": 0.0029565274841437633,
+      "endpoint_kind": "",
+      "path_index": 13,
+      "policy_hash": "cca67d114bac21e7bf08376076989f55c6befc8fc53dcebffab20504439be94e",
+      "policy_id": "gpf_path_0013",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0013.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0002147198731501057
+    },
+    {
+      "budget_slack_fraction": 0.002940010570824524,
+      "endpoint_kind": "",
+      "path_index": 14,
+      "policy_hash": "a4cf014e50e01251d2fd91e69f056e4a1822618218a6a99e012bfb3895bae906",
+      "policy_id": "gpf_path_0014",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0014.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0002312367864693446
+    },
+    {
+      "budget_slack_fraction": 0.0029234936575052856,
+      "endpoint_kind": "",
+      "path_index": 15,
+      "policy_hash": "33b842759772777db4c635e12757bb78286752741276be8a1a66d389e7c8d3b8",
+      "policy_id": "gpf_path_0015",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0015.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0002477536997885835
+    },
+    {
+      "budget_slack_fraction": 0.0029069767441860465,
+      "endpoint_kind": "",
+      "path_index": 16,
+      "policy_hash": "32d6743a3acb3a47694648456c680c41055dba8707c503720da3ead149a15d61",
+      "policy_id": "gpf_path_0016",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0016.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0002642706131078224
+    },
+    {
+      "budget_slack_fraction": 0.002890459830866808,
+      "endpoint_kind": "",
+      "path_index": 17,
+      "policy_hash": "79bc33009c9e3eb23fc95233aede8107e08c18388a91316f868948e9249a2abb",
+      "policy_id": "gpf_path_0017",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0017.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0002807875264270613
+    },
+    {
+      "budget_slack_fraction": 0.0028739429175475687,
+      "endpoint_kind": "",
+      "path_index": 18,
+      "policy_hash": "9edffc606a271b780c74736b9b53f4e3468fdab418ab4badeb7ed4d808a00ff0",
+      "policy_id": "gpf_path_0018",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0018.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0002973044397463002
+    },
+    {
+      "budget_slack_fraction": 0.0028574260042283296,
+      "endpoint_kind": "",
+      "path_index": 19,
+      "policy_hash": "9469abbc30f7e2bbc00d9be3f6be83e8f7459d8efd9e59b3a839ea4c5c036a0f",
+      "policy_id": "gpf_path_0019",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0019.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0003138213530655391
+    },
+    {
+      "budget_slack_fraction": 0.002840909090909091,
+      "endpoint_kind": "",
+      "path_index": 20,
+      "policy_hash": "9fae7642a8bb80914ec26a6272eea7ca5ab9f4ca9204f2bf3887e327141cb860",
+      "policy_id": "gpf_path_0020",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0020.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.000330338266384778
+    },
+    {
+      "budget_slack_fraction": 0.002824392177589852,
+      "endpoint_kind": "",
+      "path_index": 21,
+      "policy_hash": "a80bd39c93d5dc015440e7b92d5b5cce7ac2a984b6570078074ce5fc57e0f9d4",
+      "policy_id": "gpf_path_0021",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0021.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.00034685517970401694
+    },
+    {
+      "budget_slack_fraction": 0.0028078752642706132,
+      "endpoint_kind": "",
+      "path_index": 22,
+      "policy_hash": "1ad0402d88735847c2ef76962890f937c7039d32d537df8c4da4ad1e8aa6db6c",
+      "policy_id": "gpf_path_0022",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0022.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0003633720930232558
+    },
+    {
+      "budget_slack_fraction": 0.002791358350951374,
+      "endpoint_kind": "",
+      "path_index": 23,
+      "policy_hash": "42c27b1b9f579fe0a63c211903d6e09974ae349ba82cb10f76059627bdae6ad0",
+      "policy_id": "gpf_path_0023",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0023.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.00037988900634249473
+    },
+    {
+      "budget_slack_fraction": 0.0027748414376321355,
+      "endpoint_kind": "",
+      "path_index": 24,
+      "policy_hash": "6988654946895c05ed58ca5a97874517a853b1ef85216148e00fc6026165e053",
+      "policy_id": "gpf_path_0024",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0024.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0003964059196617336
+    },
+    {
+      "budget_slack_fraction": 0.0027583245243128964,
+      "endpoint_kind": "",
+      "path_index": 25,
+      "policy_hash": "71b60258cf87dd061ccc7319ba8d1d504fd2cdebaf0bc75736e6fe84d1f19667",
+      "policy_id": "gpf_path_0025",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0025.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.00041292283298097253
+    },
+    {
+      "budget_slack_fraction": 0.0027418076109936573,
+      "endpoint_kind": "",
+      "path_index": 26,
+      "policy_hash": "100e7d84abbd09a5c402fee2bfbc42af2eadffca2ed35a94754697caafd64288",
+      "policy_id": "gpf_path_0026",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0026.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0004294397463002114
+    },
+    {
+      "budget_slack_fraction": 0.0027252906976744187,
+      "endpoint_kind": "",
+      "path_index": 27,
+      "policy_hash": "e305b4b14162f7613db52ff550261eabd838eb394179036b4ba88e5e8a5cc92a",
+      "policy_id": "gpf_path_0027",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0027.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0004459566596194503
+    },
+    {
+      "budget_slack_fraction": 0.0027087737843551796,
+      "endpoint_kind": "",
+      "path_index": 28,
+      "policy_hash": "4507c41352906b4abae6ffc69c1d2885f0ca06aedbac65b21e4da06b193ee289",
+      "policy_id": "gpf_path_0028",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0028.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0004624735729386892
+    },
+    {
+      "budget_slack_fraction": 0.002692256871035941,
+      "endpoint_kind": "",
+      "path_index": 29,
+      "policy_hash": "156607fad80465ab0a9f5bfac3f9a50c4028b67672ddf8329ca4e1bfd65d43fc",
+      "policy_id": "gpf_path_0029",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0029.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0004789904862579281
+    },
+    {
+      "budget_slack_fraction": 0.002675739957716702,
+      "endpoint_kind": "",
+      "path_index": 30,
+      "policy_hash": "26af8fa7f4a5b69f11dfa58c6b6461a5caa8404c0461866c7451f2d1cef702c4",
+      "policy_id": "gpf_path_0030",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0030.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.000495507399577167
+    },
+    {
+      "budget_slack_fraction": 0.002659223044397463,
+      "endpoint_kind": "",
+      "path_index": 31,
+      "policy_hash": "59650fb8e9185d937860ea3a4f586772817b26f74baa8b080c10329b549deddb",
+      "policy_id": "gpf_path_0031",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0031.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.000512024312896406
+    },
+    {
+      "budget_slack_fraction": 0.002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 32,
+      "policy_hash": "686e7b1665505c40ffae4062fde80fe1e6521a49d52689b363d0602dcaef6a74",
+      "policy_id": "gpf_path_0032",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0032.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0005285412262156448
+    },
+    {
+      "budget_slack_fraction": 0.002626189217758985,
+      "endpoint_kind": "",
+      "path_index": 33,
+      "policy_hash": "91c9b647027fa29dc3a315234c51f8cf62496ac2a69465ec6b568a9f61472523",
+      "policy_id": "gpf_path_0033",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0033.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0005450581395348837
+    },
+    {
+      "budget_slack_fraction": 0.0026096723044397464,
+      "endpoint_kind": "",
+      "path_index": 34,
+      "policy_hash": "b315da6082b5f307feda578549ab455c8baef29f6fd968c756c81fe255197cea",
+      "policy_id": "gpf_path_0034",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0034.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0005615750528541226
+    },
+    {
+      "budget_slack_fraction": 0.0025931553911205073,
+      "endpoint_kind": "",
+      "path_index": 35,
+      "policy_hash": "a446a1cb5260f731c1c6499dbc9eb4f79488d3c132fd11397147fb324ccb7c68",
+      "policy_id": "gpf_path_0035",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0035.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0005780919661733616
+    },
+    {
+      "budget_slack_fraction": 0.0025766384778012686,
+      "endpoint_kind": "",
+      "path_index": 36,
+      "policy_hash": "df315ab6d5690b53088bec5f2d744d8e20285850be14bd8f4fab8b6a2f1c962e",
+      "policy_id": "gpf_path_0036",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0036.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0005946088794926004
+    },
+    {
+      "budget_slack_fraction": 0.0025601215644820295,
+      "endpoint_kind": "",
+      "path_index": 37,
+      "policy_hash": "ed6a46f264e129c984c21085dd91e45c1373f355b0103e5d0649f17376ae7ebb",
+      "policy_id": "gpf_path_0037",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0037.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0006111257928118393
+    },
+    {
+      "budget_slack_fraction": 0.002543604651162791,
+      "endpoint_kind": "",
+      "path_index": 38,
+      "policy_hash": "facc8233c0481cb086f3f7e6a616a823142ec10dfb0a8a5dcfa0e1204661afa7",
+      "policy_id": "gpf_path_0038",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0038.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0006276427061310782
+    },
+    {
+      "budget_slack_fraction": 0.002527087737843552,
+      "endpoint_kind": "",
+      "path_index": 39,
+      "policy_hash": "608452296463fafcbc25df73f68f4ec610f9feefb3fb8e9833ab7290c3cc70f3",
+      "policy_id": "gpf_path_0039",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0039.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0006441596194503172
+    },
+    {
+      "budget_slack_fraction": 0.0025105708245243127,
+      "endpoint_kind": "",
+      "path_index": 40,
+      "policy_hash": "bb29b1f4fdf43bc0e880eb4b6ddee2ce8f4acb5f8df88751f338e7fa0c1eccb5",
+      "policy_id": "gpf_path_0040",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0040.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.000660676532769556
+    },
+    {
+      "budget_slack_fraction": 0.002494053911205074,
+      "endpoint_kind": "",
+      "path_index": 41,
+      "policy_hash": "b0ee40c18fe49973484a9492c0109542e450a31be4c098c6751cfd8ac041f655",
+      "policy_id": "gpf_path_0041",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0041.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0006771934460887949
+    },
+    {
+      "budget_slack_fraction": 0.002477536997885835,
+      "endpoint_kind": "",
+      "path_index": 42,
+      "policy_hash": "5faabd442b45d53b7d5420c33a6e263881d582ac22f9c98c1d24f25cab03a09c",
+      "policy_id": "gpf_path_0042",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0042.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0006937103594080339
+    },
+    {
+      "budget_slack_fraction": 0.0024610200845665963,
+      "endpoint_kind": "",
+      "path_index": 43,
+      "policy_hash": "6ed2033d2312cf66e6d33fdea6907bd79ec680330731f72d3cf29314c2931f40",
+      "policy_id": "gpf_path_0043",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0043.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0007102272727272727
+    },
+    {
+      "budget_slack_fraction": 0.0024445031712473572,
+      "endpoint_kind": "",
+      "path_index": 44,
+      "policy_hash": "2573f80fb80a2cbdba7e1e73c892466d02318087438757a4f5f48808e0fa9d76",
+      "policy_id": "gpf_path_0044",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0044.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0007267441860465116
+    },
+    {
+      "budget_slack_fraction": 0.0024279862579281186,
+      "endpoint_kind": "",
+      "path_index": 45,
+      "policy_hash": "fdaa1919a3269683cdb852aab1dd7794b58470297a2cb5b79ef61eb58d5010db",
+      "policy_id": "gpf_path_0045",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0045.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0007432610993657505
+    },
+    {
+      "budget_slack_fraction": 0.0024114693446088795,
+      "endpoint_kind": "",
+      "path_index": 46,
+      "policy_hash": "89cfb46304bc401ea13a06c3defa46a4c9a8d0e3e04bdaacb29ec201b355755e",
+      "policy_id": "gpf_path_0046",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0046.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0007597780126849895
+    },
+    {
+      "budget_slack_fraction": 0.0023949524312896404,
+      "endpoint_kind": "",
+      "path_index": 47,
+      "policy_hash": "10a11b60d0ec552a79daa8359298db99e19c0a5d721eb48a655f6445103b007c",
+      "policy_id": "gpf_path_0047",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0047.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0007762949260042283
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 48,
+      "policy_hash": "36e73bc33f78e20640c9ff15e601b41849888c927092aace48f44fcdbf811142",
+      "policy_id": "gpf_path_0048",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0048.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0007928118393234672
+    },
+    {
+      "budget_slack_fraction": 0.0018498942917547568,
+      "endpoint_kind": "",
+      "path_index": 49,
+      "policy_hash": "18c9fe2de850125293a7cb76c1316678a0bfa5ba62b5d60df07cdabde53d8764",
+      "policy_id": "gpf_path_0049",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0049.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.001321353065539112
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 50,
+      "policy_hash": "d2eab3c24428293fc91b5d40bf16fa969e66c40914c6ce26247a489ec8397bbf",
+      "policy_id": "gpf_path_0050",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0050.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0018498942917547568
+    },
+    {
+      "budget_slack_fraction": 0.0007928118393234672,
+      "endpoint_kind": "",
+      "path_index": 51,
+      "policy_hash": "90d137d6523a87e31d992c9bd03b48214a637860a2d897b4a779faac48939ff6",
+      "policy_id": "gpf_path_0051",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0051.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0023784355179704017
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 52,
+      "policy_hash": "dc62a0ae97c04efbc19de6415242afd67bec9ed2183d78584931e87868669fbf",
+      "policy_id": "gpf_path_0052",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0052.json",
+      "realized_2bit_param_mass_fraction": 0.006342494714587738,
+      "realized_8bit_param_mass_fraction": 0.0029069767441860465
+    },
+    {
+      "budget_slack_fraction": 0.0029069767441860465,
+      "endpoint_kind": "",
+      "path_index": 53,
+      "policy_hash": "95f57af4f8330178655fb4ff24c831cfdc69606f81509a9af4969e0ffa140349",
+      "policy_id": "gpf_path_0053",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0053.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.003435517970401691
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 54,
+      "policy_hash": "fa70e8deae700e1e0bbab5b0c82800dafcbce6f7cf3a43f54c89b0d28dff372b",
+      "policy_id": "gpf_path_0054",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0054.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.003964059196617336
+    },
+    {
+      "budget_slack_fraction": 0.0018498942917547568,
+      "endpoint_kind": "",
+      "path_index": 55,
+      "policy_hash": "a5e3cfb322e1bcdcc75cf7a13811dbb2f9cc6ceb5fc8d8ee69c5d5fb430e123d",
+      "policy_id": "gpf_path_0055",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0055.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.004492600422832981
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 56,
+      "policy_hash": "7baa4409f35a359b479236509aa00ea3f2e3fb56c85650c722090c6c55ad15a8",
+      "policy_id": "gpf_path_0056",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0056.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.005021141649048625
+    },
+    {
+      "budget_slack_fraction": 0.0007928118393234672,
+      "endpoint_kind": "",
+      "path_index": 57,
+      "policy_hash": "970904f161e5c36a963cdf65d16cffe542535bb288dd2cdc339dc0c7e0f70a6d",
+      "policy_id": "gpf_path_0057",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0057.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.005549682875264271
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 58,
+      "policy_hash": "afbe813195b051ec432eb414c616768cbf9fad3db852c374369c2ca98071be4d",
+      "policy_id": "gpf_path_0058",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0058.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.006078224101479916
+    },
+    {
+      "budget_slack_fraction": 0.0029069767441860465,
+      "endpoint_kind": "",
+      "path_index": 59,
+      "policy_hash": "8abff4d53a20f6f493d267d43aad61c346c0514bfc015ff1bb00d46155e097a5",
+      "policy_id": "gpf_path_0059",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0059.json",
+      "realized_2bit_param_mass_fraction": 0.019027484143763214,
+      "realized_8bit_param_mass_fraction": 0.0066067653276955605
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 60,
+      "policy_hash": "a7cefac764e304ed2ec9f1daf82b010b9db2ee880053418a758040e552ee3bc0",
+      "policy_id": "gpf_path_0060",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0060.json",
+      "realized_2bit_param_mass_fraction": 0.019027484143763214,
+      "realized_8bit_param_mass_fraction": 0.007135306553911205
+    },
+    {
+      "budget_slack_fraction": 0.0018498942917547568,
+      "endpoint_kind": "",
+      "path_index": 61,
+      "policy_hash": "66eb9a867617a492bafed1a379f8ea4745cbb7ab04501cf5fb655215d72a846f",
+      "policy_id": "gpf_path_0061",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0061.json",
+      "realized_2bit_param_mass_fraction": 0.019027484143763214,
+      "realized_8bit_param_mass_fraction": 0.00766384778012685
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 62,
+      "policy_hash": "54a232780dc464100359840a6ab5fc8c2e61a3c925ddcf1112d9e24cf6e85c44",
+      "policy_id": "gpf_path_0062",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0062.json",
+      "realized_2bit_param_mass_fraction": 0.019027484143763214,
+      "realized_8bit_param_mass_fraction": 0.008192389006342496
+    },
+    {
+      "budget_slack_fraction": 0.0007928118393234672,
+      "endpoint_kind": "",
+      "path_index": 63,
+      "policy_hash": "a37450fc94c04a3c711d927705ac1df91aedf31b03f2c5eaf8489272d8706b0c",
+      "policy_id": "gpf_path_0063",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0063.json",
+      "realized_2bit_param_mass_fraction": 0.019027484143763214,
+      "realized_8bit_param_mass_fraction": 0.00872093023255814
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 64,
+      "policy_hash": "c0c1f5073063f27d01c54501e81ea01e3706e2f18c86ac474fbb316b0fd0e458",
+      "policy_id": "gpf_path_0064",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0064.json",
+      "realized_2bit_param_mass_fraction": 0.019027484143763214,
+      "realized_8bit_param_mass_fraction": 0.009249471458773785
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 65,
+      "policy_hash": "595a554b947baefef86d387f34c325639ea2bd616f4286224dfd448dadeaf571",
+      "policy_id": "gpf_path_0065",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0065.json",
+      "realized_2bit_param_mass_fraction": 0.02536997885835095,
+      "realized_8bit_param_mass_fraction": 0.011363636363636364
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 66,
+      "policy_hash": "a2ca06d0dc26d171cf7422e4b207ddf2b0173b4e7802fec5584134330102ff59",
+      "policy_id": "gpf_path_0066",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0066.json",
+      "realized_2bit_param_mass_fraction": 0.03171247357293869,
+      "realized_8bit_param_mass_fraction": 0.013477801268498943
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 67,
+      "policy_hash": "5db2c188e760d45bca96524a2bc763b32e697f03ed9d8e86dbe2c3b121b79145",
+      "policy_id": "gpf_path_0067",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0067.json",
+      "realized_2bit_param_mass_fraction": 0.03171247357293869,
+      "realized_8bit_param_mass_fraction": 0.015591966173361522
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 68,
+      "policy_hash": "13ffa4f74de71e241ec075b13e05d0e515c8a1f7da5e68623a57d29a8ea932bc",
+      "policy_id": "gpf_path_0068",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0068.json",
+      "realized_2bit_param_mass_fraction": 0.03805496828752643,
+      "realized_8bit_param_mass_fraction": 0.0177061310782241
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 69,
+      "policy_hash": "d66ed5af31d36e96d186d3110bb523c4e4c81b5b7e3cf1dd964f4d4262692d81",
+      "policy_id": "gpf_path_0069",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0069.json",
+      "realized_2bit_param_mass_fraction": 0.04439746300211417,
+      "realized_8bit_param_mass_fraction": 0.01982029598308668
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 70,
+      "policy_hash": "b62564bf8a8f469ba5d7493bf95a8d1e9a7d5f8ef8be97ec3edc9b74be27580d",
+      "policy_id": "gpf_path_0070",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0070.json",
+      "realized_2bit_param_mass_fraction": 0.04439746300211417,
+      "realized_8bit_param_mass_fraction": 0.02193446088794926
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 71,
+      "policy_hash": "f6e9ce7febaf754f27101c5d0a78993c8df4a2de5badf40a2cd12b5c216b1830",
+      "policy_id": "gpf_path_0071",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0071.json",
+      "realized_2bit_param_mass_fraction": 0.0507399577167019,
+      "realized_8bit_param_mass_fraction": 0.02404862579281184
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 72,
+      "policy_hash": "04cf62119508f5e699d49e1e46f8f26aeb62a5e5411ca019f7d66d36f4dff87c",
+      "policy_id": "gpf_path_0072",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0072.json",
+      "realized_2bit_param_mass_fraction": 0.05708245243128964,
+      "realized_8bit_param_mass_fraction": 0.02616279069767442
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 73,
+      "policy_hash": "c197c1d3b6939d5ef3227a312a3cd1f3d5f506bc5e68d15b4c16a149da25d509",
+      "policy_id": "gpf_path_0073",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0073.json",
+      "realized_2bit_param_mass_fraction": 0.05708245243128964,
+      "realized_8bit_param_mass_fraction": 0.028276955602537
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 74,
+      "policy_hash": "28ae495078479375543694979bdfbda6f468bc30440813a653550c0161653d46",
+      "policy_id": "gpf_path_0074",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0074.json",
+      "realized_2bit_param_mass_fraction": 0.06342494714587738,
+      "realized_8bit_param_mass_fraction": 0.030391120507399578
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 75,
+      "policy_hash": "cd506dba90273e3e93fdb400415bbd9371a45eae8b0068d645ec324646781c12",
+      "policy_id": "gpf_path_0075",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0075.json",
+      "realized_2bit_param_mass_fraction": 0.06976744186046512,
+      "realized_8bit_param_mass_fraction": 0.03250528541226216
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 76,
+      "policy_hash": "17ea579f8e6ff734f43b6c1f2ee99df4359e2101042b035eaae3821d5f263e91",
+      "policy_id": "gpf_path_0076",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0076.json",
+      "realized_2bit_param_mass_fraction": 0.06976744186046512,
+      "realized_8bit_param_mass_fraction": 0.03461945031712474
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 77,
+      "policy_hash": "2b2568b682302c01bdbd038cfc9fd6c805f9f8b9b7a83780f4aef5824223794b",
+      "policy_id": "gpf_path_0077",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0077.json",
+      "realized_2bit_param_mass_fraction": 0.07610993657505286,
+      "realized_8bit_param_mass_fraction": 0.036733615221987315
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 78,
+      "policy_hash": "74b2aaa7eed45078df0550e67c9967fb420a5489aeb21b91d66ae02c056b81e2",
+      "policy_id": "gpf_path_0078",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0078.json",
+      "realized_2bit_param_mass_fraction": 0.0824524312896406,
+      "realized_8bit_param_mass_fraction": 0.0388477801268499
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 79,
+      "policy_hash": "344c28eecdf349379f124ca19ef7c4b44af586c0f8fc0eca4046ef040f2d0b5c",
+      "policy_id": "gpf_path_0079",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0079.json",
+      "realized_2bit_param_mass_fraction": 0.0824524312896406,
+      "realized_8bit_param_mass_fraction": 0.04096194503171247
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 80,
+      "policy_hash": "d21969e1fc19bad6b56d43b55fe9a5f6eb6217a7662ca43afa5c3b72a7a065f3",
+      "policy_id": "gpf_path_0080",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0080.json",
+      "realized_2bit_param_mass_fraction": 0.08879492600422834,
+      "realized_8bit_param_mass_fraction": 0.043076109936575055
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 81,
+      "policy_hash": "d5ffb10f3ed0a6a1f7ef5bacd3b1f1ef9000f8ecb706d036e754087980ef8839",
+      "policy_id": "gpf_path_0081",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0081.json",
+      "realized_2bit_param_mass_fraction": 0.09513742071881606,
+      "realized_8bit_param_mass_fraction": 0.04519027484143763
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 82,
+      "policy_hash": "f56d7786f913c74e6a85ef79f8fd942ddccd4f254bd77a46de4d40b67073b785",
+      "policy_id": "gpf_path_0082",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0082.json",
+      "realized_2bit_param_mass_fraction": 0.09513742071881606,
+      "realized_8bit_param_mass_fraction": 0.04730443974630021
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 83,
+      "policy_hash": "a0e0c73f58085b8bc9bb402cbf3aa65762f5be453a8723d9b90c83d02495de0d",
+      "policy_id": "gpf_path_0083",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0083.json",
+      "realized_2bit_param_mass_fraction": 0.1014799154334038,
+      "realized_8bit_param_mass_fraction": 0.04941860465116279
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 84,
+      "policy_hash": "1e3fd7c554722a4695d4f83263ad14931d88d88e8f93317c316a3db0e8c1ba98",
+      "policy_id": "gpf_path_0084",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0084.json",
+      "realized_2bit_param_mass_fraction": 0.10782241014799154,
+      "realized_8bit_param_mass_fraction": 0.05153276955602537
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 85,
+      "policy_hash": "b1b70a02d16b2ed4d71ba85bb9833614cd4e8c7ed23a9bd889d898c9f1ec32c8",
+      "policy_id": "gpf_path_0085",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0085.json",
+      "realized_2bit_param_mass_fraction": 0.10782241014799154,
+      "realized_8bit_param_mass_fraction": 0.053646934460887946
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 86,
+      "policy_hash": "8ba7a27e394b313b1c21e1b8a7b739627885be80852ced7ab020b9506ea9cdb2",
+      "policy_id": "gpf_path_0086",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0086.json",
+      "realized_2bit_param_mass_fraction": 0.11416490486257928,
+      "realized_8bit_param_mass_fraction": 0.05576109936575053
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 87,
+      "policy_hash": "5fc417ae58cfa30d46e5e11af6e305508085639c3538b1f3fba403b63e67d6a0",
+      "policy_id": "gpf_path_0087",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0087.json",
+      "realized_2bit_param_mass_fraction": 0.12050739957716702,
+      "realized_8bit_param_mass_fraction": 0.05787526427061311
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 88,
+      "policy_hash": "f2028ac786a84d2720c2cdb0b03b9a3b85d4dd34c1ec37605b6d11ed4d91e398",
+      "policy_id": "gpf_path_0088",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0088.json",
+      "realized_2bit_param_mass_fraction": 0.12050739957716702,
+      "realized_8bit_param_mass_fraction": 0.059989429175475686
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 89,
+      "policy_hash": "5374471a4c8e01a97d836f249aae358006aa205bdedada5aa77122c159f222a9",
+      "policy_id": "gpf_path_0089",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0089.json",
+      "realized_2bit_param_mass_fraction": 0.12684989429175475,
+      "realized_8bit_param_mass_fraction": 0.06210359408033827
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 90,
+      "policy_hash": "14b8a75b508539a4d34523c6fec8448e8a6a54e42bab10e1c4e1bfa549a1e8b2",
+      "policy_id": "gpf_path_0090",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0090.json",
+      "realized_2bit_param_mass_fraction": 0.1331923890063425,
+      "realized_8bit_param_mass_fraction": 0.06421775898520085
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 91,
+      "policy_hash": "ec4ef9085f5ec42ed061ccec7bd519e678a23f0cb9a8ec922baeb8e900a9159f",
+      "policy_id": "gpf_path_0091",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0091.json",
+      "realized_2bit_param_mass_fraction": 0.1331923890063425,
+      "realized_8bit_param_mass_fraction": 0.06633192389006343
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 92,
+      "policy_hash": "8c91c74cef05dd8ea426a65d248d179837c238fa284409d208089b1d7b9471a0",
+      "policy_id": "gpf_path_0092",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0092.json",
+      "realized_2bit_param_mass_fraction": 0.13953488372093023,
+      "realized_8bit_param_mass_fraction": 0.068446088794926
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 93,
+      "policy_hash": "66e0d5db94e0b550a279c0fcebcab745ac97d7575f03dcb24a0555ed648c12ea",
+      "policy_id": "gpf_path_0093",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0093.json",
+      "realized_2bit_param_mass_fraction": 0.14587737843551796,
+      "realized_8bit_param_mass_fraction": 0.07056025369978858
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 94,
+      "policy_hash": "07fbbef81c590080c8d2dc0cfd41b1992f222e11641b95eb827431e6fb2adeb0",
+      "policy_id": "gpf_path_0094",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0094.json",
+      "realized_2bit_param_mass_fraction": 0.14587737843551796,
+      "realized_8bit_param_mass_fraction": 0.07267441860465117
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 95,
+      "policy_hash": "55a202c5027674e3d6d85e75e755597e43a38df1fdbff9120183a6eea29438c9",
+      "policy_id": "gpf_path_0095",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0095.json",
+      "realized_2bit_param_mass_fraction": 0.1522198731501057,
+      "realized_8bit_param_mass_fraction": 0.07478858350951374
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 96,
+      "policy_hash": "e0f163755d80b2e1618dad4bee8758bfd548275fbdd84b1344a561d9f1f84046",
+      "policy_id": "gpf_path_0096",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0096.json",
+      "realized_2bit_param_mass_fraction": 0.15856236786469344,
+      "realized_8bit_param_mass_fraction": 0.07690274841437632
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 97,
+      "policy_hash": "5d3beac72922bbec54a49dcbd8335a5922812428ce098272ebc8577407108e5d",
+      "policy_id": "gpf_path_0097",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0097.json",
+      "realized_2bit_param_mass_fraction": 0.15856236786469344,
+      "realized_8bit_param_mass_fraction": 0.07901691331923891
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 98,
+      "policy_hash": "0b442104ed9f707d39580c9337694fa0eac1d0bbf7cc355e9920e1fb992bda91",
+      "policy_id": "gpf_path_0098",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0098.json",
+      "realized_2bit_param_mass_fraction": 0.1649048625792812,
+      "realized_8bit_param_mass_fraction": 0.08113107822410148
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 99,
+      "policy_hash": "9139657e67344644be42b2cce418f1bf4379efc9725c2118a3bc7eedd620dd28",
+      "policy_id": "gpf_path_0099",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0099.json",
+      "realized_2bit_param_mass_fraction": 0.17124735729386892,
+      "realized_8bit_param_mass_fraction": 0.08324524312896406
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 100,
+      "policy_hash": "7eb397ca195e97aa81562631a18620884d82ade00d32715d233a4797f828743b",
+      "policy_id": "gpf_path_0100",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0100.json",
+      "realized_2bit_param_mass_fraction": 0.17124735729386892,
+      "realized_8bit_param_mass_fraction": 0.08535940803382663
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 101,
+      "policy_hash": "88bb874ff6dd91f609e7df96bbb68347cf525ae12404c04798fa3eb8a608b257",
+      "policy_id": "gpf_path_0101",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0101.json",
+      "realized_2bit_param_mass_fraction": 0.17758985200845667,
+      "realized_8bit_param_mass_fraction": 0.08747357293868922
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 102,
+      "policy_hash": "8e428feb20b4595bccb6b9f600a29d84bc867d6c7e4175bba7d2cd00ed8f3866",
+      "policy_id": "gpf_path_0102",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0102.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.0895877378435518
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 103,
+      "policy_hash": "19960c080251d7a17829143bddf4981d60ed9af4da141ae387c26c1aa01787c6",
+      "policy_id": "gpf_path_0103",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0103.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.09170190274841437
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 104,
+      "policy_hash": "26ef5d834390d210ddcdc41b7afd3bedf40c789a4a56804ec0cd42bd89f61b86",
+      "policy_id": "gpf_path_0104",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0104.json",
+      "realized_2bit_param_mass_fraction": 0.19027484143763213,
+      "realized_8bit_param_mass_fraction": 0.09381606765327695
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 105,
+      "policy_hash": "98afed65334678fb6836889e97daf2beed03ea009ab527397202ab12759b8923",
+      "policy_id": "gpf_path_0105",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0105.json",
+      "realized_2bit_param_mass_fraction": 0.19661733615221988,
+      "realized_8bit_param_mass_fraction": 0.09593023255813954
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 106,
+      "policy_hash": "75e118ddcc0c6debcd740376cefe5e3d19dbe26475f76e926dfb1977e37db50a",
+      "policy_id": "gpf_path_0106",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0106.json",
+      "realized_2bit_param_mass_fraction": 0.19661733615221988,
+      "realized_8bit_param_mass_fraction": 0.09804439746300211
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 107,
+      "policy_hash": "1854062074540f0715f46a47776df72fe58e8eecd2764711e3eb3affe542c0a0",
+      "policy_id": "gpf_path_0107",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0107.json",
+      "realized_2bit_param_mass_fraction": 0.2029598308668076,
+      "realized_8bit_param_mass_fraction": 0.10015856236786469
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 108,
+      "policy_hash": "03a48da278e9f46a5520fa42c3a333397e3e6853c3019d4e42825779292525c4",
+      "policy_id": "gpf_path_0108",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0108.json",
+      "realized_2bit_param_mass_fraction": 0.20930232558139536,
+      "realized_8bit_param_mass_fraction": 0.10227272727272728
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 109,
+      "policy_hash": "b9eb854a35060ef52fa48df102bd455aee8ec2a696ef63179b7466284e7d1fd1",
+      "policy_id": "gpf_path_0109",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0109.json",
+      "realized_2bit_param_mass_fraction": 0.20930232558139536,
+      "realized_8bit_param_mass_fraction": 0.10438689217758985
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 110,
+      "policy_hash": "bff47edb3fedd349d252ff3fc24fcf85c432144f84c08b6dea11ea3425ba7448",
+      "policy_id": "gpf_path_0110",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0110.json",
+      "realized_2bit_param_mass_fraction": 0.2156448202959831,
+      "realized_8bit_param_mass_fraction": 0.10650105708245243
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 111,
+      "policy_hash": "a2e3d6d650b2955de1483abe3548ffdadecd27319bb24e82f2332b41f48a71e7",
+      "policy_id": "gpf_path_0111",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0111.json",
+      "realized_2bit_param_mass_fraction": 0.2219873150105708,
+      "realized_8bit_param_mass_fraction": 0.108615221987315
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 112,
+      "policy_hash": "b2ae9c9a5d220bbf7e0688341db2917eac2caa7ecdacfa3faabaacc8f30b3b32",
+      "policy_id": "gpf_path_0112",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0112.json",
+      "realized_2bit_param_mass_fraction": 0.2219873150105708,
+      "realized_8bit_param_mass_fraction": 0.1107293868921776
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 113,
+      "policy_hash": "0f678d05a8ca1a8bb736366295e62c010bcd29b117b5731a861e70143d21b7be",
+      "policy_id": "gpf_path_0113",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0113.json",
+      "realized_2bit_param_mass_fraction": 0.22832980972515857,
+      "realized_8bit_param_mass_fraction": 0.11284355179704017
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 114,
+      "policy_hash": "1eb118a3b3c244b5d77ac5a7a66ee40f965b6f4006767b4cd46dea78effb4df1",
+      "policy_id": "gpf_path_0114",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0114.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11707188160676532
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 115,
+      "policy_hash": "c6f0c90b58e46dec399d9b8e013cf93eb9007103ee0f770b9cae9f66b7772b3b",
+      "policy_id": "gpf_path_0115",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0115.json",
+      "realized_2bit_param_mass_fraction": 0.24735729386892177,
+      "realized_8bit_param_mass_fraction": 0.12130021141649049
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 116,
+      "policy_hash": "89d69d01ae5f3840b04687c7fb90bb1781697bc85f291c9ae569aa43e48d498e",
+      "policy_id": "gpf_path_0116",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0116.json",
+      "realized_2bit_param_mass_fraction": 0.2536997885835095,
+      "realized_8bit_param_mass_fraction": 0.12552854122621565
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 117,
+      "policy_hash": "28f92c30467e754f15fc354b29cc9fc2fcd0db1346e5e3b4c996157e73504ef1",
+      "policy_id": "gpf_path_0117",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0117.json",
+      "realized_2bit_param_mass_fraction": 0.26004228329809725,
+      "realized_8bit_param_mass_fraction": 0.1297568710359408
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 118,
+      "policy_hash": "4b598d7b8a10dd2a8aa37095eed0d63ecdfc9940f7573fa0ef5d0a1ffb6b7555",
+      "policy_id": "gpf_path_0118",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0118.json",
+      "realized_2bit_param_mass_fraction": 0.2727272727272727,
+      "realized_8bit_param_mass_fraction": 0.13398520084566595
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 119,
+      "policy_hash": "d6cb6f87e34a48e1a1b1c0136934940826e60c8376804bb2157f18f54b0f0db5",
+      "policy_id": "gpf_path_0119",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0119.json",
+      "realized_2bit_param_mass_fraction": 0.27906976744186046,
+      "realized_8bit_param_mass_fraction": 0.13821353065539113
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 120,
+      "policy_hash": "f2f76a02f81af169741a587ecef6d6d279eb4f101c17ed531d358ef25f61a6c8",
+      "policy_id": "gpf_path_0120",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0120.json",
+      "realized_2bit_param_mass_fraction": 0.2854122621564482,
+      "realized_8bit_param_mass_fraction": 0.14244186046511628
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 121,
+      "policy_hash": "94395793e55bf02f53205d2c37c49e0376597ca7a1f1f8d50a249de5cf854960",
+      "policy_id": "gpf_path_0121",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0121.json",
+      "realized_2bit_param_mass_fraction": 0.29809725158562367,
+      "realized_8bit_param_mass_fraction": 0.14667019027484143
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 122,
+      "policy_hash": "f67c154488302fe51c2b919644a8c5e44b725e289b643f01853c50eea0621440",
+      "policy_id": "gpf_path_0122",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0122.json",
+      "realized_2bit_param_mass_fraction": 0.3044397463002114,
+      "realized_8bit_param_mass_fraction": 0.15089852008456658
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 123,
+      "policy_hash": "3059c2c55145e4ef83bac0f6d4c246dad2331b43e7137eb7b2c02d17444c770e",
+      "policy_id": "gpf_path_0123",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0123.json",
+      "realized_2bit_param_mass_fraction": 0.3107822410147992,
+      "realized_8bit_param_mass_fraction": 0.15512684989429176
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 124,
+      "policy_hash": "de4c263de5035dad0f08b9947ef931fdc7984f15f8f4203ae890869adc5ab5f7",
+      "policy_id": "gpf_path_0124",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0124.json",
+      "realized_2bit_param_mass_fraction": 0.32346723044397463,
+      "realized_8bit_param_mass_fraction": 0.1593551797040169
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 125,
+      "policy_hash": "d60efb26910c59b20d4d13cb05ca4267bec05be96372a609aec5dbc090167343",
+      "policy_id": "gpf_path_0125",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0125.json",
+      "realized_2bit_param_mass_fraction": 0.3298097251585624,
+      "realized_8bit_param_mass_fraction": 0.16358350951374206
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 126,
+      "policy_hash": "f0ddd6b7c875ac2ad44476fbff441f60661a696f0f91b4734ca1591e5561f13e",
+      "policy_id": "gpf_path_0126",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0126.json",
+      "realized_2bit_param_mass_fraction": 0.3361522198731501,
+      "realized_8bit_param_mass_fraction": 0.16781183932346724
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 127,
+      "policy_hash": "5b43403cc868a0c561ba17b68813c3f8f536976128f02af80e06cb0e7ae6dcaf",
+      "policy_id": "gpf_path_0127",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0127.json",
+      "realized_2bit_param_mass_fraction": 0.3488372093023256,
+      "realized_8bit_param_mass_fraction": 0.1720401691331924
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 128,
+      "policy_hash": "359ea4df728857db00ae6fd8912f502924076bf58c6053d1f92504ac7843211b",
+      "policy_id": "gpf_path_0128",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0128.json",
+      "realized_2bit_param_mass_fraction": 0.3488372093023256,
+      "realized_8bit_param_mass_fraction": 0.17415433403805497
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 129,
+      "policy_hash": "1644f427d65c679e889f12b95e7a08509ff63730fb2b4385d658d9dc0214a940",
+      "policy_id": "gpf_path_0129",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0129.json",
+      "realized_2bit_param_mass_fraction": 0.36152219873150104,
+      "realized_8bit_param_mass_fraction": 0.17838266384778012
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 130,
+      "policy_hash": "000f955d6c92adb3fb30f212d48a1a193601afc48e948216d9661153e82e6bd9",
+      "policy_id": "gpf_path_0130",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0130.json",
+      "realized_2bit_param_mass_fraction": 0.3678646934460888,
+      "realized_8bit_param_mass_fraction": 0.18261099365750527
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 131,
+      "policy_hash": "67f50ff948b1918fef88a35a8bff5be80e838442c123a0472426dd84ea39f34c",
+      "policy_id": "gpf_path_0131",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0131.json",
+      "realized_2bit_param_mass_fraction": 0.37420718816067655,
+      "realized_8bit_param_mass_fraction": 0.18683932346723045
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 132,
+      "policy_hash": "91a34118eae4fe859965f171bb8abf24bfaf99ff431ccef2a46bdfe11ccf464b",
+      "policy_id": "gpf_path_0132",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0132.json",
+      "realized_2bit_param_mass_fraction": 0.386892177589852,
+      "realized_8bit_param_mass_fraction": 0.1910676532769556
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 133,
+      "policy_hash": "84a125267eaa9fa69665b4188fba77613567a583180cbb38d132fd5ed842a6a0",
+      "policy_id": "gpf_path_0133",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0133.json",
+      "realized_2bit_param_mass_fraction": 0.39323467230443976,
+      "realized_8bit_param_mass_fraction": 0.19529598308668075
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 134,
+      "policy_hash": "857bd4a812bf01d0cf5f33870b82eb982d318d319ca1a6d5b3b10be53a5bd95c",
+      "policy_id": "gpf_path_0134",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0134.json",
+      "realized_2bit_param_mass_fraction": 0.39957716701902746,
+      "realized_8bit_param_mass_fraction": 0.19952431289640593
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 135,
+      "policy_hash": "5d491b4e65f021f7795f8f4bbbcf0439f7431f3b81797e6a1fdb8905d7458f52",
+      "policy_id": "gpf_path_0135",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0135.json",
+      "realized_2bit_param_mass_fraction": 0.41226215644820297,
+      "realized_8bit_param_mass_fraction": 0.20375264270613108
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 136,
+      "policy_hash": "ba4840dbd8928c97d7a0a5a94d3bad6d0feec96f57bb5cc1040c138b4efcba95",
+      "policy_id": "gpf_path_0136",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0136.json",
+      "realized_2bit_param_mass_fraction": 0.4186046511627907,
+      "realized_8bit_param_mass_fraction": 0.20798097251585623
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 137,
+      "policy_hash": "463e009e681bf276ad2d652b20842f29d79c8d7b8eb305591e28bdcef566f523",
+      "policy_id": "gpf_path_0137",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0137.json",
+      "realized_2bit_param_mass_fraction": 0.4249471458773784,
+      "realized_8bit_param_mass_fraction": 0.2100951374207188
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 138,
+      "policy_hash": "96c5972b9671bc7ff47b4bb1d3e8a606aac02d584ac19c51185a1c5895e664f4",
+      "policy_id": "gpf_path_0138",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0138.json",
+      "realized_2bit_param_mass_fraction": 0.4312896405919662,
+      "realized_8bit_param_mass_fraction": 0.214323467230444
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 139,
+      "policy_hash": "461c7f020e67af7a6295c93da3b43f5b2b10811a1360782e1b7472dde1f3e0b6",
+      "policy_id": "gpf_path_0139",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0139.json",
+      "realized_2bit_param_mass_fraction": 0.4376321353065539,
+      "realized_8bit_param_mass_fraction": 0.21643763213530656
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 140,
+      "policy_hash": "f5f77c8b35a7c81599ccada8c8f1b626c892bf282d208c977579e865843786a6",
+      "policy_id": "gpf_path_0140",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0140.json",
+      "realized_2bit_param_mass_fraction": 0.4439746300211416,
+      "realized_8bit_param_mass_fraction": 0.2206659619450317
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 141,
+      "policy_hash": "1e819528609cd14ab84560c883a5731db3a31dc4bb81962fa97d72a7ef1506aa",
+      "policy_id": "gpf_path_0141",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0141.json",
+      "realized_2bit_param_mass_fraction": 0.4503171247357294,
+      "realized_8bit_param_mass_fraction": 0.2227801268498943
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 142,
+      "policy_hash": "1f85ac47d665bb3500cba58f93a29a09ac860292eb93eb8924fc0b4f16f0420a",
+      "policy_id": "gpf_path_0142",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0142.json",
+      "realized_2bit_param_mass_fraction": 0.45665961945031713,
+      "realized_8bit_param_mass_fraction": 0.22700845665961944
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 143,
+      "policy_hash": "c62f9ff7b4d8352b56fb8cd4afcb9325e4d49e03253069c0e6e925eced5d3107",
+      "policy_id": "gpf_path_0143",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0143.json",
+      "realized_2bit_param_mass_fraction": 0.4630021141649049,
+      "realized_8bit_param_mass_fraction": 0.22912262156448204
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 144,
+      "policy_hash": "e61d6e19c27775f742e929a6d71f4e5584eb7134141edb256e9cbf68c875e7e3",
+      "policy_id": "gpf_path_0144",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0144.json",
+      "realized_2bit_param_mass_fraction": 0.4693446088794926,
+      "realized_8bit_param_mass_fraction": 0.2333509513742072
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 145,
+      "policy_hash": "96d5bd8f003a2ddbc4b6f05c56dc0efac1f473d994a49b08a1046da1df4d576b",
+      "policy_id": "gpf_path_0145",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0145.json",
+      "realized_2bit_param_mass_fraction": 0.4820295983086681,
+      "realized_8bit_param_mass_fraction": 0.23969344608879492
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 146,
+      "policy_hash": "39cba148385c987bf413c8d163cbbe72161fe0e371252ada2e433c8b9c925d9f",
+      "policy_id": "gpf_path_0146",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0146.json",
+      "realized_2bit_param_mass_fraction": 0.4883720930232558,
+      "realized_8bit_param_mass_fraction": 0.24392177589852007
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 147,
+      "policy_hash": "98dc46aec50807aeb81406633908c49c8c0dd17ed71b56a5fcc14fc5c2dc4e9d",
+      "policy_id": "gpf_path_0147",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0147.json",
+      "realized_2bit_param_mass_fraction": 0.49471458773784355,
+      "realized_8bit_param_mass_fraction": 0.24603594080338267
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 148,
+      "policy_hash": "4b6ca948638ffdc8c804af612f9015dd58a30e68dbe69b02529ca3ab45a18c98",
+      "policy_id": "gpf_path_0148",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0148.json",
+      "realized_2bit_param_mass_fraction": 0.507399577167019,
+      "realized_8bit_param_mass_fraction": 0.2523784355179704
+    },
+    {
+      "budget_slack_fraction": 0.001321353065539112,
+      "endpoint_kind": "",
+      "path_index": 149,
+      "policy_hash": "97f5e7b47e65b081363047064c82bd8138e3f1d956ffa190f59a0ba27dfd4fc0",
+      "policy_id": "gpf_path_0149",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0149.json",
+      "realized_2bit_param_mass_fraction": 0.5200845665961945,
+      "realized_8bit_param_mass_fraction": 0.25872093023255816
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 150,
+      "policy_hash": "5d2ba482d43f5c808404e41ca06f8a379f91cff1c94d1cd6cb836645ca56fed6",
+      "policy_id": "gpf_path_0150",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0150.json",
+      "realized_2bit_param_mass_fraction": 0.5264270613107822,
+      "realized_8bit_param_mass_fraction": 0.2629492600422833
+    },
+    {
+      "budget_slack_fraction": 0.0023784355179704017,
+      "endpoint_kind": "",
+      "path_index": 151,
+      "policy_hash": "3688abe2d8ffbbb41755f60b46c29e40667eb43af184540fbfc0b2283c84af0d",
+      "policy_id": "gpf_path_0151",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0151.json",
+      "realized_2bit_param_mass_fraction": 0.5391120507399577,
+      "realized_8bit_param_mass_fraction": 0.26717758985200846
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 152,
+      "policy_hash": "1cc1217ecac9ebf7a95f0c06e31977521bb4ae67e3b0a26e417d660cdda5f852",
+      "policy_id": "gpf_path_0152",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0152.json",
+      "realized_2bit_param_mass_fraction": 0.5433403805496829,
+      "realized_8bit_param_mass_fraction": 0.2714059196617336
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 153,
+      "policy_hash": "71128a96722867b37a1cbd5a8e52fca155de2d26b517beec37d1cb37d44e49d8",
+      "policy_id": "gpf_path_0153",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0153.json",
+      "realized_2bit_param_mass_fraction": 0.5560253699788583,
+      "realized_8bit_param_mass_fraction": 0.27774841437632136
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 154,
+      "policy_hash": "945d6b3b92bd7e808f43926687b67a0f2e48d9d43667b1b2d4e9f81b79a408aa",
+      "policy_id": "gpf_path_0154",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0154.json",
+      "realized_2bit_param_mass_fraction": 0.5602536997885835,
+      "realized_8bit_param_mass_fraction": 0.2798625792811839
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "greedy_max8_endpoint",
+      "path_index": 155,
+      "policy_hash": "2eaf4eec8cb745cde9a74a48728286e323580b631b699c5690f44a41239d5e0b",
+      "policy_id": "gpf_path_0155_endpoint",
+      "policy_path": "artifacts/policies/smoke_coarse_generation/gpf_path_0155_endpoint.json",
+      "realized_2bit_param_mass_fraction": 0.572938689217759,
+      "realized_8bit_param_mass_fraction": 0.28620507399577166
+    }
+  ],
+  "profile_kind": "bootstrap_legacy_scalar",
+  "sensitivity_metadata": {
+    "calibration_split": "first300",
+    "method": "bootstrap_from_existing_activation_profile",
+    "model_id": "Qwen/Qwen3.5-9B",
+    "num_calibration_prompts": 16,
+    "seed": 42,
+    "source_profile": "outputs/sensitivity/math500-qwen35-9b-task-sensitivity-v1-limit16.json",
+    "task": "math500"
+  }
+}

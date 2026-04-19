@@ -1,0 +1,103 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "16": 19,
+        "4": 32,
+        "8": 446
+      },
+      "budget_alignment_score": 0.9980944342132188,
+      "conservative_prediction": -0.013676318147222925,
+      "estimated_average_bit_width": 7.98475547370575,
+      "estimated_weight_footprint_gb": 23.81683349609375,
+      "fitness": 0.11264527644140532,
+      "group_value_alignment_score": 0.5911827367550514,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/math500-hierarchical-uniform8-route-v1/candidate-01.json",
+      "prediction_uncertainty": 0.02448373488625285,
+      "rank": 1,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": -0.006838159073611462
+    },
+    {
+      "bit_counts": {
+        "16": 26,
+        "4": 46,
+        "8": 425
+      },
+      "budget_alignment_score": 0.9983182422754246,
+      "conservative_prediction": -0.011221031165080176,
+      "estimated_average_bit_width": 7.986545938203397,
+      "estimated_weight_footprint_gb": 23.822174072265625,
+      "fitness": 0.11114232286933079,
+      "group_value_alignment_score": 0.5396394565285224,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/math500-hierarchical-uniform8-route-v1/candidate-02.json",
+      "prediction_uncertainty": 0.022836698743890792,
+      "rank": 2,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": -0.005610515582540088
+    },
+    {
+      "bit_counts": {
+        "16": 23,
+        "4": 42,
+        "8": 432
+      },
+      "budget_alignment_score": 0.9998928918559443,
+      "conservative_prediction": -0.013674406047728025,
+      "estimated_average_bit_width": 7.999143134847555,
+      "estimated_weight_footprint_gb": 23.85974884033203,
+      "fitness": 0.11113780902595825,
+      "group_value_alignment_score": 0.5705156011009301,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/math500-hierarchical-uniform8-route-v1/candidate-03.json",
+      "prediction_uncertainty": 0.024489799506722542,
+      "rank": 3,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": -0.006837203023864012
+    },
+    {
+      "bit_counts": {
+        "16": 29,
+        "4": 44,
+        "8": 424
+      },
+      "budget_alignment_score": 0.9999456466134643,
+      "conservative_prediction": -0.013539965433613216,
+      "estimated_average_bit_width": 7.999565172907714,
+      "estimated_weight_footprint_gb": 23.861007690429688,
+      "fitness": 0.11093771446504705,
+      "group_value_alignment_score": 0.5661803261949989,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/math500-hierarchical-uniform8-route-v1/candidate-04.json",
+      "prediction_uncertainty": 0.024487792404458184,
+      "rank": 4,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": -0.006769982716806608
+    },
+    {
+      "bit_counts": {
+        "16": 26,
+        "4": 48,
+        "8": 423
+      },
+      "budget_alignment_score": 0.9974469894618375,
+      "conservative_prediction": -0.011413116888618968,
+      "estimated_average_bit_width": 7.9795759156947,
+      "estimated_weight_footprint_gb": 23.80138397216797,
+      "fitness": 0.10973093162210949,
+      "group_value_alignment_score": 0.5254134545887326,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/math500-hierarchical-uniform8-route-v1/candidate-05.json",
+      "prediction_uncertainty": 0.022863335410075486,
+      "rank": 5,
+      "reference_accuracy": 0.0,
+      "reference_advantage_score": -0.005706558444309484
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/feasibility/math500-qwen35-27b-vs-9b-math500-uniform8-route-v3-ablation16-candidate-01-llmcompressor-source-report.json",
+  "search_result_path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/search/math500-hierarchical-uniform8-route-v1.json"
+}

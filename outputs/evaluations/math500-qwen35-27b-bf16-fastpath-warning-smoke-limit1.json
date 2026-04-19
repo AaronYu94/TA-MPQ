@@ -1,0 +1,32 @@
+{
+  "accuracy": 0.0,
+  "backend_variant": "source",
+  "mean_generation_peak_delta_mb": 276.38525390625,
+  "mean_latency_sec": 67.697289311,
+  "mean_resident_memory_mb": 51300.0966796875,
+  "mean_total_peak_memory_mb": 51576.48291015625,
+  "median_latency_sec": 67.697289311,
+  "model_id": "Qwen/Qwen3.5-27B-bf16-fastpath-warning-smoke",
+  "num_correct": 0,
+  "num_examples": 1,
+  "p95_latency_sec": 67.697289311,
+  "results": [
+    {
+      "completion_tokens": 64,
+      "example_id": "test/number_theory/417.json",
+      "generation_peak_delta_mb": 276.38525390625,
+      "is_correct": false,
+      "latency_sec": 67.697289311,
+      "model_id": "Qwen/Qwen3.5-27B-bf16-fastpath-warning-smoke",
+      "predicted_answer": "N",
+      "prompt_tokens": 47,
+      "raw_completion": "To find the smallest positive multiple of 450 whose digits are all zeroes and ones, let's denote this number as $N$.\n\n### Step 1: Analyze the Divisibility Rules\nThe number $N$ must be divisible by 450.\nFirst, we find the prime factor",
+      "reference_answer": "11,111,111,100",
+      "resident_memory_mb": 51300.0966796875,
+      "total_peak_memory_mb": 51576.48291015625
+    }
+  ],
+  "task_name": "math500",
+  "task_prompt_style": null,
+  "task_split": "full500"
+}

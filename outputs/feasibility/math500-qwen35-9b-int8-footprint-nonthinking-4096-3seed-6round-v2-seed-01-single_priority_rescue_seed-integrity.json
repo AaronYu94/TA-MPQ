@@ -1,0 +1,44 @@
+{
+  "candidate_path": "outputs/policies/math500-qwen35-9b-int8-footprint-nonthinking-4096-3seed-6round-v2/seed-01-single_priority_rescue_seed.json",
+  "candidate_provenance": "single_priority_rescue_seed",
+  "candidate_rank": 0,
+  "estimated_full_model_weight_footprint_gb": 9.27944278717041,
+  "intended_non_default_targets": [
+    {
+      "group_name": "bit_4_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.3\\.self_attn\\.o_proj$"
+    },
+    {
+      "group_name": "ignore",
+      "origin": "ignore",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "model.layers.0.linear_attn.in_proj_a"
+    }
+  ],
+  "is_clean": true,
+  "matched_linear_weight_footprint_gb": 7.3829345703125,
+  "num_intended_non_default_targets": 2,
+  "reload_matched_targets": [
+    "Linear",
+    "model.layers.0.linear_attn.in_proj_a",
+    "re:.*model\\.layers\\.3\\.self_attn\\.o_proj$"
+  ],
+  "reload_unmatched_targets": [],
+  "source_matched_targets": [
+    "Linear",
+    "model.layers.0.linear_attn.in_proj_a",
+    "re:.*model\\.layers\\.3\\.self_attn\\.o_proj$"
+  ],
+  "source_unmatched_targets": [],
+  "unresolved_target_warnings": []
+}

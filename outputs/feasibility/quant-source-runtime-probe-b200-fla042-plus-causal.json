@@ -1,0 +1,34 @@
+{
+  "cuda_device_count": 1,
+  "cuda_devices": [
+    "NVIDIA B200"
+  ],
+  "cuda_is_available": true,
+  "cuda_visible_devices": null,
+  "current_device_index": 0,
+  "nvidia_smi": [
+    "NVIDIA B200, 580.95.05"
+  ],
+  "nvidia_smi_returncode": 0,
+  "optional_module_imports": {
+    "causal_conv1d": {
+      "available": false,
+      "error_message": "No module named 'causal_conv1d'",
+      "error_type": "ModuleNotFoundError"
+    },
+    "fla": {
+      "available": true
+    }
+  },
+  "optional_module_specs": {
+    "causal_conv1d": false,
+    "fla": true
+  },
+  "qwen3_5_fast_path_available": false,
+  "torch_cuda_version": "12.8",
+  "torch_version": "2.10.0+cu128",
+  "transformers_optional_kernels": {
+    "is_causal_conv1d_available": false,
+    "is_flash_linear_attention_available": true
+  }
+}

@@ -15,6 +15,7 @@ if str(SRC_ROOT) not in sys.path:
 from ta_mpq.policy_export import (
     build_backend_projection,
     build_project_policy,
+    build_project_policy_from_module_quantization_configs,
     export_top_candidates,
     expand_group_bits_to_module_assignments,
     load_policy_from_candidate,
@@ -26,6 +27,7 @@ class PolicyExportTests(unittest.TestCase):
         self.report_payload = {
             "contract_name": "unit-test-contract",
             "model_id": "unit-test-model",
+            "estimated_non_linear_weight_footprint_gb": 0.5,
             "layer_stats": [
                 {
                     "name": "model.layers.0.linear_attn.out_proj",
@@ -150,6 +152,60 @@ class PolicyExportTests(unittest.TestCase):
         self.assertEqual(policy.rules[0].bit_width, 8)
         self.assertEqual(policy.rules[0].targets, ("model.layers.1.linear_attn.out_proj",))
 
+    def test_build_project_policy_emits_same_bit_rules_for_nondefault_quantization_config(self) -> None:
+        policy = build_project_policy_from_module_quantization_configs(
+            {
+                "model.layers.0.linear_attn.out_proj": {
+                    "bit_width": 8,
+                    "group_size": 128,
+                    "symmetric": True,
+                },
+                "model.layers.0.mlp.down_proj": {
+                    "bit_width": 8,
+                    "group_size": 64,
+                    "symmetric": False,
+                },
+                "model.layers.1.linear_attn.out_proj": {
+                    "bit_width": 8,
+                    "group_size": 128,
+                    "symmetric": True,
+                },
+            }
+        )
+
+        self.assertEqual(policy.default_bit_width, 8)
+        self.assertEqual(len(policy.rules), 1)
+        self.assertEqual(policy.rules[0].bit_width, 8)
+        self.assertEqual(policy.rules[0].group_size, 64)
+        self.assertFalse(policy.rules[0].symmetric)
+        self.assertEqual(policy.rules[0].targets, ("model.layers.0.mlp.down_proj",))
+
+    def test_build_backend_projection_emits_per_target_regexes_for_llmcompressor(self) -> None:
+        projection = build_backend_projection(
+            module_assignments={
+                "model.layers.0.linear_attn.out_proj": 8,
+                "model.layers.0.mlp.down_proj": 8,
+                "model.layers.1.linear_attn.out_proj": 4,
+                "model.layers.1.mlp.up_proj": 4,
+            },
+            backend="llmcompressor",
+        )
+
+        projected_rules = projection["projected_policy"]["rules"]
+        four_bit_rule = next(rule for rule in projected_rules if rule["bit_width"] == 4)
+        self.assertEqual(
+            tuple(four_bit_rule["targets"]),
+            (
+                r"re:.*model\.layers\.1\.linear_attn\.out_proj$",
+                r"re:.*model\.layers\.1\.mlp\.up_proj$",
+            ),
+        )
+        self.assertEqual(projection["target_compaction"]["strategy"], "per_target_regex")
+        self.assertEqual(
+            projection["target_compaction"]["post_compaction_target_count"],
+            projection["target_compaction"]["pre_compaction_target_count"],
+        )
+
     def test_export_top_candidates_writes_manifest_and_candidate_files(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
@@ -177,6 +233,11 @@ class PolicyExportTests(unittest.TestCase):
             self.assertEqual(candidate_payload["reference_accuracy"], 0.39)
             self.assertEqual(candidate_payload["reference_advantage_score"], 0.03)
             self.assertEqual(candidate_payload["prediction_uncertainty"], 0.07)
+            self.assertEqual(candidate_payload["budget_accounting_mode"], "matched_linear_weight_budget")
+            self.assertAlmostEqual(
+                candidate_payload["estimated_full_model_weight_footprint_gb"],
+                candidate_payload["matched_linear_weight_footprint_gb"] + 0.5,
+            )
             self.assertEqual(
                 candidate_payload["backend_projections"]["llmcompressor"]["projected_bit_counts"],
                 {"4": 3, "8": 1},
@@ -187,6 +248,10 @@ class PolicyExportTests(unittest.TestCase):
             self.assertEqual(manifest_candidate["reference_accuracy"], 0.39)
             self.assertEqual(manifest_candidate["reference_advantage_score"], 0.03)
             self.assertEqual(manifest_candidate["prediction_uncertainty"], 0.07)
+            self.assertAlmostEqual(
+                manifest_candidate["estimated_full_model_weight_footprint_gb"],
+                manifest_candidate["matched_linear_weight_footprint_gb"] + 0.5,
+            )
 
     def test_load_policy_from_candidate_reads_project_and_backend_versions(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

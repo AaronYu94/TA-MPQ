@@ -1,0 +1,19 @@
+{
+  "candidate_path": "outputs/policies/math500-surrogate-free-train200-test300-max512-b200/seed-01-uniform_int8_seed.json",
+  "candidate_provenance": "uniform_int8_seed",
+  "candidate_rank": 0,
+  "estimated_full_model_weight_footprint_gb": 26.23539638519287,
+  "intended_non_default_targets": [],
+  "is_clean": true,
+  "matched_linear_weight_footprint_gb": 23.8623046875,
+  "num_intended_non_default_targets": 0,
+  "reload_matched_targets": [
+    "Linear"
+  ],
+  "reload_unmatched_targets": [],
+  "source_matched_targets": [
+    "Linear"
+  ],
+  "source_unmatched_targets": [],
+  "unresolved_target_warnings": []
+}

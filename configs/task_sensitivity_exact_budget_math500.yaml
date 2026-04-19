@@ -1,0 +1,154 @@
+model_id: Qwen/Qwen3.5-9B
+task: math500
+grouping: per_block_component
+seed: 42
+
+budget:
+  target: int4
+  enforce: leq
+  use_param_count: true
+  log_actual_serialized_size: true
+
+sensitivity:
+  method: taq_kl_lite
+  calibration_split: q301_400
+  num_calibration_prompts: 64
+  temperature: 1.0
+  noise_bits: [2, 4, 8]
+  max_prompt_tokens: 1024
+  batch_size: 8
+  cache_baseline_logits: true
+  resume: true
+  output: artifacts/sensitivity/math500_taq_kl_lite_q301_400_first64.json
+
+frontier_search:
+  mode: greedy_path_frontier
+
+  hard_limits:
+    max_generated_question_evals_default: 500
+    max_unique_quantized_policies: 13
+    dedupe_before_quantization: true
+    dedupe_key: canonical_repaired_assignment_hash
+    cache_policy_artifacts_by_hash: true
+    cache_per_example_outputs: true
+
+  search_axis:
+    type: discrete_greedy_path
+    coordinate: realized_8bit_param_mass_fraction
+    anchor_policy: uniform_int4
+    endpoint_policy: greedy_max8_endpoint
+    evaluate_anchor_in_search: false
+    evaluate_endpoint_in_coarse: false
+    evaluate_endpoint_as_final_diagnostic: true
+
+  greedy_path:
+    start_from: uniform_int4
+    target_budget: raw_weight_int4
+
+    promotion_order:
+      score: benefit_8_over_4_per_extra_bit
+
+    demotion_order:
+      score: demotion_cost_4_to_2_per_saved_bit
+
+    demotion_repair:
+      method: local_beam_subset_cover
+      candidate_pool_size: 64
+      beam_width: 16
+      overshoot_penalty: 10.0
+
+    slack_policy:
+      global_slack_fill_after_each_snapshot: false
+      carry_slack_forward: true
+      allow_under_budget: true
+
+    constraints:
+      min_bitwidth:
+        global::lm_head: 4
+
+    stop_condition:
+      mode: no_more_feasible_8bit_promotions
+
+  coarse:
+    eval_split: first300
+    num_questions: 25
+    question_set_name: coarse_25
+    same_questions_for_all_policies: true
+    tie_band_correct_answers: 1
+    tie_break:
+      - higher_proxy_score
+      - lower_promotion_mass_fraction
+      - lower_twobit_mass
+      - smaller_budget_slack
+    policy_selection:
+      method: evenly_spaced_path_snapshots
+      count: 8
+      target_rule: interior_sector_centers
+      coordinate: realized_8bit_param_mass_fraction
+      dedupe_by_assignment_hash: true
+      exclude_anchor: true
+      exclude_endpoint: true
+
+  refine:
+    eval_split: first300
+    num_questions: 50
+    question_set_name: refine_50_disjoint_from_coarse
+    same_questions_for_all_policies: true
+    disjoint_from_coarse_questions: true
+    seed_selection:
+      default: best_unique_coarse_policy_only
+      allow_top2_for_candidate_generation: true
+      do_not_evaluate_4_per_seed_unconditionally: true
+      second_seed_conditions:
+        max_score_gap_correct_answers: 1
+        min_realized_fraction_distance: 0.04
+        must_have_unique_policy_hash: true
+    policy_selection:
+      method: local_evenly_spaced_path_snapshots
+      count: 4
+      include_seed: true
+      coordinate: realized_8bit_param_mass_fraction
+      dedupe_by_assignment_hash: true
+    tie_band_correct_answers: 1
+    tie_break:
+      - higher_accuracy
+      - lower_promotion_mass_fraction
+      - lower_twobit_mass
+      - smaller_budget_slack
+      - higher_proxy_score
+
+  final:
+    eval_split: last100
+    num_questions: 100
+    policies:
+      - selected_winner
+
+  endpoint_diagnostic:
+    enabled: true
+    eval_split: last100
+    num_questions: 100
+    policies:
+      - greedy_max8_endpoint
+    use_for_selection: false
+
+execution:
+  policy_parallelism:
+    mode: auto
+    max_parallel_policies: null
+    gpu_per_policy: 1
+    fail_if_requested_parallelism_unavailable: false
+    stage_overrides:
+      coarse:
+        max_parallel_policies: null
+      refine:
+        max_parallel_policies: null
+      final:
+        max_parallel_policies: null
+      endpoint_diagnostic:
+        max_parallel_policies: null
+
+evaluation:
+  eval_mode: simple_evals_nonthinking
+  greedy: true
+  max_new_tokens: 4096
+  cache_evals: true

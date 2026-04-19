@@ -1,0 +1,20 @@
+{
+  "name": "math500-qwen35-9b-int8-footprint",
+  "task_name": "math500",
+  "compressed_source_model_id": "Qwen/Qwen3.5-9B",
+  "native_baseline_model_id": "Qwen/Qwen3.5-9B",
+  "upper_bound_model_id": "Qwen/Qwen3.5-9B",
+  "comparison_rule": "Compare a task-aware mixed-precision Qwen3.5-9B checkpoint against the native BF16 9B model and the uniform 8-bit 9B baseline at matched linear-weight footprint.",
+  "budget_rule": "Use the measured matched linear-weight footprint of the uniform 8-bit 9B baseline as the search budget for task-aware mixed-precision 9B quantization.",
+  "quantization_bits": [
+    4,
+    8,
+    16
+  ],
+  "calibration_samples": 64,
+  "baseline_eval_limit": 25,
+  "generation_max_new_tokens": 4096,
+  "surrogate_target_metric": "accuracy",
+  "surrogate_uniform_baseline_bit_width": 8,
+  "search_target_budget_gb": 7.390625
+}

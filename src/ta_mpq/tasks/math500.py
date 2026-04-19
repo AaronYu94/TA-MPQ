@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
+import hashlib
 import re
 
 
@@ -26,9 +28,11 @@ def load_examples(limit: int | None = None, split: str = "test") -> list[MATH500
 def load_math500_examples(limit: int | None = None, split: str = "test") -> list[MATH500Example]:
     from datasets import load_dataset
 
+    requested_split = str(split or "test")
+    dataset_split = "test" if requested_split in _NAMED_SUBSET_SPECS else requested_split
     dataset = None
     last_error: Exception | None = None
-    split_candidates = (split, "test", "train")
+    split_candidates = (dataset_split, "test", "train")
     dataset_candidates = ("HuggingFaceH4/MATH-500", "ankner/math-500")
 
     for dataset_name in dataset_candidates:
@@ -44,9 +48,6 @@ def load_math500_examples(limit: int | None = None, split: str = "test") -> list
     if dataset is None:
         raise RuntimeError("Unable to load a MATH-500 dataset split") from last_error
 
-    if limit is not None:
-        dataset = dataset.select(range(min(limit, len(dataset))))
-
     examples: list[MATH500Example] = []
     for index, row in enumerate(dataset):
         example_id = str(row.get("unique_id") or row.get("id") or index)
@@ -59,24 +60,89 @@ def load_math500_examples(limit: int | None = None, split: str = "test") -> list
                 answer=answer,
             )
         )
+    examples = select_examples_for_split(examples, requested_split)
+    if limit is not None:
+        examples = examples[: min(limit, len(examples))]
     return examples
 
 
-def build_messages(question: str) -> list[dict[str, str]]:
-    return [
-        {
-            "role": "system",
-            "content": (
-                "You solve competition-style math problems. "
-                "Return only the final answer as a concise mathematical expression. "
-                "Do not include reasoning, analysis, or extra words."
-            ),
-        },
-        {
-            "role": "user",
-            "content": question.strip() + "\n\nRespond with only the final answer.",
-        },
-    ]
+_NAMED_SUBSET_SPECS = {
+    "dev100": (0, 100),
+    "accept200": (100, 300),
+    "train200": (0, 200),
+    "test300": (200, 500),
+    "first300": (0, 300),
+    "hard50": (450, 500),
+    "last100": (400, 500),
+    "q301_400": (300, 400),
+    "middle100": (300, 400),
+    "full500": (0, None),
+}
+
+
+def select_examples_for_split(
+    examples: list[MATH500Example],
+    split: str,
+) -> list[MATH500Example]:
+    requested_split = str(split or "test")
+    subset_spec = _NAMED_SUBSET_SPECS.get(requested_split)
+    if subset_spec is None:
+        return list(examples)
+
+    ordered = sorted(
+        examples,
+        key=lambda example: (
+            _stable_example_sort_key(example.example_id),
+            str(example.example_id),
+        ),
+    )
+    start_index, end_index = subset_spec
+    return ordered[start_index:end_index]
+
+
+def select_examples_by_id(
+    examples: list[MATH500Example],
+    example_ids: Iterable[str],
+) -> list[MATH500Example]:
+    selected_ids = [str(example_id) for example_id in example_ids]
+    if not selected_ids:
+        return []
+
+    lookup = {str(example.example_id): example for example in examples}
+    missing_ids = [example_id for example_id in selected_ids if example_id not in lookup]
+    if missing_ids:
+        raise ValueError(
+            "Unknown MATH-500 example ids requested: " + ", ".join(missing_ids[:5])
+        )
+    return [lookup[example_id] for example_id in selected_ids]
+
+
+def _stable_example_sort_key(example_id: str) -> str:
+    return hashlib.sha256(str(example_id).encode("utf-8")).hexdigest()
+
+
+def build_messages(
+    question: str,
+    prompt_style: str = "simple_evals",
+) -> list[dict[str, str]]:
+    normalized_style = str(prompt_style or "simple_evals").strip().lower()
+    if normalized_style in {
+        "simple_evals",
+        "simple_evals_nonthinking",
+        "qwen_prompt_thinking",
+        "reasoning_boxed",
+        "deepseek_math",
+    }:
+        return [
+            {
+                "role": "user",
+                "content": (
+                    question.strip()
+                    + "\n\nPlease reason step by step, and put your final answer within \\boxed{}."
+                ),
+            },
+        ]
+    raise ValueError(f"Unsupported MATH-500 prompt_style: {prompt_style}")
 
 
 def extract_reference_answer(answer: str) -> str:
@@ -87,25 +153,31 @@ def extract_reference_answer(answer: str) -> str:
 
 
 def extract_prediction_answer(completion: str) -> str | None:
+    predicted, _, _ = extract_prediction_details(completion)
+    return predicted
+
+
+def extract_prediction_details(completion: str) -> tuple[str | None, str, bool]:
     boxed = _extract_last_boxed_content(completion)
+    has_boxed_answer = boxed is not None
     if boxed is not None:
         normalized = normalize_answer(boxed)
         if normalized:
-            return normalized
+            return normalized, "boxed", has_boxed_answer
 
     inline_math = INLINE_MATH_RE.findall(completion)
     if inline_math:
         normalized = normalize_answer(inline_math[-1])
         if normalized:
-            return normalized
+            return normalized, "inline_math", has_boxed_answer
 
     lines = [line.strip() for line in completion.splitlines() if line.strip()]
     for line in reversed(lines):
         candidate = ANSWER_PREFIX_RE.sub("", line)
         normalized = normalize_answer(candidate)
         if normalized:
-            return normalized
-    return None
+            return normalized, "last_line", has_boxed_answer
+    return None, "none", has_boxed_answer
 
 
 def normalize_answer(text: str) -> str:
@@ -131,6 +203,22 @@ def score_prediction(completion: str, reference_answer: str) -> tuple[str | None
     if predicted is None:
         return None, False
     return predicted, predicted == normalize_answer(reference_answer)
+
+
+def score_prediction_detailed(
+    completion: str,
+    reference_answer: str,
+) -> tuple[str | None, bool, dict[str, object]]:
+    predicted, extraction_source, has_boxed_answer = extract_prediction_details(completion)
+    if predicted is None:
+        return None, False, {
+            "answer_extraction_source": extraction_source,
+            "has_boxed_answer": has_boxed_answer,
+        }
+    return predicted, predicted == normalize_answer(reference_answer), {
+        "answer_extraction_source": extraction_source,
+        "has_boxed_answer": has_boxed_answer,
+    }
 
 
 def _normalize_fracs(text: str) -> str:

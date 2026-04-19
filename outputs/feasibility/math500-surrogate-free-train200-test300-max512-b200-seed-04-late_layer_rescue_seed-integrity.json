@@ -1,0 +1,104 @@
+{
+  "candidate_path": "outputs/policies/math500-surrogate-free-train200-test300-max512-b200/seed-04-late_layer_rescue_seed.json",
+  "candidate_provenance": "late_layer_rescue_seed",
+  "candidate_rank": 0,
+  "estimated_full_model_weight_footprint_gb": 26.20365810394287,
+  "intended_non_default_targets": [
+    {
+      "group_name": "bit_4_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$"
+    },
+    {
+      "group_name": "bit_4_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$"
+    },
+    {
+      "group_name": "bit_4_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$"
+    },
+    {
+      "group_name": "bit_4_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$"
+    },
+    {
+      "group_name": "bit_4_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+    },
+    {
+      "group_name": "ignore",
+      "origin": "ignore",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "model.layers.61.mlp.gate_proj"
+    },
+    {
+      "group_name": "ignore",
+      "origin": "ignore",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "model.layers.63.self_attn.k_proj"
+    }
+  ],
+  "is_clean": true,
+  "matched_linear_weight_footprint_gb": 23.83056640625,
+  "num_intended_non_default_targets": 7,
+  "reload_matched_targets": [
+    "Linear",
+    "model.layers.61.mlp.gate_proj",
+    "model.layers.63.self_attn.k_proj",
+    "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+    "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+    "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+    "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+    "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+  ],
+  "reload_unmatched_targets": [],
+  "source_matched_targets": [
+    "Linear",
+    "model.layers.61.mlp.gate_proj",
+    "model.layers.63.self_attn.k_proj",
+    "re:.*model\\.layers\\.12\\.linear_attn\\.in_proj_z$",
+    "re:.*model\\.layers\\.14\\.mlp\\.gate_proj$",
+    "re:.*model\\.layers\\.29\\.linear_attn\\.in_proj_qkv$",
+    "re:.*model\\.layers\\.37\\.linear_attn\\.in_proj_qkv$",
+    "re:.*model\\.layers\\.7\\.self_attn\\.o_proj$"
+  ],
+  "source_unmatched_targets": [],
+  "unresolved_target_warnings": []
+}

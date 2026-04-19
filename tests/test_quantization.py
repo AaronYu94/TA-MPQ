@@ -54,8 +54,32 @@ class QuantizationPolicyTests(unittest.TestCase):
         recipe = to_llmcompressor_recipe_config(default_feasibility_policy())
         self.assertIn("default", recipe["config_groups"])
         self.assertIn("down_proj_int8", recipe["config_groups"])
+        self.assertEqual(list(recipe["config_groups"].keys()), ["down_proj_int8", "default"])
         self.assertEqual(recipe["config_groups"]["default"]["format"], "pack-quantized")
         self.assertEqual(recipe["config_groups"]["down_proj_int8"]["format"], "pack-quantized")
+
+    def test_llmcompressor_recipe_canonicalizes_exact_rule_targets_to_regex(self) -> None:
+        policy = MixedPrecisionPolicy(
+            default_bit_width=8,
+            rules=(
+                BitRule(
+                    name="bit_4_rule",
+                    targets=("model.layers.7.self_attn.o_proj", "lm_head"),
+                    bit_width=4,
+                ),
+            ),
+        )
+
+        recipe = to_llmcompressor_recipe_config(policy)
+
+        self.assertEqual(
+            recipe["config_groups"]["bit_4_rule"]["targets"],
+            [
+                r"re:.*model\.layers\.7\.self_attn\.o_proj$",
+                r"re:.*lm_head$",
+            ],
+        )
+        self.assertEqual(recipe["config_groups"]["default"]["targets"], ["Linear"])
 
     def test_backend_support_rejects_project_only_bits(self) -> None:
         policy = MixedPrecisionPolicy(

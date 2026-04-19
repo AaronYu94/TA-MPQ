@@ -1,0 +1,15 @@
+{
+  "num_policies": 10,
+  "policy_ids": [
+    "taqeb_m008_refined_grid",
+    "taqeb_m023_refined_grid",
+    "taqeb_m039_refined_grid",
+    "taqeb_m054_refined_grid",
+    "taqeb_m062_refined_grid",
+    "taqeb_m072_refined_grid",
+    "taqeb_m092_refined_grid",
+    "taqeb_m100_refined_grid",
+    "taqeb_m112_refined_grid",
+    "taqeb_m132_refined_grid"
+  ]
+}

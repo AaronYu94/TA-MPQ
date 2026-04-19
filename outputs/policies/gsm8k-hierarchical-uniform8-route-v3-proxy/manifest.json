@@ -1,0 +1,97 @@
+{
+  "candidates": [
+    {
+      "bit_counts": {
+        "8": 497
+      },
+      "budget_alignment_score": null,
+      "conservative_prediction": null,
+      "estimated_average_bit_width": 8.0,
+      "estimated_weight_footprint_gb": 23.8623046875,
+      "fitness": 1.1435666666666666,
+      "group_value_alignment_score": null,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/gsm8k-hierarchical-uniform8-route-v3-proxy/candidate-01.json",
+      "prediction_uncertainty": null,
+      "rank": 1,
+      "reference_accuracy": null,
+      "reference_advantage_score": null
+    },
+    {
+      "bit_counts": {
+        "4": 11,
+        "8": 486
+      },
+      "budget_alignment_score": null,
+      "conservative_prediction": null,
+      "estimated_average_bit_width": 7.9607120933087785,
+      "estimated_weight_footprint_gb": 23.7451171875,
+      "fitness": 1.1433450861577548,
+      "group_value_alignment_score": null,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/gsm8k-hierarchical-uniform8-route-v3-proxy/candidate-02.json",
+      "prediction_uncertainty": null,
+      "rank": 2,
+      "reference_accuracy": null,
+      "reference_advantage_score": null
+    },
+    {
+      "bit_counts": {
+        "16": 8,
+        "4": 4,
+        "8": 485
+      },
+      "budget_alignment_score": null,
+      "conservative_prediction": null,
+      "estimated_average_bit_width": 7.904798444853694,
+      "estimated_weight_footprint_gb": 23.578338623046875,
+      "fitness": 1.1429079488047469,
+      "group_value_alignment_score": null,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/gsm8k-hierarchical-uniform8-route-v3-proxy/candidate-03.json",
+      "prediction_uncertainty": null,
+      "rank": 3,
+      "reference_accuracy": null,
+      "reference_advantage_score": null
+    },
+    {
+      "bit_counts": {
+        "4": 11,
+        "8": 486
+      },
+      "budget_alignment_score": null,
+      "conservative_prediction": null,
+      "estimated_average_bit_width": 7.9607120933087785,
+      "estimated_weight_footprint_gb": 23.7451171875,
+      "fitness": 1.142117578994431,
+      "group_value_alignment_score": null,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/gsm8k-hierarchical-uniform8-route-v3-proxy/candidate-04.json",
+      "prediction_uncertainty": null,
+      "rank": 4,
+      "reference_accuracy": null,
+      "reference_advantage_score": null
+    },
+    {
+      "bit_counts": {
+        "8": 497
+      },
+      "budget_alignment_score": null,
+      "conservative_prediction": null,
+      "estimated_average_bit_width": 8.0,
+      "estimated_weight_footprint_gb": 23.8623046875,
+      "fitness": 1.141867041363603,
+      "group_value_alignment_score": null,
+      "llmcompressor_downgraded_module_count": 0,
+      "path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/policies/gsm8k-hierarchical-uniform8-route-v3-proxy/candidate-05.json",
+      "prediction_uncertainty": null,
+      "rank": 5,
+      "reference_accuracy": null,
+      "reference_advantage_score": null
+    }
+  ],
+  "grouping": "per_block_component",
+  "num_exported_candidates": 5,
+  "report_path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/feasibility/gsm8k-qwen35-27b-vs-9b-report.json",
+  "search_result_path": "/Users/zhangletian/Projects/15642/TA-MPQ/outputs/search/gsm8k-hierarchical-uniform8-route-v3-proxy.json"
+}

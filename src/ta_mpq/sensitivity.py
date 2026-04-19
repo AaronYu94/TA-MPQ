@@ -5,6 +5,7 @@ from typing import Any
 
 from ta_mpq.feasibility import LinearLayerStat
 from ta_mpq.tasks import load_task_adapter
+from ta_mpq.transformers_compat import apply_qwen3_5_fast_path_compat_patch
 
 
 @dataclass(frozen=True, slots=True)
@@ -54,8 +55,12 @@ def collect_task_activation_stats(
     task_name: str,
     limit: int,
     max_prompt_tokens: int = 1024,
+    split: str = "",
+    task_prompt_style: str = "",
 ) -> list[ModuleActivationStat]:
     import torch
+
+    apply_qwen3_5_fast_path_compat_patch()
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     task = load_task_adapter(task_name)
@@ -69,7 +74,7 @@ def collect_task_activation_stats(
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
         trust_remote_code=True,
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         device_map="auto",
         low_cpu_mem_usage=True,
     )
@@ -95,8 +100,19 @@ def collect_task_activation_stats(
         hooks.append(module.register_forward_hook(_build_activation_hook(module_name, module_accumulators)))
 
     try:
-        for example in task.load_examples(limit=limit):
-            prompt = _render_prompt(tokenizer, task.build_messages(example.question))
+        if split:
+            examples = task.load_examples(limit=limit, split=split)
+        else:
+            examples = task.load_examples(limit=limit)
+        for example in examples:
+            prompt = _render_prompt(
+                tokenizer,
+                _build_task_messages(
+                    task=task,
+                    question=example.question,
+                    task_prompt_style=task_prompt_style,
+                ),
+            )
             inputs = tokenizer(
                 prompt,
                 return_tensors="pt",
@@ -268,6 +284,19 @@ def _render_prompt(tokenizer: Any, messages: list[dict[str, str]]) -> str:
             tokenize=False,
             add_generation_prompt=True,
         )
+
+
+def _build_task_messages(
+    task: Any,
+    question: str,
+    task_prompt_style: str,
+) -> list[dict[str, str]]:
+    if task_prompt_style:
+        try:
+            return task.build_messages(question, prompt_style=task_prompt_style)
+        except TypeError:
+            pass
+    return task.build_messages(question)
 
 
 def _infer_model_device(model: Any) -> Any:

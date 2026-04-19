@@ -1,0 +1,56 @@
+{
+  "candidate_path": "outputs/policies/math500-qwen35-9b-int4-footprint-nonthinking-4096-2seed-12round-a100-first300-last100/round-04-candidate-02.json",
+  "candidate_provenance": "single_flip_down:block:12:linear_attn.in_proj_b",
+  "candidate_rank": 0,
+  "estimated_full_model_weight_footprint_gb": 6.05373477935791,
+  "intended_non_default_targets": [
+    {
+      "group_name": "bit_8_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*lm_head$"
+    },
+    {
+      "group_name": "bit_8_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.0\\.linear_attn\\.in_proj_a$"
+    },
+    {
+      "group_name": "bit_8_gs_128_sym",
+      "origin": "config_group",
+      "reload_matched": true,
+      "reload_unmatched": false,
+      "resolved": true,
+      "source_matched": true,
+      "source_unmatched": false,
+      "target": "re:.*model\\.layers\\.0\\.linear_attn\\.in_proj_b$"
+    }
+  ],
+  "is_clean": true,
+  "matched_linear_weight_footprint_gb": 4.1572265625,
+  "num_intended_non_default_targets": 3,
+  "reload_matched_targets": [
+    "Linear",
+    "re:.*lm_head$",
+    "re:.*model\\.layers\\.0\\.linear_attn\\.in_proj_a$",
+    "re:.*model\\.layers\\.0\\.linear_attn\\.in_proj_b$"
+  ],
+  "reload_unmatched_targets": [],
+  "source_matched_targets": [
+    "Linear",
+    "re:.*lm_head$",
+    "re:.*model\\.layers\\.0\\.linear_attn\\.in_proj_a$",
+    "re:.*model\\.layers\\.0\\.linear_attn\\.in_proj_b$"
+  ],
+  "source_unmatched_targets": [],
+  "unresolved_target_warnings": []
+}
