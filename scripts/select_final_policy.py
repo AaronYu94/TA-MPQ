@@ -39,10 +39,15 @@ def main() -> None:
     coarse_config = dict(frontier_config.get("coarse", {}))
     refine_config = dict(frontier_config.get("refine", {}))
     frontier_mode = str(frontier_config.get("mode") or "sector_coarse_to_fine_budgeted")
-    results_root = PROJECT_ROOT / "artifacts" / "results" / "task_sensitivity_exact_budget"
+    results_root = Path(
+        dict(config.get("results", {})).get("output_dir")
+        or PROJECT_ROOT / "artifacts" / "results" / "task_sensitivity_exact_budget"
+    )
     coarse_results_path = Path(args.coarse_results or (results_root / "frontier_coarse.csv"))
     refined_grid_path = Path(
-        args.write_refined_grid or PROJECT_ROOT / "artifacts" / "configs" / "refined_grid.json"
+        args.write_refined_grid
+        or config.get("refine_grid_path")
+        or PROJECT_ROOT / "artifacts" / "configs" / "refined_grid.json"
     )
 
     if frontier_mode == GREEDY_PATH_METHOD_NAME:

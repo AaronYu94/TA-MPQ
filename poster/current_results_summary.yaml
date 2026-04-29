@@ -1,0 +1,466 @@
+generated_at: "2026-04-29"
+project: "TA-MPQ"
+
+method:
+  umbrella_name: "TA-MPQ"
+  current_method_name: "Structured Exact-Budget Coarse-to-Fine Mixed-Precision Search"
+  summary: >
+    The current mainline no longer uses evolutionary crossover search.
+    It uses task sensitivity profiling, exact-budget INT2/INT4/INT8 frontier
+    construction, and coarse-to-fine policy selection under an exact INT4-sized
+    raw weight footprint budget.
+
+policies:
+  code_oriented:
+    policy_id: "gpf_refine_00_i0112"
+    policy_hash: "7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4"
+    bit_counts:
+      int2: 57
+      int4: 80
+      int8: 112
+    budget_slack_fraction: 0.000264
+    used_for:
+      - "mmlu_coding_last100"
+      - "codemmlu_last100"
+      - "humaneval_evalplus"
+      - "bigcodebench_hard"
+  math_oriented:
+    policy_id: "gpf_refine_02_i0110"
+    policy_hash: "9bbaf3a7d0e0273028f1e1c0a64d4e1c485d8c3e440b0a9d532a45e0b259b9e9"
+    bit_counts:
+      int2: 75
+      int4: 64
+      int8: 110
+    budget_slack_fraction: 0.000462
+    used_for:
+      - "math500_last100_4096"
+      - "math500_last100_20000"
+
+headline_findings:
+  - "Mixed exact-budget policies are consistently stronger than uniform INT4 on HumanEval, HumanEval+, BigCodeBench-Hard, and MATH-500."
+  - "Mixed exact-budget policies have not yet shown a consistent benchmark-wide win over INT8."
+  - "MATH-500 is highly sensitive to the generation budget: raising the token wall from 4096 to 20000 materially changes the ranking."
+  - "Current evidence is strongest for workload-family-aware policies rather than one universal mixed policy for all tasks."
+
+benchmarks:
+  mmlu_coding_last100:
+    workload_family: "code"
+    prompt_style: "simple_evals"
+    thinking_mode: "disabled"
+    max_new_tokens: 4096
+    source_paths:
+      bf16: "outputs/evaluations/mmlu-coding-qwen35-9b-bf16-last100-simple-evals-max4096.json"
+      uniform_int8: "outputs/evaluations/mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-last100-quantized.json"
+      uniform_int4: "outputs/evaluations/mmlu-coding-qwen35-9b-uniform-int4-last100-simple-evals-max4096-baseline-uniform-int4-last100-quantized.json"
+      mixed_code_policy: "artifacts/results/task_sensitivity_exact_budget_mmlu_coding/evaluations_by_hash/last100/7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4-c589d8ab532c-simple-evals-simple-evals-d7f2376a865f.json"
+    results:
+      bf16:
+        accuracy: 0.95
+        correct: 95
+        total: 100
+        length_capped_count: 0
+        avg_prompt_tokens: 144.4
+        avg_completion_tokens: 647.8
+        median_completion_tokens: 554.0
+        p95_completion_tokens: 1702.3
+        total_completion_tokens: 64778
+      uniform_int8:
+        accuracy: 0.94
+        correct: 94
+        total: 100
+        length_capped_count: 2
+        avg_prompt_tokens: 144.4
+        avg_completion_tokens: 696.5
+        median_completion_tokens: 534.5
+        p95_completion_tokens: 1446.4
+        total_completion_tokens: 69653
+      uniform_int4:
+        accuracy: 0.91
+        correct: 91
+        total: 100
+        length_capped_count: 5
+        avg_prompt_tokens: 144.4
+        avg_completion_tokens: 903.8
+        median_completion_tokens: 604.5
+        p95_completion_tokens: 2562.7
+        total_completion_tokens: 90379
+      mixed_code_policy:
+        accuracy: 0.91
+        correct: 91
+        total: 100
+        length_capped_count: 3
+        avg_prompt_tokens: 144.4
+        avg_completion_tokens: 787.4
+        median_completion_tokens: 598.0
+        p95_completion_tokens: 1869.1
+        total_completion_tokens: 78741
+    interpretation:
+      - "Mixed matches uniform INT4 on accuracy but does not exceed it on this benchmark."
+      - "Mixed uses fewer completion tokens than uniform INT4."
+
+  codemmlu_last100:
+    workload_family: "code"
+    prompt_style: "simple_evals"
+    thinking_mode: "disabled"
+    max_new_tokens: 4096
+    source_paths:
+      bf16: "outputs/evaluations/codemmlu-qwen35-9b-bf16-last100-simple-evals-max4096.json"
+      uniform_int8: "outputs/evaluations/codemmlu-qwen35-9b-uniform-int8-last100-simple-evals-max4096.json"
+      uniform_int4: "outputs/evaluations/codemmlu-qwen35-9b-uniform-int4-last100-simple-evals-max4096.json"
+      mixed_code_policy: "outputs/evaluations/codemmlu-qwen35-9b-mixed-exact-int4-budget-last100-simple-evals-max4096.json"
+    results:
+      bf16:
+        accuracy: 0.73
+        correct: 73
+        total: 100
+        length_capped_count: 13
+        avg_prompt_tokens: 281.39
+        avg_completion_tokens: 1480.37
+        median_completion_tokens: 903.5
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 148037
+      uniform_int8:
+        accuracy: 0.71
+        correct: 71
+        total: 100
+        length_capped_count: 14
+        avg_prompt_tokens: 281.39
+        avg_completion_tokens: 1520.43
+        median_completion_tokens: 855.5
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 152043
+      uniform_int4:
+        accuracy: 0.69
+        correct: 69
+        total: 100
+        length_capped_count: 19
+        avg_prompt_tokens: 281.39
+        avg_completion_tokens: 1759.56
+        median_completion_tokens: 1077.5
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 175956
+      mixed_code_policy:
+        accuracy: 0.71
+        correct: 71
+        total: 100
+        length_capped_count: 18
+        avg_prompt_tokens: 281.39
+        avg_completion_tokens: 1795.46
+        median_completion_tokens: 1175.0
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 179546
+    interpretation:
+      - "Mixed matches uniform INT8 and improves over uniform INT4 on accuracy."
+      - "All variants show a visible 4096-token wall on this benchmark."
+
+  humaneval_evalplus:
+    workload_family: "code"
+    evaluator: "EvalPlus"
+    prompt_style: "official_evalplus"
+    thinking_mode: "n/a"
+    max_new_tokens: 768
+    token_usage_source: "posthoc_tokenized_solution"
+    source_paths:
+      bf16: "outputs/evalplus/evalplus-humaneval-qwen35-9b-bf16-greedy-full/summary.json"
+      uniform_int8: "outputs/evalplus/evalplus-humaneval-qwen35-9b-uniform-int8-greedy-full/summary.json"
+      uniform_int4: "outputs/evalplus/evalplus-humaneval-qwen35-9b-uniform-int4-greedy-full/summary.json"
+      mixed_code_policy: "outputs/evalplus/evalplus-humaneval-qwen35-9b-mixed-exact-int4-budget-greedy-full/summary.json"
+    results:
+      bf16:
+        base_pass_at_1: 0.8780487804878049
+        plus_pass_at_1: 0.823170731707317
+        base_correct: 144
+        plus_correct: 135
+        total: 164
+        avg_completion_tokens: 360.8
+        median_completion_tokens: 338.5
+        p95_completion_tokens: 768.0
+        total_completion_tokens: 59168
+      uniform_int8:
+        base_pass_at_1: 0.8902439024390244
+        plus_pass_at_1: 0.823170731707317
+        base_correct: 146
+        plus_correct: 135
+        total: 164
+        avg_completion_tokens: 364.8
+        median_completion_tokens: 344.0
+        p95_completion_tokens: 768.0
+        total_completion_tokens: 59820
+      uniform_int4:
+        base_pass_at_1: 0.8109756097560976
+        plus_pass_at_1: 0.7682926829268293
+        base_correct: 133
+        plus_correct: 126
+        total: 164
+        avg_completion_tokens: 412.2
+        median_completion_tokens: 387.0
+        p95_completion_tokens: 768.0
+        total_completion_tokens: 67594
+      mixed_code_policy:
+        base_pass_at_1: 0.8475609756097561
+        plus_pass_at_1: 0.7987804878048781
+        base_correct: 139
+        plus_correct: 131
+        total: 164
+        avg_completion_tokens: 358.9
+        median_completion_tokens: 348.5
+        p95_completion_tokens: 759.4
+        total_completion_tokens: 58858
+    interpretation:
+      - "Mixed clearly improves over uniform INT4 on both HumanEval and HumanEval+."
+      - "Mixed has the lowest post-hoc completion-token count among the four variants."
+      - "This benchmark is inherently capped by the EvalPlus 768-token wall."
+
+  bigcodebench_hard:
+    workload_family: "code"
+    split: "instruct"
+    subset: "hard"
+    prompt_style: "official_bigcodebench"
+    thinking_mode: "n/a"
+    max_new_tokens: 1280
+    source_paths:
+      bf16_generation: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full/summary.json"
+      bf16_grading: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full/grading_summary.json"
+      uniform_int8_generation: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/summary.json"
+      uniform_int8_grading: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/grading_summary.json"
+      uniform_int4_generation: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full/summary.json"
+      uniform_int4_grading: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full/grading_summary.json"
+      mixed_code_policy_generation: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full/summary.json"
+      mixed_code_policy_grading: "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full/grading_summary.json"
+    results:
+      bf16:
+        pass_at_1: 0.2905405405405405
+        pass_count: 43
+        total: 148
+        length_capped_count: 2
+        avg_prompt_tokens: 231.9
+        avg_completion_tokens: 512.2
+        median_completion_tokens: 476.5
+        p95_completion_tokens: 896.1
+        total_completion_tokens: 75811
+        status_counts:
+          fail: 104
+          pass: 43
+          timeout: 1
+      uniform_int8:
+        pass_at_1: 0.2702702702702703
+        pass_count: 40
+        total: 148
+        length_capped_count: 2
+        avg_prompt_tokens: 231.9
+        avg_completion_tokens: 511.0
+        median_completion_tokens: 486.0
+        p95_completion_tokens: 918.7
+        total_completion_tokens: 75631
+        status_counts:
+          fail: 106
+          pass: 40
+          timeout: 2
+      uniform_int4:
+        pass_at_1: 0.16891891891891891
+        pass_count: 25
+        total: 148
+        length_capped_count: 2
+        avg_prompt_tokens: 231.9
+        avg_completion_tokens: 533.7
+        median_completion_tokens: 490.5
+        p95_completion_tokens: 933.7
+        total_completion_tokens: 78984
+        status_counts:
+          fail: 123
+          pass: 25
+      mixed_code_policy:
+        pass_at_1: 0.23648648648648649
+        pass_count: 35
+        total: 148
+        length_capped_count: 4
+        avg_prompt_tokens: 231.9
+        avg_completion_tokens: 501.7
+        median_completion_tokens: 454.0
+        p95_completion_tokens: 872.6
+        total_completion_tokens: 74247
+        status_counts:
+          fail: 112
+          pass: 35
+          timeout: 1
+    interpretation:
+      - "This is the strongest current benchmark for the method."
+      - "Mixed recovers 10 of the 18 tasks lost by uniform INT4 relative to BF16."
+      - "Mixed clearly outperforms uniform INT4, but still trails INT8 and BF16."
+
+  math500_last100_4096:
+    workload_family: "math"
+    prompt_style: "simple_evals_nonthinking"
+    thinking_mode: "disabled"
+    max_new_tokens: 4096
+    source_paths:
+      bf16: "MATH500 result/math500-qwen35-9b-bf16-simple-evals-nonthinking-last100-a100.json"
+      uniform_int4: "MATH500 result/math500-qwen35-9b-uniform-int4-simple-evals-nonthinking-last100-a100-baseline-uniform-int4-last100-quantized.json"
+      mixed_math_policy: "MATH500 result/9bbaf3a7d0e0273028f1e1c0a64d4e1c485d8c3e440b0a9d532a45e0b259b9e9-c589d8ab532c-simple-evals-nonthinking-simple-evals-nonthinking-84e0fddf0340.json"
+    results:
+      bf16:
+        accuracy: 0.86
+        correct: 86
+        total: 100
+        length_capped_count: 7
+        avg_prompt_tokens: 90.8
+        avg_completion_tokens: 1167.0
+        median_completion_tokens: 769.0
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 116701
+      uniform_int4:
+        accuracy: 0.80
+        correct: 80
+        total: 100
+        length_capped_count: 14
+        avg_prompt_tokens: 90.8
+        avg_completion_tokens: 1494.3
+        median_completion_tokens: 985.5
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 149432
+      mixed_math_policy:
+        accuracy: 0.84
+        correct: 84
+        total: 100
+        length_capped_count: 7
+        avg_prompt_tokens: 90.8
+        avg_completion_tokens: 1284.5
+        median_completion_tokens: 895.0
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 128455
+    interpretation:
+      - "Under a 4096-token wall, mixed outperforms uniform INT4 and approaches BF16."
+      - "Uniform INT4 shows both the worst accuracy and the highest capped count."
+      - "This setting still shows a visible MATH token-wall effect."
+
+  math500_last100_20000:
+    workload_family: "math"
+    prompt_style: "simple_evals_nonthinking"
+    thinking_mode: "disabled"
+    max_new_tokens: 20000
+    source_note: >
+      These files currently live in a WeChat temporary export path rather than a
+      repo-local results directory. The uniform INT4 file uses a
+      results_by_example_id structure and was normalized by hand for this summary.
+    source_paths:
+      bf16: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-bf16-last100-a100-max20000.json"
+      uniform_int4: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-uniform-int4-last100-a100-max20000-baseline-uniform-int4-last100.json"
+      mixed_math_policy: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-mixed-best-last100-a100-max20000.json"
+    results:
+      bf16:
+        accuracy: 0.87
+        correct: 87
+        total: 100
+        length_capped_count: 2
+        avg_prompt_tokens: 90.77
+        avg_completion_tokens: 1663.73
+        median_completion_tokens: 797.5
+        p95_completion_tokens: 6558.15
+        total_completion_tokens: 166373
+        capped_examples:
+          - "test/intermediate_algebra/1279.json"
+          - "test/intermediate_algebra/2015.json"
+      uniform_int4:
+        accuracy: 0.86
+        correct: 86
+        total: 100
+        length_capped_count: 7
+        avg_prompt_tokens: 90.77
+        avg_completion_tokens: 3002.24
+        median_completion_tokens: 965.5
+        p95_completion_tokens: 20000.0
+        total_completion_tokens: 300224
+        capped_examples:
+          - "test/geometry/561.json"
+          - "test/intermediate_algebra/1279.json"
+          - "test/intermediate_algebra/183.json"
+          - "test/intermediate_algebra/2015.json"
+          - "test/intermediate_algebra/90.json"
+          - "test/number_theory/183.json"
+          - "test/prealgebra/1733.json"
+      mixed_math_policy:
+        accuracy: 0.89
+        correct: 89
+        total: 100
+        length_capped_count: 6
+        avg_prompt_tokens: 90.77
+        avg_completion_tokens: 2349.36
+        median_completion_tokens: 895.5
+        p95_completion_tokens: 20000.0
+        total_completion_tokens: 234936
+        capped_examples:
+          - "test/intermediate_algebra/183.json"
+          - "test/geometry/561.json"
+          - "test/intermediate_algebra/1279.json"
+          - "test/precalculus/801.json"
+          - "test/intermediate_algebra/2015.json"
+          - "test/intermediate_algebra/90.json"
+    interpretation:
+      - "Raising the MATH token wall from 4096 to 20000 changes the ranking."
+      - "Under max_new_tokens=20000, mixed reaches 89%, compared with 87% for BF16 and 86% for uniform INT4."
+      - "The 20000-token run is still not fully free of truncation: mixed and uniform INT4 both retain p95 completion tokens at 20000."
+
+diagnostics:
+  math500_hard50_4096_baselines:
+    prompt_style: "simple_evals_nonthinking"
+    max_new_tokens: 4096
+    source_paths:
+      bf16: "outputs/evaluations/math500-qwen35-9b-bf16-simple-evals-nonthinking-hard50.json"
+      uniform_int8: "outputs/evaluations/math500-qwen35-9b-uniform-int8-simple-evals-nonthinking-hard50.json"
+      uniform_int4: "outputs/evaluations/math500-qwen35-9b-uniform-int4-simple-evals-nonthinking-hard50.json"
+    results:
+      bf16:
+        accuracy: 0.90
+        correct: 45
+        total: 50
+        length_capped_count: 2
+      uniform_int8:
+        accuracy: 0.92
+        correct: 46
+        total: 50
+        length_capped_count: 2
+      uniform_int4:
+        accuracy: 0.88
+        correct: 44
+        total: 50
+        length_capped_count: 4
+  math500_bf16_limit25_max8192_probe:
+    prompt_style: "simple_evals_nonthinking"
+    max_new_tokens: 8192
+    source_path: "outputs/evaluations/math500-qwen35-9b-bf16-simple-evals-nonthinking-limit25-max8192.json"
+    result:
+      accuracy: 0.80
+      correct: 20
+      total: 25
+      length_capped_count: 2
+      mean_latency_sec: 45.60
+    interpretation:
+      - "This is a BF16-only probe, not a full matched-baseline benchmark."
+      - "It is useful mainly as evidence that the MATH token-wall diagnosis was actively being checked."
+
+archived_legacy:
+  math500_uniform8_route_v1_limit100:
+    status: "archived_not_current_mainline"
+    source_path: "outputs/closed_loop/math500-uniform8-route-v1-candidate-01-limit-100-large-sample-summary.json"
+    model_setting:
+      source_model: "Qwen/Qwen3.5-27B"
+      native_baseline: "Qwen/Qwen3.5-9B"
+      matched_reference: "uniform 8-bit 27B"
+      max_new_tokens: 32
+    results:
+      ta_mpq_quantized_27b_accuracy: 0.37
+      uniform_8bit_27b_accuracy: 0.39
+      native_9b_accuracy: 0.29
+    interpretation:
+      - "This older route beat the native 9B baseline but did not beat the uniform 8-bit reference."
+      - "It is no longer the current project mainline."
+
+current_claim_boundary:
+  supported:
+    - "Mixed exact-budget policies outperform uniform INT4 on HumanEval, HumanEval+, BigCodeBench-Hard, and MATH-500."
+    - "The current evidence supports workload-family-aware policy search."
+    - "MATH-500 conclusions depend strongly on the generation budget."
+  not_supported_yet:
+    - "A consistent win over INT8 across benchmarks."
+    - "One universal mixed policy across all tasks."
+    - "Backend-agnostic latency superiority."

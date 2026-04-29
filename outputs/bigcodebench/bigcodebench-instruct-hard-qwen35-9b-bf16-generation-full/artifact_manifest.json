@@ -1,0 +1,10 @@
+{
+  "file_count": 3,
+  "local_artifact_paths": {
+    "generation_summary.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full/generation_summary.json",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  },
+  "output_slug": "bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full",
+  "remote_root": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-full"
+}

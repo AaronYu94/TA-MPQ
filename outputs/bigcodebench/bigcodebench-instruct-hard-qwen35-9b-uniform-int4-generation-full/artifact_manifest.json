@@ -1,0 +1,10 @@
+{
+  "file_count": 3,
+  "local_artifact_paths": {
+    "generation_summary.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full/generation_summary.json",
+    "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int4-last100-simple-evals-max4096-baseline-uniform-int4-source_hf_direct_temp_0.0.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int4-last100-simple-evals-max4096-baseline-uniform-int4-source_hf_direct_temp_0.0.jsonl",
+    "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int4-last100-simple-evals-max4096-baseline-uniform-int4-source_hf_direct_temp_0.0.raw.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int4-last100-simple-evals-max4096-baseline-uniform-int4-source_hf_direct_temp_0.0.raw.jsonl"
+  },
+  "output_slug": "bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full",
+  "remote_root": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int4-generation-full"
+}

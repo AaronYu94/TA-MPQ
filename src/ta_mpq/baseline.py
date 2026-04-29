@@ -270,6 +270,15 @@ def _resolve_task_prompt_style(task_name: str, task_prompt_style: str) -> str:
         return task_prompt_style
     if normalized_task_name in {"math500", "math-500"}:
         return "simple_evals"
+    if normalized_task_name in {
+        "mmlu_coding",
+        "mmlu-coding",
+        "mmlucoding",
+        "codemmlu",
+        "code_mmlu",
+        "code-mmlu",
+    }:
+        return "simple_evals"
     return ""
 
 

@@ -1,0 +1,325 @@
+\documentclass[final]{beamer}
+
+\usepackage[size=a0,orientation=landscape,scale=1.03]{beamerposter}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{ragged2e}
+
+\definecolor{Ink}{HTML}{172019}
+\definecolor{Muted}{HTML}{5B645D}
+\definecolor{Paper}{HTML}{F7F0DF}
+\definecolor{Cream}{HTML}{FFFAF0}
+\definecolor{Green}{HTML}{0F7F64}
+\definecolor{Clay}{HTML}{C8643D}
+\definecolor{Blue}{HTML}{315F85}
+\definecolor{Gold}{HTML}{D4A72C}
+\definecolor{Charcoal}{HTML}{18221D}
+\definecolor{SoftGreen}{HTML}{D8EFE3}
+\definecolor{SoftBlue}{HTML}{D7E5EE}
+\definecolor{SoftGold}{HTML}{F5E6B5}
+
+\setbeamercolor{background canvas}{bg=Paper}
+\setbeamercolor{normal text}{fg=Ink}
+\setbeamercolor{block title}{fg=Cream,bg=Charcoal}
+\setbeamercolor{block body}{fg=Ink,bg=Cream}
+\setbeamerfont{block title}{size=\large,series=\bfseries}
+\setbeamerfont{block body}{size=\small}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+
+\newcommand{\postertag}[1]{%
+  \tikz[baseline=(X.base)]\node[
+    draw=Ink!18,
+    fill=Cream,
+    rounded corners=7pt,
+    inner xsep=7pt,
+    inner ysep=3pt,
+    font=\bfseries\footnotesize
+  ] (X) {#1};%
+}
+
+\newcommand{\hbarval}[5]{%
+  \begin{tikzpicture}[baseline=-0.5ex, x=0.095cm, y=0.55cm]
+    \node[anchor=east, font=\bfseries\scriptsize] at (0,0) {#1};
+    \fill[Ink!10, rounded corners=2pt] (1,-0.22) rectangle (101,0.22);
+    \fill[#3, rounded corners=2pt] (1,-0.22) rectangle ({1+#2},0.22);
+    \node[anchor=west, font=\bfseries\scriptsize] at (104,0) {#4};
+    \node[anchor=west, font=\scriptsize, text=Muted] at (118,0) {#5};
+  \end{tikzpicture}%
+}
+
+\newcommand{\progressbar}[5]{%
+  \begin{tikzpicture}[baseline=-0.5ex, x=0.11cm, y=0.55cm]
+    \node[anchor=east, font=\bfseries\scriptsize] at (0,0) {#1};
+    \fill[Ink!10, rounded corners=2pt] (1,-0.22) rectangle (101,0.22);
+    \fill[#3, rounded corners=2pt] (1,-0.22) rectangle ({1+100*#2/148},0.22);
+    \node[anchor=west, font=\bfseries\scriptsize] at (104,0) {#2/148};
+    \node[anchor=west, font=\scriptsize, text=Muted] at (122,0) {#4 capped; #5};
+  \end{tikzpicture}%
+}
+
+\newcommand{\darkbody}{\setbeamercolor{block body}{fg=Cream,bg=Charcoal}}
+\newcommand{\lightbody}{\setbeamercolor{block body}{fg=Ink,bg=Cream}}
+
+\title{TA-MPQ: Structured Mixed Precision at an Exact INT4 Budget}
+\author{Snapshot: 2026-04-22}
+\institute{Qwen3.5-9B \quad | \quad Current mainline: deterministic 2/4/8-bit frontier search}
+
+\begin{document}
+\begin{frame}[t]
+
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[Gold!20] (current page.north west) circle [radius=18cm];
+  \fill[Blue!14] ([xshift=-8cm,yshift=-2cm]current page.north east) circle [radius=22cm];
+  \draw[Ink!8, line width=2pt, rounded corners=18pt]
+    ([xshift=1.0cm,yshift=-1.0cm]current page.north west)
+    rectangle
+    ([xshift=-1.0cm,yshift=1.0cm]current page.south east);
+\end{tikzpicture}
+
+\vspace{-0.2cm}
+{\fontsize{58}{62}\selectfont\bfseries\color{Charcoal}\inserttitle\par}
+\vspace{0.25cm}
+{\Large\color{Muted}
+Replacing evolutionary crossover with a task-sensitivity frontier: promote high-value groups to 8-bit,
+demote lower-value groups to 2-bit, and keep the full model near the raw uniform-INT4 footprint.\par}
+\vspace{0.25cm}
+\postertag{Qwen3.5-9B}\hspace{0.18cm}
+\postertag{MMLU-coding selected}\hspace{0.18cm}
+\postertag{EvalPlus validated}\hspace{0.18cm}
+\postertag{BigCodeBench generation running}\hspace{0.18cm}
+\postertag{Budget = raw weight footprint}
+
+\vspace{0.55cm}
+
+\begin{columns}[t,totalwidth=\textwidth]
+  \begin{column}{0.245\textwidth}
+    \begin{block}{Motivation and route change}
+      \justifying
+      The original TA-MPQ implementation used evolutionary search over mixed-precision policies.
+      That approach was difficult to control because crossover randomly combined policies while
+      the budget mechanism tried to repair them back to a strict footprint target. These two forces
+      were misaligned: crossover explores, but exact-budget quantization needs coordinated
+      promotions and demotions.
+
+      \vspace{0.28cm}
+      The current route is deterministic. We start from the uniform INT4 anchor and build an ordered
+      frontier. Moving along the frontier adds INT8 to valuable groups and offsets that extra cost by
+      assigning INT2 to lower-value groups. This makes the policy easier to debug, reproduce, and
+      explain.
+
+      \vspace{0.28cm}
+      \colorbox{SoftGreen}{\parbox{0.95\linewidth}{
+      \textbf{Poster claim.} The new route is not yet a universal win. It is a controllable
+      INT4-sized policy that recovers part of the INT4 quality loss on generative code tasks.
+      }}
+    \end{block}
+
+    \begin{block}{Pipeline}
+      \begin{tabular}{@{}p{0.23\linewidth}p{0.71\linewidth}@{}}
+      \textbf{Profile} & Collect task sensitivity on MMLU-coding development prompts.\\[0.13cm]
+      \textbf{Rank} & Estimate which groups deserve 8-bit and which groups can tolerate 2-bit.\\[0.13cm]
+      \textbf{Frontier} & Build a greedy path under exact raw INT4 footprint.\\[0.13cm]
+      \textbf{Refine} & Sample coarse regions, then refine near the best local neighborhood.\\[0.13cm]
+      \textbf{Validate} & Quantize the selected policy into a real artifact and evaluate held-out tasks.\\
+      \end{tabular}
+
+      \vspace{0.28cm}
+      Current selected candidate: \texttt{gpf\_refine\_00\_i0112}.\\
+      Policy hash: \texttt{7caae6e...2043e4}.\\
+      Method: \texttt{greedy\_path\_frontier}.\\
+      Search space: \texttt{\{2,4,8\}}.
+    \end{block}
+  \end{column}
+
+  \begin{column}{0.245\textwidth}
+    \darkbody
+    \begin{block}{Current mixed policy composition}
+      \justifying
+      The selected mixed model changes 169 of 249 groups relative to uniform INT4 while matching the
+      INT4 raw weight budget. The policy is not simply ``many groups in INT8.'' It keeps most parameter
+      mass at 4-bit, upgrades a smaller high-value mass to 8-bit, and pays for those upgrades using
+      2-bit assignments on lower-value groups.
+
+      \vspace{0.35cm}
+      \begin{tikzpicture}
+        \fill[Clay, rounded corners=5pt] (0,0) rectangle (3.12,0.48);
+        \fill[Gold] (3.12,0) rectangle (10.44,0.48);
+        \fill[Blue, rounded corners=5pt] (10.44,0) rectangle (12,0.48);
+        \node[anchor=west, text=Cream, font=\bfseries\scriptsize] at (0,0.85) {Param mass: 26.00\% 2-bit};
+        \node[anchor=west, text=Cream, font=\bfseries\scriptsize] at (4.0,0.85) {61.02\% 4-bit};
+        \node[anchor=west, text=Cream, font=\bfseries\scriptsize] at (8.5,0.85) {12.98\% 8-bit};
+      \end{tikzpicture}
+
+      \vspace{0.35cm}
+      \begin{tabular}{lrr}
+        \toprule
+        Bit width & Groups & Parameter mass\\
+        \midrule
+        2-bit & 57 & 26.00\%\\
+        4-bit & 80 & 61.02\%\\
+        8-bit & 112 & 12.98\%\\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.25cm}
+      \begin{tabular}{lr}
+        Total groups & 249\\
+        Changed vs uniform INT4 & 169\\
+        Estimated average bit-width & 3.9989\\
+        Estimated raw footprint & 3.694 GB\\
+        Budget slack & 0.026\%\\
+      \end{tabular}
+    \end{block}
+    \lightbody
+
+    \begin{block}{MMLU-coding chart}
+      \small Simple-evals style prompt, max\_new\_tokens=4096, single-run last100.
+
+      \vspace{0.25cm}
+      \hbarval{BF16}{95}{Green}{95\%}{0 capped}\\[0.18cm]
+      \hbarval{INT8}{94}{Blue}{94\%}{2 capped}\\[0.18cm]
+      \hbarval{INT4}{91}{Clay}{91\%}{5 capped}\\[0.18cm]
+      \hbarval{Mixed}{91}{Gold}{91\%}{3 capped}
+
+      \vspace{0.25cm}
+      \begin{tabular}{lrrr}
+        \toprule
+        Model & Correct & Accuracy & Avg latency\\
+        \midrule
+        BF16 & 95/100 & 95\% & 9.14s\\
+        INT8 & 94/100 & 94\% & 46.21s\\
+        INT4 & 91/100 & 91\% & 66.88s\\
+        Mixed & 91/100 & 91\% & 12.29s\\
+        \bottomrule
+      \end{tabular}
+    \end{block}
+  \end{column}
+
+  \begin{column}{0.245\textwidth}
+    \begin{block}{HumanEval / EvalPlus chart}
+      \small Official EvalPlus evaluator, greedy generation, max\_new\_tokens=768.
+
+      \vspace{0.25cm}
+      \begin{tikzpicture}[x=0.11cm,y=0.065cm]
+        \draw[Ink!18] (0,0) -- (100,0);
+        \foreach \x in {0,20,40,60,80,100} {
+          \draw[Ink!12] (\x,0) -- (\x,62);
+          \node[font=\tiny,text=Muted] at (\x,-4) {\x\%};
+        }
+        \node[anchor=east,font=\scriptsize\bfseries] at (-3,55) {BF16};
+        \fill[Green] (0,52) rectangle (87.8,58);
+        \fill[Green!55] (0,45) rectangle (82.3,51);
+        \node[anchor=west,font=\tiny] at (89,55) {87.8};
+        \node[anchor=west,font=\tiny] at (83.5,48) {82.3};
+
+        \node[anchor=east,font=\scriptsize\bfseries] at (-3,38) {INT8};
+        \fill[Blue] (0,35) rectangle (89.0,41);
+        \fill[Blue!55] (0,28) rectangle (82.3,34);
+        \node[anchor=west,font=\tiny] at (90.2,38) {89.0};
+        \node[anchor=west,font=\tiny] at (83.5,31) {82.3};
+
+        \node[anchor=east,font=\scriptsize\bfseries] at (-3,21) {INT4};
+        \fill[Clay] (0,18) rectangle (81.1,24);
+        \fill[Clay!55] (0,11) rectangle (76.8,17);
+        \node[anchor=west,font=\tiny] at (82.3,21) {81.1};
+        \node[anchor=west,font=\tiny] at (78,14) {76.8};
+
+        \node[anchor=east,font=\scriptsize\bfseries] at (-3,4) {Mixed};
+        \fill[Gold] (0,1) rectangle (84.8,7);
+        \fill[Gold!58] (0,-6) rectangle (79.9,0);
+        \node[anchor=west,font=\tiny] at (86,4) {84.8};
+        \node[anchor=west,font=\tiny] at (81.1,-3) {79.9};
+
+        \fill[Ink] (4,66) rectangle (9,69);
+        \node[anchor=west,font=\tiny] at (11,67.5) {HumanEval base};
+        \fill[Ink!45] (40,66) rectangle (45,69);
+        \node[anchor=west,font=\tiny] at (47,67.5) {HumanEval+};
+      \end{tikzpicture}
+
+      \vspace{0.2cm}
+      \begin{tabular}{lrr}
+        \toprule
+        Model & Base pass@1 & Plus pass@1\\
+        \midrule
+        BF16 & 87.8\% & 82.3\%\\
+        INT8 & 89.0\% & 82.3\%\\
+        INT4 & 81.1\% & 76.8\%\\
+        \textbf{Mixed} & \textbf{84.8\%} & \textbf{79.9\%}\\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.22cm}
+      \colorbox{SoftGreen}{\parbox{0.95\linewidth}{
+      \textbf{Transfer signal:} mixed recovers +3.7 points over INT4 on HumanEval base
+      and +3.0 points on HumanEval+, while staying at the INT4-sized raw footprint.
+      }}
+    \end{block}
+
+    \begin{block}{BigCodeBench progress chart}
+      \small Official BigCodeBench instruct prompt. Generation-only first; execution grading pending.
+
+      \vspace{0.25cm}
+      \progressbar{BF16}{148}{Green}{2}{complete}\\[0.18cm]
+      \progressbar{INT8}{20}{Blue}{0}{H100 running}\\[0.18cm]
+      \progressbar{INT4}{20}{Clay}{0}{H100 running}\\[0.18cm]
+      \progressbar{Mixed}{30}{Gold}{1}{H100 running}
+
+      \vspace{0.25cm}
+      We intentionally do not report BigCodeBench accuracy yet. The previous local evaluator timed out
+      because the execution environment was incomplete. The current runner writes generation artifacts
+      before evaluation, so evaluator failures will not erase samples.
+    \end{block}
+  \end{column}
+
+  \begin{column}{0.245\textwidth}
+    \darkbody
+    \begin{block}{Current interpretation}
+      \begin{itemize}
+        \item The current story is not ``mixed beats every baseline.''
+        \item The current story is that structured exact-budget mixed precision is a more defensible mainline than evolutionary crossover.
+        \item INT8 remains a very strong quantized upper baseline.
+        \item Uniform INT4 is size-efficient but loses quality on generative coding tasks.
+        \item Mixed recovers part of that INT4 degradation on HumanEval/EvalPlus without increasing the raw weight budget.
+        \item MMLU-coding does not yet separate mixed from INT4; it is not the strongest success case.
+        \item BigCodeBench is the next decisive benchmark because it is generative, dependency-heavy, and closer to realistic code synthesis.
+      \end{itemize}
+    \end{block}
+    \lightbody
+
+    \begin{block}{Limitations}
+      \begin{itemize}
+        \item MMLU-coding last100 is a small single-run slice.
+        \item HumanEval has only 164 tasks, so effect sizes should be interpreted carefully.
+        \item BigCodeBench execution scoring is still pending.
+        \item The budget here is raw weight footprint, not peak VRAM, kernel efficiency, or end-to-end serving cost.
+        \item The mixed policy was selected using MMLU-coding; stronger cross-task validation is needed before making a broad task-aware claim.
+      \end{itemize}
+    \end{block}
+
+    \begin{block}{Next steps}
+      \begin{enumerate}
+        \item Finish BigCodeBench generation for INT8, INT4, and mixed.
+        \item Run official BigCodeBench execution grading in a stable environment.
+        \item Report peak VRAM and tokens/sec separately from raw weight footprint.
+        \item Use BigCodeBench results to decide whether MMLU-coding sensitivity is sufficient or needs task-specific refinement.
+        \item If BigCodeBench shows mixed gains, promote this structured exact-budget route as the main TA-MPQ story.
+        \item If BigCodeBench does not show mixed gains, improve the sensitivity profiler and candidate generator before claiming task-aware benefit.
+      \end{enumerate}
+    \end{block}
+  \end{column}
+\end{columns}
+
+\vfill
+\begin{center}
+{\color{Muted}\large
+Recommended conclusion: Structured exact-budget mixed precision is a real, reproducible INT4-sized quantized model that recovers part of the INT4 degradation on generative code evaluation. The next decisive result is BigCodeBench execution accuracy.}
+\end{center}
+
+\end{frame}
+\end{document}

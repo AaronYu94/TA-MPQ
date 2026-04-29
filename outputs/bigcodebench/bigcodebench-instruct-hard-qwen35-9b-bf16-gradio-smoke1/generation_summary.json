@@ -1,0 +1,22 @@
+{
+  "benchmark": "bigcodebench",
+  "elapsed_generation_sec": 179.93870759010315,
+  "length_capped_count": 0,
+  "mean_completion_tokens": 662.0,
+  "model_id": "qwen35-9b-bf16-bigcodebench-gradio-smoke1",
+  "model_ref": "Qwen/Qwen3.5-9B",
+  "num_generated_tasks": 1,
+  "p95_completion_tokens": 662.0,
+  "remote_raw_samples_paths": [
+    "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-gradio-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  ],
+  "remote_samples_paths": [
+    "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-gradio-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl"
+  ],
+  "resolved_model_ref": "Qwen/Qwen3.5-9B",
+  "selected_task_ids": [
+    "BigCodeBench/13"
+  ],
+  "split": "instruct",
+  "subset": "hard"
+}

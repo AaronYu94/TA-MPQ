@@ -1,0 +1,19 @@
+{
+  "candidate_path": "outputs/policies/mmlu-coding-qwen35-9b-uniform-int8-last100/baseline-uniform-int8.json",
+  "candidate_provenance": "uniform_int8_seed",
+  "candidate_rank": 0,
+  "estimated_full_model_weight_footprint_gb": 9.28713321685791,
+  "intended_non_default_targets": [],
+  "is_clean": true,
+  "matched_linear_weight_footprint_gb": 7.390625,
+  "num_intended_non_default_targets": 0,
+  "reload_matched_targets": [
+    "Linear"
+  ],
+  "reload_unmatched_targets": [],
+  "source_matched_targets": [
+    "Linear"
+  ],
+  "source_unmatched_targets": [],
+  "unresolved_target_warnings": []
+}

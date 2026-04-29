@@ -37,8 +37,11 @@ LLMCOMPRESSOR_PACKAGE = "llmcompressor==0.8.0"
 SAFETENSORS_PACKAGE = "safetensors==0.5.0"
 SENTENCEPIECE_PACKAGE = "sentencepiece==0.2.0"
 NINJA_PACKAGE = "ninja==1.11.1.4"
+EVALPLUS_PACKAGE = "evalplus==0.3.1"
+BIGCODEBENCH_PACKAGE = "bigcodebench==0.2.2.dev2"
 DEFAULT_MODAL_GPU = "B200"
 A100_40GB_MODAL_GPU = "A100-40GB"
+H100_MODAL_GPU = "H100"
 DEFAULT_STAGE1_TURN_LIMIT = 10
 DEFAULT_STAGE2_TURN_LIMIT = 15
 DEFAULT_ROUND_PROPOSAL_EVAL_COUNT = 4
@@ -109,6 +112,80 @@ quant_source_image = (
 # stack so Modal does not need to build an incompatible llmcompressor+torch
 # image that this project no longer relies on.
 quant_image = quant_source_image
+
+evalplus_image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .apt_install("git")
+    .pip_install(
+        TORCH_PACKAGE,
+        DATASETS_PACKAGE,
+        ACCELERATE_PACKAGE,
+        HF_HUB_PACKAGE,
+        SAFETENSORS_PACKAGE,
+        SENTENCEPIECE_PACKAGE,
+        EINOPS_PACKAGE,
+        NINJA_PACKAGE,
+        EVALPLUS_PACKAGE,
+        "auto-round>=0.10.2",
+        "frozendict==2.4.0",
+        "loguru>=0.7.2",
+        "nvidia-ml-py>=12.560.30",
+        "Pillow>=10.0.0",
+        "pydantic>=2.0",
+        "PyYAML>=6.0.1",
+        "requests>=2.32.2",
+        "tqdm>=4.66.3",
+    )
+    .pip_install("git+https://github.com/huggingface/transformers.git")
+    .run_commands(
+        FLASH_LINEAR_ATTENTION_INSTALL,
+        "python -m pip install --no-deps git+https://github.com/vllm-project/compressed-tensors.git",
+        "python -m pip install --no-deps git+https://github.com/vllm-project/llm-compressor.git",
+    )
+    .add_local_python_source("ta_mpq")
+)
+
+bigcodebench_image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .apt_install("git")
+    .pip_install(
+        TORCH_PACKAGE,
+        DATASETS_PACKAGE,
+        ACCELERATE_PACKAGE,
+        HF_HUB_PACKAGE,
+        SAFETENSORS_PACKAGE,
+        SENTENCEPIECE_PACKAGE,
+        EINOPS_PACKAGE,
+        NINJA_PACKAGE,
+        "auto-round>=0.10.2",
+        "frozendict==2.4.0",
+        "loguru>=0.7.2",
+        "nvidia-ml-py>=12.560.30",
+        "Pillow>=10.0.0",
+        "pydantic>=2.0",
+        "PyYAML>=6.0.1",
+        "requests>=2.32.2",
+        "tqdm>=4.66.3",
+        "appdirs>=1.4.4",
+        "fire>=0.6.0",
+        "pqdm>=0.2.0",
+        "tempdir>=0.7.1",
+        "termcolor>=2.0.0",
+        "tree-sitter>=0.22.0",
+        "tree-sitter-python>=0.21.0",
+        "wget>=3.2",
+        "gradio-client>=1.0.0",
+        "e2b>=1.0.0",
+    )
+    .pip_install("git+https://github.com/huggingface/transformers.git")
+    .run_commands(
+        FLASH_LINEAR_ATTENTION_INSTALL,
+        "python -m pip install --no-deps git+https://github.com/vllm-project/compressed-tensors.git",
+        "python -m pip install --no-deps git+https://github.com/vllm-project/llm-compressor.git",
+    )
+    .run_commands(f"python -m pip install --no-deps {BIGCODEBENCH_PACKAGE}")
+    .add_local_python_source("ta_mpq")
+)
 
 surrogate_image = (
     modal.Image.debian_slim(python_version="3.11")
@@ -660,6 +737,1023 @@ def evaluate_task_source_model_a100(
         load_dtype=load_dtype,
         task_prompt_style=task_prompt_style,
     )
+
+
+def _run_evalplus_hf_model_impl(
+    model_ref: str,
+    model_label: str,
+    dataset: str,
+    greedy: bool,
+    n_samples: int,
+    dtype: str,
+    backend: str,
+    force_base_prompt: bool,
+    attn_implementation: str,
+    version: str,
+    parallel: int,
+    max_new_tokens: int,
+    task_limit: int,
+    runner_mode: str,
+    output_slug: str,
+) -> dict[str, Any]:
+    _configure_hf_environment()
+    _apply_transformers_token_compat_patch()
+    _apply_compressed_tensors_distributed_compat_patch()
+
+    import contextlib
+    import io
+    import json
+    import time
+
+    from evalplus.evaluate import evaluate
+    from evalplus.data.humaneval import get_human_eval_plus
+    from evalplus.data.mbpp import get_mbpp_plus
+    from evalplus.provider.utility import (
+        extra_eos_for_direct_completion,
+        make_raw_chat_prompt,
+    )
+    from evalplus.sanitize import sanitize
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    resolved_model_ref = _resolve_remote_model_ref(model_ref)
+    started_at = time.time()
+    eval_root = Path("/tmp") / "ta-mpq-evalplus" / output_slug
+    eval_root.mkdir(parents=True, exist_ok=True)
+
+    log_buffer = io.StringIO()
+    if runner_mode not in {"direct_hf", "evalplus_hf"}:
+        raise ValueError(f"Unknown EvalPlus runner_mode: {runner_mode}")
+
+    if runner_mode == "evalplus_hf":
+        with contextlib.redirect_stdout(log_buffer), contextlib.redirect_stderr(log_buffer):
+            evaluate(
+                dataset=dataset,
+                model=resolved_model_ref,
+                root=str(eval_root),
+                backend=backend,
+                greedy=greedy,
+                n_samples=n_samples,
+                bs=1 if greedy else None,
+                temperature=0.0 if greedy else 0.2,
+                resume=False,
+                trust_remote_code=True,
+                dtype=dtype,
+                force_base_prompt=force_base_prompt,
+                attn_implementation=attn_implementation,
+                parallel=parallel,
+                version=version,
+            )
+    else:
+        dataset_dir = eval_root / dataset
+        dataset_dir.mkdir(parents=True, exist_ok=True)
+        identifier = resolved_model_ref.strip("./").replace("/", "--")
+        identifier += f"_{backend}_direct_temp_{0.0 if greedy else 0.2}"
+        samples_path = dataset_dir / f"{identifier}.jsonl"
+        raw_samples_path = dataset_dir / f"{identifier}.raw.jsonl"
+        samples_path.unlink(missing_ok=True)
+        raw_samples_path.unlink(missing_ok=True)
+
+        if dataset == "humaneval":
+            problems = get_human_eval_plus(version=version)
+        elif dataset == "mbpp":
+            problems = get_mbpp_plus(version=version)
+        else:
+            raise ValueError(f"Unsupported EvalPlus dataset for direct_hf: {dataset}")
+        items = list(problems.items())
+        if task_limit > 0:
+            items = items[:task_limit]
+
+        direct_completion = force_base_prompt
+        tokenizer = AutoTokenizer.from_pretrained(resolved_model_ref, use_fast=False)
+        direct_completion = direct_completion or tokenizer.chat_template is None
+        eos_strings = list(getattr(tokenizer, "additional_special_tokens", []) or [])
+        if tokenizer.eos_token:
+            eos_strings.append(tokenizer.eos_token)
+        if direct_completion:
+            eos_strings.extend(extra_eos_for_direct_completion(dataset))
+        else:
+            eos_strings.append("\n```\n")
+
+        torch_dtype = getattr(torch, dtype)
+        model_kwargs = {
+            "device_map": "auto",
+            "trust_remote_code": True,
+            "torch_dtype": torch_dtype,
+            "attn_implementation": attn_implementation,
+        }
+        with contextlib.redirect_stdout(log_buffer), contextlib.redirect_stderr(log_buffer):
+            print(f"direct_hf model_kwargs={model_kwargs}")
+            print(f"direct_hf task_count={len(items)} max_new_tokens={max_new_tokens}")
+            model = AutoModelForCausalLM.from_pretrained(resolved_model_ref, **model_kwargs)
+            model.eval()
+            device = next(model.parameters()).device
+            if tokenizer.pad_token_id is None:
+                tokenizer.pad_token_id = tokenizer.eos_token_id
+
+            instruction_prefix = (
+                "Please provide a self-contained Python script that solves the following "
+                "problem in a markdown code block:"
+            )
+            response_prefix = (
+                "Below is a Python script with a self-contained function that solves the "
+                "problem and passes corresponding tests:"
+            )
+            for task_index, (task_id, task) in enumerate(items, start=1):
+                print(f"direct_hf codegen {task_index}/{len(items)} {task_id}", flush=True)
+                prompt = task["prompt"].strip() + "\n"
+                if direct_completion:
+                    generation_prompt = prompt
+                else:
+                    generation_prompt = make_raw_chat_prompt(
+                        prompt,
+                        instruction_prefix,
+                        response_prefix,
+                        tokenizer,
+                    )
+                encoded = tokenizer(generation_prompt, return_tensors="pt").to(device)
+                generation_kwargs: dict[str, Any] = {
+                    "max_new_tokens": max_new_tokens,
+                    "do_sample": not greedy,
+                    "num_return_sequences": 1,
+                    "pad_token_id": tokenizer.pad_token_id,
+                }
+                if not greedy:
+                    generation_kwargs["temperature"] = 0.2
+                    generation_kwargs["top_p"] = 0.95
+                for _sample_index in range(n_samples):
+                    output_ids = model.generate(**encoded, **generation_kwargs)
+                    generated = tokenizer.decode(
+                        output_ids[0, encoded["input_ids"].shape[-1] :],
+                        skip_special_tokens=True,
+                    )
+                    cut_index = len(generated)
+                    for eos in eos_strings:
+                        if eos and eos in generated:
+                            cut_index = min(cut_index, generated.index(eos))
+                    implementation = generated[:cut_index].replace("\t", "    ")
+                    solution = prompt + implementation if direct_completion else implementation
+                    sanitized_solution = sanitize(solution, entrypoint=task["entry_point"])
+                    with samples_path.open("a", encoding="utf-8") as handle:
+                        handle.write(
+                            json.dumps(
+                                {"task_id": task_id, "solution": sanitized_solution},
+                                ensure_ascii=False,
+                            )
+                            + "\n"
+                        )
+                    with raw_samples_path.open("a", encoding="utf-8") as handle:
+                        handle.write(
+                            json.dumps(
+                                {"task_id": task_id, "solution": solution},
+                                ensure_ascii=False,
+                            )
+                            + "\n"
+                        )
+            del model
+            torch.cuda.empty_cache()
+
+        if task_limit > 0:
+            samples_paths = [samples_path]
+            raw_samples_paths = [raw_samples_path]
+            summary = {
+                "status": "generated_subset",
+                "model_id": model_label or model_ref,
+                "model_ref": model_ref,
+                "resolved_model_ref": resolved_model_ref,
+                "dataset": dataset,
+                "num_tasks": len(items),
+                "num_samples": len(items) * n_samples,
+                "base_correct": None,
+                "plus_correct": None,
+                "base_pass_at_1": None,
+                "plus_pass_at_1": None,
+                "remote_result_path": None,
+                "remote_samples_paths": [str(samples_path)],
+                "remote_raw_samples_paths": [str(raw_samples_path)],
+                "elapsed_sec": time.time() - started_at,
+                "note": "task_limit was set, so this run only validates EvalPlus code generation.",
+            }
+            summary["evalplus_config"] = {
+                "backend": backend,
+                "greedy": greedy,
+                "n_samples": n_samples,
+                "dtype": dtype,
+                "force_base_prompt": force_base_prompt,
+                "attn_implementation": attn_implementation,
+                "version": version,
+                "parallel": parallel,
+                "max_new_tokens": max_new_tokens,
+                "task_limit": task_limit,
+                "runner_mode": runner_mode,
+            }
+            summary["remote_log_tail"] = log_buffer.getvalue()[-12000:]
+            summary["artifact_texts"] = {
+                str(path.relative_to(eval_root)): path.read_text(encoding="utf-8")
+                for path in [*samples_paths, *raw_samples_paths]
+                if path.exists()
+            }
+            return summary
+
+        with contextlib.redirect_stdout(log_buffer), contextlib.redirect_stderr(log_buffer):
+            evaluate(
+                dataset=dataset,
+                samples=str(samples_path),
+                parallel=parallel,
+                version=version,
+            )
+
+    result_paths = sorted(eval_root.rglob("*_eval_results.json"))
+    if not result_paths:
+        raise FileNotFoundError(f"EvalPlus did not produce an eval_results file under {eval_root}")
+    result_path = result_paths[-1]
+    results = _load_json(result_path) if result_path.exists() else {}
+    samples_paths = sorted(
+        path for path in eval_root.rglob("*.jsonl") if not path.name.endswith(".raw.jsonl")
+    )
+    raw_samples_paths = sorted(eval_root.rglob("*.raw.jsonl"))
+
+    summary = _summarize_evalplus_payload(
+        results,
+        dataset=dataset,
+        model_ref=model_ref,
+        model_label=model_label or model_ref,
+        resolved_model_ref=resolved_model_ref,
+        result_path=result_path,
+        samples_paths=samples_paths,
+        raw_samples_paths=raw_samples_paths,
+        elapsed_sec=time.time() - started_at,
+    )
+    summary["evalplus_config"] = {
+        "backend": backend,
+        "greedy": greedy,
+        "n_samples": n_samples,
+        "dtype": dtype,
+        "force_base_prompt": force_base_prompt,
+        "attn_implementation": attn_implementation,
+        "version": version,
+        "parallel": parallel,
+        "max_new_tokens": max_new_tokens,
+        "task_limit": task_limit,
+        "runner_mode": runner_mode,
+    }
+    summary["remote_log_tail"] = log_buffer.getvalue()[-12000:]
+    summary["artifact_texts"] = {
+        str(path.relative_to(eval_root)): path.read_text(encoding="utf-8")
+        for path in [*samples_paths, *raw_samples_paths, result_path]
+        if path.exists()
+    }
+    return summary
+
+
+@app.function(
+    image=evalplus_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 6,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def run_evalplus_hf_model(
+    model_ref: str,
+    model_label: str,
+    dataset: str = "humaneval",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    backend: str = "hf",
+    force_base_prompt: bool = False,
+    attn_implementation: str = "eager",
+    version: str = "default",
+    parallel: int = 0,
+    max_new_tokens: int = 768,
+    task_limit: int = 0,
+    runner_mode: str = "direct_hf",
+    output_slug: str = "evalplus-run",
+) -> dict[str, Any]:
+    return _run_evalplus_hf_model_impl(
+        model_ref=model_ref,
+        model_label=model_label,
+        dataset=dataset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        backend=backend,
+        force_base_prompt=force_base_prompt,
+        attn_implementation=attn_implementation,
+        version=version,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        runner_mode=runner_mode,
+        output_slug=output_slug,
+    )
+
+
+@app.function(
+    image=evalplus_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 6,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def run_evalplus_hf_model_a100(
+    model_ref: str,
+    model_label: str,
+    dataset: str = "humaneval",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    backend: str = "hf",
+    force_base_prompt: bool = False,
+    attn_implementation: str = "eager",
+    version: str = "default",
+    parallel: int = 0,
+    max_new_tokens: int = 768,
+    task_limit: int = 0,
+    runner_mode: str = "direct_hf",
+    output_slug: str = "evalplus-run",
+) -> dict[str, Any]:
+    return _run_evalplus_hf_model_impl(
+        model_ref=model_ref,
+        model_label=model_label,
+        dataset=dataset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        backend=backend,
+        force_base_prompt=force_base_prompt,
+        attn_implementation=attn_implementation,
+        version=version,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        runner_mode=runner_mode,
+        output_slug=output_slug,
+    )
+
+
+def _run_bigcodebench_hf_model_impl(
+    model_ref: str,
+    model_label: str,
+    split: str,
+    subset: str,
+    greedy: bool,
+    n_samples: int,
+    dtype: str,
+    attn_implementation: str,
+    parallel: int,
+    max_new_tokens: int,
+    task_limit: int,
+    output_slug: str,
+    no_gt: bool,
+    evaluation_execution: str,
+    generation_only: bool,
+    checkpoint_interval: int,
+) -> dict[str, Any]:
+    _configure_hf_environment()
+    _apply_transformers_token_compat_patch()
+    _apply_compressed_tensors_distributed_compat_patch()
+
+    import contextlib
+    import io
+    import json
+    import time
+    import traceback
+
+    from bigcodebench.data import get_bigcodebench
+    from bigcodebench.evaluate import evaluate
+    from bigcodebench.provider.utility import EOS, make_raw_chat_prompt
+    from bigcodebench.sanitize import sanitize
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    resolved_model_ref = _resolve_remote_model_ref(model_ref)
+    started_at = time.time()
+    eval_root = Path("/artifacts") / "bigcodebench" / output_slug
+    eval_root.mkdir(parents=True, exist_ok=True)
+
+    log_buffer = io.StringIO()
+    benchmark_dir = eval_root / f"{split}-{subset}"
+    benchmark_dir.mkdir(parents=True, exist_ok=True)
+    identifier = resolved_model_ref.strip("./").replace("/", "--")
+    identifier += f"_hf_direct_temp_{0.0 if greedy else 0.2}"
+    samples_path = benchmark_dir / f"{identifier}.jsonl"
+    raw_samples_path = benchmark_dir / f"{identifier}.raw.jsonl"
+    generation_summary_path = eval_root / "generation_summary.json"
+    result_path = Path(str(samples_path).replace(".jsonl", "_eval_results.json"))
+    pass_at_k_path = Path(str(result_path).replace("eval_results.json", "pass_at_k.json"))
+    for path in (samples_path, raw_samples_path, generation_summary_path, result_path, pass_at_k_path):
+        path.unlink(missing_ok=True)
+
+    with contextlib.redirect_stdout(log_buffer), contextlib.redirect_stderr(log_buffer):
+        problems = get_bigcodebench(subset=subset)
+    items = list(problems.items())
+    if task_limit > 0:
+        items = items[:task_limit]
+    selected_task_ids = [task_id for task_id, _task in items]
+    if task_limit > 0 and evaluation_execution == "gradio":
+        selective_evaluate = ",".join(task_id.split("/")[-1] for task_id in selected_task_ids)
+    else:
+        selective_evaluate = ",".join(selected_task_ids) if task_limit > 0 else ""
+
+    direct_completion = False
+    tokenizer = AutoTokenizer.from_pretrained(resolved_model_ref, use_fast=False)
+    direct_completion = direct_completion or tokenizer.chat_template is None
+    eos_strings = list(EOS)
+    if direct_completion:
+        eos_strings.extend(["\ndef ", "\nclass ", "\nimport ", "\nfrom ", "\nassert "])
+    else:
+        eos_strings.append("\n```\n")
+    if tokenizer.eos_token:
+        eos_strings.append(tokenizer.eos_token)
+
+    torch_dtype = getattr(torch, dtype)
+    model_kwargs = {
+        "device_map": "auto",
+        "trust_remote_code": True,
+        "torch_dtype": torch_dtype,
+        "attn_implementation": attn_implementation,
+    }
+    generation_records: list[dict[str, Any]] = []
+
+    def write_generation_checkpoint(checkpoint_label: str) -> None:
+        completion_token_values = [
+            int(record.get("completion_tokens", 0)) for record in generation_records
+        ]
+        generation_summary = {
+            "model_id": model_label or model_ref,
+            "model_ref": model_ref,
+            "resolved_model_ref": resolved_model_ref,
+            "benchmark": "bigcodebench",
+            "split": split,
+            "subset": subset,
+            "checkpoint_label": checkpoint_label,
+            "generation_complete": len(generation_records) == len(items),
+            "num_generated_tasks": len(generation_records),
+            "total_task_count": len(items),
+            "selected_task_ids": selected_task_ids,
+            "generated_task_ids": [
+                str(record.get("task_id", "")) for record in generation_records
+            ],
+            "length_capped_count": sum(
+                1 for record in generation_records if record.get("length_capped")
+            ),
+            "mean_completion_tokens": _mean(completion_token_values),
+            "p95_completion_tokens": _percentile(completion_token_values, 95.0),
+            "remote_samples_paths": [str(samples_path)],
+            "remote_raw_samples_paths": [str(raw_samples_path)],
+            "elapsed_generation_sec": time.time() - started_at,
+        }
+        generation_summary_path.write_text(
+            json.dumps(generation_summary, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        _sync_artifact_volume()
+
+    with contextlib.redirect_stdout(log_buffer), contextlib.redirect_stderr(log_buffer):
+        print(f"bigcodebench direct_hf model_kwargs={model_kwargs}")
+        print(
+            (
+                "bigcodebench direct_hf "
+                f"split={split} subset={subset} task_count={len(items)} "
+                f"max_new_tokens={max_new_tokens}"
+            ),
+            flush=True,
+        )
+        model = AutoModelForCausalLM.from_pretrained(resolved_model_ref, **model_kwargs)
+        model.eval()
+        device = next(model.parameters()).device
+        if tokenizer.pad_token_id is None:
+            tokenizer.pad_token_id = tokenizer.eos_token_id
+        tokenizer.padding_side = "left"
+
+        instruction_prefix = (
+            "Please provide a self-contained Python script that solves the following "
+            "problem in a markdown code block:"
+        )
+        response_prefix = (
+            "Below is a Python script with a self-contained function that solves the "
+            "problem and passes corresponding tests:"
+        )
+        for task_index, (task_id, task) in enumerate(items, start=1):
+            print(
+                f"[bigcodebench:{split}/{subset}] codegen {task_index}/{len(items)} {task_id}",
+                flush=True,
+            )
+            task_prompt = str(task[f"{split}_prompt"])
+            if direct_completion:
+                generation_prompt = task_prompt
+            else:
+                generation_prompt = make_raw_chat_prompt(
+                    task_prompt=task_prompt,
+                    subset=subset,
+                    split=split,
+                    instruction_prefix=instruction_prefix,
+                    response_prefix=response_prefix,
+                    tokenizer=tokenizer,
+                    direct_completion=direct_completion,
+                )
+            encoded = tokenizer(generation_prompt, return_tensors="pt").to(device)
+            generation_kwargs: dict[str, Any] = {
+                "max_new_tokens": max_new_tokens,
+                "do_sample": not greedy,
+                "num_return_sequences": 1,
+                "pad_token_id": tokenizer.pad_token_id,
+            }
+            if not greedy:
+                generation_kwargs["temperature"] = 0.2
+                generation_kwargs["top_p"] = 0.95
+            try:
+                generation_kwargs["stop_strings"] = eos_strings
+                generation_kwargs["tokenizer"] = tokenizer
+                start = time.perf_counter()
+                output_ids = model.generate(**encoded, **generation_kwargs)
+            except ValueError:
+                generation_kwargs.pop("stop_strings", None)
+                generation_kwargs.pop("tokenizer", None)
+                start = time.perf_counter()
+                output_ids = model.generate(**encoded, **generation_kwargs)
+            latency_sec = time.perf_counter() - start
+            generated_tokens = output_ids[0, encoded["input_ids"].shape[-1] :]
+            generated = tokenizer.decode(generated_tokens, skip_special_tokens=True)
+            cut_index = len(generated)
+            for eos in eos_strings:
+                if eos and eos in generated:
+                    cut_index = min(cut_index, generated.index(eos))
+            implementation = generated[:cut_index].replace("\t", "    ")
+            raw_solution = task_prompt + implementation if direct_completion else implementation
+            sanitized_solution = sanitize(raw_solution, entrypoint=task["entry_point"])
+            completion_tokens = int(generated_tokens.shape[-1])
+            length_capped = completion_tokens >= max_new_tokens
+            with samples_path.open("a", encoding="utf-8") as handle:
+                handle.write(
+                    json.dumps(
+                        {"task_id": task_id, "solution": sanitized_solution},
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
+            with raw_samples_path.open("a", encoding="utf-8") as handle:
+                handle.write(
+                    json.dumps(
+                        {
+                            "task_id": task_id,
+                            "solution": raw_solution,
+                            "completion_tokens": completion_tokens,
+                            "latency_sec": latency_sec,
+                            "length_capped": length_capped,
+                        },
+                        ensure_ascii=False,
+                    )
+                    + "\n"
+                )
+            generation_records.append(
+                {
+                    "task_id": task_id,
+                    "latency_sec": latency_sec,
+                    "prompt_tokens": int(encoded["input_ids"].shape[-1]),
+                    "completion_tokens": completion_tokens,
+                    "length_capped": length_capped,
+                    "sanitized_chars": len(sanitized_solution),
+                    "raw_chars": len(raw_solution),
+                }
+            )
+            print(
+                (
+                    f"[bigcodebench:{split}/{subset}] completed {task_index}/{len(items)} "
+                    f"last_latency_sec={latency_sec:.2f} "
+                    f"last_completion_tokens={completion_tokens}"
+                ),
+                flush=True,
+            )
+            if checkpoint_interval > 0 and task_index % checkpoint_interval == 0:
+                write_generation_checkpoint(f"task-{task_index}")
+        del model
+        torch.cuda.empty_cache()
+
+        write_generation_checkpoint("final")
+
+        evaluation_error: dict[str, Any] | None = None
+        if generation_only or evaluation_execution == "none":
+            print(
+                "[bigcodebench] generation complete; skipping evaluator because "
+                f"generation_only={generation_only} evaluation_execution={evaluation_execution}",
+                flush=True,
+            )
+        else:
+            try:
+                evaluate(
+                    split=split,
+                    subset=subset,
+                    samples=str(samples_path),
+                    execution=evaluation_execution,
+                    selective_evaluate=selective_evaluate,
+                    pass_k="1",
+                    save_pass_rate=True,
+                    calibrated=True,
+                    parallel=parallel,
+                    no_gt=no_gt,
+                )
+            except Exception as exc:
+                evaluation_error = {
+                    "type": type(exc).__name__,
+                    "message": str(exc),
+                    "traceback_tail": traceback.format_exc()[-6000:],
+                }
+                print(
+                    "[bigcodebench] evaluator failed after samples were saved: "
+                    f"{evaluation_error['type']}: {evaluation_error['message']}",
+                    flush=True,
+                )
+            _sync_artifact_volume()
+
+    results = _load_json(result_path) if result_path.exists() else {}
+    pass_at_k = _load_json(pass_at_k_path) if pass_at_k_path.exists() else {}
+    summary = _summarize_bigcodebench_payload(
+        results=results,
+        pass_at_k=pass_at_k,
+        generation_records=generation_records,
+        split=split,
+        subset=subset,
+        model_ref=model_ref,
+        model_label=model_label or model_ref,
+        resolved_model_ref=resolved_model_ref,
+        samples_path=samples_path,
+        raw_samples_path=raw_samples_path,
+        result_path=result_path,
+        pass_at_k_path=pass_at_k_path,
+        elapsed_sec=time.time() - started_at,
+        no_gt=no_gt,
+    )
+    summary["evaluation_status"] = (
+        "skipped"
+        if generation_only or evaluation_execution == "none"
+        else "failed"
+        if evaluation_error
+        else "completed"
+    )
+    if generation_only or evaluation_execution == "none" or evaluation_error:
+        summary["num_tasks"] = len(generation_records)
+        summary["pass_at_1"] = None
+        summary["pass_correct"] = None
+    if evaluation_error:
+        summary["evaluation_error"] = evaluation_error
+    summary["num_generated_tasks"] = len(generation_records)
+    summary["remote_generation_summary_path"] = str(generation_summary_path)
+    summary["bigcodebench_config"] = {
+        "greedy": greedy,
+        "n_samples": n_samples,
+        "dtype": dtype,
+        "attn_implementation": attn_implementation,
+        "parallel": parallel,
+        "max_new_tokens": max_new_tokens,
+        "task_limit": task_limit,
+        "split": split,
+        "subset": subset,
+        "no_gt": no_gt,
+        "evaluation_execution": evaluation_execution,
+        "generation_only": generation_only,
+        "checkpoint_interval": checkpoint_interval,
+    }
+    summary["selected_task_ids"] = selected_task_ids
+    summary["remote_log_tail"] = log_buffer.getvalue()[-12000:]
+    summary["artifact_texts"] = {
+        str(path.relative_to(eval_root)): path.read_text(encoding="utf-8")
+        for path in [
+            samples_path,
+            raw_samples_path,
+            generation_summary_path,
+            result_path,
+            pass_at_k_path,
+        ]
+        if path.exists()
+    }
+    return summary
+
+
+@app.function(
+    image=bigcodebench_image,
+    gpu=DEFAULT_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def run_bigcodebench_hf_model(
+    model_ref: str,
+    model_label: str,
+    split: str = "instruct",
+    subset: str = "hard",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    attn_implementation: str = "eager",
+    parallel: int = 8,
+    max_new_tokens: int = 1280,
+    task_limit: int = 0,
+    output_slug: str = "bigcodebench-run",
+    no_gt: bool = False,
+    evaluation_execution: str = "gradio",
+    generation_only: bool = False,
+    checkpoint_interval: int = 10,
+) -> dict[str, Any]:
+    return _run_bigcodebench_hf_model_impl(
+        model_ref=model_ref,
+        model_label=model_label,
+        split=split,
+        subset=subset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        attn_implementation=attn_implementation,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        output_slug=output_slug,
+        no_gt=no_gt,
+        evaluation_execution=evaluation_execution,
+        generation_only=generation_only,
+        checkpoint_interval=checkpoint_interval,
+    )
+
+
+@app.function(
+    image=bigcodebench_image,
+    gpu=A100_40GB_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def run_bigcodebench_hf_model_a100(
+    model_ref: str,
+    model_label: str,
+    split: str = "instruct",
+    subset: str = "hard",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    attn_implementation: str = "eager",
+    parallel: int = 8,
+    max_new_tokens: int = 1280,
+    task_limit: int = 0,
+    output_slug: str = "bigcodebench-run",
+    no_gt: bool = False,
+    evaluation_execution: str = "gradio",
+    generation_only: bool = False,
+    checkpoint_interval: int = 10,
+) -> dict[str, Any]:
+    return _run_bigcodebench_hf_model_impl(
+        model_ref=model_ref,
+        model_label=model_label,
+        split=split,
+        subset=subset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        attn_implementation=attn_implementation,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        output_slug=output_slug,
+        no_gt=no_gt,
+        evaluation_execution=evaluation_execution,
+        generation_only=generation_only,
+        checkpoint_interval=checkpoint_interval,
+    )
+
+
+@app.function(
+    image=bigcodebench_image,
+    gpu=H100_MODAL_GPU,
+    timeout=60 * 60 * 8,
+    volumes={"/cache": cache_volume, "/artifacts": artifact_volume},
+    secrets=[hf_secret],
+)
+def run_bigcodebench_hf_model_h100(
+    model_ref: str,
+    model_label: str,
+    split: str = "instruct",
+    subset: str = "hard",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    attn_implementation: str = "eager",
+    parallel: int = 8,
+    max_new_tokens: int = 1280,
+    task_limit: int = 0,
+    output_slug: str = "bigcodebench-run",
+    no_gt: bool = False,
+    evaluation_execution: str = "gradio",
+    generation_only: bool = False,
+    checkpoint_interval: int = 10,
+) -> dict[str, Any]:
+    return _run_bigcodebench_hf_model_impl(
+        model_ref=model_ref,
+        model_label=model_label,
+        split=split,
+        subset=subset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        attn_implementation=attn_implementation,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        output_slug=output_slug,
+        no_gt=no_gt,
+        evaluation_execution=evaluation_execution,
+        generation_only=generation_only,
+        checkpoint_interval=checkpoint_interval,
+    )
+
+
+@app.function(
+    image=bigcodebench_image,
+    cpu=4,
+    timeout=60 * 60 * 8,
+    volumes={"/artifacts": artifact_volume},
+)
+def grade_bigcodebench_samples_remote(
+    output_slug: str,
+    split: str = "instruct",
+    subset: str = "hard",
+    samples_relative_path: str = "",
+    raw_samples_relative_path: str = "",
+    evaluation_execution: str = "gradio",
+    parallel: int = 4,
+    no_gt: bool = False,
+    overwrite: bool = True,
+) -> dict[str, Any]:
+    import contextlib
+    import io
+    import json
+    import time
+    import traceback
+
+    from bigcodebench.evaluate import evaluate
+
+    started_at = time.time()
+    try:
+        artifact_volume.reload()
+    except Exception:
+        pass
+
+    root = Path("/artifacts") / "bigcodebench" / _slugify(output_slug)
+    if not root.exists():
+        raise FileNotFoundError(f"BigCodeBench artifact directory does not exist: {root}")
+
+    benchmark_dir = root / f"{split}-{subset}"
+    if samples_relative_path:
+        samples_path = root / samples_relative_path
+    else:
+        candidates = sorted(
+            path
+            for path in benchmark_dir.glob("*.jsonl")
+            if not path.name.endswith(".raw.jsonl")
+        )
+        if not candidates:
+            raise FileNotFoundError(f"No BigCodeBench samples .jsonl found under {benchmark_dir}")
+        samples_path = candidates[0]
+    if not samples_path.exists():
+        raise FileNotFoundError(f"BigCodeBench samples file does not exist: {samples_path}")
+
+    if raw_samples_relative_path:
+        raw_samples_path = root / raw_samples_relative_path
+    else:
+        raw_candidate = Path(str(samples_path).replace(".jsonl", ".raw.jsonl"))
+        raw_samples_path = raw_candidate if raw_candidate.exists() else samples_path
+
+    result_path = Path(str(samples_path).replace(".jsonl", "_eval_results.json"))
+    pass_at_k_path = Path(str(result_path).replace("eval_results.json", "pass_at_k.json"))
+    if overwrite:
+        result_path.unlink(missing_ok=True)
+        pass_at_k_path.unlink(missing_ok=True)
+
+    generation_summary_path = root / "generation_summary.json"
+    generation_summary = _load_json(generation_summary_path) if generation_summary_path.exists() else {}
+    generation_records: list[dict[str, Any]] = []
+    if raw_samples_path.exists():
+        with raw_samples_path.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                item = json.loads(line)
+                generation_records.append(
+                    {
+                        "task_id": item.get("task_id"),
+                        "latency_sec": float(item.get("latency_sec", 0.0) or 0.0),
+                        "completion_tokens": int(item.get("completion_tokens", 0) or 0),
+                        "length_capped": bool(item.get("length_capped", False)),
+                        "raw_chars": len(str(item.get("solution", ""))),
+                        "sanitized_chars": 0,
+                    }
+                )
+
+    log_buffer = io.StringIO()
+    evaluation_error: dict[str, Any] | None = None
+    with contextlib.redirect_stdout(log_buffer), contextlib.redirect_stderr(log_buffer):
+        try:
+            evaluate(
+                split=split,
+                subset=subset,
+                samples=str(samples_path),
+                execution=evaluation_execution,
+                pass_k="1",
+                save_pass_rate=True,
+                calibrated=True,
+                parallel=parallel,
+                no_gt=no_gt,
+            )
+        except Exception as exc:
+            evaluation_error = {
+                "type": type(exc).__name__,
+                "message": str(exc),
+                "traceback_tail": traceback.format_exc()[-6000:],
+            }
+            print(
+                "[bigcodebench] sample evaluator failed: "
+                f"{evaluation_error['type']}: {evaluation_error['message']}",
+                flush=True,
+            )
+    _sync_artifact_volume()
+
+    results = _load_json(result_path) if result_path.exists() else {}
+    pass_at_k = _load_json(pass_at_k_path) if pass_at_k_path.exists() else {}
+    model_label = str(generation_summary.get("model_id") or output_slug)
+    model_ref = str(generation_summary.get("model_ref") or output_slug)
+    resolved_model_ref = str(generation_summary.get("resolved_model_ref") or model_ref)
+    summary = _summarize_bigcodebench_payload(
+        results=results,
+        pass_at_k=pass_at_k,
+        generation_records=generation_records,
+        split=split,
+        subset=subset,
+        model_ref=model_ref,
+        model_label=model_label,
+        resolved_model_ref=resolved_model_ref,
+        samples_path=samples_path,
+        raw_samples_path=raw_samples_path,
+        result_path=result_path,
+        pass_at_k_path=pass_at_k_path,
+        elapsed_sec=time.time() - started_at,
+        no_gt=no_gt,
+    )
+    summary["evaluation_status"] = "failed" if evaluation_error else "completed"
+    if evaluation_error:
+        summary["evaluation_error"] = evaluation_error
+    summary["bigcodebench_eval_config"] = {
+        "split": split,
+        "subset": subset,
+        "evaluation_execution": evaluation_execution,
+        "parallel": parallel,
+        "no_gt": no_gt,
+        "samples_relative_path": str(samples_path.relative_to(root)),
+        "raw_samples_relative_path": str(raw_samples_path.relative_to(root))
+        if raw_samples_path.exists()
+        else None,
+    }
+    summary["remote_generation_summary_path"] = str(generation_summary_path)
+    summary["remote_log_tail"] = log_buffer.getvalue()[-12000:]
+    summary["artifact_texts"] = {
+        str(path.relative_to(root)): path.read_text(encoding="utf-8")
+        for path in [
+            generation_summary_path,
+            samples_path,
+            raw_samples_path,
+            result_path,
+            pass_at_k_path,
+        ]
+        if path.exists()
+    }
+    return summary
+
+
+@app.function(
+    image=report_image,
+    timeout=60 * 10,
+    volumes={"/artifacts": artifact_volume},
+)
+def collect_bigcodebench_artifacts(output_slug: str) -> dict[str, Any]:
+    try:
+        artifact_volume.reload()
+    except Exception:
+        pass
+
+    root = Path("/artifacts") / "bigcodebench" / _slugify(output_slug)
+    if not root.exists():
+        raise FileNotFoundError(f"BigCodeBench artifact directory does not exist: {root}")
+
+    artifact_texts: dict[str, str] = {}
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        artifact_texts[str(path.relative_to(root))] = path.read_text(encoding="utf-8")
+
+    return {
+        "remote_root": str(root),
+        "output_slug": _slugify(output_slug),
+        "artifact_texts": artifact_texts,
+        "file_count": len(artifact_texts),
+    }
 
 
 @app.function(
@@ -1496,6 +2590,183 @@ def run_evaluate_candidate_manifest(
 
 
 @app.local_entrypoint()
+def run_evalplus_model_eval(
+    model_ref: str,
+    model_label: str = "",
+    dataset: str = "humaneval",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    backend: str = "hf",
+    force_base_prompt: bool = False,
+    attn_implementation: str = "eager",
+    version: str = "default",
+    parallel: int = 0,
+    max_new_tokens: int = 768,
+    task_limit: int = 0,
+    runner_mode: str = "direct_hf",
+    gpu_type: str = A100_40GB_MODAL_GPU,
+    output_name: str = "",
+) -> None:
+    resolved_model_label = model_label or model_ref
+    effective_output_name = output_name or (
+        f"evalplus-{dataset}-{Path(model_ref).name}-{backend}-greedy"
+    )
+    output_slug = _slugify(effective_output_name)
+    evalplus_remote = _resolve_evalplus_remote(gpu_type)
+    summary = evalplus_remote.remote(
+        model_ref=model_ref,
+        model_label=resolved_model_label,
+        dataset=dataset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        backend=backend,
+        force_base_prompt=force_base_prompt,
+        attn_implementation=attn_implementation,
+        version=version,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        runner_mode=runner_mode,
+        output_slug=output_slug,
+    )
+    artifact_texts = dict(summary.pop("artifact_texts", {}))
+    output_dir = PROJECT_ROOT / "outputs" / "evalplus" / output_slug
+    output_dir.mkdir(parents=True, exist_ok=True)
+    local_artifact_paths: dict[str, str] = {}
+    for relative_path, text in artifact_texts.items():
+        artifact_path = output_dir / relative_path
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_path.write_text(text, encoding="utf-8")
+        local_artifact_paths[relative_path] = to_relative_path(artifact_path, PROJECT_ROOT)
+    summary["local_artifact_paths"] = local_artifact_paths
+    save_summary(output_dir / "summary.json", summary)
+    print(output_dir / "summary.json")
+
+
+@app.local_entrypoint()
+def run_bigcodebench_model_eval(
+    model_ref: str,
+    model_label: str = "",
+    split: str = "instruct",
+    subset: str = "hard",
+    greedy: bool = True,
+    n_samples: int = 1,
+    dtype: str = "bfloat16",
+    attn_implementation: str = "eager",
+    parallel: int = 8,
+    max_new_tokens: int = 1280,
+    task_limit: int = 0,
+    gpu_type: str = A100_40GB_MODAL_GPU,
+    output_name: str = "",
+    no_gt: bool = False,
+    evaluation_execution: str = "gradio",
+    generation_only: bool = False,
+    checkpoint_interval: int = 10,
+) -> None:
+    resolved_model_label = model_label or model_ref
+    effective_output_name = output_name or (
+        f"bigcodebench-{split}-{subset}-{Path(model_ref).name}-hf-greedy"
+    )
+    output_slug = _slugify(effective_output_name)
+    bigcodebench_remote = _resolve_bigcodebench_remote(gpu_type)
+    summary = bigcodebench_remote.remote(
+        model_ref=model_ref,
+        model_label=resolved_model_label,
+        split=split,
+        subset=subset,
+        greedy=greedy,
+        n_samples=n_samples,
+        dtype=dtype,
+        attn_implementation=attn_implementation,
+        parallel=parallel,
+        max_new_tokens=max_new_tokens,
+        task_limit=task_limit,
+        output_slug=output_slug,
+        no_gt=no_gt,
+        evaluation_execution=evaluation_execution,
+        generation_only=generation_only,
+        checkpoint_interval=checkpoint_interval,
+    )
+    artifact_texts = dict(summary.pop("artifact_texts", {}))
+    output_dir = PROJECT_ROOT / "outputs" / "bigcodebench" / output_slug
+    output_dir.mkdir(parents=True, exist_ok=True)
+    local_artifact_paths: dict[str, str] = {}
+    for relative_path, text in artifact_texts.items():
+        artifact_path = output_dir / relative_path
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_path.write_text(text, encoding="utf-8")
+        local_artifact_paths[relative_path] = to_relative_path(artifact_path, PROJECT_ROOT)
+    summary["local_artifact_paths"] = local_artifact_paths
+    save_summary(output_dir / "summary.json", summary)
+    print(output_dir / "summary.json")
+
+
+@app.local_entrypoint()
+def run_bigcodebench_samples_eval(
+    output_name: str,
+    split: str = "instruct",
+    subset: str = "hard",
+    samples_relative_path: str = "",
+    raw_samples_relative_path: str = "",
+    evaluation_execution: str = "gradio",
+    parallel: int = 4,
+    no_gt: bool = False,
+    overwrite: bool = True,
+) -> None:
+    output_slug = _slugify(output_name)
+    summary = grade_bigcodebench_samples_remote.remote(
+        output_slug=output_slug,
+        split=split,
+        subset=subset,
+        samples_relative_path=samples_relative_path,
+        raw_samples_relative_path=raw_samples_relative_path,
+        evaluation_execution=evaluation_execution,
+        parallel=parallel,
+        no_gt=no_gt,
+        overwrite=overwrite,
+    )
+    artifact_texts = dict(summary.pop("artifact_texts", {}))
+    output_dir = PROJECT_ROOT / "outputs" / "bigcodebench" / output_slug
+    output_dir.mkdir(parents=True, exist_ok=True)
+    local_artifact_paths: dict[str, str] = {}
+    for relative_path, text in artifact_texts.items():
+        artifact_path = output_dir / relative_path
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_path.write_text(text, encoding="utf-8")
+        local_artifact_paths[relative_path] = to_relative_path(artifact_path, PROJECT_ROOT)
+    summary["local_artifact_paths"] = local_artifact_paths
+    save_summary(output_dir / "grading_summary.json", summary)
+    print(output_dir / "grading_summary.json")
+
+
+@app.local_entrypoint()
+def download_bigcodebench_artifacts(output_name: str) -> None:
+    output_slug = _slugify(output_name)
+    payload = collect_bigcodebench_artifacts.remote(output_slug)
+    artifact_texts = dict(payload.get("artifact_texts", {}))
+    output_dir = PROJECT_ROOT / "outputs" / "bigcodebench" / output_slug
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    local_artifact_paths: dict[str, str] = {}
+    for relative_path, text in artifact_texts.items():
+        artifact_path = output_dir / relative_path
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_path.write_text(text, encoding="utf-8")
+        local_artifact_paths[relative_path] = to_relative_path(artifact_path, PROJECT_ROOT)
+
+    manifest = {
+        "output_slug": output_slug,
+        "remote_root": payload.get("remote_root"),
+        "file_count": payload.get("file_count", 0),
+        "local_artifact_paths": local_artifact_paths,
+    }
+    save_summary(output_dir / "artifact_manifest.json", manifest)
+    print(output_dir / "artifact_manifest.json")
+
+
+@app.local_entrypoint()
 def run_uniform_int4_task_baseline(
     report_path: str,
     contract_path: str = "configs/experiment_contract_9b_math500_int8.json",
@@ -1548,6 +2819,73 @@ def run_uniform_int4_task_baseline(
         PROJECT_ROOT / "outputs" / "search" / f"{output_slug}.json",
         {
             "strategy": "uniform_int4_task_baseline",
+            "contract_path": contract_path,
+            "report_path": report_path,
+            "task_name": resolved_task_name,
+            "task_prompt_style": task_prompt_style,
+            "split": split,
+            "limit": limit,
+            "max_new_tokens": max_new_tokens,
+            "gpu_type": gpu_type,
+            "target_budget_gb": target_budget_gb,
+            "candidate": _candidate_result_snapshot(record),
+        },
+    )
+
+
+@app.local_entrypoint()
+def run_uniform_int8_task_baseline(
+    report_path: str,
+    contract_path: str = "configs/experiment_contract_9b_math500_int8.json",
+    task_name: str = "",
+    task_prompt_style: str = "simple_evals_nonthinking",
+    split: str = "last100",
+    limit: int = 100,
+    max_new_tokens: int = 4096,
+    calibration_limit: int = 4,
+    gpu_type: str = A100_40GB_MODAL_GPU,
+    output_name: str = "",
+) -> None:
+    from ta_mpq.search import build_search_groups, estimate_candidate_weight_footprint_gb, layer_stats_from_report
+
+    contract = load_contract(PROJECT_ROOT / contract_path)
+    resolved_task_name = task_name or contract.task_name
+    report_payload = _load_json(PROJECT_ROOT / report_path)
+    layer_stats = layer_stats_from_report(report_payload)
+    groups = build_search_groups(layer_stats, grouping="per_block_component")
+    fixed_assignments = _resolve_sprint_fixed_assignments(groups)
+    group_bits = {group.name: 8 for group in groups}
+    group_bits.update(fixed_assignments)
+    target_budget_gb = estimate_candidate_weight_footprint_gb(groups, group_bits)
+    effective_output_name = output_name or (
+        f"{contract.name}-{resolved_task_name}-uniform-int8-{split}"
+    )
+    output_slug = _slugify(effective_output_name)
+    policy_output_dir = PROJECT_ROOT / "outputs" / "policies" / output_slug
+    policy_output_dir.mkdir(parents=True, exist_ok=True)
+
+    record = _run_surrogate_free_candidate_eval(
+        candidate_key="baseline-uniform-int8",
+        report_payload=report_payload,
+        group_bits=group_bits,
+        proposal_score=0.0,
+        provenance="uniform_int8_seed",
+        contract=contract,
+        task_name=resolved_task_name,
+        task_prompt_style=task_prompt_style,
+        calibration_limit=calibration_limit,
+        target_budget_gb=target_budget_gb,
+        dev_split=split,
+        dev_limit=limit,
+        max_new_tokens=max_new_tokens,
+        output_slug=output_slug,
+        policy_output_dir=policy_output_dir,
+        gpu_type=gpu_type,
+    )
+    save_summary(
+        PROJECT_ROOT / "outputs" / "search" / f"{output_slug}.json",
+        {
+            "strategy": "uniform_int8_task_baseline",
             "contract_path": contract_path,
             "report_path": report_path,
             "task_name": resolved_task_name,
@@ -3812,6 +5150,165 @@ def _resolve_eval_remote(gpu_type: str):
     if gpu_type == A100_40GB_MODAL_GPU:
         return evaluate_task_source_model_a100
     return evaluate_task_source_model
+
+
+def _resolve_evalplus_remote(gpu_type: str):
+    if gpu_type == A100_40GB_MODAL_GPU:
+        return run_evalplus_hf_model_a100
+    return run_evalplus_hf_model
+
+
+def _resolve_bigcodebench_remote(gpu_type: str):
+    if gpu_type == A100_40GB_MODAL_GPU:
+        return run_bigcodebench_hf_model_a100
+    if gpu_type == H100_MODAL_GPU:
+        return run_bigcodebench_hf_model_h100
+    return run_bigcodebench_hf_model
+
+
+def _summarize_evalplus_payload(
+    results: dict[str, Any],
+    *,
+    dataset: str,
+    model_ref: str,
+    model_label: str,
+    resolved_model_ref: str,
+    result_path: Path,
+    samples_paths: list[Path],
+    raw_samples_paths: list[Path],
+    elapsed_sec: float,
+) -> dict[str, Any]:
+    task_results = dict(results.get("eval", {}))
+    num_tasks = len(task_results)
+    num_samples = sum(len(list(records)) for records in task_results.values())
+    base_correct = 0
+    plus_correct = 0
+    base_status_counts: dict[str, int] = {}
+    plus_status_counts: dict[str, int] = {}
+    for records in task_results.values():
+        task_base_passed = False
+        task_plus_passed = False
+        for record in records:
+            base_status = str(record.get("base_status"))
+            plus_status = str(record.get("plus_status"))
+            base_status_counts[base_status] = base_status_counts.get(base_status, 0) + 1
+            plus_status_counts[plus_status] = plus_status_counts.get(plus_status, 0) + 1
+            if base_status == "pass":
+                task_base_passed = True
+            if base_status == "pass" and plus_status == "pass":
+                task_plus_passed = True
+        if task_base_passed:
+            base_correct += 1
+        if task_plus_passed:
+            plus_correct += 1
+
+    return {
+        "model_id": model_label,
+        "model_ref": model_ref,
+        "resolved_model_ref": resolved_model_ref,
+        "dataset": dataset,
+        "num_tasks": num_tasks,
+        "num_samples": num_samples,
+        "base_correct": base_correct,
+        "plus_correct": plus_correct,
+        "base_pass_at_1": base_correct / num_tasks if num_tasks else 0.0,
+        "plus_pass_at_1": plus_correct / num_tasks if num_tasks else 0.0,
+        "base_status_counts": base_status_counts,
+        "plus_status_counts": plus_status_counts,
+        "eval_hash": results.get("hash"),
+        "eval_date": results.get("date"),
+        "remote_result_path": str(result_path),
+        "remote_samples_paths": [str(path) for path in samples_paths],
+        "remote_raw_samples_paths": [str(path) for path in raw_samples_paths],
+        "elapsed_sec": elapsed_sec,
+    }
+
+
+def _mean(values: list[float] | list[int]) -> float:
+    return float(sum(values) / len(values)) if values else 0.0
+
+
+def _percentile(values: list[float] | list[int], percentile: float) -> float:
+    if not values:
+        return 0.0
+    sorted_values = sorted(float(value) for value in values)
+    if len(sorted_values) == 1:
+        return sorted_values[0]
+    rank = (len(sorted_values) - 1) * (percentile / 100.0)
+    lower = int(rank)
+    upper = min(lower + 1, len(sorted_values) - 1)
+    fraction = rank - lower
+    return sorted_values[lower] * (1.0 - fraction) + sorted_values[upper] * fraction
+
+
+def _summarize_bigcodebench_payload(
+    *,
+    results: dict[str, Any],
+    pass_at_k: dict[str, Any],
+    generation_records: list[dict[str, Any]],
+    split: str,
+    subset: str,
+    model_ref: str,
+    model_label: str,
+    resolved_model_ref: str,
+    samples_path: Path,
+    raw_samples_path: Path,
+    result_path: Path,
+    pass_at_k_path: Path,
+    elapsed_sec: float,
+    no_gt: bool,
+) -> dict[str, Any]:
+    task_results = dict(results.get("eval", {}))
+    num_tasks = len(task_results)
+    num_samples = sum(len(list(records)) for records in task_results.values())
+    status_counts: dict[str, int] = {}
+    passed_tasks = 0
+    failed_tasks: list[str] = []
+    for task_id, records in task_results.items():
+        task_passed = False
+        for record in records:
+            status = str(record.get("status"))
+            status_counts[status] = status_counts.get(status, 0) + 1
+            if status == "pass":
+                task_passed = True
+        if task_passed:
+            passed_tasks += 1
+        else:
+            failed_tasks.append(str(task_id))
+
+    completion_tokens = [int(record.get("completion_tokens", 0)) for record in generation_records]
+    latencies = [float(record.get("latency_sec", 0.0)) for record in generation_records]
+
+    return {
+        "model_id": model_label,
+        "model_ref": model_ref,
+        "resolved_model_ref": resolved_model_ref,
+        "benchmark": "bigcodebench",
+        "split": split,
+        "subset": subset,
+        "num_tasks": num_tasks,
+        "num_samples": num_samples,
+        "pass_correct": passed_tasks,
+        "pass_at_1": float(pass_at_k.get("pass@1", passed_tasks / num_tasks if num_tasks else 0.0)),
+        "status_counts": status_counts,
+        "failed_tasks": failed_tasks,
+        "length_capped_count": sum(1 for record in generation_records if record.get("length_capped")),
+        "mean_latency_sec": _mean(latencies),
+        "median_latency_sec": _percentile(latencies, 50.0),
+        "p95_latency_sec": _percentile(latencies, 95.0),
+        "mean_completion_tokens": _mean(completion_tokens),
+        "median_completion_tokens": _percentile(completion_tokens, 50.0),
+        "p95_completion_tokens": _percentile(completion_tokens, 95.0),
+        "generation_records": generation_records,
+        "pass_at_k": pass_at_k,
+        "eval_date": results.get("date"),
+        "no_gt": no_gt,
+        "remote_result_path": str(result_path),
+        "remote_pass_at_k_path": str(pass_at_k_path),
+        "remote_samples_paths": [str(samples_path)],
+        "remote_raw_samples_paths": [str(raw_samples_path)],
+        "elapsed_sec": elapsed_sec,
+    }
 
 
 def _resolve_feasibility_remote(gpu_type: str):

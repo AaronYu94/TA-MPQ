@@ -1,0 +1,11 @@
+{
+  "pass@1": 0.2905405405405405,
+  "model": "Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+  "split": "instruct",
+  "subset": "hard",
+  "calibrated": true,
+  "gt_pass_rate": 0.9932432432432432,
+  "failed_tasks": [
+    "BigCodeBench/590"
+  ]
+}

@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: ta_mpq_mlsys_paper.aux
+The style file: mlsys2025.bst
+Database file #1: ta_mpq_mlsys_paper.bib
+You've used 11 entries,
+            2773 wiz_defined-function locations,
+            638 strings with 7190 characters,
+and the built_in function-call counts, 6262 in all, are:
+= -- 458
+> -- 594
+< -- 2
++ -- 201
+- -- 189
+* -- 546
+:= -- 1009
+add.period$ -- 33
+call.type$ -- 11
+change.case$ -- 94
+chr.to.int$ -- 10
+cite$ -- 22
+duplicate$ -- 242
+empty$ -- 424
+format.name$ -- 200
+if$ -- 1267
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 9
+newline$ -- 63
+num.names$ -- 44
+pop$ -- 228
+preamble$ -- 1
+purify$ -- 83
+quote$ -- 0
+skip$ -- 193
+stack$ -- 0
+substring$ -- 22
+swap$ -- 21
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 121
+warning$ -- 0
+while$ -- 33
+width$ -- 0
+write$ -- 139

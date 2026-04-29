@@ -1,0 +1,1361 @@
+{
+  "benchmark": "bigcodebench",
+  "bigcodebench_eval_config": {
+    "evaluation_execution": "gradio",
+    "no_gt": false,
+    "parallel": 4,
+    "raw_samples_relative_path": "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.raw.jsonl",
+    "samples_relative_path": "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.jsonl",
+    "split": "instruct",
+    "subset": "hard"
+  },
+  "elapsed_sec": 311.1033515930176,
+  "eval_date": "2026-04-22 18:25",
+  "evaluation_status": "completed",
+  "failed_tasks": [
+    "BigCodeBench/17",
+    "BigCodeBench/82",
+    "BigCodeBench/89",
+    "BigCodeBench/93",
+    "BigCodeBench/100",
+    "BigCodeBench/101",
+    "BigCodeBench/108",
+    "BigCodeBench/120",
+    "BigCodeBench/123",
+    "BigCodeBench/124",
+    "BigCodeBench/15",
+    "BigCodeBench/161",
+    "BigCodeBench/147",
+    "BigCodeBench/177",
+    "BigCodeBench/187",
+    "BigCodeBench/208",
+    "BigCodeBench/211",
+    "BigCodeBench/227",
+    "BigCodeBench/241",
+    "BigCodeBench/267",
+    "BigCodeBench/273",
+    "BigCodeBench/214",
+    "BigCodeBench/274",
+    "BigCodeBench/287",
+    "BigCodeBench/302",
+    "BigCodeBench/308",
+    "BigCodeBench/310",
+    "BigCodeBench/324",
+    "BigCodeBench/326",
+    "BigCodeBench/341",
+    "BigCodeBench/360",
+    "BigCodeBench/374",
+    "BigCodeBench/399",
+    "BigCodeBench/401",
+    "BigCodeBench/409",
+    "BigCodeBench/346",
+    "BigCodeBench/424",
+    "BigCodeBench/443",
+    "BigCodeBench/454",
+    "BigCodeBench/458",
+    "BigCodeBench/477",
+    "BigCodeBench/486",
+    "BigCodeBench/492",
+    "BigCodeBench/501",
+    "BigCodeBench/502",
+    "BigCodeBench/503",
+    "BigCodeBench/509",
+    "BigCodeBench/511",
+    "BigCodeBench/513",
+    "BigCodeBench/526",
+    "BigCodeBench/528",
+    "BigCodeBench/532",
+    "BigCodeBench/560",
+    "BigCodeBench/567",
+    "BigCodeBench/574",
+    "BigCodeBench/579",
+    "BigCodeBench/582",
+    "BigCodeBench/461",
+    "BigCodeBench/590",
+    "BigCodeBench/592",
+    "BigCodeBench/593",
+    "BigCodeBench/594",
+    "BigCodeBench/618",
+    "BigCodeBench/636",
+    "BigCodeBench/637",
+    "BigCodeBench/654",
+    "BigCodeBench/655",
+    "BigCodeBench/657",
+    "BigCodeBench/720",
+    "BigCodeBench/723",
+    "BigCodeBench/752",
+    "BigCodeBench/765",
+    "BigCodeBench/771",
+    "BigCodeBench/777",
+    "BigCodeBench/800",
+    "BigCodeBench/854",
+    "BigCodeBench/857",
+    "BigCodeBench/583",
+    "BigCodeBench/906",
+    "BigCodeBench/914",
+    "BigCodeBench/915",
+    "BigCodeBench/916",
+    "BigCodeBench/917",
+    "BigCodeBench/942",
+    "BigCodeBench/945",
+    "BigCodeBench/952",
+    "BigCodeBench/963",
+    "BigCodeBench/955",
+    "BigCodeBench/785",
+    "BigCodeBench/964",
+    "BigCodeBench/985",
+    "BigCodeBench/988",
+    "BigCodeBench/999",
+    "BigCodeBench/998",
+    "BigCodeBench/1004",
+    "BigCodeBench/1015",
+    "BigCodeBench/1019",
+    "BigCodeBench/1022",
+    "BigCodeBench/1012",
+    "BigCodeBench/1040",
+    "BigCodeBench/1053",
+    "BigCodeBench/1057",
+    "BigCodeBench/1077",
+    "BigCodeBench/1129",
+    "BigCodeBench/1137",
+    "BigCodeBench/13",
+    "BigCodeBench/1039",
+    "BigCodeBench/1042"
+  ],
+  "generation_records": [
+    {
+      "completion_tokens": 658,
+      "latency_sec": 116.31910836399999,
+      "length_capped": false,
+      "raw_chars": 2549,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/13"
+    },
+    {
+      "completion_tokens": 662,
+      "latency_sec": 46.959891387,
+      "length_capped": false,
+      "raw_chars": 2994,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/15"
+    },
+    {
+      "completion_tokens": 434,
+      "latency_sec": 34.72140865199998,
+      "length_capped": false,
+      "raw_chars": 2046,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/17"
+    },
+    {
+      "completion_tokens": 322,
+      "latency_sec": 28.14158598199998,
+      "length_capped": false,
+      "raw_chars": 1366,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/19"
+    },
+    {
+      "completion_tokens": 250,
+      "latency_sec": 24.26423965099997,
+      "length_capped": false,
+      "raw_chars": 961,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/34"
+    },
+    {
+      "completion_tokens": 397,
+      "latency_sec": 32.324428409999996,
+      "length_capped": false,
+      "raw_chars": 1671,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/37"
+    },
+    {
+      "completion_tokens": 1185,
+      "latency_sec": 75.95563158200002,
+      "length_capped": false,
+      "raw_chars": 5001,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/82"
+    },
+    {
+      "completion_tokens": 517,
+      "latency_sec": 38.49604217700005,
+      "length_capped": false,
+      "raw_chars": 2078,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/89"
+    },
+    {
+      "completion_tokens": 555,
+      "latency_sec": 40.62717273499999,
+      "length_capped": false,
+      "raw_chars": 2073,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/92"
+    },
+    {
+      "completion_tokens": 444,
+      "latency_sec": 34.92350479999999,
+      "length_capped": false,
+      "raw_chars": 1855,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/93"
+    },
+    {
+      "completion_tokens": 301,
+      "latency_sec": 26.925681840999914,
+      "length_capped": false,
+      "raw_chars": 1107,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/99"
+    },
+    {
+      "completion_tokens": 458,
+      "latency_sec": 35.55910202100006,
+      "length_capped": false,
+      "raw_chars": 1836,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/100"
+    },
+    {
+      "completion_tokens": 383,
+      "latency_sec": 31.26351790299998,
+      "length_capped": false,
+      "raw_chars": 1599,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/101"
+    },
+    {
+      "completion_tokens": 536,
+      "latency_sec": 39.813762269999984,
+      "length_capped": false,
+      "raw_chars": 2235,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/108"
+    },
+    {
+      "completion_tokens": 445,
+      "latency_sec": 35.102370967999946,
+      "length_capped": false,
+      "raw_chars": 1862,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/120"
+    },
+    {
+      "completion_tokens": 530,
+      "latency_sec": 39.959612881,
+      "length_capped": false,
+      "raw_chars": 2195,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/123"
+    },
+    {
+      "completion_tokens": 676,
+      "latency_sec": 47.94188497599998,
+      "length_capped": false,
+      "raw_chars": 2633,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/124"
+    },
+    {
+      "completion_tokens": 745,
+      "latency_sec": 53.36223119900001,
+      "length_capped": false,
+      "raw_chars": 2960,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/129"
+    },
+    {
+      "completion_tokens": 315,
+      "latency_sec": 27.751543165000044,
+      "length_capped": false,
+      "raw_chars": 1318,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/139"
+    },
+    {
+      "completion_tokens": 464,
+      "latency_sec": 36.162024521000035,
+      "length_capped": false,
+      "raw_chars": 1804,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/147"
+    },
+    {
+      "completion_tokens": 454,
+      "latency_sec": 35.64614342699997,
+      "length_capped": false,
+      "raw_chars": 1832,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/161"
+    },
+    {
+      "completion_tokens": 324,
+      "latency_sec": 29.07195716299998,
+      "length_capped": false,
+      "raw_chars": 1253,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/162"
+    },
+    {
+      "completion_tokens": 471,
+      "latency_sec": 36.352021817000036,
+      "length_capped": false,
+      "raw_chars": 1975,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/177"
+    },
+    {
+      "completion_tokens": 689,
+      "latency_sec": 48.38271620399996,
+      "length_capped": false,
+      "raw_chars": 2559,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/184"
+    },
+    {
+      "completion_tokens": 513,
+      "latency_sec": 38.66131935500016,
+      "length_capped": false,
+      "raw_chars": 1875,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/187"
+    },
+    {
+      "completion_tokens": 557,
+      "latency_sec": 40.83062426300012,
+      "length_capped": false,
+      "raw_chars": 2138,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/199"
+    },
+    {
+      "completion_tokens": 501,
+      "latency_sec": 37.65297440900008,
+      "length_capped": false,
+      "raw_chars": 1945,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/208"
+    },
+    {
+      "completion_tokens": 466,
+      "latency_sec": 35.298951386,
+      "length_capped": false,
+      "raw_chars": 2206,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/211"
+    },
+    {
+      "completion_tokens": 357,
+      "latency_sec": 29.92175070600001,
+      "length_capped": false,
+      "raw_chars": 1357,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/214"
+    },
+    {
+      "completion_tokens": 1280,
+      "latency_sec": 80.44791149100001,
+      "length_capped": true,
+      "raw_chars": 4896,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/227"
+    },
+    {
+      "completion_tokens": 495,
+      "latency_sec": 37.07129234100012,
+      "length_capped": false,
+      "raw_chars": 1970,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/239"
+    },
+    {
+      "completion_tokens": 300,
+      "latency_sec": 27.0777581320001,
+      "length_capped": false,
+      "raw_chars": 1259,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/241"
+    },
+    {
+      "completion_tokens": 515,
+      "latency_sec": 39.52577700300003,
+      "length_capped": false,
+      "raw_chars": 1936,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/267"
+    },
+    {
+      "completion_tokens": 557,
+      "latency_sec": 40.6688806709999,
+      "length_capped": false,
+      "raw_chars": 2356,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/273"
+    },
+    {
+      "completion_tokens": 698,
+      "latency_sec": 48.72514411899988,
+      "length_capped": false,
+      "raw_chars": 3034,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/274"
+    },
+    {
+      "completion_tokens": 332,
+      "latency_sec": 28.57252233899999,
+      "length_capped": false,
+      "raw_chars": 1440,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/287"
+    },
+    {
+      "completion_tokens": 580,
+      "latency_sec": 42.028344199,
+      "length_capped": false,
+      "raw_chars": 2368,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/302"
+    },
+    {
+      "completion_tokens": 509,
+      "latency_sec": 38.019716390999974,
+      "length_capped": false,
+      "raw_chars": 2030,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/308"
+    },
+    {
+      "completion_tokens": 537,
+      "latency_sec": 39.50005580799984,
+      "length_capped": false,
+      "raw_chars": 1904,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/310"
+    },
+    {
+      "completion_tokens": 557,
+      "latency_sec": 40.48276749799993,
+      "length_capped": false,
+      "raw_chars": 2593,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/313"
+    },
+    {
+      "completion_tokens": 291,
+      "latency_sec": 26.313440383999932,
+      "length_capped": false,
+      "raw_chars": 1226,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/324"
+    },
+    {
+      "completion_tokens": 360,
+      "latency_sec": 30.8744265480002,
+      "length_capped": false,
+      "raw_chars": 1645,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/326"
+    },
+    {
+      "completion_tokens": 506,
+      "latency_sec": 37.886568917999966,
+      "length_capped": false,
+      "raw_chars": 1915,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/341"
+    },
+    {
+      "completion_tokens": 307,
+      "latency_sec": 27.493549878000067,
+      "length_capped": false,
+      "raw_chars": 1289,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/346"
+    },
+    {
+      "completion_tokens": 487,
+      "latency_sec": 36.82871938199992,
+      "length_capped": false,
+      "raw_chars": 1973,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/360"
+    },
+    {
+      "completion_tokens": 314,
+      "latency_sec": 27.348493340999994,
+      "length_capped": false,
+      "raw_chars": 1320,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/367"
+    },
+    {
+      "completion_tokens": 413,
+      "latency_sec": 32.81420100599985,
+      "length_capped": false,
+      "raw_chars": 1663,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/368"
+    },
+    {
+      "completion_tokens": 349,
+      "latency_sec": 29.41554782000003,
+      "length_capped": false,
+      "raw_chars": 1658,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/374"
+    },
+    {
+      "completion_tokens": 373,
+      "latency_sec": 30.715441463999923,
+      "length_capped": false,
+      "raw_chars": 1394,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/399"
+    },
+    {
+      "completion_tokens": 337,
+      "latency_sec": 28.892650481999908,
+      "length_capped": false,
+      "raw_chars": 1426,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/401"
+    },
+    {
+      "completion_tokens": 388,
+      "latency_sec": 31.3025719929999,
+      "length_capped": false,
+      "raw_chars": 1562,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/409"
+    },
+    {
+      "completion_tokens": 402,
+      "latency_sec": 32.07415231500022,
+      "length_capped": false,
+      "raw_chars": 1535,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/417"
+    },
+    {
+      "completion_tokens": 556,
+      "latency_sec": 41.012063562000094,
+      "length_capped": false,
+      "raw_chars": 1920,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/418"
+    },
+    {
+      "completion_tokens": 551,
+      "latency_sec": 39.982803087999855,
+      "length_capped": false,
+      "raw_chars": 2240,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/424"
+    },
+    {
+      "completion_tokens": 644,
+      "latency_sec": 45.43193865100011,
+      "length_capped": false,
+      "raw_chars": 2279,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/443"
+    },
+    {
+      "completion_tokens": 444,
+      "latency_sec": 34.68367753099983,
+      "length_capped": false,
+      "raw_chars": 1607,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/445"
+    },
+    {
+      "completion_tokens": 1103,
+      "latency_sec": 69.9654220870002,
+      "length_capped": false,
+      "raw_chars": 4690,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/454"
+    },
+    {
+      "completion_tokens": 710,
+      "latency_sec": 48.85043763900012,
+      "length_capped": false,
+      "raw_chars": 3403,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/458"
+    },
+    {
+      "completion_tokens": 699,
+      "latency_sec": 48.22813776699968,
+      "length_capped": false,
+      "raw_chars": 3307,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/461"
+    },
+    {
+      "completion_tokens": 507,
+      "latency_sec": 37.547124503000305,
+      "length_capped": false,
+      "raw_chars": 1935,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/477"
+    },
+    {
+      "completion_tokens": 448,
+      "latency_sec": 34.85008506799977,
+      "length_capped": false,
+      "raw_chars": 1794,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/486"
+    },
+    {
+      "completion_tokens": 581,
+      "latency_sec": 41.82606828500002,
+      "length_capped": false,
+      "raw_chars": 2413,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/492"
+    },
+    {
+      "completion_tokens": 480,
+      "latency_sec": 36.217695475000255,
+      "length_capped": false,
+      "raw_chars": 1919,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/501"
+    },
+    {
+      "completion_tokens": 470,
+      "latency_sec": 35.77881947500009,
+      "length_capped": false,
+      "raw_chars": 1831,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/502"
+    },
+    {
+      "completion_tokens": 326,
+      "latency_sec": 28.064038117999644,
+      "length_capped": false,
+      "raw_chars": 1213,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/503"
+    },
+    {
+      "completion_tokens": 933,
+      "latency_sec": 61.71433688099978,
+      "length_capped": false,
+      "raw_chars": 3701,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/509"
+    },
+    {
+      "completion_tokens": 613,
+      "latency_sec": 43.522766586000216,
+      "length_capped": false,
+      "raw_chars": 2395,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/511"
+    },
+    {
+      "completion_tokens": 520,
+      "latency_sec": 38.58615968699996,
+      "length_capped": false,
+      "raw_chars": 2089,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/513"
+    },
+    {
+      "completion_tokens": 405,
+      "latency_sec": 31.805094474999805,
+      "length_capped": false,
+      "raw_chars": 1684,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/526"
+    },
+    {
+      "completion_tokens": 597,
+      "latency_sec": 42.325540376999925,
+      "length_capped": false,
+      "raw_chars": 2377,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/528"
+    },
+    {
+      "completion_tokens": 438,
+      "latency_sec": 33.77696502599974,
+      "length_capped": false,
+      "raw_chars": 1769,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/530"
+    },
+    {
+      "completion_tokens": 492,
+      "latency_sec": 36.6016951900001,
+      "length_capped": false,
+      "raw_chars": 1914,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/532"
+    },
+    {
+      "completion_tokens": 408,
+      "latency_sec": 32.26391518799983,
+      "length_capped": false,
+      "raw_chars": 1470,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/553"
+    },
+    {
+      "completion_tokens": 285,
+      "latency_sec": 25.87671236299957,
+      "length_capped": false,
+      "raw_chars": 1045,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/560"
+    },
+    {
+      "completion_tokens": 247,
+      "latency_sec": 23.623509037000076,
+      "length_capped": false,
+      "raw_chars": 962,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/567"
+    },
+    {
+      "completion_tokens": 525,
+      "latency_sec": 38.54644557599977,
+      "length_capped": false,
+      "raw_chars": 1866,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/574"
+    },
+    {
+      "completion_tokens": 615,
+      "latency_sec": 43.309186782000324,
+      "length_capped": false,
+      "raw_chars": 2351,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/579"
+    },
+    {
+      "completion_tokens": 321,
+      "latency_sec": 27.791573236000204,
+      "length_capped": false,
+      "raw_chars": 1189,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/582"
+    },
+    {
+      "completion_tokens": 262,
+      "latency_sec": 24.298542908999934,
+      "length_capped": false,
+      "raw_chars": 1025,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/583"
+    },
+    {
+      "completion_tokens": 514,
+      "latency_sec": 38.44606795200025,
+      "length_capped": false,
+      "raw_chars": 1916,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/587"
+    },
+    {
+      "completion_tokens": 491,
+      "latency_sec": 36.316436176000025,
+      "length_capped": false,
+      "raw_chars": 1968,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/590"
+    },
+    {
+      "completion_tokens": 444,
+      "latency_sec": 34.20253564099994,
+      "length_capped": false,
+      "raw_chars": 1688,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/592"
+    },
+    {
+      "completion_tokens": 605,
+      "latency_sec": 43.06819237899981,
+      "length_capped": false,
+      "raw_chars": 2155,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/593"
+    },
+    {
+      "completion_tokens": 467,
+      "latency_sec": 35.74467389099982,
+      "length_capped": false,
+      "raw_chars": 1893,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/594"
+    },
+    {
+      "completion_tokens": 536,
+      "latency_sec": 39.389532982999754,
+      "length_capped": false,
+      "raw_chars": 1929,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/618"
+    },
+    {
+      "completion_tokens": 321,
+      "latency_sec": 27.554345566999928,
+      "length_capped": false,
+      "raw_chars": 1245,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/636"
+    },
+    {
+      "completion_tokens": 547,
+      "latency_sec": 40.080077625000285,
+      "length_capped": false,
+      "raw_chars": 2031,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/637"
+    },
+    {
+      "completion_tokens": 616,
+      "latency_sec": 44.10734577199992,
+      "length_capped": false,
+      "raw_chars": 2171,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/654"
+    },
+    {
+      "completion_tokens": 491,
+      "latency_sec": 36.84853186500004,
+      "length_capped": false,
+      "raw_chars": 1984,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/655"
+    },
+    {
+      "completion_tokens": 390,
+      "latency_sec": 30.9950336109996,
+      "length_capped": false,
+      "raw_chars": 1511,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/657"
+    },
+    {
+      "completion_tokens": 446,
+      "latency_sec": 34.56276359599997,
+      "length_capped": false,
+      "raw_chars": 1891,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/678"
+    },
+    {
+      "completion_tokens": 365,
+      "latency_sec": 30.295755203000226,
+      "length_capped": false,
+      "raw_chars": 1451,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/720"
+    },
+    {
+      "completion_tokens": 324,
+      "latency_sec": 27.922528439000416,
+      "length_capped": false,
+      "raw_chars": 1262,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/723"
+    },
+    {
+      "completion_tokens": 419,
+      "latency_sec": 33.26037107800039,
+      "length_capped": false,
+      "raw_chars": 1707,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/752"
+    },
+    {
+      "completion_tokens": 1146,
+      "latency_sec": 72.75194017800004,
+      "length_capped": false,
+      "raw_chars": 4176,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/760"
+    },
+    {
+      "completion_tokens": 502,
+      "latency_sec": 37.68632081099986,
+      "length_capped": false,
+      "raw_chars": 2124,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/763"
+    },
+    {
+      "completion_tokens": 304,
+      "latency_sec": 26.393395977000182,
+      "length_capped": false,
+      "raw_chars": 1317,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/765"
+    },
+    {
+      "completion_tokens": 467,
+      "latency_sec": 35.77498971199975,
+      "length_capped": false,
+      "raw_chars": 2015,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/771"
+    },
+    {
+      "completion_tokens": 1280,
+      "latency_sec": 80.86182727000005,
+      "length_capped": true,
+      "raw_chars": 4597,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/777"
+    },
+    {
+      "completion_tokens": 366,
+      "latency_sec": 30.086197919999904,
+      "length_capped": false,
+      "raw_chars": 1510,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/785"
+    },
+    {
+      "completion_tokens": 432,
+      "latency_sec": 33.96734956399996,
+      "length_capped": false,
+      "raw_chars": 1718,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/800"
+    },
+    {
+      "completion_tokens": 1028,
+      "latency_sec": 67.58152152000002,
+      "length_capped": false,
+      "raw_chars": 4510,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/826"
+    },
+    {
+      "completion_tokens": 544,
+      "latency_sec": 39.68634275000022,
+      "length_capped": false,
+      "raw_chars": 1928,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/845"
+    },
+    {
+      "completion_tokens": 365,
+      "latency_sec": 30.46592372499981,
+      "length_capped": false,
+      "raw_chars": 1572,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/854"
+    },
+    {
+      "completion_tokens": 485,
+      "latency_sec": 36.59211048099951,
+      "length_capped": false,
+      "raw_chars": 2239,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/857"
+    },
+    {
+      "completion_tokens": 313,
+      "latency_sec": 27.429089136000584,
+      "length_capped": false,
+      "raw_chars": 1268,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/865"
+    },
+    {
+      "completion_tokens": 438,
+      "latency_sec": 33.46447093699953,
+      "length_capped": false,
+      "raw_chars": 1737,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/870"
+    },
+    {
+      "completion_tokens": 892,
+      "latency_sec": 58.78958694399989,
+      "length_capped": false,
+      "raw_chars": 3630,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/879"
+    },
+    {
+      "completion_tokens": 325,
+      "latency_sec": 27.61140089500077,
+      "length_capped": false,
+      "raw_chars": 1241,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/897"
+    },
+    {
+      "completion_tokens": 1008,
+      "latency_sec": 65.83962685999995,
+      "length_capped": false,
+      "raw_chars": 4398,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/906"
+    },
+    {
+      "completion_tokens": 511,
+      "latency_sec": 38.54340035199948,
+      "length_capped": false,
+      "raw_chars": 2006,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/914"
+    },
+    {
+      "completion_tokens": 357,
+      "latency_sec": 30.074587625000277,
+      "length_capped": false,
+      "raw_chars": 1396,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/915"
+    },
+    {
+      "completion_tokens": 341,
+      "latency_sec": 29.052189443000316,
+      "length_capped": false,
+      "raw_chars": 1349,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/916"
+    },
+    {
+      "completion_tokens": 554,
+      "latency_sec": 40.895240613999704,
+      "length_capped": false,
+      "raw_chars": 2167,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/917"
+    },
+    {
+      "completion_tokens": 318,
+      "latency_sec": 27.443251841000347,
+      "length_capped": false,
+      "raw_chars": 1381,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/928"
+    },
+    {
+      "completion_tokens": 491,
+      "latency_sec": 37.1187111549998,
+      "length_capped": false,
+      "raw_chars": 1814,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/942"
+    },
+    {
+      "completion_tokens": 492,
+      "latency_sec": 36.84407766999993,
+      "length_capped": false,
+      "raw_chars": 1838,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/945"
+    },
+    {
+      "completion_tokens": 444,
+      "latency_sec": 34.25025832099982,
+      "length_capped": false,
+      "raw_chars": 1718,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/952"
+    },
+    {
+      "completion_tokens": 331,
+      "latency_sec": 28.60017951700047,
+      "length_capped": false,
+      "raw_chars": 1371,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/955"
+    },
+    {
+      "completion_tokens": 456,
+      "latency_sec": 35.36101465700085,
+      "length_capped": false,
+      "raw_chars": 1897,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/963"
+    },
+    {
+      "completion_tokens": 747,
+      "latency_sec": 50.062308001999554,
+      "length_capped": false,
+      "raw_chars": 3553,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/964"
+    },
+    {
+      "completion_tokens": 322,
+      "latency_sec": 27.79327484500027,
+      "length_capped": false,
+      "raw_chars": 1436,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/969"
+    },
+    {
+      "completion_tokens": 487,
+      "latency_sec": 37.26507137000044,
+      "length_capped": false,
+      "raw_chars": 2192,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/971"
+    },
+    {
+      "completion_tokens": 684,
+      "latency_sec": 46.98036757400041,
+      "length_capped": false,
+      "raw_chars": 3057,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/985"
+    },
+    {
+      "completion_tokens": 557,
+      "latency_sec": 43.89632089799943,
+      "length_capped": false,
+      "raw_chars": 2638,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/988"
+    },
+    {
+      "completion_tokens": 615,
+      "latency_sec": 43.85903322900049,
+      "length_capped": false,
+      "raw_chars": 2102,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/990"
+    },
+    {
+      "completion_tokens": 454,
+      "latency_sec": 35.282853052000064,
+      "length_capped": false,
+      "raw_chars": 1732,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/998"
+    },
+    {
+      "completion_tokens": 529,
+      "latency_sec": 39.56014655400031,
+      "length_capped": false,
+      "raw_chars": 2463,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/999"
+    },
+    {
+      "completion_tokens": 426,
+      "latency_sec": 34.258413176999966,
+      "length_capped": false,
+      "raw_chars": 1843,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1003"
+    },
+    {
+      "completion_tokens": 482,
+      "latency_sec": 37.275548038000125,
+      "length_capped": false,
+      "raw_chars": 1916,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1004"
+    },
+    {
+      "completion_tokens": 495,
+      "latency_sec": 37.947449807999874,
+      "length_capped": false,
+      "raw_chars": 2221,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1006"
+    },
+    {
+      "completion_tokens": 496,
+      "latency_sec": 38.087308210999254,
+      "length_capped": false,
+      "raw_chars": 2097,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1008"
+    },
+    {
+      "completion_tokens": 517,
+      "latency_sec": 38.67464543599999,
+      "length_capped": false,
+      "raw_chars": 2233,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1012"
+    },
+    {
+      "completion_tokens": 370,
+      "latency_sec": 30.376895793000585,
+      "length_capped": false,
+      "raw_chars": 1489,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1013"
+    },
+    {
+      "completion_tokens": 635,
+      "latency_sec": 45.48211252699912,
+      "length_capped": false,
+      "raw_chars": 2804,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1015"
+    },
+    {
+      "completion_tokens": 683,
+      "latency_sec": 48.84046959999978,
+      "length_capped": false,
+      "raw_chars": 3439,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1019"
+    },
+    {
+      "completion_tokens": 683,
+      "latency_sec": 48.629521454000496,
+      "length_capped": false,
+      "raw_chars": 2998,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1020"
+    },
+    {
+      "completion_tokens": 474,
+      "latency_sec": 36.72080866900069,
+      "length_capped": false,
+      "raw_chars": 2020,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1022"
+    },
+    {
+      "completion_tokens": 523,
+      "latency_sec": 38.63693169100043,
+      "length_capped": false,
+      "raw_chars": 2144,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1039"
+    },
+    {
+      "completion_tokens": 778,
+      "latency_sec": 52.91212343299958,
+      "length_capped": false,
+      "raw_chars": 3851,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1040"
+    },
+    {
+      "completion_tokens": 528,
+      "latency_sec": 39.23764712799948,
+      "length_capped": false,
+      "raw_chars": 2188,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1042"
+    },
+    {
+      "completion_tokens": 799,
+      "latency_sec": 54.35240298200006,
+      "length_capped": false,
+      "raw_chars": 3409,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1053"
+    },
+    {
+      "completion_tokens": 624,
+      "latency_sec": 44.48821213000065,
+      "length_capped": false,
+      "raw_chars": 2464,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1057"
+    },
+    {
+      "completion_tokens": 338,
+      "latency_sec": 29.513110902000335,
+      "length_capped": false,
+      "raw_chars": 1329,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1077"
+    },
+    {
+      "completion_tokens": 344,
+      "latency_sec": 29.613538467999206,
+      "length_capped": false,
+      "raw_chars": 1249,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1085"
+    },
+    {
+      "completion_tokens": 347,
+      "latency_sec": 29.20351531400047,
+      "length_capped": false,
+      "raw_chars": 1384,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1124"
+    },
+    {
+      "completion_tokens": 423,
+      "latency_sec": 34.18834215700008,
+      "length_capped": false,
+      "raw_chars": 1720,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1129"
+    },
+    {
+      "completion_tokens": 429,
+      "latency_sec": 33.77946377999979,
+      "length_capped": false,
+      "raw_chars": 1711,
+      "sanitized_chars": 0,
+      "task_id": "BigCodeBench/1137"
+    }
+  ],
+  "length_capped_count": 2,
+  "local_artifact_paths": {
+    "generation_summary.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/generation_summary.json",
+    "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.jsonl",
+    "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.raw.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.raw.jsonl",
+    "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0_eval_results.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0_eval_results.json",
+    "instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0_pass_at_k.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0_pass_at_k.json"
+  },
+  "mean_completion_tokens": 511.02027027027026,
+  "mean_latency_sec": 38.79615490658785,
+  "median_completion_tokens": 486.0,
+  "median_latency_sec": 36.661251929500395,
+  "model_id": "qwen35-9b-uniform-int8-bigcodebench-hard",
+  "model_ref": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source",
+  "no_gt": false,
+  "num_samples": 148,
+  "num_tasks": 148,
+  "p95_completion_tokens": 918.6500000000002,
+  "p95_latency_sec": 64.39577536734991,
+  "pass_at_1": 0.2702702702702703,
+  "pass_at_k": {
+    "calibrated": true,
+    "failed_tasks": [
+      "BigCodeBench/590"
+    ],
+    "gt_pass_rate": 0.9932432432432432,
+    "model": "artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.jsonl",
+    "pass@1": 0.2702702702702703,
+    "split": "instruct",
+    "subset": "hard"
+  },
+  "pass_correct": 40,
+  "remote_generation_summary_path": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/generation_summary.json",
+  "remote_log_tail": "Loaded as API: https://bigcode-bigcodebench-evaluator.hf.space/\nBigCodeBench-Instruct (Hard)\nGroundtruth pass rate: 0.993\nFailed tasks: ['BigCodeBench/590']\npass@1:\t0.270\n",
+  "remote_pass_at_k_path": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0_pass_at_k.json",
+  "remote_raw_samples_paths": [
+    "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.raw.jsonl"
+  ],
+  "remote_result_path": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0_eval_results.json",
+  "remote_samples_paths": [
+    "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-uniform-int8-generation-full/instruct-hard/artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source_hf_direct_temp_0.0.jsonl"
+  ],
+  "resolved_model_ref": "/artifacts/math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int8-last100-simple-evals-max4096-baseline-uniform-int8-source",
+  "split": "instruct",
+  "status_counts": {
+    "fail": 106,
+    "pass": 40,
+    "timeout": 2
+  },
+  "subset": "hard"
+}

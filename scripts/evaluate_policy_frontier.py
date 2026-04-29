@@ -81,7 +81,10 @@ def main() -> None:
         or dict(config.get("policy_builder", {})).get("output_dir")
         or PROJECT_ROOT / "artifacts" / "policies" / "task_sensitivity_exact_budget"
     )
-    results_root = PROJECT_ROOT / "artifacts" / "results" / "task_sensitivity_exact_budget"
+    results_root = Path(
+        dict(config.get("results", {})).get("output_dir")
+        or PROJECT_ROOT / "artifacts" / "results" / "task_sensitivity_exact_budget"
+    )
     results_root.mkdir(parents=True, exist_ok=True)
     results_csv = Path(args.results_csv or (results_root / f"frontier_{args.stage}.csv"))
 
@@ -184,6 +187,7 @@ def main() -> None:
             )
     if args.stage == "final":
         _write_final_summary(
+            config=config,
             results_root=results_root,
             final_rows=[row for row in rows if bool(row.get("was_evaluated", True))],
             policy_dir=policy_dir,
@@ -614,6 +618,7 @@ def _run_policy_eval_row(
 
 def _write_final_summary(
     *,
+    config: dict[str, Any],
     results_root: Path,
     final_rows: list[dict[str, Any]],
     policy_dir: Path,
@@ -632,7 +637,10 @@ def _write_final_summary(
         for group_id, bitwidth in policy_payload["bitwidths"].items()
         if int(bitwidth) == 2
     ][:20]
-    report_path = PROJECT_ROOT / "artifacts" / "reports" / "task_sensitivity_exact_budget" / "final_report.md"
+    report_path = Path(
+        dict(config.get("reports", {})).get("output_dir")
+        or PROJECT_ROOT / "artifacts" / "reports" / "task_sensitivity_exact_budget"
+    ) / "final_report.md"
     report_path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
         f"best_policy_id: {best_policy_id}",

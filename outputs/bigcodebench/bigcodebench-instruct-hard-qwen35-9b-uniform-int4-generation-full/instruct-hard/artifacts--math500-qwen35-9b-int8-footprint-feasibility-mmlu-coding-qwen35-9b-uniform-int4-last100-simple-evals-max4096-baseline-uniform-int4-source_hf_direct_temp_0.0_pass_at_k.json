@@ -1,0 +1,11 @@
+{
+  "pass@1": 0.16891891891891891,
+  "model": "artifacts--math500-qwen35-9b-int8-footprint-feasibility-mmlu-coding-qwen35-9b-uniform-int4-last100-simple-evals-max4096-baseline-uniform-int4-source_hf_direct_temp_0.0.jsonl",
+  "split": "instruct",
+  "subset": "hard",
+  "calibrated": true,
+  "gt_pass_rate": 0.9932432432432432,
+  "failed_tasks": [
+    "BigCodeBench/590"
+  ]
+}

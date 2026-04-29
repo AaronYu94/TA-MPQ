@@ -1,0 +1,70 @@
+{
+  "benchmark": "bigcodebench",
+  "bigcodebench_config": {
+    "attn_implementation": "eager",
+    "dtype": "bfloat16",
+    "evaluation_execution": "none",
+    "generation_only": true,
+    "greedy": true,
+    "max_new_tokens": 1280,
+    "n_samples": 1,
+    "no_gt": false,
+    "parallel": 4,
+    "split": "instruct",
+    "subset": "hard",
+    "task_limit": 1
+  },
+  "elapsed_sec": 115.99705457687378,
+  "eval_date": null,
+  "evaluation_status": "skipped",
+  "failed_tasks": [],
+  "generation_records": [
+    {
+      "completion_tokens": 638,
+      "latency_sec": 96.966821942,
+      "length_capped": false,
+      "prompt_tokens": 382,
+      "raw_chars": 2534,
+      "sanitized_chars": 2529,
+      "task_id": "BigCodeBench/13"
+    }
+  ],
+  "length_capped_count": 0,
+  "local_artifact_paths": {
+    "generation_summary.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/generation_summary.json",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  },
+  "mean_completion_tokens": 638.0,
+  "mean_latency_sec": 96.966821942,
+  "median_completion_tokens": 638.0,
+  "median_latency_sec": 96.966821942,
+  "model_id": "qwen35-9b-bf16-bigcodebench-generation-smoke1",
+  "model_ref": "Qwen/Qwen3.5-9B",
+  "no_gt": false,
+  "num_generated_tasks": 1,
+  "num_samples": 0,
+  "num_tasks": 1,
+  "p95_completion_tokens": 638.0,
+  "p95_latency_sec": 96.966821942,
+  "pass_at_1": null,
+  "pass_at_k": {},
+  "pass_correct": null,
+  "remote_generation_summary_path": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/generation_summary.json",
+  "remote_log_tail": "\rCreating json from Arrow format:   0%|          | 0/1 [00:00<?, ?ba/s]\rCreating json from Arrow format: 100%|##########| 1/1 [00:00<00:00, 56.96ba/s]\nbigcodebench direct_hf model_kwargs={'device_map': 'auto', 'trust_remote_code': True, 'torch_dtype': torch.bfloat16, 'attn_implementation': 'eager'}\nbigcodebench direct_hf split=instruct subset=hard task_count=1 max_new_tokens=1280\n\rFetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]\rFetching 4 files: 100%|##########| 4/4 [00:00<00:00, 6288.31it/s]\n\rLoading weights:   0%|          | 0/427 [00:00<?, ?it/s]\rLoading weights:   0%|          | 1/427 [00:00<05:31,  1.29it/s]\rLoading weights:   0%|          | 2/427 [00:01<06:10,  1.15it/s]\rLoading weights:   3%|2         | 11/427 [00:01<00:46,  8.92it/s]\rLoading weights:   4%|3         | 16/427 [00:01<00:31, 13.23it/s]\rLoading weights:   6%|6         | 27/427 [00:02<00:15, 25.60it/s]\rLoading weights:   8%|8         | 36/427 [00:02<00:11, 35.16it/s]\rLoading weights:  10%|#         | 43/427 [00:02<00:11, 34.24it/s]\rLoading weights:  11%|#1        | 49/427 [00:02<00:10, 35.61it/s]\rLoading weights:  14%|#4        | 60/427 [00:02<00:07, 49.40it/s]\rLoading weights:  16%|#5        | 67/427 [00:02<00:07, 48.97it/s]\rLoading weights:  17%|#7        | 74/427 [00:02<00:06, 53.14it/s]\rLoading weights:  19%|#8        | 81/427 [00:03<00:07, 48.65it/s]\rLoading weights:  22%|##2       | 95/427 [00:03<00:05, 62.15it/s]\rLoading weights:  24%|##3       | 102/427 [00:03<00:06, 47.12it/s]\rLoading weights:  26%|##5       | 110/427 [00:03<00:05, 53.28it/s]\rLoading weights:  27%|##7       | 117/427 [00:03<00:05, 54.77it/s]\rLoading weights:  29%|##9       | 124/427 [00:03<00:06, 45.96it/s]\rLoading weights:  30%|###       | 130/427 [00:04<00:06, 45.14it/s]\rLoading weights:  32%|###1      | 135/427 [00:04<00:08, 34.62it/s]\rLoading weights:  33%|###3      | 143/427 [00:04<00:07, 37.39it/s]\rLoading weights:  35%|###4      | 148/427 [00:04<00:08, 34.54it/s]\rLoading weights:  36%|###5      | 153/427 [00:04<00:07, 36.54it/s]\rLoading weights:  37%|###7      | 158/427 [00:04<00:07, 34.04it/s]\rLoading weights:  40%|###9      | 170/427 [00:05<00:05, 50.46it/s]\rLoading weights:  41%|####1     | 176/427 [00:05<00:05, 49.52it/s]\rLoading weights:  43%|####3     | 184/427 [00:05<00:04, 54.72it/s]\rLoading weights:  44%|####4     | 190/427 [00:05<00:04, 50.09it/s]\rLoading weights:  46%|####6     | 197/427 [00:05<00:04, 49.64it/s]\rLoading weights:  48%|####7     | 203/427 [00:05<00:05, 38.15it/s]\rLoading weights:  49%|####8     | 208/427 [00:06<00:06, 36.28it/s]\rLoading weights:  52%|#####1    | 222/427 [00:06<00:04, 45.39it/s]\rLoading weights:  53%|#####3    | 227/427 [00:06<00:05, 38.43it/s]\rLoading weights:  55%|#####5    | 236/427 [00:06<00:04, 43.81it/s]\rLoading weights:  56%|#####6    | 241/427 [00:06<00:04, 40.42it/s]\rLoading weights:  59%|#####8    | 250/427 [00:06<00:03, 48.20it/s]\rLoading weights:  60%|#####9    | 256/427 [00:07<00:04, 37.36it/s]\rLoading weights:  61%|######1   | 261/427 [00:07<00:04, 34.06it/s]\rLoading weights:  64%|######4   | 275/427 [00:07<00:03, 48.75it/s]\rLoading weights:  66%|######5   | 281/427 [00:07<00:03, 42.19it/s]\rLoading weights:  68%|######7   | 289/427 [00:07<00:03, 39.65it/s]\rLoading weights:  69%|######8   | 294/427 [00:08<00:03, 40.26it/s]\rLoading weights:  71%|#######1  | 305/427 [00:08<00:02, 49.90it/s]\rLoading weights:  73%|#######2  | 311/427 [00:08<00:02, 46.36it/s]\rLoading weights:  74%|#######4  | 316/427 [00:08<00:02, 45.34it/s]\rLoading weights:  77%|#######6  | 328/427 [00:08<00:01, 53.05it/s]\rLoading weights:  79%|#######8  | 337/427 [00:08<00:01, 60.92it/s]\rLoading weights:  81%|########  | 344/427 [00:08<00:01, 62.36it/s]\rLoading weights:  82%|########2 | 351/427 [00:09<00:01, 54.10it/s]\rLoading weights:  84%|########3 | 357/427 [00:09<00:01, 50.04it/s]\rLoading weights:  85%|########5 | 363/427 [00:09<00:01, 38.12it/s]\rLoading weights:  86%|########6 | 368/427 [00:09<00:01, 35.24it/s]\rLoading weights:  88%|########7 | 374/427 [00:09<00:01, 38.31it/s]\rLoading weights:  89%|########9 | 381/427 [00:09<00:01, 42.13it/s]\rLoading weights:  90%|######### | 386/427 [00:10<00:01, 35.98it/s]\rLoading weights:  93%|#########2| 396/427 [00:10<00:00, 44.98it/s]\rLoading weights:  94%|#########3| 401/427 [00:10<00:00, 41.90it/s]\rLoading weights:  95%|#########5| 406/427 [00:10<00:00, 32.46it/s]\rLoading weights:  97%|#########6| 413/427 [00:10<00:00, 39.33it/s]\rLoading weights:  98%|#########7| 418/427 [00:10<00:00, 33.66it/s]\rLoading weights:  99%|#########8| 422/427 [00:11<00:00, 34.13it/s]\rLoading weights: 100%|##########| 427/427 [00:11<00:00, 38.55it/s]\n[bigcodebench:instruct/hard] codegen 1/1 BigCodeBench/13\n[bigcodebench:instruct/hard] completed 1/1 last_latency_sec=96.97 last_completion_tokens=638\n[bigcodebench] generation complete; skipping evaluator because generation_only=True evaluation_execution=none\n",
+  "remote_pass_at_k_path": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_pass_at_k.json",
+  "remote_raw_samples_paths": [
+    "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  ],
+  "remote_result_path": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_eval_results.json",
+  "remote_samples_paths": [
+    "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-generation-smoke1/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl"
+  ],
+  "resolved_model_ref": "Qwen/Qwen3.5-9B",
+  "selected_task_ids": [
+    "BigCodeBench/13"
+  ],
+  "split": "instruct",
+  "status_counts": {},
+  "subset": "hard"
+}

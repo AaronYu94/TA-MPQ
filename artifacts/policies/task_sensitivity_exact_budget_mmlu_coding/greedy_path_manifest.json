@@ -1,0 +1,1446 @@
+{
+  "coarse_policy_ids": [
+    "gpf_coarse_00_i0007",
+    "gpf_coarse_01_i0025",
+    "gpf_coarse_02_i0048",
+    "gpf_coarse_03_i0111",
+    "gpf_coarse_04_i0117",
+    "gpf_coarse_05_i0122",
+    "gpf_coarse_06_i0127",
+    "gpf_coarse_07_i0133"
+  ],
+  "coarse_selected_path_indices": [
+    7,
+    25,
+    48,
+    111,
+    117,
+    122,
+    127,
+    133
+  ],
+  "endpoint_policy_id": "gpf_endpoint_diagnostic",
+  "endpoint_stats": {
+    "budget_slack_bits": 8388608,
+    "budget_slack_fraction": 0.0002642706131078224,
+    "changed_groups_vs_uniform_int4": 246,
+    "fourbit_mass_fraction": 0.14085623678646936,
+    "fourbit_param_count": 1117782016,
+    "num_2bit": 109,
+    "num_4bit": 3,
+    "num_8bit": 137,
+    "path_index": 137,
+    "promoted_param_count": 2271215616,
+    "promotion_mass_fraction": 0.28620507399577166,
+    "raw_weight_bits": 31734104064,
+    "realized_2bit_param_mass_fraction": 0.572938689217759,
+    "realized_4bit_param_mass_fraction": 0.14085623678646936,
+    "realized_8bit_param_mass_fraction": 0.28620507399577166,
+    "target_int4_bits": 31742492672,
+    "total_param_count": 7935623168,
+    "twobit_mass_fraction": 0.572938689217759,
+    "twobit_param_count": 4546625536
+  },
+  "mode": "greedy_path_frontier",
+  "num_path_states": 138,
+  "num_unique_path_states": 138,
+  "path": [
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "uniform_int4_anchor",
+      "path_index": 0,
+      "policy_hash": "c8172e29cd077d0cf55ec239e3d5c72d143d8adc1b4eb9da63094ce427e98446",
+      "policy_id": "gpf_uniform_int4_anchor",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_uniform_int4_anchor.json",
+      "realized_2bit_param_mass_fraction": 0.0,
+      "realized_8bit_param_mass_fraction": 0.0
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 1,
+      "policy_hash": "7feec4efe1b96c37bf7f525dbc93f671f20d5a54214188452498b0a1006db479",
+      "policy_id": "gpf_path_0001",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0001.json",
+      "realized_2bit_param_mass_fraction": 0.004228329809725159,
+      "realized_8bit_param_mass_fraction": 0.0021141649048625794
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 2,
+      "policy_hash": "47f449a08b752c0fcafc6e43e6cb10a98e468ce5c6d87578ac9feb2424fc3544",
+      "policy_id": "gpf_path_0002",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0002.json",
+      "realized_2bit_param_mass_fraction": 0.008456659619450317,
+      "realized_8bit_param_mass_fraction": 0.004228329809725159
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 3,
+      "policy_hash": "9e109bab87788dfa62acc9d60e7d53ea4d6aeeaa18c1630b7ee0383e8e14f0d6",
+      "policy_id": "gpf_path_0003",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0003.json",
+      "realized_2bit_param_mass_fraction": 0.012684989429175475,
+      "realized_8bit_param_mass_fraction": 0.006342494714587738
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 4,
+      "policy_hash": "b4ab4ebf7a0d46a5865427705944461b097c75ae165633758160f398d72491ab",
+      "policy_id": "gpf_path_0004",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0004.json",
+      "realized_2bit_param_mass_fraction": 0.02536997885835095,
+      "realized_8bit_param_mass_fraction": 0.012684989429175475
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 5,
+      "policy_hash": "bfc3b605aa32e934fcde7838a775575f12d5e11db5f19bb64cf58d25165e2bef",
+      "policy_id": "gpf_path_0005",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0005.json",
+      "realized_2bit_param_mass_fraction": 0.02959830866807611,
+      "realized_8bit_param_mass_fraction": 0.014799154334038054
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 6,
+      "policy_hash": "68f4a8443486d18c2b8cbf3fc671477965e6a84ef91dd97b3cb9905181a694e6",
+      "policy_id": "gpf_path_0006",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0006.json",
+      "realized_2bit_param_mass_fraction": 0.03382663847780127,
+      "realized_8bit_param_mass_fraction": 0.016913319238900635
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 7,
+      "policy_hash": "a6eed29f0ea7cdfa0696c6b8f9dbf8bd422f21810b02206c12cf4bc30a057362",
+      "policy_id": "gpf_path_0007",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0007.json",
+      "realized_2bit_param_mass_fraction": 0.03805496828752643,
+      "realized_8bit_param_mass_fraction": 0.019027484143763214
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 8,
+      "policy_hash": "09d2056040dfdccee08018b11a72491be3c45449b018f526bd9f89ea04046023",
+      "policy_id": "gpf_path_0008",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0008.json",
+      "realized_2bit_param_mass_fraction": 0.042283298097251586,
+      "realized_8bit_param_mass_fraction": 0.021141649048625793
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 9,
+      "policy_hash": "b07c7a160aa8ac3eb0b01762f952a111bd369333912ac074c78aea83e54f47ad",
+      "policy_id": "gpf_path_0009",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0009.json",
+      "realized_2bit_param_mass_fraction": 0.046511627906976744,
+      "realized_8bit_param_mass_fraction": 0.023255813953488372
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 10,
+      "policy_hash": "697848ec801c57554e222c6b52456b6fb0223a61a552d70312136d694d36a99d",
+      "policy_id": "gpf_path_0010",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0010.json",
+      "realized_2bit_param_mass_fraction": 0.0507399577167019,
+      "realized_8bit_param_mass_fraction": 0.02536997885835095
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 11,
+      "policy_hash": "181f03a7b974c49ef87cf6de80c980b730afef9e40388b2cbae576370bd8c6d0",
+      "policy_id": "gpf_path_0011",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0011.json",
+      "realized_2bit_param_mass_fraction": 0.05496828752642706,
+      "realized_8bit_param_mass_fraction": 0.02748414376321353
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 12,
+      "policy_hash": "db252d809d64d26d51fc6e3adbd3002344c41fb80f4957a19fed469e6457504a",
+      "policy_id": "gpf_path_0012",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0012.json",
+      "realized_2bit_param_mass_fraction": 0.0613107822410148,
+      "realized_8bit_param_mass_fraction": 0.02959830866807611
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 13,
+      "policy_hash": "4062a3a08da7a331d7b4a005dff856d2ae799cc6f132750977550bb22f43ffdb",
+      "policy_id": "gpf_path_0013",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0013.json",
+      "realized_2bit_param_mass_fraction": 0.06342494714587738,
+      "realized_8bit_param_mass_fraction": 0.03171247357293869
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 14,
+      "policy_hash": "1c1ecca578d5b6fed640716f3eba4da70f021d1179fe27b0c3c091670703f5d9",
+      "policy_id": "gpf_path_0014",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0014.json",
+      "realized_2bit_param_mass_fraction": 0.06976744186046512,
+      "realized_8bit_param_mass_fraction": 0.03382663847780127
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 15,
+      "policy_hash": "e9f0d5b65d5c65b7bae83cbd039025bdb0a59b2a188590414d16d8df520f1078",
+      "policy_id": "gpf_path_0015",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0015.json",
+      "realized_2bit_param_mass_fraction": 0.07188160676532769,
+      "realized_8bit_param_mass_fraction": 0.035940803382663845
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 16,
+      "policy_hash": "5527ecd9974be723163a77e5d7874ee56e0671c07bca8c3d3467ae14e2516502",
+      "policy_id": "gpf_path_0016",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0016.json",
+      "realized_2bit_param_mass_fraction": 0.07822410147991543,
+      "realized_8bit_param_mass_fraction": 0.03805496828752643
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 17,
+      "policy_hash": "bddd7819288865cf0de017910080d1afc27de27cd127893276369283a869a0f8",
+      "policy_id": "gpf_path_0017",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0017.json",
+      "realized_2bit_param_mass_fraction": 0.08456659619450317,
+      "realized_8bit_param_mass_fraction": 0.042283298097251586
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 18,
+      "policy_hash": "0f47c4ef0f49243312c93bf24c8aed668b61bb4508956af0975ef2ea06595256",
+      "policy_id": "gpf_path_0018",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0018.json",
+      "realized_2bit_param_mass_fraction": 0.09090909090909091,
+      "realized_8bit_param_mass_fraction": 0.04439746300211417
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 19,
+      "policy_hash": "27c44ae5fd216b635c7de4c4f0a6aec1aaffe9553d8dff5161992cb2190f8c0d",
+      "policy_id": "gpf_path_0019",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0019.json",
+      "realized_2bit_param_mass_fraction": 0.09302325581395349,
+      "realized_8bit_param_mass_fraction": 0.046511627906976744
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 20,
+      "policy_hash": "db29d202f51b7b08481e0943b35f58b6e5932cb3b9799eecfc6777a6708ca580",
+      "policy_id": "gpf_path_0020",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0020.json",
+      "realized_2bit_param_mass_fraction": 0.09936575052854123,
+      "realized_8bit_param_mass_fraction": 0.048625792811839326
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 21,
+      "policy_hash": "bafe2b30776d98ac89718d1fd249fc8b4ce0fc66778a7234eeb1991b600d12bb",
+      "policy_id": "gpf_path_0021",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0021.json",
+      "realized_2bit_param_mass_fraction": 0.1014799154334038,
+      "realized_8bit_param_mass_fraction": 0.0507399577167019
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 22,
+      "policy_hash": "f22e9a2e083dfbbf123c6c158bf17c0d2032f7e9200edff3b08c333e8501ef4f",
+      "policy_id": "gpf_path_0022",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0022.json",
+      "realized_2bit_param_mass_fraction": 0.10359408033826638,
+      "realized_8bit_param_mass_fraction": 0.051268498942917545
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 23,
+      "policy_hash": "d0ebd10e2aa5c5d4758f91ce7a845182efce64df6b26d37d890fbf84c28334a5",
+      "policy_id": "gpf_path_0023",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0023.json",
+      "realized_2bit_param_mass_fraction": 0.10359408033826638,
+      "realized_8bit_param_mass_fraction": 0.05179704016913319
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 24,
+      "policy_hash": "f5a346f79b969d01003654e1c8dd9a71cac37b6881c8a9adf600955f81878d7b",
+      "policy_id": "gpf_path_0024",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0024.json",
+      "realized_2bit_param_mass_fraction": 0.10570824524312897,
+      "realized_8bit_param_mass_fraction": 0.05232558139534884
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 25,
+      "policy_hash": "8b78d47d7397897592efb1c7496f09b38d0a6147ef47a907c7d013849ce3ca24",
+      "policy_id": "gpf_path_0025",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0025.json",
+      "realized_2bit_param_mass_fraction": 0.10993657505285412,
+      "realized_8bit_param_mass_fraction": 0.054439746300211415
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 26,
+      "policy_hash": "2685396fcda526882d9fe2fab52f4f21dc73eb7df8b1896d1f608531db5a33d1",
+      "policy_id": "gpf_path_0026",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0026.json",
+      "realized_2bit_param_mass_fraction": 0.10993657505285412,
+      "realized_8bit_param_mass_fraction": 0.05496828752642706
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 27,
+      "policy_hash": "5927e4e53ccc4989db701e10b9eac4bf0bbb6e99f12b6a3536a07343a3c9d871",
+      "policy_id": "gpf_path_0027",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0027.json",
+      "realized_2bit_param_mass_fraction": 0.11627906976744186,
+      "realized_8bit_param_mass_fraction": 0.05708245243128964
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 28,
+      "policy_hash": "38c401341418e0cf2871459a95ac83cfe59c965e00136b777c2ed3d99de0f0fe",
+      "policy_id": "gpf_path_0028",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0028.json",
+      "realized_2bit_param_mass_fraction": 0.11627906976744186,
+      "realized_8bit_param_mass_fraction": 0.057610993657505286
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 29,
+      "policy_hash": "60b700b55c395171a62b12f14082544f065fa782cbada9b5148158ef3e10709c",
+      "policy_id": "gpf_path_0029",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0029.json",
+      "realized_2bit_param_mass_fraction": 0.12050739957716702,
+      "realized_8bit_param_mass_fraction": 0.05972515856236787
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 30,
+      "policy_hash": "50f6730cbb46674e163daa655f8e70a6cd03e6053ca3302d7ee97d3920eb057e",
+      "policy_id": "gpf_path_0030",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0030.json",
+      "realized_2bit_param_mass_fraction": 0.12050739957716702,
+      "realized_8bit_param_mass_fraction": 0.06025369978858351
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 31,
+      "policy_hash": "369db5edff7d72c628f2bf3437ad00d573bef4a4af1a0ecdfb48b01fbcb8f436",
+      "policy_id": "gpf_path_0031",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0031.json",
+      "realized_2bit_param_mass_fraction": 0.12684989429175475,
+      "realized_8bit_param_mass_fraction": 0.06236786469344609
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 32,
+      "policy_hash": "f402758a19ac9f416e86e170e29b1198be4ec3377e97e050f4d70cb781f09b3b",
+      "policy_id": "gpf_path_0032",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0032.json",
+      "realized_2bit_param_mass_fraction": 0.12896405919661733,
+      "realized_8bit_param_mass_fraction": 0.06448202959830866
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 33,
+      "policy_hash": "a8e567a8a5489aeec34867a273c2ec8c969bab233a89ea59b0b9080f5e129c4d",
+      "policy_id": "gpf_path_0033",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0033.json",
+      "realized_2bit_param_mass_fraction": 0.1331923890063425,
+      "realized_8bit_param_mass_fraction": 0.06659619450317125
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 34,
+      "policy_hash": "6dc3a09a1f39dedd4ab67b146baffd7213acc9e38b6ad5ed0ec1e872fcd4b293",
+      "policy_id": "gpf_path_0034",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0034.json",
+      "realized_2bit_param_mass_fraction": 0.13953488372093023,
+      "realized_8bit_param_mass_fraction": 0.06871035940803383
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 35,
+      "policy_hash": "ea249fe2d0714dc99b17b09fe2201260807cc9d09ed5afdce1cf65cb378515fb",
+      "policy_id": "gpf_path_0035",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0035.json",
+      "realized_2bit_param_mass_fraction": 0.13953488372093023,
+      "realized_8bit_param_mass_fraction": 0.06923890063424948
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 36,
+      "policy_hash": "342f1df037a526dea5798e4f888d71e24263760c867096fffce3a4d95cb5692e",
+      "policy_id": "gpf_path_0036",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0036.json",
+      "realized_2bit_param_mass_fraction": 0.14376321353065538,
+      "realized_8bit_param_mass_fraction": 0.07135306553911205
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 37,
+      "policy_hash": "507c543c598f3eb7a0700b2298a97420d88b5b1765b82d07e80c4e85e5b7d19c",
+      "policy_id": "gpf_path_0037",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0037.json",
+      "realized_2bit_param_mass_fraction": 0.14376321353065538,
+      "realized_8bit_param_mass_fraction": 0.07188160676532769
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 38,
+      "policy_hash": "417ad80de74f8e460a9342fd95879ac5dc4fbb365ad24ccb8bb22780f385e2fe",
+      "policy_id": "gpf_path_0038",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0038.json",
+      "realized_2bit_param_mass_fraction": 0.15010570824524314,
+      "realized_8bit_param_mass_fraction": 0.07399577167019028
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 39,
+      "policy_hash": "244a186dcd8daab3fa6f838bbfdbeaa96880557625e4d1573cfb210a05812452",
+      "policy_id": "gpf_path_0039",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0039.json",
+      "realized_2bit_param_mass_fraction": 0.15644820295983086,
+      "realized_8bit_param_mass_fraction": 0.07822410147991543
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 40,
+      "policy_hash": "607ce56910e2f19348f7f466371b174566f49365181a7609ca1bfc89cbbbf361",
+      "policy_id": "gpf_path_0040",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0040.json",
+      "realized_2bit_param_mass_fraction": 0.16279069767441862,
+      "realized_8bit_param_mass_fraction": 0.080338266384778
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 41,
+      "policy_hash": "40b193be15c3ddda0943a7040ce3c4288b833e96ce3e16a0fb99a12f884d9266",
+      "policy_id": "gpf_path_0041",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0041.json",
+      "realized_2bit_param_mass_fraction": 0.16279069767441862,
+      "realized_8bit_param_mass_fraction": 0.08086680761099366
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 42,
+      "policy_hash": "9f2440d215cb6c48fafb6bee5fd3d36a36b54bc236a7fd9a970a566a1778c402",
+      "policy_id": "gpf_path_0042",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0042.json",
+      "realized_2bit_param_mass_fraction": 0.16701902748414377,
+      "realized_8bit_param_mass_fraction": 0.08298097251585623
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 43,
+      "policy_hash": "9293877c2bac72b13069dc57063b3d9deb982955a64a8e3fb7c816e4c7ae182d",
+      "policy_id": "gpf_path_0043",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0043.json",
+      "realized_2bit_param_mass_fraction": 0.16701902748414377,
+      "realized_8bit_param_mass_fraction": 0.08350951374207188
+    },
+    {
+      "budget_slack_fraction": 0.0010570824524312897,
+      "endpoint_kind": "",
+      "path_index": 44,
+      "policy_hash": "ffa59765386bfced33b892a2be6d0449abb294f430e1fb4941c382ed276aee14",
+      "policy_id": "gpf_path_0044",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0044.json",
+      "realized_2bit_param_mass_fraction": 0.1733615221987315,
+      "realized_8bit_param_mass_fraction": 0.08562367864693446
+    },
+    {
+      "budget_slack_fraction": 0.0,
+      "endpoint_kind": "",
+      "path_index": 45,
+      "policy_hash": "c0a862ac6608be4e3a349e6115b5734a9d90791e78c5e9edf9669f1eb8561c9a",
+      "policy_id": "gpf_path_0045",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0045.json",
+      "realized_2bit_param_mass_fraction": 0.17547568710359407,
+      "realized_8bit_param_mass_fraction": 0.08773784355179703
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 46,
+      "policy_hash": "3eb7381fdcceea83212c18c0974389a45c62e4dc4ffce5c5a93ac309a2372eee",
+      "policy_id": "gpf_path_0046",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0046.json",
+      "realized_2bit_param_mass_fraction": 0.17758985200845667,
+      "realized_8bit_param_mass_fraction": 0.08826638477801269
+    },
+    {
+      "budget_slack_fraction": 0.000512024312896406,
+      "endpoint_kind": "",
+      "path_index": 47,
+      "policy_hash": "997c7517e3ce5c00176813d2706893985744a80eb918a21e3573598a1c7c07ad",
+      "policy_id": "gpf_path_0047",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0047.json",
+      "realized_2bit_param_mass_fraction": 0.17758985200845667,
+      "realized_8bit_param_mass_fraction": 0.08828290169133192
+    },
+    {
+      "budget_slack_fraction": 0.000495507399577167,
+      "endpoint_kind": "",
+      "path_index": 48,
+      "policy_hash": "3d08ae8ff6bdc10e863f8ea5858db2ba0c72ee29efb2a6a721242acadc294b35",
+      "policy_id": "gpf_path_0048",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0048.json",
+      "realized_2bit_param_mass_fraction": 0.17758985200845667,
+      "realized_8bit_param_mass_fraction": 0.08829941860465117
+    },
+    {
+      "budget_slack_fraction": 0.0015525898520084567,
+      "endpoint_kind": "",
+      "path_index": 49,
+      "policy_hash": "ce3e204b9e28352cd4f72b9d799b0a39b46e4716804d492b2eb7cda3f5978eb9",
+      "policy_id": "gpf_path_0049",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0049.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.09041358350951374
+    },
+    {
+      "budget_slack_fraction": 0.001024048625792812,
+      "endpoint_kind": "",
+      "path_index": 50,
+      "policy_hash": "207e859fd11d734786477e3f1510c5a2f3837951e1b4ae4f71fc279c7585bc8a",
+      "policy_id": "gpf_path_0050",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0050.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.0909421247357294
+    },
+    {
+      "budget_slack_fraction": 0.000495507399577167,
+      "endpoint_kind": "",
+      "path_index": 51,
+      "policy_hash": "ac935c31910743d131f6316bc8f92baaa9981ad00a5abf6866d6c7ae05a0253f",
+      "policy_id": "gpf_path_0051",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0051.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.09147066596194503
+    },
+    {
+      "budget_slack_fraction": 0.0004789904862579281,
+      "endpoint_kind": "",
+      "path_index": 52,
+      "policy_hash": "7786b576effe5aa6f4b0ba5a45a30f8d3942333b55cc6782de9c712269d455f2",
+      "policy_id": "gpf_path_0052",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0052.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.09148718287526426
+    },
+    {
+      "budget_slack_fraction": 0.0004624735729386892,
+      "endpoint_kind": "",
+      "path_index": 53,
+      "policy_hash": "d64f65dda94d8014c1514f01bb1c003b6c5f75ceb3f2d2daf2b589d599ecc109",
+      "policy_id": "gpf_path_0053",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0053.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.09150369978858351
+    },
+    {
+      "budget_slack_fraction": 0.0004459566596194503,
+      "endpoint_kind": "",
+      "path_index": 54,
+      "policy_hash": "88c5be041913e773e154af3911156bd6252f3a15763db7cea6f7b0dcaed064c1",
+      "policy_id": "gpf_path_0054",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0054.json",
+      "realized_2bit_param_mass_fraction": 0.1839323467230444,
+      "realized_8bit_param_mass_fraction": 0.09152021670190275
+    },
+    {
+      "budget_slack_fraction": 0.0009744978858350951,
+      "endpoint_kind": "",
+      "path_index": 55,
+      "policy_hash": "067b5638d96af84ddbf0635c02dc275f2230db7136d66c7343a7b6af0dbffcb7",
+      "policy_id": "gpf_path_0055",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0055.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.0920487579281184
+    },
+    {
+      "budget_slack_fraction": 0.0009579809725158562,
+      "endpoint_kind": "",
+      "path_index": 56,
+      "policy_hash": "7854d50a570bba9189b77a5e0166c1cee72cd59e909aaaa674ea1bd8b82d8a1e",
+      "policy_id": "gpf_path_0056",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0056.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09206527484143763
+    },
+    {
+      "budget_slack_fraction": 0.0009414640591966174,
+      "endpoint_kind": "",
+      "path_index": 57,
+      "policy_hash": "05dfe23ecbcfddc652c91685dec7f81c46c49fd9c3f535c745821b48e84c2da2",
+      "policy_id": "gpf_path_0057",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0057.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09208179175475686
+    },
+    {
+      "budget_slack_fraction": 0.0009249471458773784,
+      "endpoint_kind": "",
+      "path_index": 58,
+      "policy_hash": "a53be81b40c05d78d471ed04701c48cbf954bc601c5fd396eb6fa231005c81e9",
+      "policy_id": "gpf_path_0058",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0058.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09209830866807611
+    },
+    {
+      "budget_slack_fraction": 0.0009084302325581395,
+      "endpoint_kind": "",
+      "path_index": 59,
+      "policy_hash": "de58c8500f1e4fdb86297dfabb47e4ef572247299d02512ed4c25eeb4b4add8c",
+      "policy_id": "gpf_path_0059",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0059.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09211482558139535
+    },
+    {
+      "budget_slack_fraction": 0.0008919133192389007,
+      "endpoint_kind": "",
+      "path_index": 60,
+      "policy_hash": "0640308dc5125724da44e2d23528b05e4e90e659c236007e9955d83d864f6ad8",
+      "policy_id": "gpf_path_0060",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0060.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.0921313424947146
+    },
+    {
+      "budget_slack_fraction": 0.0008753964059196618,
+      "endpoint_kind": "",
+      "path_index": 61,
+      "policy_hash": "e173269a7fa396c96b3fe6aaa811e91c4ba15b9ca88ceaad1bdea299aa6bb75d",
+      "policy_id": "gpf_path_0061",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0061.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09214785940803383
+    },
+    {
+      "budget_slack_fraction": 0.0008588794926004228,
+      "endpoint_kind": "",
+      "path_index": 62,
+      "policy_hash": "a69d4a6924e95f2495c833b32b62fc45af77ec848336274072b4eaf66203491e",
+      "policy_id": "gpf_path_0062",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0062.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09216437632135306
+    },
+    {
+      "budget_slack_fraction": 0.0008423625792811839,
+      "endpoint_kind": "",
+      "path_index": 63,
+      "policy_hash": "4354e31be511aa622cea94743a9d21547f84dbf65eb02e7a2d1f982fcece3895",
+      "policy_id": "gpf_path_0063",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0063.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09218089323467231
+    },
+    {
+      "budget_slack_fraction": 0.0008258456659619451,
+      "endpoint_kind": "",
+      "path_index": 64,
+      "policy_hash": "c230e54615ff327ee2767f8cb33f09ed4da31c9cefe23f9e2135ef17499ed211",
+      "policy_id": "gpf_path_0064",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0064.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09219741014799154
+    },
+    {
+      "budget_slack_fraction": 0.0008093287526427061,
+      "endpoint_kind": "",
+      "path_index": 65,
+      "policy_hash": "6908496e73501d954fe1f45e293f7b9aae46ccc031d13d25626945329b606d1d",
+      "policy_id": "gpf_path_0065",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0065.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09221392706131078
+    },
+    {
+      "budget_slack_fraction": 0.0007928118393234672,
+      "endpoint_kind": "",
+      "path_index": 66,
+      "policy_hash": "7891760824fc6134ba9df792e531a3a9e3d7c2bbd3175a57a745217240cf6637",
+      "policy_id": "gpf_path_0066",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0066.json",
+      "realized_2bit_param_mass_fraction": 0.18604651162790697,
+      "realized_8bit_param_mass_fraction": 0.09223044397463002
+    },
+    {
+      "budget_slack_fraction": 0.0018498942917547568,
+      "endpoint_kind": "",
+      "path_index": 67,
+      "policy_hash": "d42838973f8795c6a29b3574f24036a7b2747c22b24efb71a8581eddbc4db9f4",
+      "policy_id": "gpf_path_0067",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0067.json",
+      "realized_2bit_param_mass_fraction": 0.19238900634249473,
+      "realized_8bit_param_mass_fraction": 0.0943446088794926
+    },
+    {
+      "budget_slack_fraction": 0.001833377378435518,
+      "endpoint_kind": "",
+      "path_index": 68,
+      "policy_hash": "6a926ade3bca88c7aec4d439e92d022e96d2a0bc7b21b390fc904ae9606a9e38",
+      "policy_id": "gpf_path_0068",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0068.json",
+      "realized_2bit_param_mass_fraction": 0.19238900634249473,
+      "realized_8bit_param_mass_fraction": 0.09436112579281183
+    },
+    {
+      "budget_slack_fraction": 0.001816860465116279,
+      "endpoint_kind": "",
+      "path_index": 69,
+      "policy_hash": "3b133423ec29e595e202e9985b88b5cd1bfc71e13345b69fad1251b09b6a4f16",
+      "policy_id": "gpf_path_0069",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0069.json",
+      "realized_2bit_param_mass_fraction": 0.19238900634249473,
+      "realized_8bit_param_mass_fraction": 0.09437764270613108
+    },
+    {
+      "budget_slack_fraction": 0.0018003435517970402,
+      "endpoint_kind": "",
+      "path_index": 70,
+      "policy_hash": "37096afd3bea9d9781c3727222a18aa51df04e9aab55c19f99267efeb71934c7",
+      "policy_id": "gpf_path_0070",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0070.json",
+      "realized_2bit_param_mass_fraction": 0.19238900634249473,
+      "realized_8bit_param_mass_fraction": 0.09439415961945032
+    },
+    {
+      "budget_slack_fraction": 0.0007432610993657505,
+      "endpoint_kind": "",
+      "path_index": 71,
+      "policy_hash": "5ad681b7c4a3a188222f738746e806ea94bbbcb0d20216ff7ba44f84175e83fb",
+      "policy_id": "gpf_path_0071",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0071.json",
+      "realized_2bit_param_mass_fraction": 0.19873150105708245,
+      "realized_8bit_param_mass_fraction": 0.09862248942917548
+    },
+    {
+      "budget_slack_fraction": 0.0007267441860465116,
+      "endpoint_kind": "",
+      "path_index": 72,
+      "policy_hash": "c304daa4f5ba28aa3bfefcf9d5f9be4a694e12e2248a8c825c5ac2fd7941d051",
+      "policy_id": "gpf_path_0072",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0072.json",
+      "realized_2bit_param_mass_fraction": 0.19873150105708245,
+      "realized_8bit_param_mass_fraction": 0.09863900634249471
+    },
+    {
+      "budget_slack_fraction": 0.0007102272727272727,
+      "endpoint_kind": "",
+      "path_index": 73,
+      "policy_hash": "6866b2c5fc05f3c82a9d32ebc5106400b6baf61e0a32da9fc4d25086f8c9677a",
+      "policy_id": "gpf_path_0073",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0073.json",
+      "realized_2bit_param_mass_fraction": 0.19873150105708245,
+      "realized_8bit_param_mass_fraction": 0.09865552325581395
+    },
+    {
+      "budget_slack_fraction": 0.0006937103594080339,
+      "endpoint_kind": "",
+      "path_index": 74,
+      "policy_hash": "cc63b20a61ae79084f0a5936590e2a43bf444f38ce00224e46a41f9699f50c27",
+      "policy_id": "gpf_path_0074",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0074.json",
+      "realized_2bit_param_mass_fraction": 0.19873150105708245,
+      "realized_8bit_param_mass_fraction": 0.0986720401691332
+    },
+    {
+      "budget_slack_fraction": 0.000165169133192389,
+      "endpoint_kind": "",
+      "path_index": 75,
+      "policy_hash": "5c7f5c6022b3ab8afbffda00d29cb3c83f77d2ca008ebd55da22d9e737c54ff9",
+      "policy_id": "gpf_path_0075",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0075.json",
+      "realized_2bit_param_mass_fraction": 0.19873150105708245,
+      "realized_8bit_param_mass_fraction": 0.09920058139534883
+    },
+    {
+      "budget_slack_fraction": 0.0001486522198731501,
+      "endpoint_kind": "",
+      "path_index": 76,
+      "policy_hash": "54cdff34812bc2ee977f1b1de88d9c390940bfce9cf14de1ff4a16bae344a0b2",
+      "policy_id": "gpf_path_0076",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0076.json",
+      "realized_2bit_param_mass_fraction": 0.19873150105708245,
+      "realized_8bit_param_mass_fraction": 0.09921709830866808
+    },
+    {
+      "budget_slack_fraction": 0.0001486522198731501,
+      "endpoint_kind": "",
+      "path_index": 77,
+      "policy_hash": "2c581ea54b63252891f1f58421d4a6e235831d181e31a01509e1c5a216cbacc8",
+      "policy_id": "gpf_path_0077",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0077.json",
+      "realized_2bit_param_mass_fraction": 0.2029598308668076,
+      "realized_8bit_param_mass_fraction": 0.10133126321353066
+    },
+    {
+      "budget_slack_fraction": 0.0006771934460887949,
+      "endpoint_kind": "",
+      "path_index": 78,
+      "policy_hash": "3782782cf8694d1608ca69db96dca6bf3a792a47393101f76c7e40c061e870da",
+      "policy_id": "gpf_path_0078",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0078.json",
+      "realized_2bit_param_mass_fraction": 0.20507399577167018,
+      "realized_8bit_param_mass_fraction": 0.10185980443974631
+    },
+    {
+      "budget_slack_fraction": 0.0017342758985200845,
+      "endpoint_kind": "",
+      "path_index": 79,
+      "policy_hash": "903289d90c19ff03f0d678a91e1b663eafa7a7c2a1511ee91d1623e2d207e710",
+      "policy_id": "gpf_path_0079",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0079.json",
+      "realized_2bit_param_mass_fraction": 0.21141649048625794,
+      "realized_8bit_param_mass_fraction": 0.10397396934460888
+    },
+    {
+      "budget_slack_fraction": 0.0017177589852008456,
+      "endpoint_kind": "",
+      "path_index": 80,
+      "policy_hash": "39cae1d5f11a3591f7c8e64382fcfe86b24aac478edd903411c9d9ed628860b1",
+      "policy_id": "gpf_path_0080",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0080.json",
+      "realized_2bit_param_mass_fraction": 0.21141649048625794,
+      "realized_8bit_param_mass_fraction": 0.10399048625792812
+    },
+    {
+      "budget_slack_fraction": 0.000660676532769556,
+      "endpoint_kind": "",
+      "path_index": 81,
+      "policy_hash": "ad5b0281e885a27cbcc77ee4984baa7f5bde696c227f9d7660c780cb99b8d28d",
+      "policy_id": "gpf_path_0081",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0081.json",
+      "realized_2bit_param_mass_fraction": 0.2135306553911205,
+      "realized_8bit_param_mass_fraction": 0.10610465116279069
+    },
+    {
+      "budget_slack_fraction": 0.000660676532769556,
+      "endpoint_kind": "",
+      "path_index": 82,
+      "policy_hash": "39fc1621c802bc5d2b297f5e648aed10c09cf9828f272c26867961c710506f29",
+      "policy_id": "gpf_path_0082",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0082.json",
+      "realized_2bit_param_mass_fraction": 0.21775898520084566,
+      "realized_8bit_param_mass_fraction": 0.10821881606765328
+    },
+    {
+      "budget_slack_fraction": 0.0017177589852008456,
+      "endpoint_kind": "",
+      "path_index": 83,
+      "policy_hash": "ff6656c246cc9b161b294c3769c4124d6b67b98b0abf9dec6a60f0fbcb62e1ca",
+      "policy_id": "gpf_path_0083",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0083.json",
+      "realized_2bit_param_mass_fraction": 0.22410147991543342,
+      "realized_8bit_param_mass_fraction": 0.11033298097251586
+    },
+    {
+      "budget_slack_fraction": 0.000660676532769556,
+      "endpoint_kind": "",
+      "path_index": 84,
+      "policy_hash": "9c44d61d03632d6bb39d23ae72b82a7fb7f67114b138cd2a9432f9dc8100df66",
+      "policy_id": "gpf_path_0084",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0084.json",
+      "realized_2bit_param_mass_fraction": 0.226215644820296,
+      "realized_8bit_param_mass_fraction": 0.11244714587737843
+    },
+    {
+      "budget_slack_fraction": 0.0017177589852008456,
+      "endpoint_kind": "",
+      "path_index": 85,
+      "policy_hash": "d6ccc867257bd3ad55912d7fd97b8db95ce1cff1fc83a809653821fc4439879c",
+      "policy_id": "gpf_path_0085",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0085.json",
+      "realized_2bit_param_mass_fraction": 0.23255813953488372,
+      "realized_8bit_param_mass_fraction": 0.11456131078224102
+    },
+    {
+      "budget_slack_fraction": 0.0017012420718816067,
+      "endpoint_kind": "",
+      "path_index": 86,
+      "policy_hash": "e56c242b85c880d1cd75ed23101d3ef649b73db260dab9142baf528d173f11ca",
+      "policy_id": "gpf_path_0086",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0086.json",
+      "realized_2bit_param_mass_fraction": 0.23255813953488372,
+      "realized_8bit_param_mass_fraction": 0.11457782769556026
+    },
+    {
+      "budget_slack_fraction": 0.0006441596194503172,
+      "endpoint_kind": "",
+      "path_index": 87,
+      "policy_hash": "3eb9c0f7f62f131102594686c0e3f189e24923820b7c36d9381930c1590b1e08",
+      "policy_id": "gpf_path_0087",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0087.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11669199260042283
+    },
+    {
+      "budget_slack_fraction": 0.0006276427061310782,
+      "endpoint_kind": "",
+      "path_index": 88,
+      "policy_hash": "3efcb18b13bf9cc5fc348532654e01d0600bf67472a39ab3c722085d5249874a",
+      "policy_id": "gpf_path_0088",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0088.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11670850951374208
+    },
+    {
+      "budget_slack_fraction": 0.0006111257928118393,
+      "endpoint_kind": "",
+      "path_index": 89,
+      "policy_hash": "564d7bbd6fb1490efd494d605198dca3b7129f3518b4cb8000aa1fde3bda1f18",
+      "policy_id": "gpf_path_0089",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0089.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11672502642706131
+    },
+    {
+      "budget_slack_fraction": 0.0005946088794926004,
+      "endpoint_kind": "",
+      "path_index": 90,
+      "policy_hash": "97e4413bfeb50576037d16ebe52c105c22c01a7e6e4670d788a499209db960ec",
+      "policy_id": "gpf_path_0090",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0090.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11674154334038055
+    },
+    {
+      "budget_slack_fraction": 0.0005780919661733616,
+      "endpoint_kind": "",
+      "path_index": 91,
+      "policy_hash": "f9dac745902b418e528b270e7bd6bb74ec32102fdb7012e80665bae3ea69ed99",
+      "policy_id": "gpf_path_0091",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0091.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.1167580602536998
+    },
+    {
+      "budget_slack_fraction": 0.0005615750528541226,
+      "endpoint_kind": "",
+      "path_index": 92,
+      "policy_hash": "a7207b7d80f380d83611f25e93417dab4e9ab276e59db589419f2ee621d8eaaf",
+      "policy_id": "gpf_path_0092",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0092.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11677457716701903
+    },
+    {
+      "budget_slack_fraction": 0.0005450581395348837,
+      "endpoint_kind": "",
+      "path_index": 93,
+      "policy_hash": "540f9bbfea0fcdfeb8d823abb15beb433e3cbeb6e06b0283e89d7f1bb1f3d3e2",
+      "policy_id": "gpf_path_0093",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0093.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11679109408033826
+    },
+    {
+      "budget_slack_fraction": 0.0005285412262156448,
+      "endpoint_kind": "",
+      "path_index": 94,
+      "policy_hash": "cc370aa307d8a05fab98423b733655eba2d04b1430def94dfa14a772503c01ac",
+      "policy_id": "gpf_path_0094",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0094.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11680761099365751
+    },
+    {
+      "budget_slack_fraction": 0.000512024312896406,
+      "endpoint_kind": "",
+      "path_index": 95,
+      "policy_hash": "334f3df8d404b4aa9bb4a5b36df10947a9cfca4d4f70fc7a044a8086be836e20",
+      "policy_id": "gpf_path_0095",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0095.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11682412790697674
+    },
+    {
+      "budget_slack_fraction": 0.000495507399577167,
+      "endpoint_kind": "",
+      "path_index": 96,
+      "policy_hash": "fdb1f4d575f7d4cb9eebdfb39426c77634cd3af442eb26d32cb97c211c57f5aa",
+      "policy_id": "gpf_path_0096",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0096.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11684064482029598
+    },
+    {
+      "budget_slack_fraction": 0.0004789904862579281,
+      "endpoint_kind": "",
+      "path_index": 97,
+      "policy_hash": "c3e62bc41531257e2fd4eb32fce573b45ee240f4c3502e4fb21eb66311bd322d",
+      "policy_id": "gpf_path_0097",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0097.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11685716173361523
+    },
+    {
+      "budget_slack_fraction": 0.0004624735729386892,
+      "endpoint_kind": "",
+      "path_index": 98,
+      "policy_hash": "e6185c9e7fe60377b14d1efa3a57bd174779e8e0e39d0cfe3c550a9066018aef",
+      "policy_id": "gpf_path_0098",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0098.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11687367864693446
+    },
+    {
+      "budget_slack_fraction": 0.0004459566596194503,
+      "endpoint_kind": "",
+      "path_index": 99,
+      "policy_hash": "c2a61359081978c563c8647e0587be9c2851c100a8347f62c0ccbb5bdcc28eed",
+      "policy_id": "gpf_path_0099",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0099.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11689019556025369
+    },
+    {
+      "budget_slack_fraction": 0.0004294397463002114,
+      "endpoint_kind": "",
+      "path_index": 100,
+      "policy_hash": "8f76ef8059c31dfac248f34e1e13ed114a28ee01846b815fc3fc056fa94ac789",
+      "policy_id": "gpf_path_0100",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0100.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11690671247357294
+    },
+    {
+      "budget_slack_fraction": 0.00041292283298097253,
+      "endpoint_kind": "",
+      "path_index": 101,
+      "policy_hash": "7fdbdc3e9fb689a3cf606273ebbcc11a82853d063f275758bbb7635851ddff6c",
+      "policy_id": "gpf_path_0101",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0101.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11692322938689217
+    },
+    {
+      "budget_slack_fraction": 0.0003964059196617336,
+      "endpoint_kind": "",
+      "path_index": 102,
+      "policy_hash": "18e00eabec5ca2dedb1db704d9014fcf37cda3cdbe47eaf0c90093bb6cd6bdb0",
+      "policy_id": "gpf_path_0102",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0102.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11693974630021142
+    },
+    {
+      "budget_slack_fraction": 0.00037988900634249473,
+      "endpoint_kind": "",
+      "path_index": 103,
+      "policy_hash": "b11465095d1ff0a93e08876a2234fec7bfa4524fcdc4d46dd8798927d8258743",
+      "policy_id": "gpf_path_0103",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0103.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11695626321353066
+    },
+    {
+      "budget_slack_fraction": 0.0003633720930232558,
+      "endpoint_kind": "",
+      "path_index": 104,
+      "policy_hash": "6ad9b6a96a7cad667691e8b3c4965b59d50063b43ee340196f7b0045f428e440",
+      "policy_id": "gpf_path_0104",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0104.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11697278012684989
+    },
+    {
+      "budget_slack_fraction": 0.00034685517970401694,
+      "endpoint_kind": "",
+      "path_index": 105,
+      "policy_hash": "916902afbd389dcda4ffc9930de0c7ae28bfda99a2d0b34d5be47a98d86df5a6",
+      "policy_id": "gpf_path_0105",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0105.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11698929704016914
+    },
+    {
+      "budget_slack_fraction": 0.000330338266384778,
+      "endpoint_kind": "",
+      "path_index": 106,
+      "policy_hash": "9d0275fdb467d6452ce72b8497b4a74b5fbc0b5860abedf89e037fc0f3b0bea0",
+      "policy_id": "gpf_path_0106",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0106.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11700581395348837
+    },
+    {
+      "budget_slack_fraction": 0.0003138213530655391,
+      "endpoint_kind": "",
+      "path_index": 107,
+      "policy_hash": "acb3fee330adb4168d1427c67814530681a37757b0c18cfd676cc6953f674d97",
+      "policy_id": "gpf_path_0107",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0107.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.1170223308668076
+    },
+    {
+      "budget_slack_fraction": 0.0002973044397463002,
+      "endpoint_kind": "",
+      "path_index": 108,
+      "policy_hash": "38d663a8c75546d0dd2177151e4b1eaae4da0b389cab51e23967429b3c653d25",
+      "policy_id": "gpf_path_0108",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0108.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11703884778012685
+    },
+    {
+      "budget_slack_fraction": 0.0002807875264270613,
+      "endpoint_kind": "",
+      "path_index": 109,
+      "policy_hash": "00bd01aff778f249031025424e3d89c4ec8696e5746d815cd3f164534b215e6d",
+      "policy_id": "gpf_path_0109",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0109.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11705536469344609
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 110,
+      "policy_hash": "10e3228504f94c3d7a769d63c9ee1871ce6dd4197f12fbfc3de10bbcab0c1e7a",
+      "policy_id": "gpf_path_0110",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0110.json",
+      "realized_2bit_param_mass_fraction": 0.2346723044397463,
+      "realized_8bit_param_mass_fraction": 0.11707188160676532
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 111,
+      "policy_hash": "12c0a9bc9077c97d7ffd3df337646b7e45aa0e41935c4cde5fdd98da52750e43",
+      "policy_id": "gpf_path_0111",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0111.json",
+      "realized_2bit_param_mass_fraction": 0.24735729386892177,
+      "realized_8bit_param_mass_fraction": 0.12341437632135306
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 112,
+      "policy_hash": "7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4",
+      "policy_id": "gpf_path_0112",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0112.json",
+      "realized_2bit_param_mass_fraction": 0.26004228329809725,
+      "realized_8bit_param_mass_fraction": 0.1297568710359408
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 113,
+      "policy_hash": "6f4ae48c3f3a5d6f3b2287504034958fe4f761fb8167d85eb21ee1c71ff84f97",
+      "policy_id": "gpf_path_0113",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0113.json",
+      "realized_2bit_param_mass_fraction": 0.2727272727272727,
+      "realized_8bit_param_mass_fraction": 0.13609936575052853
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 114,
+      "policy_hash": "54ac5a2a2ac95633aaebd4761e94b5081441809bc8bcd620ed0315caf7bf0bb9",
+      "policy_id": "gpf_path_0114",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0114.json",
+      "realized_2bit_param_mass_fraction": 0.2854122621564482,
+      "realized_8bit_param_mass_fraction": 0.14244186046511628
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 115,
+      "policy_hash": "00976cfd838b3848298717d8a394f00f58b018aba4214f1101859e15e053ea57",
+      "policy_id": "gpf_path_0115",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0115.json",
+      "realized_2bit_param_mass_fraction": 0.29809725158562367,
+      "realized_8bit_param_mass_fraction": 0.148784355179704
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 116,
+      "policy_hash": "0a6db88339eea48a91778987295c176abd8aa39eef628b05a98b2f93814e7372",
+      "policy_id": "gpf_path_0116",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0116.json",
+      "realized_2bit_param_mass_fraction": 0.3107822410147992,
+      "realized_8bit_param_mass_fraction": 0.15512684989429176
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 117,
+      "policy_hash": "03e245cddd7dc7a1d6745b235a27768bd0878fb10990caffd2396e1b4573cf35",
+      "policy_id": "gpf_path_0117",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0117.json",
+      "realized_2bit_param_mass_fraction": 0.32346723044397463,
+      "realized_8bit_param_mass_fraction": 0.1614693446088795
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 118,
+      "policy_hash": "705871b1221acc654e41a462efc16d82d6b1938d82496f878d8693fda4407887",
+      "policy_id": "gpf_path_0118",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0118.json",
+      "realized_2bit_param_mass_fraction": 0.3361522198731501,
+      "realized_8bit_param_mass_fraction": 0.16781183932346724
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 119,
+      "policy_hash": "7a11d726bdcfca77c27d666c5218159c83fc34e3bba209548869a7b4b419a112",
+      "policy_id": "gpf_path_0119",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0119.json",
+      "realized_2bit_param_mass_fraction": 0.3488372093023256,
+      "realized_8bit_param_mass_fraction": 0.17415433403805497
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 120,
+      "policy_hash": "aa6baf9c603d4e53f3699bea31efb2e2d2f0d064f43955c2f0313cd9b63d1b37",
+      "policy_id": "gpf_path_0120",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0120.json",
+      "realized_2bit_param_mass_fraction": 0.36152219873150104,
+      "realized_8bit_param_mass_fraction": 0.1804968287526427
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 121,
+      "policy_hash": "b2d70ef0902bd8f2908d9c6f6c626034043ad8eb2b9009f572e353adf3e8dca1",
+      "policy_id": "gpf_path_0121",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0121.json",
+      "realized_2bit_param_mass_fraction": 0.37420718816067655,
+      "realized_8bit_param_mass_fraction": 0.18683932346723045
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 122,
+      "policy_hash": "900cd0443b793b6d541213a98380bbfd454beecc2fdfd5e03dfadf1faad24865",
+      "policy_id": "gpf_path_0122",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0122.json",
+      "realized_2bit_param_mass_fraction": 0.386892177589852,
+      "realized_8bit_param_mass_fraction": 0.19318181818181818
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 123,
+      "policy_hash": "43b4966238e1eef025d820eb934dc97b1f4b7dc8359ffd01dc3d28d190441b31",
+      "policy_id": "gpf_path_0123",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0123.json",
+      "realized_2bit_param_mass_fraction": 0.39957716701902746,
+      "realized_8bit_param_mass_fraction": 0.19952431289640593
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 124,
+      "policy_hash": "f9fa4ef38c04ffef258a0b004c2c569ff4a26211cd101418259a253831ea1fe1",
+      "policy_id": "gpf_path_0124",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0124.json",
+      "realized_2bit_param_mass_fraction": 0.41226215644820297,
+      "realized_8bit_param_mass_fraction": 0.20586680761099366
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 125,
+      "policy_hash": "649c3f1f2b38ca13e4a277aed9ce0515da279cdb4dbb7c0d9224ac5ec6b1fcc9",
+      "policy_id": "gpf_path_0125",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0125.json",
+      "realized_2bit_param_mass_fraction": 0.4249471458773784,
+      "realized_8bit_param_mass_fraction": 0.21220930232558138
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 126,
+      "policy_hash": "28d7b41578f03d0db888c7b0bb351c471211cca750c49bd1073d66a8faf6671a",
+      "policy_id": "gpf_path_0126",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0126.json",
+      "realized_2bit_param_mass_fraction": 0.4376321353065539,
+      "realized_8bit_param_mass_fraction": 0.21855179704016914
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 127,
+      "policy_hash": "7ab60cee8a771049352899ba1abd87dc75ed097dffea66624a6d34b284b552fc",
+      "policy_id": "gpf_path_0127",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0127.json",
+      "realized_2bit_param_mass_fraction": 0.4503171247357294,
+      "realized_8bit_param_mass_fraction": 0.22489429175475686
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 128,
+      "policy_hash": "129a897a751d6ddbb723f51348ace76807c2e2529c3771e2301a1bb5fa364e83",
+      "policy_id": "gpf_path_0128",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0128.json",
+      "realized_2bit_param_mass_fraction": 0.4630021141649049,
+      "realized_8bit_param_mass_fraction": 0.23123678646934462
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 129,
+      "policy_hash": "2f8dfae619eb166b9a80e2bfa3b3e37286d90e3c29180f1111e62b65dc4af86e",
+      "policy_id": "gpf_path_0129",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0129.json",
+      "realized_2bit_param_mass_fraction": 0.47568710359408034,
+      "realized_8bit_param_mass_fraction": 0.23757928118393234
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 130,
+      "policy_hash": "62ec516526067c9d6eb3e0168baad3edbcf35aeae65a89ca83387d699ee333b8",
+      "policy_id": "gpf_path_0130",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0130.json",
+      "realized_2bit_param_mass_fraction": 0.4883720930232558,
+      "realized_8bit_param_mass_fraction": 0.24392177589852007
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 131,
+      "policy_hash": "05b77b5c1a1fe7a99e3bc41df6a1b3102dc78ae5349970636573183dbb0c035e",
+      "policy_id": "gpf_path_0131",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0131.json",
+      "realized_2bit_param_mass_fraction": 0.5010570824524313,
+      "realized_8bit_param_mass_fraction": 0.2502642706131078
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 132,
+      "policy_hash": "e7b7cd6e6b18b81683b090faf256d2e28705846edb595aaf73d80fa2ba7d57a4",
+      "policy_id": "gpf_path_0132",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0132.json",
+      "realized_2bit_param_mass_fraction": 0.5137420718816068,
+      "realized_8bit_param_mass_fraction": 0.25660676532769555
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 133,
+      "policy_hash": "0a3373e4122ddeda1e0921328f8309f8909d6f9dca6a491aa16da439aa829358",
+      "policy_id": "gpf_path_0133",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0133.json",
+      "realized_2bit_param_mass_fraction": 0.5221987315010571,
+      "realized_8bit_param_mass_fraction": 0.2608350951374207
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 134,
+      "policy_hash": "e5f37e836927fc2e3155f31986334dfcaff60c36ee63ec06788bf39df7609173",
+      "policy_id": "gpf_path_0134",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0134.json",
+      "realized_2bit_param_mass_fraction": 0.5348837209302325,
+      "realized_8bit_param_mass_fraction": 0.26717758985200846
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 135,
+      "policy_hash": "ee487e851ecd47f247356d5b10346dd32c39779f574d2f470888c348e15c88ee",
+      "policy_id": "gpf_path_0135",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0135.json",
+      "realized_2bit_param_mass_fraction": 0.547568710359408,
+      "realized_8bit_param_mass_fraction": 0.2735200845665962
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "",
+      "path_index": 136,
+      "policy_hash": "e728519b8c8948ec3133c31bf8da85a3d1a461d8788e020e7c40adef19d9f214",
+      "policy_id": "gpf_path_0136",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0136.json",
+      "realized_2bit_param_mass_fraction": 0.5602536997885835,
+      "realized_8bit_param_mass_fraction": 0.2798625792811839
+    },
+    {
+      "budget_slack_fraction": 0.0002642706131078224,
+      "endpoint_kind": "greedy_max8_endpoint",
+      "path_index": 137,
+      "policy_hash": "a3f7c3d6fc1f94dffdf482a9f8454a4fdc2f9ca492ae2d7e76ed9bfeb6a19f7b",
+      "policy_id": "gpf_path_0137_endpoint",
+      "policy_path": "artifacts/policies/task_sensitivity_exact_budget_mmlu_coding/gpf_path_0137_endpoint.json",
+      "realized_2bit_param_mass_fraction": 0.572938689217759,
+      "realized_8bit_param_mass_fraction": 0.28620507399577166
+    }
+  ],
+  "profile_kind": "taq_kl_groupwise",
+  "sensitivity_metadata": {
+    "batch_size": 8,
+    "calibration_split": "first300",
+    "method": "taq_kl_lite",
+    "model_id": "Qwen/Qwen3.5-9B",
+    "noise_bits": [
+      2,
+      4,
+      8
+    ],
+    "num_calibration_prompts": 64,
+    "seed": 42,
+    "task": "mmlu_coding",
+    "task_prompt_style": "simple_evals_nonthinking",
+    "temperature": 1.0
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "benchmark": "bigcodebench",
+  "bigcodebench_config": {
+    "attn_implementation": "eager",
+    "dtype": "bfloat16",
+    "greedy": true,
+    "max_new_tokens": 1280,
+    "n_samples": 1,
+    "no_gt": false,
+    "parallel": 4,
+    "split": "instruct",
+    "subset": "hard",
+    "task_limit": 5
+  },
+  "elapsed_sec": 258.5682518482208,
+  "eval_date": "2026-04-22 02:10",
+  "failed_tasks": [
+    "BigCodeBench/13",
+    "BigCodeBench/15",
+    "BigCodeBench/17",
+    "BigCodeBench/19",
+    "BigCodeBench/34"
+  ],
+  "generation_records": [
+    {
+      "completion_tokens": 662,
+      "latency_sec": 115.788975414,
+      "length_capped": false,
+      "prompt_tokens": 382,
+      "raw_chars": 2695,
+      "sanitized_chars": 2690,
+      "task_id": "BigCodeBench/13"
+    },
+    {
+      "completion_tokens": 656,
+      "latency_sec": 41.432937869,
+      "length_capped": false,
+      "prompt_tokens": 232,
+      "raw_chars": 2939,
+      "sanitized_chars": 2934,
+      "task_id": "BigCodeBench/15"
+    },
+    {
+      "completion_tokens": 434,
+      "latency_sec": 30.05642623899999,
+      "length_capped": false,
+      "prompt_tokens": 182,
+      "raw_chars": 2060,
+      "sanitized_chars": 2055,
+      "task_id": "BigCodeBench/17"
+    },
+    {
+      "completion_tokens": 327,
+      "latency_sec": 24.728850574000006,
+      "length_capped": false,
+      "prompt_tokens": 171,
+      "raw_chars": 1361,
+      "sanitized_chars": 1326,
+      "task_id": "BigCodeBench/19"
+    },
+    {
+      "completion_tokens": 240,
+      "latency_sec": 20.189664485999998,
+      "length_capped": false,
+      "prompt_tokens": 160,
+      "raw_chars": 944,
+      "sanitized_chars": 917,
+      "task_id": "BigCodeBench/34"
+    }
+  ],
+  "length_capped_count": 0,
+  "local_artifact_paths": {
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_eval_results.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_eval_results.json",
+    "instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_pass_at_k.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_pass_at_k.json"
+  },
+  "mean_completion_tokens": 463.8,
+  "mean_latency_sec": 46.439370916399994,
+  "median_completion_tokens": 434.0,
+  "median_latency_sec": 30.05642623899999,
+  "model_id": "qwen35-9b-bf16-bigcodebench-smoke5",
+  "model_ref": "Qwen/Qwen3.5-9B",
+  "no_gt": false,
+  "num_samples": 5,
+  "num_tasks": 5,
+  "p95_completion_tokens": 660.8,
+  "p95_latency_sec": 100.91776790499999,
+  "pass_at_1": 0.0,
+  "pass_at_k": {
+    "calibrated": true,
+    "failed_tasks": [
+      "BigCodeBench/15",
+      "BigCodeBench/17",
+      "BigCodeBench/13",
+      "BigCodeBench/19",
+      "BigCodeBench/34"
+    ],
+    "gt_pass_rate": 0.0,
+    "model": "Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+    "pass@1": 0.0,
+    "split": "instruct",
+    "subset": "hard"
+  },
+  "pass_correct": 0,
+  "remote_log_tail": "\rGenerating v0.1.0_hf split:   0%|          | 0/148 [00:00<?, ? examples/s]\rGenerating v0.1.0_hf split: 100%|##########| 148/148 [00:00<00:00, 7537.21 examples/s]\n\rGenerating v0.1.1 split:   0%|          | 0/148 [00:00<?, ? examples/s]\rGenerating v0.1.1 split: 100%|##########| 148/148 [00:00<00:00, 9286.65 examples/s]\n\rGenerating v0.1.2 split:   0%|          | 0/148 [00:00<?, ? examples/s]\rGenerating v0.1.2 split: 100%|##########| 148/148 [00:00<00:00, 10757.61 examples/s]\n\rGenerating v0.1.3 split:   0%|          | 0/148 [00:00<?, ? examples/s]\rGenerating v0.1.3 split: 100%|##########| 148/148 [00:00<00:00, 11859.86 examples/s]\n\rGenerating v0.1.4 split:   0%|          | 0/148 [00:00<?, ? examples/s]\rGenerating v0.1.4 split: 100%|##########| 148/148 [00:00<00:00, 12144.08 examples/s]\n\rCreating json from Arrow format:   0%|          | 0/1 [00:00<?, ?ba/s]\rCreating json from Arrow format: 100%|##########| 1/1 [00:00<00:00, 49.07ba/s]\nbigcodebench direct_hf model_kwargs={'device_map': 'auto', 'trust_remote_code': True, 'torch_dtype': torch.bfloat16, 'attn_implementation': 'eager'}\nbigcodebench direct_hf split=instruct subset=hard task_count=5 max_new_tokens=1280\n\rFetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]\rFetching 4 files: 100%|##########| 4/4 [00:00<00:00, 83886.08it/s]\n\rLoading weights:   0%|          | 0/427 [00:00<?, ?it/s]\rLoading weights:   0%|          | 1/427 [00:01<11:31,  1.62s/it]\rLoading weights:   0%|          | 2/427 [00:02<10:04,  1.42s/it]\rLoading weights:   2%|2         | 10/427 [00:03<01:24,  4.91it/s]\rLoading weights:   4%|3         | 15/427 [00:03<00:53,  7.74it/s]\rLoading weights:   5%|4         | 20/427 [00:03<00:38, 10.50it/s]\rLoading weights:   8%|8         | 35/427 [00:03<00:15, 24.88it/s]\rLoading weights:  10%|9         | 42/427 [00:03<00:13, 27.90it/s]\rLoading weights:  11%|#1        | 48/427 [00:03<00:13, 28.23it/s]\rLoading weights:  15%|#4        | 62/427 [00:04<00:09, 40.03it/s]\rLoading weights:  16%|#5        | 68/427 [00:04<00:08, 41.50it/s]\rLoading weights:  19%|#8        | 80/427 [00:04<00:06, 54.28it/s]\rLoading weights:  20%|##        | 87/427 [00:04<00:06, 55.33it/s]\rLoading weights:  22%|##2       | 94/427 [00:04<00:05, 57.02it/s]\rLoading weights:  24%|##3       | 101/427 [00:04<00:07, 44.23it/s]\rLoading weights:  27%|##7       | 116/427 [00:04<00:05, 60.80it/s]\rLoading weights:  29%|##9       | 124/427 [00:05<00:04, 63.60it/s]\rLoading weights:  31%|###1      | 134/427 [00:05<00:04, 59.94it/s]\rLoading weights:  35%|###4      | 148/427 [00:05<00:03, 70.65it/s]\rLoading weights:  37%|###6      | 156/427 [00:05<00:04, 63.35it/s]\rLoading weights:  40%|###9      | 169/427 [00:05<00:03, 75.29it/s]\rLoading weights:  42%|####1     | 178/427 [00:05<00:03, 71.17it/s]\rLoading weights:  44%|####3     | 187/427 [00:06<00:03, 63.74it/s]\rLoading weights:  47%|####6     | 200/427 [00:06<00:02, 76.66it/s]\rLoading weights:  49%|####8     | 209/427 [00:06<00:03, 64.03it/s]\rLoading weights:  52%|#####1    | 222/427 [00:06<00:02, 74.40it/s]\rLoading weights:  54%|#####4    | 231/427 [00:06<00:02, 73.98it/s]\rLoading weights:  56%|#####6    | 240/427 [00:06<00:02, 71.31it/s]\rLoading weights:  59%|#####8    | 250/427 [00:06<00:02, 70.38it/s]\rLoading weights:  60%|######    | 258/427 [00:07<00:02, 64.80it/s]\rLoading weights:  62%|######2   | 265/427 [00:07<00:02, 62.90it/s]\rLoading weights:  65%|######4   | 277/427 [00:07<00:01, 75.21it/s]\rLoading weights:  67%|######6   | 285/427 [00:07<00:01, 72.61it/s]\rLoading weights:  69%|######8   | 293/427 [00:07<00:01, 68.85it/s]\rLoading weights:  71%|#######   | 302/427 [00:07<00:01, 70.91it/s]\rLoading weights:  73%|#######2  | 310/427 [00:07<00:02, 56.42it/s]\rLoading weights:  74%|#######4  | 317/427 [00:08<00:02, 50.30it/s]\rLoading weights:  77%|#######6  | 328/427 [00:08<00:01, 58.51it/s]\rLoading weights:  78%|#######8  | 335/427 [00:08<00:01, 57.26it/s]\rLoading weights:  80%|########  | 342/427 [00:08<00:01, 58.00it/s]\rLoading weights:  82%|########1 | 349/427 [00:08<00:01, 60.21it/s]\rLoading weights:  84%|########4 | 359/427 [00:08<00:00, 68.85it/s]\rLoading weights:  86%|########5 | 367/427 [00:08<00:01, 57.32it/s]\rLoading weights:  89%|########8 | 379/427 [00:08<00:00, 71.59it/s]\rLoading weights:  91%|######### | 387/427 [00:09<00:00, 63.15it/s]\rLoading weights:  93%|#########3| 399/427 [00:09<00:00, 72.99it/s]\rLoading weights:  96%|#########5| 408/427 [00:09<00:00, 71.20it/s]\rLoading weights:  97%|#########7| 416/427 [00:09<00:00, 66.67it/s]\rLoading weights:  99%|#########9| 424/427 [00:09<00:00, 68.99it/s]\rLoading weights: 100%|##########| 427/427 [00:09<00:00, 44.54it/s]\n[bigcodebench:instruct/hard] codegen 1/5 BigCodeBench/13\n[bigcodebench:instruct/hard] completed 1/5 last_latency_sec=115.79 last_completion_tokens=662\n[bigcodebench:instruct/hard] codegen 2/5 BigCodeBench/15\n[bigcodebench:instruct/hard] completed 2/5 last_latency_sec=41.43 last_completion_tokens=656\n[bigcodebench:instruct/hard] codegen 3/5 BigCodeBench/17\n[bigcodebench:instruct/hard] completed 3/5 last_latency_sec=30.06 last_completion_tokens=434\n[bigcodebench:instruct/hard] codegen 4/5 BigCodeBench/19\n[bigcodebench:instruct/hard] completed 4/5 last_latency_sec=24.73 last_completion_tokens=327\n[bigcodebench:instruct/hard] codegen 5/5 BigCodeBench/34\n[bigcodebench:instruct/hard] completed 5/5 last_latency_sec=20.19 last_completion_tokens=240\n\nAsserting the groundtruth...\n\r  0%|          | 0/5 [00:00<?, ?it/s]\r 20%|##        | 1/5 [00:00<00:02,  1.82it/s]\r100%|##########| 5/5 [00:00<00:00,  6.46it/s]\r100%|##########| 5/5 [00:00<00:00,  5.60it/s]\nExpected outputs computed in 1.32s\nReading samples...\n\r0it [00:00, ?it/s]\r1it [00:00,  3.45it/s]\r5it [00:00, 15.99it/s]\n\r  0%|          | 0/5 [00:00<?, ?it/s]\r 20%|##        | 1/5 [00:00<00:03,  1.28it/s]\r100%|##########| 5/5 [00:01<00:00,  4.19it/s]\r100%|##########| 5/5 [00:01<00:00,  3.68it/s]\nBigCodeBench-Instruct (Hard)\nGroundtruth pass rate: 0.000\nPlease be cautious!\nFailed tasks: ['BigCodeBench/15', 'BigCodeBench/17', 'BigCodeBench/13', 'BigCodeBench/19', 'BigCodeBench/34']\npass@1:\t0.000\n",
+  "remote_pass_at_k_path": "/tmp/ta-mpq-bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_pass_at_k.json",
+  "remote_raw_samples_paths": [
+    "/tmp/ta-mpq-bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  ],
+  "remote_result_path": "/tmp/ta-mpq-bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0_eval_results.json",
+  "remote_samples_paths": [
+    "/tmp/ta-mpq-bigcodebench/bigcodebench-instruct-hard-qwen35-9b-bf16-smoke5/instruct-hard/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl"
+  ],
+  "resolved_model_ref": "Qwen/Qwen3.5-9B",
+  "selected_task_ids": [
+    "BigCodeBench/13",
+    "BigCodeBench/15",
+    "BigCodeBench/17",
+    "BigCodeBench/19",
+    "BigCodeBench/34"
+  ],
+  "split": "instruct",
+  "status_counts": {
+    "timeout": 5
+  },
+  "subset": "hard"
+}

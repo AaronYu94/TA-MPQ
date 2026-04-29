@@ -1,0 +1,10 @@
+{
+  "file_count": 3,
+  "local_artifact_paths": {
+    "generation_summary.json": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full/generation_summary.json",
+    "instruct-hard/artifacts--task-sensitivity-exact-budget-feasibility-7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4-source_hf_direct_temp_0.0.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full/instruct-hard/artifacts--task-sensitivity-exact-budget-feasibility-7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4-source_hf_direct_temp_0.0.jsonl",
+    "instruct-hard/artifacts--task-sensitivity-exact-budget-feasibility-7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4-source_hf_direct_temp_0.0.raw.jsonl": "outputs/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full/instruct-hard/artifacts--task-sensitivity-exact-budget-feasibility-7caae6e48fce5c6736e9464543d7f78329ceae88693fa2a6db90d47dd82043e4-source_hf_direct_temp_0.0.raw.jsonl"
+  },
+  "output_slug": "bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full",
+  "remote_root": "/artifacts/bigcodebench/bigcodebench-instruct-hard-qwen35-9b-mixed-exact-int4-budget-generation-full"
+}

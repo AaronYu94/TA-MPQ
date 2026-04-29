@@ -44,6 +44,7 @@ def summarize_results(
             "mean_generation_peak_delta_mb": 0.0,
             "mean_total_peak_memory_mb": 0.0,
             "length_capped_count": 0,
+            "answer_colon_count": 0,
             "boxed_answer_count": 0,
             "fallback_answer_count": 0,
             "no_answer_count": 0,
@@ -57,9 +58,15 @@ def summarize_results(
     total_peaks = [result.total_peak_memory_mb for result in results]
     num_correct = sum(1 for result in results if result.is_correct)
     length_capped_count = sum(1 for result in results if result.length_capped)
+    answer_colon_count = sum(
+        1 for result in results if result.answer_extraction_source == "answer_colon"
+    )
     boxed_answer_count = sum(1 for result in results if result.answer_extraction_source == "boxed")
     fallback_answer_count = sum(
-        1 for result in results if result.answer_extraction_source in {"inline_math", "last_line"}
+        1
+        for result in results
+        if result.answer_extraction_source
+        in {"answer_prefix", "inline_math", "last_line", "standalone"}
     )
     no_answer_count = sum(1 for result in results if result.answer_extraction_source == "none")
 
@@ -76,6 +83,7 @@ def summarize_results(
         "mean_generation_peak_delta_mb": statistics.fmean(generation_peak_deltas),
         "mean_total_peak_memory_mb": statistics.fmean(total_peaks),
         "length_capped_count": length_capped_count,
+        "answer_colon_count": answer_colon_count,
         "boxed_answer_count": boxed_answer_count,
         "fallback_answer_count": fallback_answer_count,
         "no_answer_count": no_answer_count,

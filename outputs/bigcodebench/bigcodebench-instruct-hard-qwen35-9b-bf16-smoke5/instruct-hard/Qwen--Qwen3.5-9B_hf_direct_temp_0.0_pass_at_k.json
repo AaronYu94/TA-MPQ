@@ -1,0 +1,15 @@
+{
+  "pass@1": 0.0,
+  "model": "Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+  "split": "instruct",
+  "subset": "hard",
+  "calibrated": true,
+  "gt_pass_rate": 0.0,
+  "failed_tasks": [
+    "BigCodeBench/15",
+    "BigCodeBench/17",
+    "BigCodeBench/13",
+    "BigCodeBench/19",
+    "BigCodeBench/34"
+  ]
+}

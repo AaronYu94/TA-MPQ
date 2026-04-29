@@ -8,6 +8,11 @@ This repository now serves a single active route:
 - active search space: `{4, 8, 16}`
 - active method: **hierarchical coarse-to-fine structured search**
 
+## Contributors
+
+- `AaronYu94` — repository owner, experiment direction, and mainline integration
+- `Loskiz` — merged PR #1 (`Greedy search`), including the greedy-search / structured-search mainline implementation
+
 The project is no longer centered on the older:
 
 - surrogate-guided evolutionary search

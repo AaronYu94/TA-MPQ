@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TA-MPQ — Structured Exact-Budget Mixed Precision for Task-Aware LLM Quantization</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C41230;
+    --red-dark: #8B0D21;
+    --red-light: #F5E6E9;
+    --bg: #F8F7F5;
+    --card: #FFFFFF;
+    --ink: #1A1614;
+    --muted: #6B6560;
+    --border: #E0DDD8;
+    --int8: oklch(52% 0.14 245);
+    --int4: oklch(50% 0.13 155);
+    --int2: oklch(55% 0.14 55);
+    --mixed: #C41230;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    margin: 0; padding: 0;
+    background: #2A2A2A;
+  }
+
+  .stage {
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .poster {
+    width: 3840px;
+    height: 2880px;
+    background: var(--bg);
+    transform-origin: top left;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ─── HEADER ─────────────────────────────────────────── */
+  .header {
+    background: var(--red);
+    width: 100%;
+    padding: 36px 80px 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 8px;
+    background: var(--red-dark);
+  }
+  .header-logo-wrap {
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .header-logo {
+    width: 160px;
+    display: block;
+  }
+  .header-text {
+    flex: 1;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.9);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 6px 18px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 1.08;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .header h1 span.accent {
+    color: rgba(255,255,255,0.7);
+  }
+  .header-authors {
+    font-size: 22px;
+    color: rgba(255,255,255,0.88);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .header-authors strong {
+    font-weight: 600;
+    color: #fff;
+  }
+
+  /* ─── TAKEAWAY BAR ────────────────────────────────────── */
+  .takeaway-bar {
+    background: var(--ink);
+    padding: 18px 80px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .takeaway-label {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .takeaway-divider {
+    width: 3px;
+    height: 40px;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .takeaway-text {
+    font-size: 24px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .takeaway-text strong { color: #fff; font-weight: 600; }
+
+  /* ─── BODY GRID ───────────────────────────────────────── */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0;
+    padding: 36px 60px 36px;
+    column-gap: 40px;
+    flex: 1;
+  }
+
+  .col { display: flex; flex-direction: column; gap: 28px; }
+
+  /* ─── SECTION CARD ────────────────────────────────────── */
+  .card {
+    background: var(--card);
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .card-header {
+    padding: 16px 26px 14px;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #FDFCFB;
+  }
+  .card-header-accent {
+    width: 6px;
+    height: 36px;
+    background: var(--red);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .card-body {
+    padding: 18px 26px;
+  }
+
+  /* ─── BODY TEXT ───────────────────────────────────────── */
+  p, li { font-size: 19px; line-height: 1.5; color: var(--ink); }
+  ul { padding-left: 28px; }
+  ul li { margin-bottom: 8px; }
+  ul li::marker { color: var(--red); }
+  .muted { color: var(--muted); }
+  strong { font-weight: 600; }
+
+  /* ─── KEY CLAIM CALLOUT ───────────────────────────────── */
+  .callout {
+    background: var(--red-light);
+    border-left: 5px solid var(--red);
+    border-radius: 0 6px 6px 0;
+    padding: 18px 22px;
+    margin-top: 16px;
+  }
+  .callout p { font-size: 24px; color: var(--red-dark); font-weight: 500; }
+
+  /* ─── PRECISION CHIPS ─────────────────────────────────── */
+  .chip {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 4px;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+  .chip-int8 { background: color-mix(in oklch, var(--int8) 15%, white); color: var(--int8); border: 1.5px solid color-mix(in oklch, var(--int8) 35%, white); }
+  .chip-int4 { background: color-mix(in oklch, var(--int4) 15%, white); color: var(--int4); border: 1.5px solid color-mix(in oklch, var(--int4) 35%, white); }
+  .chip-int2 { background: color-mix(in oklch, var(--int2) 15%, white); color: var(--int2); border: 1.5px solid color-mix(in oklch, var(--int2) 35%, white); }
+  .chip-bf16 { background: #F0F0F0; color: #444; border: 1.5px solid #CCC; }
+  .chip-mixed { background: var(--red-light); color: var(--red); border: 1.5px solid color-mix(in oklch, var(--red) 35%, white); }
+
+  /* ─── RESULTS TABLE ───────────────────────────────────── */
+  .results-table { width: 100%; border-collapse: collapse; }
+  .results-table th {
+    font-size: 19px;
+    font-weight: 700;
+    padding: 14px 16px;
+    text-align: center;
+    background: #F2F0ED;
+    border-bottom: 2px solid var(--border);
+    letter-spacing: 0.02em;
+  }
+  .results-table th:first-child { text-align: left; }
+  .results-table td {
+    font-size: 20px;
+    padding: 13px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .results-table td:first-child {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    text-align: left;
+  }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table tr:hover td { background: #FAFAF8; }
+  .cell-best { color: var(--red); font-weight: 700; }
+  .cell-mixed-win {
+    background: color-mix(in oklch, var(--red) 8%, white);
+    color: var(--red-dark);
+    font-weight: 700;
+    position: relative;
+  }
+  .cell-int4-loss { color: var(--muted); }
+  .delta-tag {
+    display: inline-block;
+    font-size: 16px;
+    background: var(--red-light);
+    color: var(--red);
+    border-radius: 3px;
+    padding: 1px 7px;
+    margin-left: 6px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  /* ─── RECOVERY BAR ────────────────────────────────────── */
+  .recovery-container { margin-top: 20px; }
+  .recovery-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .recovery-label {
+    font-size: 21px;
+    font-weight: 600;
+    width: 220px;
+    flex-shrink: 0;
+    color: var(--ink);
+  }
+  .recovery-track {
+    flex: 1;
+    height: 22px;
+    background: #EAE8E4;
+    border-radius: 11px;
+    position: relative;
+    overflow: visible;
+  }
+  .recovery-fill {
+    height: 100%;
+    border-radius: 11px;
+    position: absolute;
+    left: 0; top: 0;
+  }
+  .recovery-pct {
+    font-size: 21px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--ink);
+    width: 70px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  .footer {
+    background: var(--ink);
+    padding: 30px 96px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-left {
+    font-size: 26px;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+  }
+  .footer-left strong { color: rgba(255,255,255,0.85); font-style: normal; }
+  .footer-right {
+    font-size: 24px;
+    color: rgba(255,255,255,0.5);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ─── SECTION NUMBER ──────────────────────────────────── */
+  .sec-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px; height: 34px;
+    background: var(--red);
+    color: white;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .two-col-list { columns: 2; column-gap: 24px; }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="poster" id="poster">
+
+  <!-- ══════════════════ HEADER ══════════════════ -->
+  <div class="header">
+    <div class="header-logo-wrap">
+      <img class="header-logo" src="uploads/logo-1776969462570.jpg" alt="Carnegie Mellon University">
+    </div>
+    <div class="header-text">
+      <div class="header-badge">Poster</div>
+      <h1>TA-MPQ: <span class="accent">Structured Exact-Budget Mixed Precision for Task-Aware LLM Quantization</span></h1>
+      <div class="header-authors">
+        <strong>Aaron Yu &nbsp;·&nbsp; Letian Zhang &nbsp;·&nbsp; Tim Gao</strong><br>
+        Carnegie Mellon University &nbsp;·&nbsp; 15-442/15-642: Machine Learning Systems
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ TAKEAWAY BAR ══════════════════ -->
+  <div class="takeaway-bar">
+    <div class="takeaway-label">Key Takeaway</div>
+    <div class="takeaway-divider"></div>
+    <div class="takeaway-text">
+      Our <strong>Structured Exact-Budget Coarse-to-Fine Mixed-Precision Search</strong> consistently recovers quality lost by uniform INT4 — under the <strong>same memory budget</strong>.
+    </div>
+  </div>
+
+  <!-- ══════════════════ 4-COLUMN BODY ══════════════════ -->
+  <div class="body-grid">
+
+    <!-- ──────────── COLUMN 1 ──────────── -->
+    <div class="col">
+
+      <!-- Motivation -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Motivation &amp; Problem</div>
+          <div class="sec-num">1</div>
+        </div>
+        <div class="card-body">
+          <p>Running LLMs under <strong>strict memory budgets</strong> is critical for local inference and multi-LLM orchestration. Uniform quantization treats all layers identically — but components vary widely in task sensitivity.</p>
+          <ul style="margin-top:14px">
+            <li>Assigning equal precision <strong>wastes budget</strong> on low-sensitivity layers</li>
+            <li>Different benchmarks value different groups — one policy need not fit every workload family</li>
+            <li>Goal: <strong>reallocate precision</strong> across groups without increasing total budget</li>
+          </ul>
+          <p style="margin-top:14px">We target the same raw weight footprint as uniform INT4 and reallocate precision across groups instead of increasing total budget.</p>
+
+          <!-- Budget allocation visual -->
+          <svg viewBox="0 0 580 140" width="100%" style="display:block; margin-top:16px; border-radius:6px; overflow:hidden">
+            <!-- Uniform INT4 row -->
+            <rect x="0" y="0" width="580" height="60" fill="#F4F2EF"/>
+            <text x="14" y="22" font-family="IBM Plex Sans" font-size="17" fill="#6B6560" font-weight="700">Uniform INT4</text>
+            <rect x="14" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="82" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="150" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="218" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="286" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="354" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="422" y="28" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="490" y="28" width="76" height="24" rx="3" fill="#6aaa8a"/>
+            <text x="46" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="114" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="182" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="250" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="318" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="386" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="454" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="528" y="45" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+
+            <!-- Mixed row -->
+            <rect x="0" y="62" width="580" height="60" fill="#FFF8F8"/>
+            <text x="14" y="82" font-family="IBM Plex Sans" font-size="17" fill="#C41230" font-weight="700">Mixed (TA-MPQ)</text>
+            <!-- INT8 blocks (sensitive) -->
+            <rect x="14" y="88" width="64" height="24" rx="3" fill="#3b82f6"/>
+            <rect x="82" y="88" width="64" height="24" rx="3" fill="#3b82f6"/>
+            <rect x="150" y="88" width="64" height="24" rx="3" fill="#3b82f6"/>
+            <!-- INT4 blocks -->
+            <rect x="218" y="88" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="286" y="88" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <rect x="354" y="88" width="64" height="24" rx="3" fill="#6aaa8a"/>
+            <!-- INT2 blocks (budget offset) -->
+            <rect x="422" y="88" width="64" height="24" rx="3" fill="#e8a838"/>
+            <rect x="490" y="88" width="76" height="24" rx="3" fill="#e8a838"/>
+            <text x="46" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT8</text>
+            <text x="114" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT8</text>
+            <text x="182" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT8</text>
+            <text x="250" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="318" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="386" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT4</text>
+            <text x="454" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT2</text>
+            <text x="528" y="105" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="white" font-weight="600">INT2</text>
+
+            <!-- Footer label -->
+            <rect x="0" y="122" width="580" height="18" fill="#1A1614"/>
+            <text x="290" y="134" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="rgba(255,255,255,0.8)" font-weight="600">Same total budget · Different allocation</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Why Not Evolutionary -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Why Not Evolutionary Search?</div>
+          <div class="sec-num">3</div>
+        </div>
+        <div class="card-body">
+          <p>As originally proposed, we tried an evolutionary algorithm. In practice, crossover made it too difficult to find policies that <strong>both improved performance and stayed under budget</strong> within limited compute.</p>
+
+          <!-- Failure mechanism diagram -->
+          <svg viewBox="0 0 560 160" width="100%" style="display:block; margin:14px 0">
+            <defs>
+              <marker id="arr2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L7,3 z" fill="#999"/>
+              </marker>
+            </defs>
+            <!-- Parent A -->
+            <rect x="10" y="10" width="110" height="36" rx="5" fill="#EEF3FB" stroke="#C5D7F0" stroke-width="1.5"/>
+            <text x="65" y="33" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#2a4a8a" font-weight="600">Parent A</text>
+            <!-- Parent B -->
+            <rect x="130" y="10" width="110" height="36" rx="5" fill="#EEF3FB" stroke="#C5D7F0" stroke-width="1.5"/>
+            <text x="185" y="33" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#2a4a8a" font-weight="600">Parent B</text>
+            <!-- Arrow to crossover -->
+            <line x1="120" y1="28" x2="148" y2="28" stroke="#AAA" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <!-- Crossover child -->
+            <line x1="130" y1="46" x2="130" y2="65" stroke="#AAA" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <rect x="60" y="68" width="148" height="36" rx="5" fill="#FEF3C7" stroke="#FCD34D" stroke-width="1.5"/>
+            <text x="134" y="87" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#92400e" font-weight="600">Crossover child</text>
+            <text x="134" y="100" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="#b45309">often exceeds budget</text>
+            <!-- Arrow to repair -->
+            <line x1="210" y1="86" x2="242" y2="86" stroke="#AAA" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <!-- Repair -->
+            <rect x="244" y="68" width="140" height="36" rx="5" fill="#FFF0F3" stroke="#F9A8BA" stroke-width="1.5"/>
+            <text x="314" y="87" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#C41230" font-weight="600">Repair step</text>
+            <text x="314" y="100" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="#C41230">rewrites many assignments</text>
+            <!-- Arrow to result -->
+            <line x1="384" y1="86" x2="414" y2="86" stroke="#AAA" stroke-width="1.5" marker-end="url(#arr2)"/>
+            <!-- Result -->
+            <rect x="416" y="68" width="130" height="36" rx="5" fill="#F4F2EF" stroke="#DDD" stroke-width="1.5"/>
+            <text x="481" y="87" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#888" font-weight="600">Child no longer</text>
+            <text x="481" y="100" text-anchor="middle" font-family="IBM Plex Sans" font-size="13" fill="#888">inherits structure</text>
+            <!-- Summary -->
+            <rect x="10" y="118" width="536" height="34" rx="5" fill="#1A1614"/>
+            <text x="278" y="139" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" fill="rgba(255,255,255,0.85)" font-weight="500">Repair breaks crossover's main advantage: reusable inheritance</text>
+          </svg>
+
+          <p style="font-size:19px; color:var(--muted); margin-bottom:14px"><em>We do not argue evolutionary search is universally ineffective — it was unreliable under strict exact-budget constraints and limited compute in our setting.</em></p>
+          <!-- Comparison table -->
+          <div style="margin-top:20px; border:1.5px solid var(--border); border-radius:6px; overflow:hidden">
+            <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; background:#F4F2EF; padding:10px 14px; font-size:19px; font-weight:700; border-bottom:1.5px solid var(--border)">
+              <span></span><span style="text-align:center">YHOJ*</span><span style="text-align:center">Evolutionary</span><span style="text-align:center; color:var(--red)">Ours</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; padding:9px 14px; font-size:20px; border-bottom:1px solid var(--border)">
+              <span style="font-weight:600; color:var(--muted)">Budget</span>
+              <span style="text-align:center">Fixed ratio</span>
+              <span style="text-align:center">Approx.</span>
+              <span style="text-align:center; font-weight:600; color:var(--red)">Exact ✓</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; padding:9px 14px; font-size:20px; border-bottom:1px solid var(--border)">
+              <span style="font-weight:600; color:var(--muted)">Stability</span>
+              <span style="text-align:center">High</span>
+              <span style="text-align:center">Low</span>
+              <span style="text-align:center; font-weight:600; color:var(--red)">High ✓</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; padding:9px 14px; font-size:20px; border-bottom:1px solid var(--border)">
+              <span style="font-weight:600; color:var(--muted)">Task-aware</span>
+              <span style="text-align:center">No</span>
+              <span style="text-align:center">Partial</span>
+              <span style="text-align:center; font-weight:600; color:var(--red)">Yes ✓</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr; padding:9px 14px; font-size:20px;">
+              <span style="font-weight:600; color:var(--muted)">Interpretable</span>
+              <span style="text-align:center">Yes</span>
+              <span style="text-align:center">No</span>
+              <span style="text-align:center; font-weight:600; color:var(--red)">Yes ✓</span>
+            </div>
+            <div style="padding:8px 14px; font-size:17px; color:var(--muted); border-top:1px solid var(--border)">*YHOJ = <em>You Had One Job</em> (fixed 25% INT8 / 75% INT4, no strict budget)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ──────────── COLUMN 2 ──────────── -->
+    <div class="col">
+
+      <!-- Core Idea -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Core Idea</div>
+          <div class="sec-num">2</div>
+        </div>
+        <div class="card-body">
+          <p>Unlike <em>You Had One Job</em> (fixed 25% INT8 / 75% INT4, no strict budget), we use fixed-ratio recipes <strong>only as sensitivity profilers</strong>. We rank all linear groups by <code style="font-family:'IBM Plex Mono',monospace">task sensitivity / true group size</code>, then build an <strong>exact-budget policy frontier</strong>:</p>
+          <ul style="margin:12px 0 0 0">
+            <li><strong>High-sensitivity groups</strong> → promoted to <span class="chip chip-int8">INT8</span></li>
+            <li><strong>Low-value large groups</strong> → demoted to <span class="chip chip-int2">INT2</span> to pay for INT8 cost</li>
+            <li><strong>Remaining groups</strong> → stay at <span class="chip chip-int4">INT4</span></li>
+          </ul>
+          <div class="callout" style="margin-top:14px; margin-bottom:4px">
+            <p>Every candidate stays within the <strong>exact INT4 raw weight footprint</strong>. Left end: more INT8+INT2. Right end: uniform INT4.</p>
+          </div>
+
+          <!-- Pipeline Diagram -->
+          <div style="margin-top:16px">
+            <svg viewBox="0 0 640 420" width="100%" style="display:block">
+              <defs>
+                <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#888"/>
+                </marker>
+              </defs>
+
+              <!-- Step 1 -->
+              <rect x="40" y="10" width="560" height="58" rx="8" fill="#F4F2EF" stroke="#DDD" stroke-width="1.5"/>
+              <text x="320" y="34" text-anchor="middle" font-family="IBM Plex Sans" font-size="21" fill="#444" font-weight="600">Fixed-ratio Recipe (GPTQ / AWQ)</text>
+              <text x="320" y="56" text-anchor="middle" font-family="IBM Plex Sans" font-size="17" fill="#888">Used as sensitivity profiler only</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="68" x2="320" y2="88" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Step 2 -->
+              <rect x="40" y="90" width="560" height="52" rx="8" fill="#EEF3FB" stroke="#C5D7F0" stroke-width="1.5"/>
+              <text x="320" y="112" text-anchor="middle" font-family="IBM Plex Sans" font-size="21" fill="#2a4a8a" font-weight="600">Rank linear components by benchmark sensitivity</text>
+              <text x="320" y="133" text-anchor="middle" font-family="IBM Plex Sans" font-size="17" fill="#5a7ac8">Normalize by true component size</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="142" x2="320" y2="162" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Step 3: 3-bit assignment boxes -->
+              <text x="320" y="185" text-anchor="middle" font-family="IBM Plex Sans" font-size="20" fill="#444" font-weight="600">Assign precision by sensitivity rank</text>
+              <rect x="60" y="196" width="148" height="50" rx="7" fill="#DBEAFE" stroke="#93C5FD" stroke-width="2"/>
+              <text x="134" y="218" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" fill="#1d4ed8" font-weight="700">INT8</text>
+              <text x="134" y="238" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" fill="#3b82f6">Top-sensitive</text>
+
+              <rect x="246" y="196" width="148" height="50" rx="7" fill="#DCFCE7" stroke="#86EFAC" stroke-width="2"/>
+              <text x="320" y="218" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" fill="#15803d" font-weight="700">INT4</text>
+              <text x="320" y="238" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" fill="#16a34a">Remaining</text>
+
+              <rect x="432" y="196" width="148" height="50" rx="7" fill="#FEF3C7" stroke="#FCD34D" stroke-width="2"/>
+              <text x="506" y="218" text-anchor="middle" font-family="IBM Plex Mono" font-size="20" fill="#92400e" font-weight="700">INT2</text>
+              <text x="506" y="238" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" fill="#b45309">Budget offset</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="246" x2="320" y2="266" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Step 4: Budget constraint -->
+              <rect x="40" y="268" width="560" height="52" rx="8" fill="#FFF0F3" stroke="#F9A8BA" stroke-width="1.5"/>
+              <text x="320" y="291" text-anchor="middle" font-family="IBM Plex Sans" font-size="21" fill="#8B0D21" font-weight="700">Exact budget constraint enforced</text>
+              <text x="320" y="311" text-anchor="middle" font-family="IBM Plex Sans" font-size="17" fill="#C41230">Total raw weight footprint = uniform INT4</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="320" x2="320" y2="340" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Result -->
+              <rect x="40" y="342" width="560" height="58" rx="8" fill="#C41230"/>
+              <text x="320" y="368" text-anchor="middle" font-family="IBM Plex Sans" font-size="22" fill="white" font-weight="700">Structured Policy Frontier</text>
+              <text x="320" y="390" text-anchor="middle" font-family="IBM Plex Sans" font-size="17" fill="rgba(255,255,255,0.8)">Spectrum from Uniform INT4 → High-sensitivity Mixed</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy Frontier -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Policy Frontier</div>
+          <div class="sec-num">4a</div>
+        </div>
+        <div class="card-body">
+          <p>Each point on the frontier is an <strong>exact-budget policy</strong>. As we promote more INT8, we must add INT2 to stay within budget — spanning a full spectrum.</p>
+          <svg viewBox="0 0 620 210" width="100%" style="display:block; margin-top:16px">
+            <!-- background -->
+            <rect x="30" y="30" width="560" height="80" rx="8" fill="#F4F2EF" stroke="#E0DDD8" stroke-width="1.5"/>
+            <!-- gradient fill representing spectrum -->
+            <defs>
+              <linearGradient id="frontierGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6aaa8a" stop-opacity="0.5"/>
+                <stop offset="100%" stop-color="#C41230" stop-opacity="0.35"/>
+              </linearGradient>
+            </defs>
+            <rect x="30" y="30" width="560" height="80" rx="8" fill="url(#frontierGrad)"/>
+
+            <!-- 8 sector dividers -->
+            <line x1="100" y1="30" x2="100" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            <line x1="170" y1="30" x2="170" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            <line x1="240" y1="30" x2="240" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            <line x1="310" y1="30" x2="310" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            <line x1="380" y1="30" x2="380" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            <line x1="450" y1="30" x2="450" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+            <line x1="520" y1="30" x2="520" y2="110" stroke="white" stroke-width="1.5" opacity="0.6"/>
+
+            <!-- Policy dots -->
+            <circle cx="65" cy="70" r="8" fill="#C41230" stroke="white" stroke-width="2"/>
+            <circle cx="135" cy="70" r="8" fill="#C41230" stroke="white" stroke-width="2"/>
+            <circle cx="205" cy="70" r="8" fill="#C41230" stroke="white" stroke-width="2"/>
+            <circle cx="275" cy="70" r="10" fill="#C41230" stroke="white" stroke-width="3"/> <!-- best -->
+            <circle cx="345" cy="70" r="8" fill="#C41230" stroke="white" stroke-width="2"/>
+            <circle cx="415" cy="70" r="8" fill="#C41230" stroke="white" stroke-width="2"/>
+            <circle cx="485" cy="70" r="8" fill="#C41230" stroke="white" stroke-width="2"/>
+            <circle cx="555" cy="70" r="8" fill="#6aaa8a" stroke="white" stroke-width="2"/>
+
+            <!-- Best label -->
+            <text x="275" y="24" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#C41230" font-weight="700">Best policy</text>
+            <line x1="275" y1="27" x2="275" y2="58" stroke="#C41230" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- Left label -->
+            <text x="35" y="125" font-family="IBM Plex Sans" font-size="17" fill="#555" font-weight="600">← High INT8 + INT2</text>
+            <text x="35" y="145" font-family="IBM Plex Mono" font-size="15" fill="#888">More sensitive layers at INT8</text>
+
+            <!-- Right label -->
+            <text x="590" y="125" font-family="IBM Plex Sans" font-size="17" fill="#555" font-weight="600" text-anchor="end">Uniform INT4 →</text>
+            <text x="590" y="145" font-family="IBM Plex Mono" font-size="15" fill="#888" text-anchor="end">All layers at INT4</text>
+
+            <!-- Budget indicator -->
+            <rect x="30" y="160" width="560" height="28" rx="4" fill="#F4F2EF" stroke="var(--border)" stroke-width="1"/>
+            <text x="320" y="179" text-anchor="middle" font-family="IBM Plex Sans" font-size="17" fill="#555" font-weight="600">All policies share identical raw weight footprint (= uniform INT4)</text>
+          </svg>
+          <div class="callout" style="margin-top:14px">
+            <p><strong>Observation:</strong> Adjacent policies on the frontier tend to have similar benchmark performance — the space is discrete but behaves like a <strong>nearly continuous function</strong>. This justifies coarse-to-fine search: a good sector reliably contains a good policy.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ──────────── COLUMN 3 ──────────── -->
+    <div class="col">
+      <!-- Policy Search -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Structured Exact-Budget Coarse-to-Fine Search</div>
+          <div class="sec-num">4b</div>
+        </div>
+        <div class="card-body">
+          <!-- Two-column step layout -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px">
+            <!-- Round 1 -->
+            <div style="background:#F4F2EF; border-radius:8px; padding:16px 18px">
+              <div style="font-size:21px; font-weight:700; color:var(--ink); margin-bottom:12px; border-bottom:2px solid var(--border); padding-bottom:8px">Round 1 — Coarse</div>
+              <!-- 8 sector blocks mini -->
+              <div style="display:flex; gap:4px; margin-bottom:12px; flex-wrap:wrap">
+                <div style="background:#DBEAFE; border:1.5px solid #93C5FD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#1d4ed8">S1</div>
+                <div style="background:#DBEAFE; border:1.5px solid #93C5FD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#1d4ed8">S2</div>
+                <div style="background:#FFF0F3; border:2px solid var(--red); border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:var(--red); font-weight:700">S3★</div>
+                <div style="background:#DBEAFE; border:1.5px solid #93C5FD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#1d4ed8">S4</div>
+                <div style="background:#DBEAFE; border:1.5px solid #93C5FD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#1d4ed8">S5</div>
+                <div style="background:#DBEAFE; border:1.5px solid #93C5FD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#1d4ed8">S6</div>
+                <div style="background:#DBEAFE; border:1.5px solid #93C5FD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#1d4ed8">S7</div>
+                <div style="background:#F4F2EF; border:1.5px solid #DDD; border-radius:4px; padding:4px 7px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:#888">S8</div>
+              </div>
+              <ul style="font-size:21px; padding-left:22px">
+                <li>8 evenly spaced frontier sectors</li>
+                <li>1 representative policy per sector</li>
+                <li>Select the best sector</li>
+                <li style="color:var(--muted); font-size:19px"><em>Ties → prefer higher INT4 fraction</em></li>
+              </ul>
+            </div>
+            <!-- Round 2 -->
+            <div style="background:#FFF0F3; border-radius:8px; padding:16px 18px; border:1.5px solid #F9A8BA">
+              <div style="font-size:21px; font-weight:700; color:var(--red); margin-bottom:12px; border-bottom:2px solid #F9A8BA; padding-bottom:8px">Round 2 — Fine</div>
+              <!-- 4 policy blocks -->
+              <div style="display:flex; gap:6px; margin-bottom:12px">
+                <div style="background:white; border:1.5px solid #F9A8BA; border-radius:4px; padding:4px 10px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:var(--red)">P1</div>
+                <div style="background:var(--red); border:2px solid var(--red-dark); border-radius:4px; padding:4px 10px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:white; font-weight:700">P2★</div>
+                <div style="background:white; border:1.5px solid #F9A8BA; border-radius:4px; padding:4px 10px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:var(--red)">P3</div>
+                <div style="background:white; border:1.5px solid #F9A8BA; border-radius:4px; padding:4px 10px; font-size:17px; font-family:'IBM Plex Mono',monospace; color:var(--red)">P4</div>
+              </div>
+              <ul style="font-size:21px; padding-left:22px">
+                <li>4 evenly spaced policies inside winning sector</li>
+                <li>Evaluate all 4</li>
+                <li>Select the best policy</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Final result bar -->
+          <div style="background:var(--red); border-radius:7px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between">
+            <div>
+              <div style="font-size:22px; font-weight:700; color:white">Final policy selected</div>
+              <div style="font-size:18px; color:rgba(255,255,255,0.8); margin-top:2px">Real mixed-precision PTQ artifact — not a surrogate prediction</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.2); border-radius:6px; padding:10px 18px; text-align:center; flex-shrink:0; margin-left:16px">
+              <div style="font-size:28px; font-weight:700; color:white; font-family:'IBM Plex Mono',monospace">12</div>
+              <div style="font-size:16px; color:rgba(255,255,255,0.8)">total evals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Experimental Setup -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Experimental Setup</div>
+          <div class="sec-num">5a</div>
+        </div>
+        <div class="card-body">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+            <div style="background:#F4F2EF; border-radius:6px; padding:14px 16px">
+              <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em">Model</div>
+              <div style="font-size:24px; font-weight:700; font-family:'IBM Plex Mono', monospace">Qwen3.5-9B</div>
+            </div>
+            <div style="background:#F4F2EF; border-radius:6px; padding:14px 16px">
+              <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em">Bit Space</div>
+              <div style="font-size:24px; font-weight:700; font-family:'IBM Plex Mono', monospace">
+                <span class="chip chip-int4">INT4</span>
+                <span class="chip chip-int2">INT2</span>
+              </div>
+            </div>
+            <div style="background:#F4F2EF; border-radius:6px; padding:14px 16px">
+              <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em">Grouping</div>
+              <div style="font-size:22px; font-weight:500">Linear components within transformer blocks</div>
+            </div>
+            <div style="background:#F4F2EF; border-radius:6px; padding:14px 16px">
+              <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em">Budget</div>
+              <div style="font-size:22px; font-weight:500">Raw weight footprint = uniform INT4</div>
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px">
+              <div style="background:#F4F2EF; border-radius:6px; padding:12px 16px">
+                <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.06em">Prompting</div>
+                <div style="font-size:21px; font-weight:600; font-family:'IBM Plex Mono',monospace">Zero-Shot-CoT</div>
+                <div style="font-size:17px; color:var(--muted); margin-top:2px">&ldquo;Think step by step&rdquo; suffix</div>
+              </div>
+              <div style="background:#F4F2EF; border-radius:6px; padding:12px 16px">
+                <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.06em">Eval Split</div>
+                <div style="font-size:20px; font-weight:500">Sensitivity: first 50%<br>Evaluation: last 50%</div>
+              </div>
+            </div>
+            <div style="font-size:20px; font-weight:700; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.06em">Metrics &amp; Benchmarks</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px">
+              <span style="background:#F4F2EF; border:1.5px solid var(--border); border-radius:4px; padding:6px 14px; font-size:21px; font-weight:500">MMLU-coding</span>
+              <span style="background:#F4F2EF; border:1.5px solid var(--border); border-radius:4px; padding:6px 14px; font-size:21px; font-weight:500">HumanEval</span>
+              <span style="background:#F4F2EF; border:1.5px solid var(--border); border-radius:4px; padding:6px 14px; font-size:21px; font-weight:500">HumanEval+</span>
+              <span style="background:#F4F2EF; border:1.5px solid var(--border); border-radius:4px; padding:6px 14px; font-size:21px; font-weight:500">BigCodeBench-Hard</span>
+              <span style="background:#F4F2EF; border:1.5px solid var(--border); border-radius:4px; padding:6px 14px; font-size:21px; font-weight:500">MATH-500 last100</span>
+            </div>
+          </div>
+          <div class="callout" style="margin-top:16px">
+            <p><strong>Evaluation note:</strong> We use <code style="font-family:'IBM Plex Mono',monospace; font-size:21px">llmcompressor.oneshot</code> rather than an optimized INT4 serving stack — so <strong>token usage and accuracy</strong> are more trustworthy comparison points than raw latency.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ──────────── COLUMN 4 ──────────── -->
+    <div class="col">
+      <!-- Results Table -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Results &amp; Interpretation</div>
+          <div class="sec-num">5b</div>
+        </div>
+        <div class="card-body" style="padding:0">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Benchmark</th>
+                <th><span class="chip chip-bf16">BF16</span></th>
+                <th><span class="chip chip-int4">INT4</span></th>
+                <th><span class="chip chip-mixed">Mixed</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MMLU-coding</td>
+                <td class="cell-best">95.0</td>
+                <td class="cell-int4-loss">91.0</td>
+                <td>91.0</td>
+              </tr>
+              <tr>
+                <td>HumanEval</td>
+                <td class="cell-best">87.8</td>
+                <td class="cell-int4-loss">81.1</td>
+                <td class="cell-mixed-win">84.8 <span class="delta-tag">+3.7</span></td>
+              </tr>
+              <tr>
+                <td>HumanEval+</td>
+                <td class="cell-best">82.3</td>
+                <td class="cell-int4-loss">76.8</td>
+                <td class="cell-mixed-win">79.9 <span class="delta-tag">+3.1</span></td>
+              </tr>
+              <tr>
+                <td>BigCodeBench-H</td>
+                <td class="cell-best">29.05</td>
+                <td class="cell-int4-loss">16.89</td>
+                <td class="cell-mixed-win">23.65 <span class="delta-tag">+6.8</span></td>
+              </tr>
+              <tr>
+                <td>MATH-500 ×100 <span style="font-size:16px; color:var(--muted)">(max 20k)</span></td>
+                <td>87.0</td>
+                <td class="cell-int4-loss">80.0</td>
+                <td class="cell-mixed-win">84.0 <span class="delta-tag">+4.0</span></td>
+              </tr>
+              <tr>
+                <td>MATH-500 ×100 <span style="font-size:16px; color:var(--muted)">(max 4096)</span></td>
+                <td class="cell-best">87.0</td>
+                <td class="cell-int4-loss">86.0</td>
+                <td class="cell-mixed-win">89.0 <span class="delta-tag">+2.0</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <!-- Token Usage subsection -->
+          <div style="border-top:2px solid var(--border); margin:24px 0"></div>
+          <div style="font-size:20px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:12px">Avg Completion Tokens — By Benchmark</div>
+          <table style="width:100%; border-collapse:collapse; font-size:21px">
+            <thead>
+              <tr style="background:#F4F2EF; border-bottom:2px solid var(--border)">
+                <th style="text-align:left; padding:10px 12px; font-weight:700">Benchmark</th>
+                <th style="text-align:center; padding:10px 12px; font-weight:700"><span class="chip chip-bf16">BF16</span></th>
+                <th style="text-align:center; padding:10px 12px; font-weight:700"><span class="chip chip-int4">INT4</span></th>
+                <th style="text-align:center; padding:10px 12px; font-weight:700"><span class="chip chip-mixed">Mixed</span></th>
+                <th style="text-align:left; padding:10px 12px; font-weight:700; color:var(--muted)">Observation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border)">
+                <td style="padding:10px 12px; font-weight:500">MMLU-coding</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace">647.8</td>
+                                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; color:var(--muted)">903.8</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--red)">787.4</td>
+                <td style="padding:10px 12px; color:var(--muted); font-size:19px">Mixed &lt; INT4, but higher than BF16/INT8</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border); background:#FAFAF8">
+                <td style="padding:10px 12px; font-weight:500">HumanEval</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace">360.8</td>
+                                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; color:var(--muted)">412.2</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--red)">358.9</td>
+                <td style="padding:10px 12px; color:var(--red); font-weight:600; font-size:19px">Mixed lowest — clearly below INT4</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border)">
+                <td style="padding:10px 12px; font-weight:500">BigCodeBench</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace">512.2</td>
+                                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; color:var(--muted)">533.7</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--red)">501.7</td>
+                <td style="padding:10px 12px; color:var(--red); font-weight:600; font-size:19px">Mixed lowest — strongest result</td>
+              </tr>
+              <tr style="background:#FAFAF8">
+                <td style="padding:10px 12px; font-weight:500">MATH-500</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace">1167.0</td>
+                                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; color:var(--muted)">1494.3</td>
+                <td style="text-align:center; padding:10px 12px; font-family:'IBM Plex Mono',monospace; font-weight:700; color:var(--red)">1284.5</td>
+                <td style="padding:10px 12px; color:var(--muted); font-size:19px">Mixed &lt; INT4, but higher than BF16</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Divider -->
+          <div style="border-top:2px solid var(--border); margin:24px 0"></div>
+
+          <!-- Interpretation content -->
+          <p>The strongest claim is <em>not</em> that mixed precision beats INT8. The defensible claim is:</p>
+          <div class="callout" style="margin-top:14px; margin-bottom:16px">
+            <p>Under an INT4-sized memory budget, <em>Structured Exact-Budget Coarse-to-Fine Mixed-Precision Search</em> <strong>consistently recovers part of the quality lost by uniform INT4</strong> — and the best policy is workload-family-aware.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px">
+            <div style="background:#F4F2EF; border-radius:6px; padding:14px 16px; border-top:3px solid var(--red)">
+              <div style="font-size:20px; font-weight:700; color:var(--red); margin-bottom:8px">BigCodeBench-Hard</div>
+              <p style="font-size:21px; line-height:1.45">BF16: <strong>43</strong>/148 tasks<br>INT4: <strong>25</strong>/148 tasks<br>Mixed: <strong>35</strong>/148 tasks</p>
+              <p style="font-size:19px; color:var(--muted); margin-top:8px">Recovers <strong>10 of 18</strong> tasks lost</p>
+            </div>
+            <div style="background:#F4F2EF; border-radius:6px; padding:14px 16px; border-top:3px solid var(--red)">
+              <div style="font-size:20px; font-weight:700; color:var(--red); margin-bottom:8px">MATH-500 ×100</div>
+              <p style="font-size:21px; line-height:1.45">BF16: <strong>87</strong>/100<br>INT4: <strong>86</strong>/100<br>Mixed: <strong>89</strong>/100 <span style="font-size:16px; background:var(--red-light); color:var(--red); border-radius:3px; padding:1px 7px; font-weight:700">+2 vs BF16</span></p>
+              <p style="font-size:19px; color:var(--muted); margin-top:8px">Mixed <strong>surpasses BF16</strong> accuracy</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Limitations + Future Work -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-accent"></div>
+          <div class="card-title">Limitations &amp; Future Work</div>
+          <div class="sec-num">6</div>
+        </div>
+        <div class="card-body">
+          <p style="font-size:19px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px">What We Claim</p>
+          <ul style="margin-bottom:18px">
+            <li>Beats uniform INT4 on HumanEval, BigCodeBench-Hard, and MATH-500</li>
+            <li>Does <strong>not</strong> consistently beat INT8</li>
+            <li>Current evidence supports <strong>workload-family-aware</strong> policies — not a single universal policy</li>
+          </ul>
+          <p style="font-size:19px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px">Current Limitations</p>
+          <ul style="margin-bottom:18px">
+            <li>Benchmark sizes are modest; small differences should be interpreted carefully</li>
+            <li>Latency is reported for completeness — current comparisons are influenced by the serving backend; token usage and accuracy are more reliable indicators at this stage</li>
+          </ul>
+          <p style="font-size:19px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px">Next Steps</p>
+          <ul>
+            <li>Larger model families and longer experiments</li>
+            <li>Layer-level vs. component-level granularity comparison</li>
+            <li>Optimize directly for token usage, not only accuracy</li>
+            <li>Controlled cross-task experiments to test true task specificity</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <div class="footer">
+    <div class="footer-left"><strong>TA-MPQ</strong> · Aaron Yu, Letian Zhang, Tim Gao · Carnegie Mellon University · 15-442/15-642: Machine Learning Systems</div>
+    <div class="footer-right"></div>
+  </div>
+
+</div><!-- .poster -->
+</div><!-- .stage -->
+
+<script>
+  function scalePoster() {
+    const poster = document.getElementById('poster');
+    const stage = document.querySelector('.stage');
+    const pw = 3840, ph = 2880;
+    const scale = window.innerWidth / pw;
+    poster.style.transform = `scale(${scale})`;
+    const scaledH = Math.round(ph * scale);
+    poster.style.marginBottom = `-${ph - scaledH}px`;
+    stage.style.height = scaledH + 'px';
+  }
+  window.addEventListener('resize', scalePoster);
+  scalePoster();
+</script>
+
+</body>
+</html>

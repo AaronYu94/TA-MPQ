@@ -1,0 +1,5 @@
+model,plus_pass_at_1,raw_total_tokens,raw_avg_tokens,raw_median_tokens,raw_max_tokens,raw_hit_768_count,sanitized_total_tokens,sanitized_avg_tokens,sanitized_median_tokens,sanitized_max_tokens,sanitized_hit_768_count
+BF16,0.8232,59168,360.8,338.5,768,10,37807,230.5,206.5,768,1
+INT8,0.8232,59820,364.8,344.0,768,10,39726,242.2,209.0,768,1
+INT4,0.7683,67594,412.2,387.0,768,20,42277,257.8,232.5,768,6
+Mixed,0.7988,58858,358.9,348.5,768,9,39189,239.0,209.5,768,3

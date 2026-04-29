@@ -1,0 +1,40 @@
+{
+  "base_correct": null,
+  "base_pass_at_1": null,
+  "dataset": "humaneval",
+  "elapsed_sec": 368.3647577762604,
+  "evalplus_config": {
+    "attn_implementation": "eager",
+    "backend": "hf",
+    "dtype": "bfloat16",
+    "force_base_prompt": false,
+    "greedy": true,
+    "max_new_tokens": 768,
+    "n_samples": 1,
+    "parallel": 8,
+    "runner_mode": "direct_hf",
+    "task_limit": 25,
+    "version": "default"
+  },
+  "local_artifact_paths": {
+    "humaneval/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl": "outputs/evalplus/evalplus-humaneval-qwen35-9b-bf16-greedy-smoke25/humaneval/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl",
+    "humaneval/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl": "outputs/evalplus/evalplus-humaneval-qwen35-9b-bf16-greedy-smoke25/humaneval/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  },
+  "model_id": "qwen35-9b-bf16-humanevalplus",
+  "model_ref": "Qwen/Qwen3.5-9B",
+  "note": "task_limit was set, so this run only validates EvalPlus code generation.",
+  "num_samples": 25,
+  "num_tasks": 25,
+  "plus_correct": null,
+  "plus_pass_at_1": null,
+  "remote_log_tail": "direct_hf model_kwargs={'device_map': 'auto', 'trust_remote_code': True, 'torch_dtype': torch.bfloat16, 'attn_implementation': 'eager'}\ndirect_hf task_count=25 max_new_tokens=768\n\rFetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]\rFetching 4 files: 100%|##########| 4/4 [00:00<00:00, 29905.91it/s]\n\rLoading weights:   0%|          | 0/427 [00:00<?, ?it/s]\rLoading weights:   0%|          | 1/427 [00:00<06:24,  1.11it/s]\rLoading weights:   0%|          | 2/427 [00:02<07:13,  1.02s/it]\rLoading weights:   3%|2         | 11/427 [00:02<00:54,  7.69it/s]\rLoading weights:   4%|3         | 15/427 [00:02<00:40, 10.27it/s]\rLoading weights:   6%|5         | 24/427 [00:02<00:21, 19.15it/s]\rLoading weights:   7%|6         | 29/427 [00:02<00:19, 20.38it/s]\rLoading weights:   9%|8         | 37/427 [00:02<00:13, 28.02it/s]\rLoading weights:  10%|9         | 42/427 [00:02<00:13, 27.52it/s]\rLoading weights:  11%|#1        | 47/427 [00:03<00:13, 27.55it/s]\rLoading weights:  12%|#1        | 51/427 [00:03<00:13, 27.17it/s]\rLoading weights:  13%|#2        | 55/427 [00:03<00:13, 28.12it/s]\rLoading weights:  14%|#4        | 60/427 [00:03<00:13, 26.87it/s]\rLoading weights:  15%|#5        | 65/427 [00:03<00:12, 28.05it/s]\rLoading weights:  18%|#8        | 77/427 [00:03<00:09, 38.28it/s]\rLoading weights:  19%|#9        | 82/427 [00:04<00:09, 35.95it/s]\rLoading weights:  22%|##1       | 92/427 [00:04<00:07, 47.67it/s]\rLoading weights:  23%|##2       | 98/427 [00:04<00:06, 47.70it/s]\rLoading weights:  24%|##4       | 104/427 [00:04<00:08, 38.42it/s]\rLoading weights:  26%|##6       | 113/427 [00:04<00:07, 41.80it/s]\rLoading weights:  28%|##8       | 121/427 [00:04<00:07, 40.68it/s]\rLoading weights:  30%|###       | 129/427 [00:05<00:06, 44.16it/s]\rLoading weights:  32%|###1      | 135/427 [00:05<00:06, 43.69it/s]\rLoading weights:  34%|###3      | 144/427 [00:05<00:05, 48.25it/s]\rLoading weights:  35%|###4      | 149/427 [00:05<00:06, 45.35it/s]\rLoading weights:  36%|###6      | 154/427 [00:05<00:07, 38.65it/s]\rLoading weights:  39%|###8      | 165/427 [00:05<00:05, 50.17it/s]\rLoading weights:  40%|####      | 171/427 [00:05<00:04, 51.69it/s]\rLoading weights:  41%|####1     | 177/427 [00:06<00:05, 46.15it/s]\rLoading weights:  43%|####2     | 183/427 [00:06<00:05, 46.50it/s]\rLoading weights:  44%|####4     | 188/427 [00:06<00:05, 44.32it/s]\rLoading weights:  46%|####6     | 197/427 [00:06<00:04, 52.31it/s]\rLoading weights:  48%|####7     | 203/427 [00:06<00:05, 42.63it/s]\rLoading weights:  49%|####9     | 210/427 [00:06<00:04, 48.05it/s]\rLoading weights:  51%|#####1    | 219/427 [00:06<00:03, 56.76it/s]\rLoading weights:  53%|#####2    | 226/427 [00:07<00:03, 54.90it/s]\rLoading weights:  54%|#####4    | 232/427 [00:07<00:03, 51.71it/s]\rLoading weights:  56%|#####6    | 240/427 [00:07<00:03, 48.87it/s]\rLoading weights:  58%|#####8    | 249/427 [00:07<00:03, 56.80it/s]\rLoading weights:  60%|#####9    | 256/427 [00:07<00:03, 48.21it/s]\rLoading weights:  61%|######1   | 262/427 [00:07<00:04, 40.74it/s]\rLoading weights:  64%|######4   | 275/427 [00:08<00:02, 56.22it/s]\rLoading weights:  66%|######6   | 282/427 [00:08<00:03, 47.71it/s]\rLoading weights:  68%|######7   | 289/427 [00:08<00:03, 45.54it/s]\rLoading weights:  69%|######9   | 295/427 [00:08<00:02, 46.55it/s]\rLoading weights:  72%|#######1  | 306/427 [00:08<00:02, 58.04it/s]\rLoading weights:  73%|#######3  | 313/427 [00:08<00:02, 42.08it/s]\rLoading weights:  77%|#######6  | 327/427 [00:09<00:01, 59.19it/s]\rLoading weights:  78%|#######8  | 335/427 [00:09<00:01, 53.03it/s]\rLoading weights:  81%|########  | 345/427 [00:09<00:01, 54.51it/s]\rLoading weights:  83%|########3 | 356/427 [00:09<00:01, 61.73it/s]\rLoading weights:  85%|########5 | 363/427 [00:09<00:01, 57.69it/s]\rLoading weights:  87%|########6 | 370/427 [00:09<00:00, 59.83it/s]\rLoading weights:  89%|########9 | 381/427 [00:09<00:00, 70.11it/s]\rLoading weights:  91%|#########1| 389/427 [00:10<00:00, 64.50it/s]\rLoading weights:  93%|#########3| 399/427 [00:10<00:00, 67.04it/s]\rLoading weights:  96%|#########5| 408/427 [00:10<00:00, 68.90it/s]\rLoading weights:  97%|#########7| 416/427 [00:10<00:00, 52.23it/s]\rLoading weights:  99%|#########8| 422/427 [00:10<00:00, 53.80it/s]\rLoading weights: 100%|##########| 427/427 [00:10<00:00, 39.80it/s]\ndirect_hf codegen 1/25 HumanEval/0\ndirect_hf codegen 2/25 HumanEval/1\ndirect_hf codegen 3/25 HumanEval/2\ndirect_hf codegen 4/25 HumanEval/3\ndirect_hf codegen 5/25 HumanEval/4\ndirect_hf codegen 6/25 HumanEval/5\ndirect_hf codegen 7/25 HumanEval/6\ndirect_hf codegen 8/25 HumanEval/7\ndirect_hf codegen 9/25 HumanEval/8\ndirect_hf codegen 10/25 HumanEval/9\ndirect_hf codegen 11/25 HumanEval/10\ndirect_hf codegen 12/25 HumanEval/11\ndirect_hf codegen 13/25 HumanEval/12\ndirect_hf codegen 14/25 HumanEval/13\ndirect_hf codegen 15/25 HumanEval/14\ndirect_hf codegen 16/25 HumanEval/15\ndirect_hf codegen 17/25 HumanEval/16\ndirect_hf codegen 18/25 HumanEval/17\ndirect_hf codegen 19/25 HumanEval/18\ndirect_hf codegen 20/25 HumanEval/19\ndirect_hf codegen 21/25 HumanEval/20\ndirect_hf codegen 22/25 HumanEval/21\ndirect_hf codegen 23/25 HumanEval/22\ndirect_hf codegen 24/25 HumanEval/23\ndirect_hf codegen 25/25 HumanEval/24\n",
+  "remote_raw_samples_paths": [
+    "/tmp/ta-mpq-evalplus/evalplus-humaneval-qwen35-9b-bf16-greedy-smoke25/humaneval/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.raw.jsonl"
+  ],
+  "remote_result_path": null,
+  "remote_samples_paths": [
+    "/tmp/ta-mpq-evalplus/evalplus-humaneval-qwen35-9b-bf16-greedy-smoke25/humaneval/Qwen--Qwen3.5-9B_hf_direct_temp_0.0.jsonl"
+  ],
+  "resolved_model_ref": "Qwen/Qwen3.5-9B",
+  "status": "generated_subset"
+}

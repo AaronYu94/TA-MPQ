@@ -1,0 +1,284 @@
+\documentclass[final]{beamer}
+
+\usepackage[size=a0,orientation=landscape,scale=1.16]{beamerposter}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{ragged2e}
+
+\definecolor{PosterInk}{HTML}{172019}
+\definecolor{PosterMuted}{HTML}{5B645D}
+\definecolor{PosterPaper}{HTML}{F7F0DF}
+\definecolor{PosterCream}{HTML}{FFFAF0}
+\definecolor{PosterGreen}{HTML}{0F7F64}
+\definecolor{PosterGreenSoft}{HTML}{D8EFE3}
+\definecolor{PosterClay}{HTML}{C8643D}
+\definecolor{PosterClaySoft}{HTML}{F4D5C6}
+\definecolor{PosterBlue}{HTML}{315F85}
+\definecolor{PosterBlueSoft}{HTML}{D7E5EE}
+\definecolor{PosterGold}{HTML}{D4A72C}
+\definecolor{PosterGoldSoft}{HTML}{F5E6B5}
+\definecolor{PosterCharcoal}{HTML}{18221D}
+
+\setbeamercolor{background canvas}{bg=PosterPaper}
+\setbeamercolor{normal text}{fg=PosterInk}
+\setbeamercolor{block title}{fg=PosterCream,bg=PosterCharcoal}
+\setbeamercolor{block body}{fg=PosterInk,bg=PosterCream}
+\setbeamerfont{block title}{size=\Large,series=\bfseries}
+\setbeamerfont{block body}{size=\normalsize}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+
+\newcommand{\softblock}[1]{%
+  \setbeamercolor{block title}{fg=PosterCream,bg=PosterCharcoal}%
+  \setbeamercolor{block body}{fg=PosterInk,bg=PosterCream}%
+  #1%
+}
+
+\newcommand{\darkblock}[1]{%
+  \setbeamercolor{block title}{fg=PosterCream,bg=PosterCharcoal}%
+  \setbeamercolor{block body}{fg=PosterCream,bg=PosterCharcoal}%
+  #1%
+  \setbeamercolor{block body}{fg=PosterInk,bg=PosterCream}%
+}
+
+\newcommand{\metricbar}[4]{%
+  \begin{tikzpicture}[baseline=-0.5ex]
+    \node[anchor=west, font=\bfseries] at (0,0) {#1};
+    \fill[PosterInk!10, rounded corners=4pt] (4.3,-0.18) rectangle (13.2,0.18);
+    \fill[#3, rounded corners=4pt] (4.3,-0.18) rectangle ({4.3 + 8.9*#2/100},0.18);
+    \node[anchor=east, font=\bfseries] at (15.1,0) {#4};
+  \end{tikzpicture}%
+}
+
+\newcommand{\smalltag}[1]{%
+  \tikz[baseline=(X.base)]\node[
+    draw=PosterInk!18,
+    fill=PosterCream,
+    rounded corners=8pt,
+    inner xsep=8pt,
+    inner ysep=4pt,
+    font=\bfseries\small
+  ] (X) {#1};%
+}
+
+\title{\vspace{-1.3cm}TA-MPQ: Structured Mixed Precision at an Exact INT4 Budget}
+\author{Current snapshot: 2026-04-22}
+\institute{Qwen3.5-9B \quad | \quad 2/4/8-bit mixed precision \quad | \quad MMLU-coding selected, EvalPlus validated}
+
+\begin{document}
+\begin{frame}[t]
+
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[PosterGold!22] (current page.north west) circle [radius=18cm];
+  \fill[PosterBlue!16] ([xshift=-4cm,yshift=-2cm]current page.north east) circle [radius=20cm];
+  \draw[PosterInk!8, line width=2pt, rounded corners=22pt]
+    ([xshift=1.2cm,yshift=-1.2cm]current page.north west)
+    rectangle
+    ([xshift=-1.2cm,yshift=1.2cm]current page.south east);
+\end{tikzpicture}
+
+\vspace{0.6cm}
+\begin{columns}[t,totalwidth=\textwidth]
+  \begin{column}{0.70\textwidth}
+    {\usebeamerfont{title}\color{PosterCharcoal}\inserttitle\par}
+    \vspace{0.35cm}
+    {\Large\color{PosterMuted}
+    We moved from evolutionary crossover to a deterministic task-sensitivity frontier:
+    promote the most valuable groups to 8-bit, demote lower-value groups to 2-bit,
+    and keep the full model near the raw uniform-INT4 weight footprint.\par}
+    \vspace{0.45cm}
+    \smalltag{Qwen3.5-9B}\hspace{0.25cm}
+    \smalltag{2/4/8-bit policy}\hspace{0.25cm}
+    \smalltag{Exact INT4 budget}\hspace{0.25cm}
+    \smalltag{BigCodeBench generation running}
+  \end{column}
+  \begin{column}{0.26\textwidth}
+    \begin{beamercolorbox}[rounded=true,shadow=true,wd=\textwidth,sep=0.55cm]{block title}
+      {\Large Current mixed policy}\\[0.2cm]
+      {\fontsize{54}{58}\selectfont\bfseries 3.999-bit}\\[0.2cm]
+      {\large Estimated average bit-width at 3.694 GB with 0.026\% budget slack.}\\[0.25cm]
+      {\normalsize \texttt{gpf\_refine\_00\_i0112}\\
+      hash: \texttt{7caae6e...2043e4}}
+    \end{beamercolorbox}
+  \end{column}
+\end{columns}
+
+\vspace{0.7cm}
+
+\begin{columns}[t,totalwidth=\textwidth]
+  \begin{column}{0.32\textwidth}
+    \begin{block}{Why the route changed}
+      \justifying
+      The old evolutionary route mixed random mutation, crossover, surrogate ranking,
+      and budget repair. In practice, crossover fought the exact-budget constraint
+      and produced unstable candidates.
+
+      \vspace{0.35cm}
+      The new route makes the budget explicit: traverse an ordered frontier from
+      mostly INT4 toward more INT8, using INT2 demotions only where needed to stay
+      near the target size.
+
+      \vspace{0.4cm}
+      \begin{tabular}{@{}p{0.18\linewidth}p{0.76\linewidth}@{}}
+      \textbf{1. Profile} & Task sensitivity on MMLU-coding dev prompts.\\
+      \textbf{2. Rank} & Group value for 8-bit promotions and 2-bit demotions.\\
+      \textbf{3. Build} & Greedy frontier under exact INT4 footprint.\\
+      \textbf{4. Refine} & Local search around the best coarse region.\\
+      \textbf{5. Validate} & Run real quantized artifacts on held-out tasks.\\
+      \end{tabular}
+
+      \vspace{0.45cm}
+      \begin{beamercolorbox}[rounded=true,wd=\textwidth,sep=0.35cm]{block body}
+        \colorbox{PosterGreenSoft}{\parbox{0.94\textwidth}{
+        \textbf{Main claim today.}
+        The method is now controllable and reproducible. Performance is mixed:
+        it improves over INT4 on HumanEval/EvalPlus, but it does not yet beat
+        INT4 or INT8 on MMLU-coding.
+        }}
+      \end{beamercolorbox}
+    \end{block}
+
+    \begin{block}{MMLU-coding, last100}
+      \small Simple-evals style prompt, max\_new\_tokens=4096. Single-run last100.
+      \vspace{0.35cm}
+
+      \metricbar{BF16}{95}{PosterGreen}{95\%}\\[0.22cm]
+      \metricbar{Uniform INT8}{94}{PosterBlue}{94\%}\\[0.22cm]
+      \metricbar{Uniform INT4}{91}{PosterClay}{91\%}\\[0.22cm]
+      \metricbar{Mixed 2/4/8}{91}{PosterGold}{91\%}
+
+      \vspace{0.45cm}
+      \begin{tabular}{lrr}
+        \toprule
+        Model & Capped & Avg latency\\
+        \midrule
+        BF16 & 0 & 9.14s\\
+        INT8 & 2 & 46.21s\\
+        INT4 & 5 & 66.88s\\
+        Mixed & 3 & 12.29s\\
+        \bottomrule
+      \end{tabular}
+    \end{block}
+  \end{column}
+
+  \begin{column}{0.32\textwidth}
+    \darkblock{
+    \begin{block}{Current mixed policy}
+      \justifying
+      The selected policy changes 169 of 249 groups relative to uniform INT4 while
+      matching the INT4 raw weight budget.
+
+      \vspace{0.45cm}
+      \begin{tikzpicture}
+        \fill[PosterClay, rounded corners=8pt] (0,0) rectangle (3.12,0.52);
+        \fill[PosterGold] (3.12,0) rectangle (10.44,0.52);
+        \fill[PosterBlue, rounded corners=8pt] (10.44,0) rectangle (12,0.52);
+        \node[anchor=west, text=PosterCream, font=\bfseries] at (0,0.95) {Param mass: 26.00\% 2-bit \quad 61.02\% 4-bit \quad 12.98\% 8-bit};
+      \end{tikzpicture}
+
+      \vspace{0.45cm}
+      \begin{tabular}{lrr}
+        \toprule
+        Bit & Groups & Param mass\\
+        \midrule
+        2-bit & 57 & 26.00\%\\
+        4-bit & 80 & 61.02\%\\
+        8-bit & 112 & 12.98\%\\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.35cm}
+      \begin{tabular}{lr}
+        Total groups & 249\\
+        Estimated average bit-width & 3.9989\\
+        Estimated footprint & 3.694 GB\\
+        Budget slack & 0.026\%\\
+      \end{tabular}
+
+      \vspace{0.3cm}
+      {\small Budget accounting is raw linear weight footprint, not end-to-end VRAM or throughput parity.}
+    \end{block}
+    }
+
+    \begin{block}{HumanEval / EvalPlus}
+      \small Official EvalPlus evaluator. pass@1 with greedy generation, max\_new\_tokens=768.
+      \vspace{0.35cm}
+
+      \begin{tabular}{lrr}
+        \toprule
+        Model & Base pass@1 & HumanEval+ pass@1\\
+        \midrule
+        BF16 & 87.8\% & 82.3\%\\
+        Uniform INT8 & 89.0\% & 82.3\%\\
+        Uniform INT4 & 81.1\% & 76.8\%\\
+        \textbf{Mixed 2/4/8} & \textbf{84.8\%} & \textbf{79.9\%}\\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.45cm}
+      \colorbox{PosterGreenSoft}{\parbox{0.94\textwidth}{
+      \textbf{Transfer signal.}
+      Mixed recovers +3.7 points over INT4 on HumanEval base and +3.0 points on
+      HumanEval+, while keeping the INT4-sized budget.
+      }}
+    \end{block}
+  \end{column}
+
+  \begin{column}{0.32\textwidth}
+    \begin{block}{BigCodeBench status}
+      \justifying
+      We use the official BigCodeBench instruct prompt builder, not simple-evals.
+      Generation is separated from execution so evaluator failures do not erase samples.
+
+      \vspace{0.4cm}
+      \begin{tabular}{lrrl}
+        \toprule
+        Model & Generated & Capped & Status\\
+        \midrule
+        BF16 & 148 / 148 & 2 & Complete; eval pending\\
+        Uniform INT8 & 20 / 148 & 0 & H100 running\\
+        Uniform INT4 & 20 / 148 & 0 & H100 running\\
+        Mixed 2/4/8 & 30 / 148 & 1 & H100 running\\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.35cm}
+      {\small BigCodeBench scores are intentionally not reported yet; generation artifacts exist, execution grading is pending.}
+    \end{block}
+
+    \darkblock{
+    \begin{block}{What we can say now}
+      \begin{itemize}
+        \item INT8 remains close to BF16 across current coding evaluations.
+        \item Uniform INT4 is a strong size baseline, but loses clear accuracy on HumanEval/EvalPlus.
+        \item The mixed exact-budget policy improves over INT4 on HumanEval while matching the INT4 footprint.
+        \item MMLU-coding currently does not separate mixed from INT4; stronger selection and evaluation coverage is needed.
+        \item BigCodeBench is the next meaningful generative-code test once execution grading is stable.
+      \end{itemize}
+    \end{block}
+    }
+
+    \begin{block}{Next steps}
+      \begin{itemize}
+        \item Finish BigCodeBench generation for INT8, INT4, and mixed; then run official execution grading.
+        \item Report end-to-end VRAM and throughput separately from raw weight footprint.
+        \item Use BigCodeBench results to decide whether MMLU-coding sensitivity is sufficient or needs task-specific refinement.
+        \item If BigCodeBench shows mixed gains, promote this route as the main TA-MPQ story; if not, tune the sensitivity profiler and candidate generator.
+      \end{itemize}
+    \end{block}
+  \end{column}
+\end{columns}
+
+\vfill
+\begin{center}
+{\large\color{PosterMuted}
+Artifacts: \texttt{gpf\_refine\_00\_i0112}; BigCodeBench generation-only pipeline with checkpointed samples.}
+\end{center}
+
+\end{frame}
+\end{document}

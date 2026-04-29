@@ -44,6 +44,20 @@ class BaselineEvaluationModeTests(unittest.TestCase):
         self.assertEqual(mode["thinking_mode"], "disabled")
         self.assertEqual(mode["generation_mode"], "greedy")
 
+    def test_mmlu_coding_defaults_to_simple_evals_prompt(self) -> None:
+        mode = _resolve_task_evaluation_mode("mmlu-coding", "")
+        self.assertEqual(mode["task_prompt_style"], "simple_evals")
+        self.assertFalse(mode["enable_thinking"])
+        self.assertEqual(mode["thinking_mode"], "disabled")
+        self.assertEqual(mode["generation_mode"], "greedy")
+
+    def test_codemmlu_defaults_to_simple_evals_prompt(self) -> None:
+        mode = _resolve_task_evaluation_mode("codemmlu", "")
+        self.assertEqual(mode["task_prompt_style"], "simple_evals")
+        self.assertFalse(mode["enable_thinking"])
+        self.assertEqual(mode["thinking_mode"], "disabled")
+        self.assertEqual(mode["generation_mode"], "greedy")
+
     def test_render_prompt_passes_thinking_flag(self) -> None:
         tokenizer = mock.Mock()
         tokenizer.apply_chat_template.return_value = "prompt"
@@ -120,6 +134,7 @@ class ResultSummaryTests(unittest.TestCase):
         summary = summarize_results(model_id="demo-model", task_name="math500", results=results)
 
         self.assertEqual(summary["length_capped_count"], 1)
+        self.assertEqual(summary["answer_colon_count"], 0)
         self.assertEqual(summary["boxed_answer_count"], 1)
         self.assertEqual(summary["fallback_answer_count"], 1)
         self.assertEqual(summary["no_answer_count"], 1)
