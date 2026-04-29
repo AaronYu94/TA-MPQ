@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TA-MPQ Table Components</title>
+  <style>
+    :root {
+      --bg: #f4f1eb;
+      --panel: #fffdf9;
+      --ink: #1f1a17;
+      --muted: #6e665f;
+      --border: #ddd4c9;
+      --accent: #bf1736;
+      --bf16: #243b53;
+      --int4: #4f8a6b;
+      --mixed: #bf1736;
+      --shadow: 0 10px 28px rgba(31, 26, 23, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .component-list {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .component {
+      background: transparent;
+    }
+
+    .component-label {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .table-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .table-title {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 24px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.74);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 11px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f7f3ee;
+      color: #5d554d;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .note {
+      padding: 14px 18px 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .bf16 { background: var(--bf16); }
+    .int4 { background: var(--int4); }
+    .mixed { background: var(--mixed); }
+
+    .mono {
+      font-family: "SFMono-Regular", "Menlo", monospace;
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px;
+      }
+
+      .table-title {
+        font-size: 20px;
+      }
+
+      table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="component-list">
+    <section class="component" id="policy-inventory-component">
+      <p class="component-label">Component 1</p>
+      <div class="table-card">
+        <div class="table-title">Policy Inventory</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Policy</th>
+              <th>Policy ID</th>
+              <th>Bit Mix</th>
+              <th>Budget Slack</th>
+              <th>Used For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pill mixed">Code-oriented</span></td>
+              <td class="mono">gpf_refine_00_i0112</td>
+              <td>57 × INT2<br>80 × INT4<br>112 promoted groups</td>
+              <td>0.000264</td>
+              <td>MMLU-coding, CodeMMLU, HumanEval, BigCodeBench-Hard</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Math-oriented</span></td>
+              <td class="mono">gpf_refine_02_i0110</td>
+              <td>75 × INT2<br>64 × INT4<br>110 promoted groups</td>
+              <td>0.000462</td>
+              <td>MATH-500 @ 4096, MATH-500 @ 20000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="component" id="main-benchmarks-component">
+      <p class="component-label">Component 2</p>
+      <div class="table-card">
+        <div class="table-title">Main Benchmark Table</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Benchmark</th>
+              <th>Model</th>
+              <th>Primary Metric</th>
+              <th>Capped</th>
+              <th>Avg Completion Tokens</th>
+              <th>p95 Completion Tokens</th>
+              <th>Takeaway</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3"><strong>MMLU-coding last100</strong><br><span class="subtle">simple_evals · max_new_tokens=4096</span></td>
+              <td><span class="pill bf16">BF16</span></td>
+              <td>95/100 = 95.0%</td>
+              <td>0</td>
+              <td>647.8</td>
+              <td>1702.3</td>
+              <td rowspan="3">Mixed matches INT4 on accuracy, but uses fewer completion tokens.</td>
+            </tr>
+            <tr>
+              <td><span class="pill int4">INT4</span></td>
+              <td>91/100 = 91.0%</td>
+              <td>5</td>
+              <td>903.8</td>
+              <td>2562.7</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Mixed</span></td>
+              <td>91/100 = 91.0%</td>
+              <td>3</td>
+              <td>787.4</td>
+              <td>1869.1</td>
+            </tr>
+
+            <tr>
+              <td rowspan="3"><strong>CodeMMLU last100</strong><br><span class="subtle">simple_evals · max_new_tokens=4096</span></td>
+              <td><span class="pill bf16">BF16</span></td>
+              <td>73/100 = 73.0%</td>
+              <td>13</td>
+              <td>1480.37</td>
+              <td>4096.0</td>
+              <td rowspan="3">Mixed improves over INT4, but all variants show a strong token wall.</td>
+            </tr>
+            <tr>
+              <td><span class="pill int4">INT4</span></td>
+              <td>69/100 = 69.0%</td>
+              <td>19</td>
+              <td>1759.56</td>
+              <td>4096.0</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Mixed</span></td>
+              <td>71/100 = 71.0%</td>
+              <td>18</td>
+              <td>1795.46</td>
+              <td>4096.0</td>
+            </tr>
+
+            <tr>
+              <td rowspan="3"><strong>HumanEval / EvalPlus</strong><br><span class="subtle">official EvalPlus · max_new_tokens=768</span></td>
+              <td><span class="pill bf16">BF16</span></td>
+              <td>Base 87.8% · Plus 82.3%</td>
+              <td>-</td>
+              <td>360.8</td>
+              <td>768.0</td>
+              <td rowspan="3">Mixed clearly improves over INT4 and has the lowest post-hoc completion-token count.</td>
+            </tr>
+            <tr>
+              <td><span class="pill int4">INT4</span></td>
+              <td>Base 81.1% · Plus 76.8%</td>
+              <td>-</td>
+              <td>412.2</td>
+              <td>768.0</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Mixed</span></td>
+              <td>Base 84.8% · Plus 79.9%</td>
+              <td>-</td>
+              <td>358.9</td>
+              <td>759.4</td>
+            </tr>
+
+            <tr>
+              <td rowspan="3"><strong>BigCodeBench-Hard</strong><br><span class="subtle">official BigCodeBench · max_new_tokens=1280</span></td>
+              <td><span class="pill bf16">BF16</span></td>
+              <td>43/148 = 29.05%</td>
+              <td>2</td>
+              <td>512.2</td>
+              <td>896.1</td>
+              <td rowspan="3">Strongest current benchmark: Mixed recovers 10 of the 18 tasks lost by INT4 relative to BF16.</td>
+            </tr>
+            <tr>
+              <td><span class="pill int4">INT4</span></td>
+              <td>25/148 = 16.89%</td>
+              <td>2</td>
+              <td>533.7</td>
+              <td>933.7</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Mixed</span></td>
+              <td>35/148 = 23.65%</td>
+              <td>4</td>
+              <td>501.7</td>
+              <td>872.6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="component" id="math-token-wall-component">
+      <p class="component-label">Component 3</p>
+      <div class="table-card">
+        <div class="table-title">MATH-500 Token-Wall Comparison</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>Model</th>
+              <th>Accuracy</th>
+              <th>Capped</th>
+              <th>Avg Completion Tokens</th>
+              <th>p95 Completion Tokens</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3"><strong>MATH-500 last100 @ 4096</strong></td>
+              <td><span class="pill bf16">BF16</span></td>
+              <td>86/100 = 86.0%</td>
+              <td>7</td>
+              <td>1167.0</td>
+              <td>4096.0</td>
+            </tr>
+            <tr>
+              <td><span class="pill int4">INT4</span></td>
+              <td>80/100 = 80.0%</td>
+              <td>14</td>
+              <td>1494.3</td>
+              <td>4096.0</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Mixed</span></td>
+              <td>84/100 = 84.0%</td>
+              <td>7</td>
+              <td>1284.5</td>
+              <td>4096.0</td>
+            </tr>
+
+            <tr>
+              <td rowspan="3"><strong>MATH-500 last100 @ 20000</strong></td>
+              <td><span class="pill bf16">BF16</span></td>
+              <td>87/100 = 87.0%</td>
+              <td>2</td>
+              <td>1663.73</td>
+              <td>6558.15</td>
+            </tr>
+            <tr>
+              <td><span class="pill int4">INT4</span></td>
+              <td>86/100 = 86.0%</td>
+              <td>7</td>
+              <td>3002.24</td>
+              <td>20000.0</td>
+            </tr>
+            <tr>
+              <td><span class="pill mixed">Mixed</span></td>
+              <td>89/100 = 89.0%</td>
+              <td>6</td>
+              <td>2349.36</td>
+              <td>20000.0</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note">
+          Raising the token wall from 4096 to 20000 changes the ranking: under 20000,
+          Mixed reaches 89%, compared with 87% for BF16 and 86% for uniform INT4.
+        </div>
+      </div>
+    </section>
+
+    <section class="component" id="legacy-route-component">
+      <p class="component-label">Component 4</p>
+      <div class="table-card">
+        <div class="table-title">Archived Legacy Route</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Setting</th>
+              <th>Quantized 27B</th>
+              <th>Native 9B</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MATH-500 limit=100 · archived old route · max_new_tokens=32</td>
+              <td>37%</td>
+              <td>29%</td>
+              <td>Beat native 9B, but this route is archived and not part of the current mainline.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
