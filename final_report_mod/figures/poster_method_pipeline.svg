@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420"  >
+              <defs>
+                <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#888"/>
+                </marker>
+              </defs>
+
+              <!-- Step 1 -->
+              <rect x="40" y="10" width="560" height="58" rx="8" fill="#F4F2EF" stroke="#DDD" stroke-width="1.5"/>
+              <text x="320" y="34" text-anchor="middle" font-family="Helvetica" font-size="21" fill="#444" font-weight="600">Fixed-ratio Recipe (GPTQ / AWQ)</text>
+              <text x="320" y="56" text-anchor="middle" font-family="Helvetica" font-size="17" fill="#888">Used as sensitivity profiler only</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="68" x2="320" y2="88" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Step 2 -->
+              <rect x="40" y="90" width="560" height="52" rx="8" fill="#EEF3FB" stroke="#C5D7F0" stroke-width="1.5"/>
+              <text x="320" y="112" text-anchor="middle" font-family="Helvetica" font-size="21" fill="#2a4a8a" font-weight="600">Rank linear components by benchmark sensitivity</text>
+              <text x="320" y="133" text-anchor="middle" font-family="Helvetica" font-size="17" fill="#5a7ac8">Normalize by true component size</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="142" x2="320" y2="162" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Step 3: 3-bit assignment boxes -->
+              <text x="320" y="185" text-anchor="middle" font-family="Helvetica" font-size="20" fill="#444" font-weight="600">Assign precision by sensitivity rank</text>
+              <rect x="60" y="196" width="148" height="50" rx="7" fill="#DBEAFE" stroke="#93C5FD" stroke-width="2"/>
+              <text x="134" y="218" text-anchor="middle" font-family="Courier" font-size="20" fill="#1d4ed8" font-weight="700">INT8</text>
+              <text x="134" y="238" text-anchor="middle" font-family="Helvetica" font-size="15" fill="#3b82f6">Top-sensitive</text>
+
+              <rect x="246" y="196" width="148" height="50" rx="7" fill="#DCFCE7" stroke="#86EFAC" stroke-width="2"/>
+              <text x="320" y="218" text-anchor="middle" font-family="Courier" font-size="20" fill="#15803d" font-weight="700">INT4</text>
+              <text x="320" y="238" text-anchor="middle" font-family="Helvetica" font-size="15" fill="#16a34a">Remaining</text>
+
+              <rect x="432" y="196" width="148" height="50" rx="7" fill="#FEF3C7" stroke="#FCD34D" stroke-width="2"/>
+              <text x="506" y="218" text-anchor="middle" font-family="Courier" font-size="20" fill="#92400e" font-weight="700">INT2</text>
+              <text x="506" y="238" text-anchor="middle" font-family="Helvetica" font-size="15" fill="#b45309">Budget offset</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="246" x2="320" y2="266" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Step 4: Budget constraint -->
+              <rect x="40" y="268" width="560" height="52" rx="8" fill="#FFF0F3" stroke="#F9A8BA" stroke-width="1.5"/>
+              <text x="320" y="291" text-anchor="middle" font-family="Helvetica" font-size="21" fill="#8B0D21" font-weight="700">Exact budget constraint enforced</text>
+              <text x="320" y="311" text-anchor="middle" font-family="Helvetica" font-size="17" fill="#C41230">Total raw weight footprint = uniform INT4</text>
+
+              <!-- Arrow -->
+              <line x1="320" y1="320" x2="320" y2="340" stroke="#AAA" stroke-width="2" marker-end="url(#arr)"/>
+
+              <!-- Result -->
+              <rect x="40" y="342" width="560" height="58" rx="8" fill="#C41230"/>
+              <text x="320" y="368" text-anchor="middle" font-family="Helvetica" font-size="22" fill="white" font-weight="700">Structured Policy Frontier</text>
+              <text x="320" y="390" text-anchor="middle" font-family="Helvetica" font-size="17" fill="#F1F1F1">Spectrum from Uniform INT4 → High-sensitivity Mixed</text>
+            </svg>

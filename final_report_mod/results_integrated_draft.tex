@@ -1,0 +1,122 @@
+This section reports workload-family-specific results under the exact raw weight footprint of uniform \intfour{}. The mixed coding policy is \texttt{gpf\_refine\_00\_i0112} (hash \texttt{7caae6e48fce...2043e4}), searched on MMLU-coding and then transferred unchanged to HumanEval, HumanEval+, and BigCodeBench-Hard. The mixed math policy is \texttt{gpf\_refine\_02\_i0110} (hash \texttt{9bbaf3a7d0e0...59b9e9}), searched for MATH-500 and then evaluated under two token-wall settings. All reported numbers use greedy decoding on held-out evaluation slices with benchmark-specific prompt protocols. Across the evaluated benchmarks, exact-budget mixed precision reliably improves over uniform \intfour{}, but it does not surpass stronger higher-precision baselines overall, including uniform \inteight{} and BF16.
+
+\subsection{Frozen Policies and Evaluation Protocol}
+
+Table~\ref{tab:results-artifact-registry} ties the main empirical claims to explicit policy identifiers and evaluation settings. For the coding route, all reported gains come from a single mixed policy transferred across multiple coding benchmarks. For the math route, all reported gains come from one MATH-oriented policy evaluated twice with different token walls.
+
+\begin{table*}[t]
+\centering
+\caption{Mixed-policy registry. The coding policy is reused unchanged across all coding benchmarks; the math policy is reused unchanged across both MATH-500 token-wall settings.}
+\label{tab:results-artifact-registry}
+\footnotesize
+\begin{tabular}{p{0.12\textwidth}p{0.18\textwidth}p{0.14\textwidth}p{0.18\textwidth}p{0.26\textwidth}}
+\toprule
+Workload family & Policy identifier & Search task & Held-out evaluation slice & Protocol summary \\
+\midrule
+Coding & \texttt{gpf\_refine\_00\_i0112} & MMLU-coding & MMLU-coding last100; full HumanEval / HumanEval+; full BigCodeBench-Hard & Greedy decoding. MMLU-coding uses simple-evals CoT with \texttt{max\_new\_tokens}=4096; HumanEval / HumanEval+ use EvalPlus with \texttt{max\_new\_tokens}=768; BigCodeBench-Hard uses the official instruct prompt with \texttt{max\_new\_tokens}=1280. \\
+\midrule
+Math & \texttt{gpf\_refine\_02\_i0110} & MATH-500 & MATH-500 last100 at \texttt{max\_new\_tokens}=4096 and 20000 & Greedy decoding with the simple-evals non-thinking prompt under two token-wall settings. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Main Quantitative Results}
+
+Table~\ref{tab:results-main-summary} gives the headline benchmark scores. The mixed coding policy is a clear improvement over uniform \intfour{} on generative coding benchmarks, but not on multiple-choice coding. The mixed math policy improves over uniform \intfour{} under both MATH token-wall settings, although uniform \inteight{} remains the strongest baseline on that task.
+
+\begin{table*}[t]
+\centering
+\caption{Main benchmark outcomes under frozen evaluation settings. HumanEval and HumanEval+ share the same generated samples and therefore differ only in the execution-based scoring harness.}
+\label{tab:results-main-summary}
+\footnotesize
+\begin{tabular}{llrrrr}
+\toprule
+Benchmark & Metric & BF16 & Uniform \inteight{} & Uniform \intfour{} & Mixed \\
+\midrule
+MMLU-coding last100 & Accuracy & 95.0\% & 94.0\% & 91.0\% & 91.0\% \\
+HumanEval & Pass@1 & 87.8\% & 89.0\% & 81.1\% & 84.8\% \\
+HumanEval+ & Pass@1 & 82.3\% & 82.3\% & 76.8\% & 79.9\% \\
+BigCodeBench-Hard & Pass@1 & 29.05\% & 27.03\% & 16.89\% & 23.65\% \\
+BigCodeBench-Hard & Passed tasks & 43/148 & 40/148 & 25/148 & 35/148 \\
+MATH-500 @4096 & Accuracy & 86.0\% & 88.0\% & 80.0\% & 84.0\% \\
+MATH-500 @20000 & Accuracy & 87.0\% & 91.0\% & 86.0\% & 89.0\% \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The coding results split cleanly into one no-gain case and several positive cases. On MMLU-coding last100, the mixed coding policy reaches 91.0\% accuracy, exactly matching uniform \intfour{} rather than improving over it. MMLU-coding therefore functions as a negative or inconclusive case for mixed-over-\intfour{} gains. The current evidence does not support a claim that the mixed policy helps uniformly across all coding benchmarks.
+
+The picture is more favorable on generative coding tasks. On HumanEval, mixed improves pass@1 from 81.1\% to 84.8\% relative to uniform \intfour{}, recovering 3.7 points. On HumanEval+, the gain is 3.1 points, from 76.8\% to 79.9\%. BigCodeBench-Hard provides the clearest current coding result: uniform \intfour{} passes only 25 of 148 tasks, while the mixed policy passes 35 of 148. Relative to BF16, which passes 43 tasks, the mixed policy recovers 10 of the 18 tasks lost by uniform \intfour{}. Taken together, these results suggest that the benefit of task-aware precision reallocation is easier to observe on generative synthesis than on multiple-choice recognition.
+
+\subsection{MATH-500 and Token-Wall Sensitivity}
+
+The MATH results need to be interpreted jointly with the generation budget. Table~\ref{tab:results-math-tokenwall} expands the score comparison to include token-wall hit counts and completion-length statistics for both the 4096-token and 20000-token settings. The 4096-token setting is a realistic but restrictive wall; the 20000-token setting is a diagnostic run intended to separate genuine quantization degradation from truncation-induced failures.
+
+\begin{table*}[t]
+\centering
+\caption{MATH-500 last100 under two token walls. Both runs use the same held-out last100 slice, greedy decoding, and the simple-evals non-thinking prompt; only \texttt{max\_new\_tokens} changes.}
+\label{tab:results-math-tokenwall}
+\footnotesize
+\begin{tabular}{llrrrr}
+\toprule
+Setting & Metric & BF16 & Uniform \inteight{} & Uniform \intfour{} & Mixed \\
+\midrule
+MATH-500 @4096 & Accuracy & 86.0\% & 88.0\% & 80.0\% & 84.0\% \\
+MATH-500 @4096 & Correct & 86/100 & 88/100 & 80/100 & 84/100 \\
+MATH-500 @4096 & Token-wall hits & 7 & 6 & 14 & 7 \\
+MATH-500 @4096 & Avg.\ completion tokens & 1167.0 & 1168.5 & 1494.3 & 1284.5 \\
+MATH-500 @4096 & P95 completion tokens & 4096.0 & 4096.0 & 4096.0 & 4096.0 \\
+\midrule
+MATH-500 @20000 & Accuracy & 87.0\% & 91.0\% & 86.0\% & 89.0\% \\
+MATH-500 @20000 & Correct & 87/100 & 91/100 & 86/100 & 89/100 \\
+MATH-500 @20000 & Token-wall hits & 2 & 2 & 7 & 6 \\
+MATH-500 @20000 & Avg.\ completion tokens & 1663.7 & 1654.0 & 3002.2 & 2349.4 \\
+MATH-500 @20000 & P95 completion tokens & 6558.2 & 4332.8 & 20000.0 & 20000.0 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Several conclusions follow from Table~\ref{tab:results-math-tokenwall}. First, all four models improve when the token wall is relaxed, so the tighter 4096-token setting is not merely a harmless formatting choice. Second, the improvements are larger for lower-precision models: BF16 rises by 1 point from 86 to 87, uniform \inteight{} rises by 3 points from 88 to 91, uniform \intfour{} rises by 6 points from 80 to 86, and the mixed math policy rises by 5 points from 84 to 89. Third, the token-wall hit counts follow the same trend: the lower-precision models are capped more often, especially under the tighter wall. This indicates that part of the gap observed on MATH-500 under \texttt{max\_new\_tokens}=4096 is due to truncation rather than quantization error alone.
+
+The ranking under the 20000-token diagnostic run is also instructive. Uniform \inteight{} is the strongest baseline at 91.0\%, the mixed math policy follows at 89.0\%, BF16 reaches 87.0\%, and uniform \intfour{} reaches 86.0\%. This ordering should not be read as evidence that low-bit models are inherently better than the native model. A safer interpretation is that, under this particular prompt, parser, and greedy decoding protocol, widening the token budget changes which models are most often truncated before landing on a correct boxed answer. MATH-500 is therefore a task where token-wall control is inseparable from quantization interpretation.
+
+\subsection{Completion-Token Usage Across the Suite}
+
+Accuracy is the primary metric, but completion-token usage gives a second and surprisingly consistent view of model behavior. Table~\ref{tab:results-token-summary} shows that the mixed policy uses fewer completion tokens than uniform \intfour{} on every benchmark in the evaluated suite. This pattern holds on MMLU-coding, HumanEval, BigCodeBench-Hard, and both MATH settings.
+
+\begin{table*}[t]
+\centering
+\caption{Completion-token usage under the same frozen evaluation settings as the main benchmark tables. HumanEval and HumanEval+ share the same generations and therefore the same token statistics.}
+\label{tab:results-token-summary}
+\footnotesize
+\begin{tabular}{lrrrr}
+\toprule
+Benchmark & BF16 & Uniform \inteight{} & Uniform \intfour{} & Mixed \\
+\midrule
+MMLU-coding last100 (avg completion tokens) & 647.8 & 696.5 & 903.8 & 787.4 \\
+MMLU-coding last100 (p95 completion tokens) & 1702.3 & 1446.4 & 2562.7 & 1869.1 \\
+\midrule
+HumanEval / HumanEval+ (avg completion tokens) & 360.8 & 364.8 & 412.2 & 358.9 \\
+HumanEval / HumanEval+ (p95 completion tokens) & 768.0 & 768.0 & 768.0 & 759.4 \\
+\midrule
+BigCodeBench-Hard (avg completion tokens) & 512.2 & 511.0 & 533.7 & 501.7 \\
+BigCodeBench-Hard (p95 completion tokens) & 896.1 & 918.7 & 933.7 & 872.6 \\
+\midrule
+MATH-500 @4096 (avg completion tokens) & 1167.0 & 1168.5 & 1494.3 & 1284.5 \\
+MATH-500 @4096 (p95 completion tokens) & 4096.0 & 4096.0 & 4096.0 & 4096.0 \\
+\midrule
+MATH-500 @20000 (avg completion tokens) & 1663.7 & 1654.0 & 3002.2 & 2349.4 \\
+MATH-500 @20000 (p95 completion tokens) & 6558.2 & 4332.8 & 20000.0 & 20000.0 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+This token pattern matters because the mixed policy often improves quality while using fewer tokens, rather than improving quality by simply generating longer outputs. On BigCodeBench-Hard, for example, mixed passes 10 more tasks than uniform \intfour{} while also using fewer average completion tokens (501.7 versus 533.7). On MATH-500 under the 20000-token wall, the mixed math policy remains substantially more token-efficient than uniform \intfour{} (2349.4 versus 3002.2) while also being 3 points more accurate. A plausible interpretation is that preserving higher precision on task-sensitive groups helps keep reasoning or code generation more on-track, although this remains a hypothesis rather than a proven causal mechanism.
+
+\subsection{Interpretation, Failure Cases, and Remaining Ablations}
+
+The evidence supports a narrow but defensible claim: structured exact-budget mixed precision is a practical improvement over uniform \intfour{} under the same raw weight budget, and the clearest gains appear on generative coding benchmarks and on long-form reasoning tasks where uniform \intfour{} is especially vulnerable to truncation or drift. At the same time, the data show that mixed precision does not surpass \inteight{} or BF16 as the overall quality ceiling. Uniform \inteight{} remains the strongest baseline on MATH-500 in both token-budget settings, and MMLU-coding remains a case where mixed does not separate from uniform \intfour{}.
+
+Several ablation axes remain important for interpreting these results: the task-sensitivity profiler, the exact-budget demotion repair rule, path-based coarse selection, and local refinement. Two of these comparisons are already partially exposed by the current numbers. First, the MATH-500 4096-versus-20000 comparison makes token-wall control explicit rather than hidden. Second, the MMLU-coding result serves as a direct no-gain case. The remaining ablations still need frozen numeric comparisons, but the present results already establish the main empirical boundary: workload-aware reallocation can recover a meaningful fraction of the quality lost by uniform \intfour{}, yet its gains are benchmark-dependent and must be interpreted alongside prompting protocol and generation-budget effects.
+
+Finally, these results should still be read as engineering evidence rather than as high-power statistical claims. MMLU-coding and MATH-500 last100 each evaluate 100 held-out examples, HumanEval and HumanEval+ use 164 tasks, and BigCodeBench-Hard uses 148 tasks. Small margins should therefore be interpreted carefully, and future versions of this evaluation would be stronger with uncertainty estimates or paired tests where per-example outputs are available.
