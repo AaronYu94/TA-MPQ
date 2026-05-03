@@ -655,6 +655,7 @@
             <div style="font-size:19px; font-weight:700; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.06em">Baselines</div>
             <div style="font-size:17px; line-height:1.5">
               <div><strong>BF16</strong> — unquantized reference</div>
+              <div><strong>Uniform INT8</strong> — higher-precision quantized baseline via the same backend</div>
               <div><strong>Uniform INT4</strong> — every linear group at INT4 via <code style="font-family:'IBM Plex Mono',monospace">llmcompressor.oneshot</code> (RTN, W4A16, group-size 128, symmetric)</div>
               <div style="margin-top:3px; color:var(--muted); font-size:15px">Mixed (TA-MPQ) is built with the same quantization backend, so INT4-vs-Mixed comparisons isolate the allocation policy.</div>
             </div>
@@ -745,45 +746,55 @@
                 <!-- X-axis baseline -->
                 <line x1="58" y1="320" x2="810" y2="320" stroke="#888" stroke-width="1.5"/>
 
-                <!-- G0: MMLU-coding (x_base=80.5, bar_w=24) -->
-                <rect x="80.5" y="54.0" width="24" height="266.0" fill="#9CA3AF" rx="2"/>
-                <text x="92.5" y="47" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">95</text>
-                <rect x="108.5" y="65.2" width="24" height="254.8" fill="#6aaa8a" rx="2"/>
-                <text x="120.5" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">91</text>
-                <rect x="136.5" y="65.2" width="24" height="254.8" fill="#C41230" rx="2"/>
-                <text x="148.5" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">91</text>
+                <!-- G0: MMLU-coding (BF16=95, INT8=94, INT4=91, Mixed=91) -->
+                <rect x="74.5" y="54.0" width="20" height="266.0" fill="#9CA3AF" rx="2"/>
+                <text x="84.5" y="47" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">95</text>
+                <rect x="98.5" y="56.8" width="20" height="263.2" fill="#D98B2B" rx="2"/>
+                <text x="108.5" y="50" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">94</text>
+                <rect x="122.5" y="65.2" width="20" height="254.8" fill="#6aaa8a" rx="2"/>
+                <text x="132.5" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">91</text>
+                <rect x="146.5" y="65.2" width="20" height="254.8" fill="#C41230" rx="2"/>
+                <text x="156.5" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">91</text>
 
-                <!-- G1: HumanEval (x_base=205.5) -->
-                <rect x="243" y="74.2" width="24" height="245.8" fill="#9CA3AF" rx="2"/>
-                <text x="255" y="67" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">87.8</text>
-                <rect x="271" y="92.9" width="24" height="227.1" fill="#6aaa8a" rx="2"/>
-                <text x="283" y="86" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">81.1</text>
-                <rect x="299" y="82.6" width="24" height="237.4" fill="#C41230" rx="2"/>
-                <text x="311" y="75" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">84.8</text>
+                <!-- G1: HumanEval (BF16=87.8, INT8=89.0, INT4=81.1, Mixed=84.8) -->
+                <rect x="237" y="74.2" width="20" height="245.8" fill="#9CA3AF" rx="2"/>
+                <text x="247" y="67" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">87.8</text>
+                <rect x="261" y="70.8" width="20" height="249.2" fill="#D98B2B" rx="2"/>
+                <text x="271" y="64" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">89.0</text>
+                <rect x="285" y="92.9" width="20" height="227.1" fill="#6aaa8a" rx="2"/>
+                <text x="295" y="86" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">81.1</text>
+                <rect x="309" y="82.6" width="20" height="237.4" fill="#C41230" rx="2"/>
+                <text x="319" y="75" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">84.8</text>
 
-                <!-- G2: BCB-Hard (x_base=330.5) -->
-                <rect x="405.5" y="238.5" width="24" height="81.5" fill="#9CA3AF" rx="2"/>
-                <text x="417.5" y="231" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">29.1</text>
-                <rect x="433.5" y="272.7" width="24" height="47.3" fill="#6aaa8a" rx="2"/>
-                <text x="445.5" y="265" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">16.9</text>
-                <rect x="461.5" y="253.9" width="24" height="66.1" fill="#C41230" rx="2"/>
-                <text x="473.5" y="246" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">23.6</text>
+                <!-- G2: BCB-Hard (BF16=29.1, INT8=27.0, INT4=16.9, Mixed=23.6) -->
+                <rect x="399.5" y="238.7" width="20" height="81.3" fill="#9CA3AF" rx="2"/>
+                <text x="409.5" y="231" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">29.1</text>
+                <rect x="423.5" y="244.3" width="20" height="75.7" fill="#D98B2B" rx="2"/>
+                <text x="433.5" y="237" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">27.0</text>
+                <rect x="447.5" y="272.7" width="20" height="47.3" fill="#6aaa8a" rx="2"/>
+                <text x="457.5" y="265" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">16.9</text>
+                <rect x="471.5" y="253.8" width="20" height="66.2" fill="#C41230" rx="2"/>
+                <text x="481.5" y="246" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">23.6</text>
 
-                <!-- G3: MATH-500 max_new_tokens=4096 (x_base=455.5) -->
-                <rect x="568" y="79.2" width="24" height="240.8" fill="#9CA3AF" rx="2"/>
-                <text x="580" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">86</text>
-                <rect x="596" y="96.0" width="24" height="224.0" fill="#6aaa8a" rx="2"/>
-                <text x="608" y="89" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">80</text>
-                <rect x="624" y="84.8" width="24" height="235.2" fill="#C41230" rx="2"/>
-                <text x="636" y="77" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">84</text>
+                <!-- G3: MATH-500 max_new_tokens=4096 (BF16=86, INT8=88, INT4=80, Mixed=84) -->
+                <rect x="562" y="79.2" width="20" height="240.8" fill="#9CA3AF" rx="2"/>
+                <text x="572" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">86</text>
+                <rect x="586" y="73.6" width="20" height="246.4" fill="#D98B2B" rx="2"/>
+                <text x="596" y="67" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">88</text>
+                <rect x="610" y="96.0" width="20" height="224.0" fill="#6aaa8a" rx="2"/>
+                <text x="620" y="89" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">80</text>
+                <rect x="634" y="84.8" width="20" height="235.2" fill="#C41230" rx="2"/>
+                <text x="644" y="78" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">84</text>
 
-                <!-- G4: MATH-500 max_new_tokens=20000 (x_base=580.5) -->
-                <rect x="730.5" y="76.4" width="24" height="243.6" fill="#9CA3AF" rx="2"/>
-                <text x="742.5" y="69" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">87</text>
-                <rect x="758.5" y="79.2" width="24" height="240.8" fill="#6aaa8a" rx="2"/>
-                <text x="770.5" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">86</text>
-                <rect x="786.5" y="70.8" width="24" height="249.2" fill="#C41230" rx="2"/>
-                <text x="798.5" y="63" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">89</text>
+                <!-- G4: MATH-500 max_new_tokens=20000 (BF16=87, INT8=91, INT4=86, Mixed=89) -->
+                <rect x="724.5" y="76.4" width="20" height="243.6" fill="#9CA3AF" rx="2"/>
+                <text x="734.5" y="69" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">87</text>
+                <rect x="748.5" y="65.2" width="20" height="254.8" fill="#D98B2B" rx="2"/>
+                <text x="758.5" y="58" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">91</text>
+                <rect x="772.5" y="79.2" width="20" height="240.8" fill="#6aaa8a" rx="2"/>
+                <text x="782.5" y="72" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">86</text>
+                <rect x="796.5" y="70.8" width="20" height="249.2" fill="#C41230" rx="2"/>
+                <text x="806.5" y="63" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">89</text>
 
                 <!-- Group X-axis labels (y=335) -->
                 <text x="120.5" y="337" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" fill="#444">MMLU-coding</text>
@@ -798,14 +809,16 @@
                 <text x="685" y="370" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#444" font-weight="600">MATH-500</text>
 
                 <!-- Legend -->
-                <rect x="140" y="396" width="18" height="15" fill="#9CA3AF" rx="2"/>
-                <text x="164" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">BF16</text>
-                <rect x="240" y="396" width="18" height="15" fill="#6aaa8a" rx="2"/>
-                <text x="264" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">Uniform INT4</text>
-                <rect x="400" y="396" width="18" height="15" fill="#C41230" rx="2"/>
-                <text x="424" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">Mixed (TA-MPQ)</text>
+                <rect x="70" y="396" width="18" height="15" fill="#9CA3AF" rx="2"/>
+                <text x="94" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">BF16</text>
+                <rect x="165" y="396" width="18" height="15" fill="#D98B2B" rx="2"/>
+                <text x="189" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">Uniform INT8</text>
+                <rect x="330" y="396" width="18" height="15" fill="#6aaa8a" rx="2"/>
+                <text x="354" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">Uniform INT4</text>
+                <rect x="500" y="396" width="18" height="15" fill="#C41230" rx="2"/>
+                <text x="524" y="408" font-family="IBM Plex Sans" font-size="17" fill="#444">Mixed (TA-MPQ)</text>
           </svg>
-          <div style="background:#FFF0F3; border-left:4px solid var(--red); border-radius:0 6px 6px 0; padding:14px 18px; margin-top:14px; font-size:19px; line-height:1.4"><strong>Observation.</strong> Mixed precision matches or beats uniform INT4 on every benchmark.</div>
+          <div style="background:#FFF0F3; border-left:4px solid var(--red); border-radius:0 6px 6px 0; padding:14px 18px; margin-top:14px; font-size:19px; line-height:1.4"><strong>Observation.</strong> Mixed mainly improves over uniform INT4, while uniform INT8 remains the stronger higher-precision baseline on MATH-500.</div>
 
           <!-- Token usage histogram -->
           <div style="font-size:19px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-top:32px; margin-bottom:2px">Avg Token Usage by Benchmarks We Tested</div>
@@ -826,45 +839,55 @@
             <!-- X-axis baseline -->
             <line x1="58" y1="300" x2="810" y2="300" stroke="#888" stroke-width="1.5"/>
 
-            <!-- G0: MMLU-coding (x_base=80.5) BF16=648 INT4=904 Mixed=787 -->
-            <rect x="80.5" y="247.3" width="24" height="52.7" fill="#9CA3AF" rx="2"/>
-            <text x="92.5" y="240" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">648</text>
-            <rect x="108.5" y="226.6" width="24" height="73.4" fill="#6aaa8a" rx="2"/>
-            <text x="120.5" y="219" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">904</text>
-            <rect x="136.5" y="236.1" width="24" height="63.9" fill="#C41230" rx="2"/>
-            <text x="148.5" y="229" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">787</text>
+            <!-- G0: MMLU-coding (BF16=648 INT8=697 INT4=904 Mixed=787) -->
+            <rect x="74.5" y="247.3" width="20" height="52.7" fill="#9CA3AF" rx="2"/>
+            <text x="84.5" y="240" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">648</text>
+            <rect x="98.5" y="243.4" width="20" height="56.6" fill="#D98B2B" rx="2"/>
+            <text x="108.5" y="236" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">697</text>
+            <rect x="122.5" y="226.6" width="20" height="73.4" fill="#6aaa8a" rx="2"/>
+            <text x="132.5" y="219" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">904</text>
+            <rect x="146.5" y="236.1" width="20" height="63.9" fill="#C41230" rx="2"/>
+            <text x="156.5" y="229" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">787</text>
 
-            <!-- G1: HumanEval (x_base=205.5) BF16=361 INT4=412 Mixed=359 -->
-            <rect x="243" y="270.7" width="24" height="29.3" fill="#9CA3AF" rx="2"/>
-            <text x="255" y="263" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">361</text>
-            <rect x="271" y="266.5" width="24" height="33.5" fill="#6aaa8a" rx="2"/>
-            <text x="283" y="259" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">412</text>
-            <rect x="299" y="270.8" width="24" height="29.2" fill="#C41230" rx="2"/>
-            <text x="311" y="263" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">359</text>
+            <!-- G1: HumanEval (BF16=361 INT8=365 INT4=412 Mixed=359) -->
+            <rect x="237" y="270.7" width="20" height="29.3" fill="#9CA3AF" rx="2"/>
+            <text x="247" y="263" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">361</text>
+            <rect x="261" y="270.4" width="20" height="29.6" fill="#D98B2B" rx="2"/>
+            <text x="271" y="263" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">365</text>
+            <rect x="285" y="266.5" width="20" height="33.5" fill="#6aaa8a" rx="2"/>
+            <text x="295" y="259" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">412</text>
+            <rect x="309" y="270.8" width="20" height="29.2" fill="#C41230" rx="2"/>
+            <text x="319" y="263" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">359</text>
 
-            <!-- G2: BCB-Hard (x_base=330.5) BF16=512 INT4=534 Mixed=502 -->
-            <rect x="405.5" y="258.4" width="24" height="41.6" fill="#9CA3AF" rx="2"/>
-            <text x="417.5" y="251" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">512</text>
-            <rect x="433.5" y="256.6" width="24" height="43.4" fill="#6aaa8a" rx="2"/>
-            <text x="445.5" y="249" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">534</text>
-            <rect x="461.5" y="259.2" width="24" height="40.8" fill="#C41230" rx="2"/>
-            <text x="473.5" y="252" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">502</text>
+            <!-- G2: BCB-Hard (BF16=512 INT8=511 INT4=534 Mixed=502) -->
+            <rect x="399.5" y="258.4" width="20" height="41.6" fill="#9CA3AF" rx="2"/>
+            <text x="409.5" y="251" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">512</text>
+            <rect x="423.5" y="258.5" width="20" height="41.5" fill="#D98B2B" rx="2"/>
+            <text x="433.5" y="251" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">511</text>
+            <rect x="447.5" y="256.6" width="20" height="43.4" fill="#6aaa8a" rx="2"/>
+            <text x="457.5" y="249" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">534</text>
+            <rect x="471.5" y="259.2" width="20" height="40.8" fill="#C41230" rx="2"/>
+            <text x="481.5" y="252" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">502</text>
 
-            <!-- G3: MATH-500 max 4096 (x_base=455.5) BF16=1167 INT4=1494 Mixed=1285 -->
-            <rect x="568" y="205.2" width="24" height="94.8" fill="#9CA3AF" rx="2"/>
-            <text x="580" y="198" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">1167</text>
-            <rect x="596" y="178.6" width="24" height="121.4" fill="#6aaa8a" rx="2"/>
-            <text x="608" y="171" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">1494</text>
-            <rect x="624" y="195.6" width="24" height="104.4" fill="#C41230" rx="2"/>
-            <text x="636" y="188" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">1285</text>
+            <!-- G3: MATH-500 max 4096 (BF16=1167 INT8=1169 INT4=1494 Mixed=1285) -->
+            <rect x="562" y="205.2" width="20" height="94.8" fill="#9CA3AF" rx="2"/>
+            <text x="572" y="198" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">1167</text>
+            <rect x="586" y="205.1" width="20" height="94.9" fill="#D98B2B" rx="2"/>
+            <text x="596" y="198" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">1169</text>
+            <rect x="610" y="178.6" width="20" height="121.4" fill="#6aaa8a" rx="2"/>
+            <text x="620" y="171" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">1494</text>
+            <rect x="634" y="195.6" width="20" height="104.4" fill="#C41230" rx="2"/>
+            <text x="644" y="188" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">1285</text>
 
-            <!-- G4: MATH-500 max 20k (x_base=580.5) BF16=1664 INT4=3002 Mixed=2349 -->
-            <rect x="730.5" y="164.8" width="24" height="135.2" fill="#9CA3AF" rx="2"/>
-            <text x="742.5" y="157" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#666">1664</text>
-            <rect x="758.5" y="56.2" width="24" height="243.8" fill="#6aaa8a" rx="2"/>
-            <text x="770.5" y="49" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#3d7a5a">3002</text>
-            <rect x="786.5" y="109.1" width="24" height="190.9" fill="#C41230" rx="2"/>
-            <text x="798.5" y="102" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#C41230">2349</text>
+            <!-- G4: MATH-500 max 20k (BF16=1664 INT8=1654 INT4=3002 Mixed=2349) -->
+            <rect x="724.5" y="164.8" width="20" height="135.2" fill="#9CA3AF" rx="2"/>
+            <text x="734.5" y="157" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#666">1664</text>
+            <rect x="748.5" y="165.6" width="20" height="134.4" fill="#D98B2B" rx="2"/>
+            <text x="758.5" y="158" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#B96D18">1654</text>
+            <rect x="772.5" y="56.2" width="20" height="243.8" fill="#6aaa8a" rx="2"/>
+            <text x="782.5" y="49" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#3d7a5a">3002</text>
+            <rect x="796.5" y="109.1" width="20" height="190.9" fill="#C41230" rx="2"/>
+            <text x="806.5" y="102" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="#C41230">2349</text>
 
             <!-- X-axis labels (y=317) -->
             <text x="120.5" y="317" text-anchor="middle" font-family="IBM Plex Sans" font-size="15" fill="#444">MMLU-coding</text>
@@ -879,14 +902,16 @@
             <text x="685" y="350" text-anchor="middle" font-family="IBM Plex Sans" font-size="16" fill="#444" font-weight="600">MATH-500</text>
 
             <!-- Legend (shared with accuracy chart above, compact) -->
-            <rect x="140" y="366" width="18" height="14" fill="#9CA3AF" rx="2"/>
-            <text x="164" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">BF16</text>
-            <rect x="230" y="366" width="18" height="14" fill="#6aaa8a" rx="2"/>
-            <text x="254" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">Uniform INT4</text>
-            <rect x="390" y="366" width="18" height="14" fill="#C41230" rx="2"/>
-            <text x="414" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">Mixed (TA-MPQ)</text>
+            <rect x="70" y="366" width="18" height="14" fill="#9CA3AF" rx="2"/>
+            <text x="94" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">BF16</text>
+            <rect x="160" y="366" width="18" height="14" fill="#D98B2B" rx="2"/>
+            <text x="184" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">Uniform INT8</text>
+            <rect x="310" y="366" width="18" height="14" fill="#6aaa8a" rx="2"/>
+            <text x="334" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">Uniform INT4</text>
+            <rect x="470" y="366" width="18" height="14" fill="#C41230" rx="2"/>
+            <text x="494" y="378" font-family="IBM Plex Sans" font-size="16" fill="#444">Mixed (TA-MPQ)</text>
           </svg>
-          <div style="background:#FFF0F3; border-left:4px solid var(--red); border-radius:0 6px 6px 0; padding:14px 18px; margin-top:14px; font-size:19px; line-height:1.4"><strong>Observation.</strong> Mixed uses fewer tokens than uniform INT4 on every benchmark. <strong>Conjecture:</strong> higher precision at sensitive layers keeps reasoning on-track — pending verification.</div>
+          <div style="background:#FFF0F3; border-left:4px solid var(--red); border-radius:0 6px 6px 0; padding:14px 18px; margin-top:14px; font-size:19px; line-height:1.4"><strong>Observation.</strong> Mixed uses fewer tokens than uniform INT4 on every benchmark; INT8 is more token-efficient on MATH-500, consistent with its larger precision budget.</div>
         </div>
       </div>
 

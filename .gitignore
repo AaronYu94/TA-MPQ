@@ -1,2 +1,25 @@
 .DS_Store
 **/.DS_Store
+
+# Python/cache artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# LaTeX/build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+missfont.log
+texput.log
+
+# Local scratch/output
+tmp/

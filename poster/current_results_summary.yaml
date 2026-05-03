@@ -295,6 +295,7 @@ benchmarks:
     max_new_tokens: 4096
     source_paths:
       bf16: "MATH500 result/math500-qwen35-9b-bf16-simple-evals-nonthinking-last100-a100.json"
+      uniform_int8: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-uniform-int8-last100-a100-max4096-baseline-uniform-int8-last100-quantized.json"
       uniform_int4: "MATH500 result/math500-qwen35-9b-uniform-int4-simple-evals-nonthinking-last100-a100-baseline-uniform-int4-last100-quantized.json"
       mixed_math_policy: "MATH500 result/9bbaf3a7d0e0273028f1e1c0a64d4e1c485d8c3e440b0a9d532a45e0b259b9e9-c589d8ab532c-simple-evals-nonthinking-simple-evals-nonthinking-84e0fddf0340.json"
     results:
@@ -308,6 +309,18 @@ benchmarks:
         median_completion_tokens: 769.0
         p95_completion_tokens: 4096.0
         total_completion_tokens: 116701
+      uniform_int8:
+        accuracy: 0.88
+        correct: 88
+        total: 100
+        length_capped_count: 6
+        fallback_answer_count: 5
+        boxed_answer_count: 95
+        avg_prompt_tokens: 90.77
+        avg_completion_tokens: 1168.53
+        median_completion_tokens: 797.5
+        p95_completion_tokens: 4096.0
+        total_completion_tokens: 116853
       uniform_int4:
         accuracy: 0.80
         correct: 80
@@ -329,7 +342,7 @@ benchmarks:
         p95_completion_tokens: 4096.0
         total_completion_tokens: 128455
     interpretation:
-      - "Under a 4096-token wall, mixed outperforms uniform INT4 and approaches BF16."
+      - "Under a 4096-token wall, mixed outperforms uniform INT4, while uniform INT8 is the strongest baseline."
       - "Uniform INT4 shows both the worst accuracy and the highest capped count."
       - "This setting still shows a visible MATH token-wall effect."
 
@@ -344,6 +357,7 @@ benchmarks:
       results_by_example_id structure and was normalized by hand for this summary.
     source_paths:
       bf16: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-bf16-last100-a100-max20000.json"
+      uniform_int8: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-uniform-int8-last100-a100-max20000-baseline-uniform-int8-last100-quantized.json"
       uniform_int4: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-uniform-int4-last100-a100-max20000-baseline-uniform-int4-last100.json"
       mixed_math_policy: "/Users/aaronyu/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/4bf6206577e5dcb957767b1c85c384dd/Message/MessageTemp/92a6d23ea2eeebd3f6356a9241a85ecd/File/math500-qwen35-9b-mixed-best-last100-a100-max20000.json"
     results:
@@ -360,6 +374,18 @@ benchmarks:
         capped_examples:
           - "test/intermediate_algebra/1279.json"
           - "test/intermediate_algebra/2015.json"
+      uniform_int8:
+        accuracy: 0.91
+        correct: 91
+        total: 100
+        length_capped_count: 2
+        fallback_answer_count: 0
+        boxed_answer_count: 100
+        avg_prompt_tokens: 90.77
+        avg_completion_tokens: 1653.99
+        median_completion_tokens: 797.5
+        p95_completion_tokens: 4332.8
+        total_completion_tokens: 165399
       uniform_int4:
         accuracy: 0.86
         correct: 86
@@ -397,7 +423,7 @@ benchmarks:
           - "test/intermediate_algebra/90.json"
     interpretation:
       - "Raising the MATH token wall from 4096 to 20000 changes the ranking."
-      - "Under max_new_tokens=20000, mixed reaches 89%, compared with 87% for BF16 and 86% for uniform INT4."
+      - "Under max_new_tokens=20000, uniform INT8 reaches 91%, mixed reaches 89%, BF16 reaches 87%, and uniform INT4 reaches 86%."
       - "The 20000-token run is still not fully free of truncation: mixed and uniform INT4 both retain p95 completion tokens at 20000."
 
 diagnostics:
