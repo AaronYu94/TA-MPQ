@@ -91,7 +91,7 @@ Mixed-precision quantization treats bit-widths as allocation decisions rather th
 \paragraph{Evaluation tasks for reasoning and coding.}
 The final evaluation suite covers both recognition-style and generation-style tasks. MMLU measures broad multitask understanding through multiple-choice questions across many domains \cite{hendrycks2021mmlu}; the MMLU-coding slice used here preserves that recognition-style format while focusing on coding-related questions. HumanEval measures ``functional correctness for synthesizing programs from docstrings'' \cite{chen2021codex}. EvalPlus augments HumanEval with stronger tests for generated code \cite{liu2023evalplus}. BigCodeBench targets code generation with ``diverse function calls as tools'' and complex instructions \cite{zhuo2025bigcodebench}. MATH introduces ``12,500 challenging competition mathematics problems'' and is useful for reasoning-heavy evaluation \cite{hendrycks2021math}. Together, these benchmarks provide the workload diversity needed to test whether one searched coding policy transfers across multiple coding tasks and whether a separate math policy behaves differently under long-form reasoning conditions.
 
-\section{Problem Setting}
+\section{Problem}
 
 Let a pretrained transformer contain a set of quantizable groups
 \[
@@ -115,11 +115,11 @@ This raw-bit accounting is the feasibility test for every generated policy. A po
 
 The optimization goal is to find a policy in $\mathcal{P}$ that performs well on a target task. This is not equivalent to maximizing the number of \inteight{} groups because group sizes vary. A small group can be promoted cheaply, while a large group can consume much of the promotion budget. Likewise, a small \inttwo{} demotion may not offset an expensive \inteight{} promotion. The method must therefore reason over true parameter mass, not only group count.
 
-\section{Method}
-
-\subsection{Overview}
+\section{Overview}
 
 \method{} converts task-aware mixed-precision search into a one-dimensional frontier over real budget-feasible policies. The pipeline has five stages. First, it enumerates quantizable linear groups and records their true parameter counts. Second, it estimates task sensitivity for each group. Third, it constructs a greedy path from uniform \intfour{} toward increasingly mixed policies. Fourth, it selects coarse and refined candidate snapshots from that path. Fifth, it quantizes and evaluates the selected policies as real artifacts.
+
+The system takes as input a source model, a target workload, calibration prompts, and an exact raw-weight budget. It outputs a runnable mixed-precision PTQ artifact and an evaluation record for the selected policy. The implemented components are the group registry, sensitivity profiler interface, exact-budget frontier builder, and coarse-to-fine selector; final quantized artifacts are instantiated through the adopted \texttt{llmcompressor.oneshot} PTQ backend.
 
 \begin{figure*}[t]
 \centering
@@ -127,6 +127,8 @@ The optimization goal is to find a policy in $\mathcal{P}$ that performs well on
 \caption{High-level \method{} pipeline. Fixed-ratio quantization recipes are used only to obtain task sensitivity signals; the search then ranks groups by sensitivity per true bit cost, assigns \inteight{}, \intfour{}, and \inttwo{} under an exact raw-footprint constraint, and produces a structured policy frontier.}
 \label{fig:method-pipeline}
 \end{figure*}
+
+\section{Method}
 
 \subsection{Group Registry}
 
@@ -178,7 +180,9 @@ Coarse/refine candidate & Real path snapshot selected by realized \inteight{} ma
 \end{tabular}
 \end{table}
 
-\section{Experimental Setup}
+\section{Evaluation}
+
+\subsection{Experimental Setup}
 
 \paragraph{Model and grouping.}
 The active model is Qwen3.5-9B. The active bit space is \{\inttwo{}, \intfour{}, \inteight{}\}. The active group granularity is per-block component grouping. The budget is raw weight footprint less than or equal to uniform \intfour{}. The language-model head is kept at least at \intfour{} as a minimum-bit constraint.
@@ -198,7 +202,7 @@ Prompting follows the native or currently supported protocol for each benchmark.
 \paragraph{Serving caveat.}
 Latency should be interpreted carefully because the current artifact path uses one-shot post-training quantization artifacts rather than an optimized mixed-precision serving stack. Accuracy and token usage are therefore stronger signals than raw latency at this stage.
 
-\section{Results}
+\subsection{Results}
 \label{sec:results}
 
 \input{results_integrated_draft.tex}
