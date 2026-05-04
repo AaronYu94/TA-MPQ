@@ -119,7 +119,7 @@ The optimization goal is to find a policy in $\mathcal{P}$ that performs well on
 
 \method{} converts task-aware mixed-precision search into a one-dimensional frontier over real budget-feasible policies. The pipeline has five stages. First, it enumerates quantizable linear groups and records their true parameter counts. Second, it estimates task sensitivity for each group. Third, it constructs a greedy path from uniform \intfour{} toward increasingly mixed policies. Fourth, it selects coarse and refined candidate snapshots from that path. Fifth, it quantizes and evaluates the selected policies as real artifacts.
 
-The system takes as input a source model, a target workload, calibration prompts, and an exact raw-weight budget. It outputs a runnable mixed-precision PTQ artifact and an evaluation record for the selected policy. The implemented components are the group registry, sensitivity profiler interface, exact-budget frontier builder, and coarse-to-fine selector; final quantized artifacts are instantiated through the adopted \texttt{llmcompressor.oneshot} PTQ backend.
+The system takes as input a source model, a target workload, calibration prompts, and an exact raw-weight budget. It outputs a runnable mixed-precision PTQ artifact and an evaluation record for the selected policy. The implemented components are the group registry, sensitivity profiler interface, exact-budget frontier builder, and coarse-to-fine selector; final quantized artifacts are instantiated through the adopted \texttt{llmcompressor.oneshot} PTQ backend. The project code, experiment scripts, and report artifacts are available at \url{https://github.com/AaronYu94/TA-MPQ}.
 
 \begin{figure*}[t]
 \centering
